@@ -87,7 +87,7 @@ In the following monilogger, the condition specifies that the `id` parameter of 
 	}
 ```
 
-Both of these expressions are written using the MiniExpr language, which is available [here](https://github.com/gemoc/miniexpr/).
+Both of these expressions (and all other expressions in the examples thereafter) are written using the MiniExpr language, which is available [here](https://github.com/gemoc/miniexpr/).
 
 #### Temporal Conditions
 
@@ -95,11 +95,11 @@ Temporal conditions are expressed using the `stream` condition and by specifying
 In more details, temporal patterns are defined as follows:
 
 ```
-	TemporalPattern: <Pattern> <Scope>
+	TemporalPattern: <Pattern> <Scope>?
 
 	Pattern:
 		'always' <event> |
-		'exists' (n | 'atleast' n | atmost 'n') <event> |
+		'exists' (n | 'atleast' n | atmost 'n')? <event> |
 		'never' <event> |
 		<event> 'precedes' <event> |
 		<event> 'respondsTo' <event>;
@@ -112,7 +112,7 @@ In more details, temporal patterns are defined as follows:
 		'after' <event> 'until' <event>;
 ```
 
-`<event>` is a placeholder for events defined by the user, such as the `InvalidDel` event in the example below.
+The `<event>` tag is a placeholder for events defined by the user, such as the `InvalidDel` event in the example below.
 Events can hold parameters, declared as a comma-separated list of key/value pairs between brackets.
 
 In the following monilogger, the temporal condition evaluates to `true` whenever the event stream (see Actions below) contains at least 3 `InvalidDel` events, each holding a parameter equal to the `uuid` of the current `session`.
@@ -194,7 +194,7 @@ The following parameters are the same as those used for printing to the console 
 Pushing events to the stream is done through the `append stream` action.
 You must provide a name for the event, and can then specify values held by the occurrence by providing a comma separated list of expressions inside brackets `[...]`.
 
-The following monilog prints a message to the `log.txt` file and then pushes an occurrence of the `InvalidDel` event with the `uuid` of the current `session`.
+The following monilogger prints a message to the `log.txt` file and then pushes an occurrence of the `InvalidDel` event with the `uuid` of the current `session` whenever an invalid request to delete an item of `todolist` is received.
 
 ```
 	monilog {
@@ -210,14 +210,3 @@ The following monilog prints a message to the `log.txt` file and then pushes an 
 		}
 	}
 ```
-
-
-
-
-
-
-
-
-
-
-
