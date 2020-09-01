@@ -10,6 +10,9 @@ To enable the monilog tool on GraalVM, the archives available [here](https://git
 ## Use
 
 Use the `--monilogger.files=` option when starting an execution from the command line, and supply the list of monilogger files (.mnlg) you want to include in the execution, as a comma-separated list.
+In addition, according to the language you are using (e.g. js/node), you might need to use the `--jvm` and `--polyglot` options or their equivalents to enable execution on the VM and polyglot access.
+
+Example command for node: `node --polyglot --jvm --monilogger.files=todolist.mnlg todolist.js`
 
 ## Syntax
 
