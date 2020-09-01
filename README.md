@@ -118,7 +118,7 @@ Scope:
 The `<event>` tag is a placeholder for events defined by the user, such as the `InvalidDel` event in the example below.
 Events can hold parameters, declared as a comma-separated list of key/value pairs between brackets.
 
-In the following monilogger, the temporal condition evaluates to `true` whenever the event stream (see Actions below) contains at least 3 `InvalidDel` events, each holding a parameter equal to the `uuid` of the current `session`.
+In the following monilogger, the temporal condition evaluates to `true` whenever the event stream (see [Actions](https://github.com/gemoc/monilog#actions) below) contains at least 3 `InvalidDel` events, each holding a parameter equal to the `uuid` of the current `session`.
 This pattern of 3 event occurrences is evaluated over the complete execution as no scope has been specified, which leads to the default `globally` scope being used.
 This effectively triggers the monilogger's actions whenever a user issues three invalid delete requests.
 
