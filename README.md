@@ -1,6 +1,10 @@
 # Monilog
 Monitoring and Logging tool for executable domain-specific models
 
+## Setup
+
+To enable the monilog tool on GraalVM, the archives available [here](https://github.com/gemoc/monilog/releases/tag/v1.0.0) (for the monilog tool) and optionally [here](https://github.com/gemoc/miniexpr/releases/tag/v1.0.0) (for an expression language to use in your moniloggers), extract them in a folder of your choice, and run their corresponding graalvm-setup.sh scripts. Each archive also contain an eclipse update site (packaged as a zip file) which you can use to install the monilogger and miniexpr editors into your Eclipse IDE, providing auto-completion and syntax highlighting for these languages.
+
 ## Syntax
 
 A monilog definition can be given a name and is split in three blocks:
