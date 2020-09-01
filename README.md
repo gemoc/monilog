@@ -115,7 +115,7 @@ Three types of actions are available to moniloggers: printing to the console, to
 
 #### Printing to the console
 
-Printing a message to the console is done through the `append console` keywords.
+Printing a message to the console is done through the `append console` action.
 The following monilogger prints the first, middle and last values of an array named `u_nplus1`:
 
 ```
@@ -145,7 +145,7 @@ Here is an example of message that is printed by this monilogger:
 
 #### Printing to a file
 
-Printing a message to a file is very similar to printing to the console, and is done through the `append file` keywords.
+Printing a message to a file is very similar to printing to the console, and is done through the `append file` action.
 The following monilogger prints a message to the `log.txt` file whenever `p` is negative after a call to `computePressure`.
 
 ```
@@ -167,6 +167,11 @@ The following parameters are the same as those used for printing to the console 
 
 #### Pushing events to the stream
 
+Pushing events to the stream is done through the `append stream` action.
+You must provide a name for the event, and can then specify values held by the occurrence by providing a comma separated list of expressions inside brackets `[...]`.
+
+The following monilog prints a message to the `log.txt` file and then pushes an occurrence of the `InvalidDel` event with the `uuid` of the current `session`.
+
 ```
 	monilog {
 		events {
@@ -176,7 +181,7 @@ The following parameters are the same as those used for printing to the console 
 			"req.params.id < |req.session.todolist|"
 		}
 		actions {
-			append file("log", "Invalid delete call by {0} on id {1}", "req.session.uuid", "req.params.id"),
+			append file("log.txt", "Invalid delete call by {0} on id {1}", "req.session.uuid", "req.params.id"),
 			append stream(InvalidDel["req.session.uuid"])
 		}
 	}
