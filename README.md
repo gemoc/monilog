@@ -1,9 +1,15 @@
 # Monilog
-Monitoring and Logging tool for executable domain-specific models
+Monitoring and logging tool for executable domain-specific models run on GraalVM.
+
+Requires GraalVM 20.1.0.
 
 ## Setup
 
 To enable the monilog tool on GraalVM, the archives available [here](https://github.com/gemoc/monilog/releases/tag/v1.0.0) (for the monilog tool) and optionally [here](https://github.com/gemoc/miniexpr/releases/tag/v1.0.0) (for an expression language to use in your moniloggers), extract them in a folder of your choice, and run their corresponding graalvm-setup.sh scripts. Each archive also contain an eclipse update site (packaged as a zip file) which you can use to install the monilogger and miniexpr editors into your Eclipse IDE, providing auto-completion and syntax highlighting for these languages.
+
+## Use
+
+Use the `--monilogger.files=` option when starting an execution from the command line, and supply the list of monilogger files (.mnlg) you want to include in the execution, as a comma-separated list.
 
 ## Syntax
 
@@ -15,7 +21,7 @@ A monilog definition can be given a name and is split in three blocks:
 
 ### Events
 
-When specifying an event, you can add the **before** or **after** keywords in front of the reference to the callable, to specify whether monilogging actions should be triggered before or after each call. If no keyword is present, actions are triggered both before and after each call.
+When specifying an execution event, you can add the `before` or `after` keywords in front of the reference to the callable, to specify whether monilogging actions should be triggered before or after each call. If no keyword is present, actions are triggered both before and after each call.
 
 ```
 	monilog "lowPressure" [WARNING] {
@@ -64,7 +70,7 @@ In the following monilogger, a condition specifies that actions should only be t
 	}
 ```
 
-In the following monilogger, the condition specifies that the `id` parameter of the request `req` should be smaller than the length of the `todolist` of the current session.
+In the following monilogger, the condition specifies that the `id` parameter of the request `req` should be greater or equal to the length of the `todolist` of the current session for the monilogger's action to be triggered.
 
 ```
 	monilog "invalidDel" [WARNING] {
@@ -73,7 +79,7 @@ In the following monilogger, the condition specifies that the `id` parameter of 
 		}
 		
 		conditions {
-			"req.params.id < |req.session.todolist|"
+			"req.params.id >= |req.session.todolist|"
 		}
 		
 		...
@@ -85,13 +91,33 @@ Both of these expressions are written using the MiniExpr language, which is avai
 
 #### Temporal Conditions
 
-Temporal conditions are expressed using the `stream` keyword and by specifying a temporal pattern from a list of predefined patterns (`always`, `exists`, `never`, `precedence` and `response`) and scopes (`globally`, which is the default one, `after`, `before`, `between-and` and `after-until`).
-These patterns reference events defined by the user, such as the `InvalidDel` event in the example below.
+Temporal conditions are expressed using the `stream` condition and by specifying a temporal pattern from a list of predefined patterns (`always`, `exists`, `never`, `precedence` and `response`) and scopes (`globally`, which is the default one, `after`, `before`, `between-and` and `after-until`).
+In more details, temporal patterns are defined as follows:
+
+```
+	TemporalPattern: <Pattern> <Scope>
+
+	Pattern:
+		'always' <event> |
+		'exists' (n | 'atleast' n | atmost 'n') <event> |
+		'never' <event> |
+		<event> 'precedes' <event> |
+		<event> 'respondsTo' <event>;
+
+	Scope:
+		'globally' |
+		'after' <event> |
+		'before' <event> |
+		'between' <event> 'and' <event> |
+		'after' <event> 'until' <event>;
+```
+
+`<event>` is a placeholder for events defined by the user, such as the `InvalidDel` event in the example below.
 Events can hold parameters, declared as a comma-separated list of key/value pairs between brackets.
 
 In the following monilogger, the temporal condition evaluates to `true` whenever the event stream (see Actions below) contains at least 3 `InvalidDel` events, each holding a parameter equal to the `uuid` of the current `session`.
 This pattern of 3 event occurrences is evaluated over the complete execution as no scope has been specified, which leads to the default `globally` scope being used.
-This effectively triggers the associated action whenever a user issues three invalid delete requests.
+This effectively triggers the monilogger's actions whenever a user issues three invalid delete requests.
 
 ```
 	monilog "suspiciousBehavior" [SEVERE] {
@@ -106,8 +132,6 @@ This effectively triggers the associated action whenever a user issues three inv
 		
 	}
 ```
-
-The available 
 
 ### Actions
 
@@ -178,7 +202,7 @@ The following monilog prints a message to the `log.txt` file and then pushes an 
 			before del
 		}
 		conditions {
-			"req.params.id < |req.session.todolist|"
+			"req.params.id >= |req.session.todolist|"
 		}
 		actions {
 			append file("log.txt", "Invalid delete call by {0} on id {1}", "req.session.uuid", "req.params.id"),
