@@ -5,6 +5,7 @@ package org.gemoc.monilog.moniLog4DSL.impl;
 
 import java.util.Collection;
 
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EList;
@@ -12,14 +13,15 @@ import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
-import org.gemoc.monilog.moniLog4DSL.LanguageExpression;
 import org.gemoc.monilog.moniLog4DSL.Layout;
 import org.gemoc.monilog.moniLog4DSL.MoniLog4DSLPackage;
+import org.gemoc.monilog.moniLog4DSL.Parameter;
 
 /**
  * <!-- begin-user-doc -->
@@ -29,7 +31,8 @@ import org.gemoc.monilog.moniLog4DSL.MoniLog4DSLPackage;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.gemoc.monilog.moniLog4DSL.impl.LayoutImpl#getValues <em>Values</em>}</li>
+ *   <li>{@link org.gemoc.monilog.moniLog4DSL.impl.LayoutImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.gemoc.monilog.moniLog4DSL.impl.LayoutImpl#getParameters <em>Parameters</em>}</li>
  * </ul>
  *
  * @generated
@@ -37,14 +40,34 @@ import org.gemoc.monilog.moniLog4DSL.MoniLog4DSLPackage;
 public class LayoutImpl extends MinimalEObjectImpl.Container implements Layout
 {
   /**
-   * The cached value of the '{@link #getValues() <em>Values</em>}' containment reference list.
+   * The default value of the '{@link #getName() <em>Name</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getValues()
+   * @see #getName()
    * @generated
    * @ordered
    */
-  protected EList<LanguageExpression> values;
+  protected static final String NAME_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getName()
+   * @generated
+   * @ordered
+   */
+  protected String name = NAME_EDEFAULT;
+
+  /**
+   * The cached value of the '{@link #getParameters() <em>Parameters</em>}' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getParameters()
+   * @generated
+   * @ordered
+   */
+  protected EList<Parameter> parameters;
 
   /**
    * <!-- begin-user-doc -->
@@ -73,13 +96,38 @@ public class LayoutImpl extends MinimalEObjectImpl.Container implements Layout
    * @generated
    */
   @Override
-  public EList<LanguageExpression> getValues()
+  public String getName()
   {
-    if (values == null)
+    return name;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setName(String newName)
+  {
+    String oldName = name;
+    name = newName;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, MoniLog4DSLPackage.LAYOUT__NAME, oldName, name));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EList<Parameter> getParameters()
+  {
+    if (parameters == null)
     {
-      values = new EObjectContainmentEList<LanguageExpression>(LanguageExpression.class, this, MoniLog4DSLPackage.LAYOUT__VALUES);
+      parameters = new EObjectContainmentEList<Parameter>(Parameter.class, this, MoniLog4DSLPackage.LAYOUT__PARAMETERS);
     }
-    return values;
+    return parameters;
   }
 
   /**
@@ -92,8 +140,8 @@ public class LayoutImpl extends MinimalEObjectImpl.Container implements Layout
   {
     switch (featureID)
     {
-      case MoniLog4DSLPackage.LAYOUT__VALUES:
-        return ((InternalEList<?>)getValues()).basicRemove(otherEnd, msgs);
+      case MoniLog4DSLPackage.LAYOUT__PARAMETERS:
+        return ((InternalEList<?>)getParameters()).basicRemove(otherEnd, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -108,8 +156,10 @@ public class LayoutImpl extends MinimalEObjectImpl.Container implements Layout
   {
     switch (featureID)
     {
-      case MoniLog4DSLPackage.LAYOUT__VALUES:
-        return getValues();
+      case MoniLog4DSLPackage.LAYOUT__NAME:
+        return getName();
+      case MoniLog4DSLPackage.LAYOUT__PARAMETERS:
+        return getParameters();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -125,9 +175,12 @@ public class LayoutImpl extends MinimalEObjectImpl.Container implements Layout
   {
     switch (featureID)
     {
-      case MoniLog4DSLPackage.LAYOUT__VALUES:
-        getValues().clear();
-        getValues().addAll((Collection<? extends LanguageExpression>)newValue);
+      case MoniLog4DSLPackage.LAYOUT__NAME:
+        setName((String)newValue);
+        return;
+      case MoniLog4DSLPackage.LAYOUT__PARAMETERS:
+        getParameters().clear();
+        getParameters().addAll((Collection<? extends Parameter>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -143,8 +196,11 @@ public class LayoutImpl extends MinimalEObjectImpl.Container implements Layout
   {
     switch (featureID)
     {
-      case MoniLog4DSLPackage.LAYOUT__VALUES:
-        getValues().clear();
+      case MoniLog4DSLPackage.LAYOUT__NAME:
+        setName(NAME_EDEFAULT);
+        return;
+      case MoniLog4DSLPackage.LAYOUT__PARAMETERS:
+        getParameters().clear();
         return;
     }
     super.eUnset(featureID);
@@ -160,10 +216,29 @@ public class LayoutImpl extends MinimalEObjectImpl.Container implements Layout
   {
     switch (featureID)
     {
-      case MoniLog4DSLPackage.LAYOUT__VALUES:
-        return values != null && !values.isEmpty();
+      case MoniLog4DSLPackage.LAYOUT__NAME:
+        return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+      case MoniLog4DSLPackage.LAYOUT__PARAMETERS:
+        return parameters != null && !parameters.isEmpty();
     }
     return super.eIsSet(featureID);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public String toString()
+  {
+    if (eIsProxy()) return super.toString();
+
+    StringBuilder result = new StringBuilder(super.toString());
+    result.append(" (name: ");
+    result.append(name);
+    result.append(')');
+    return result.toString();
   }
 
 } //LayoutImpl

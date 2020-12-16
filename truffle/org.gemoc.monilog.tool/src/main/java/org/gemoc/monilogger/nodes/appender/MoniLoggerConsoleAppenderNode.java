@@ -6,10 +6,13 @@ import java.util.logging.Level;
 
 import org.gemoc.monilogger.MoniLoggerInstrument;
 import org.gemoc.monilogger.nodes.MoniLoggerExecutableNode;
+import org.graalvm.polyglot.Value;
 
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.TruffleLogger;
 import com.oracle.truffle.api.frame.VirtualFrame;
+import com.oracle.truffle.api.interop.InteropLibrary;
+import com.oracle.truffle.api.interop.UnsupportedMessageException;
 import com.oracle.truffle.api.nodes.ExplodeLoop;
 
 public class MoniLoggerConsoleAppenderNode extends MoniLoggerExecutableNode {
@@ -37,8 +40,7 @@ public class MoniLoggerConsoleAppenderNode extends MoniLoggerExecutableNode {
 	public Object execute(VirtualFrame frame) {
 		Object[] values = new Object[valueNodes.length];
 		for (int i = 0; i < valueNodes.length; i++) {
-			Object value = valueNodes[i].execute(frame);
-			values[i] = value;
+			values[i] = valueNodes[i].execute(frame);
 		}
 		logger.log(level, formatString, values);
 		return null;

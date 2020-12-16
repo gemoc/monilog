@@ -3,7 +3,6 @@
  */
 package org.gemoc.monilog.moniLog4DSL;
 
-import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -21,7 +20,7 @@ import org.eclipse.emf.ecore.EObject;
  * @model
  * @generated
  */
-public interface LanguageExpression extends EObject
+public interface LanguageExpression extends Action, Expression
 {
   /**
    * Returns the value of the '<em><b>Expression</b></em>' attribute.

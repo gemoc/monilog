@@ -73,17 +73,70 @@ public class MoniLog4DSLSwitch<T> extends Switch<T>
   {
     switch (classifierID)
     {
-      case MoniLog4DSLPackage.MODEL:
+      case MoniLog4DSLPackage.DOCUMENT:
       {
-        Model model = (Model)theEObject;
-        T result = caseModel(model);
+        Document document = (Document)theEObject;
+        T result = caseDocument(document);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case MoniLog4DSLPackage.MONI_LOG_SPEC:
+      case MoniLog4DSLPackage.APPENDER:
       {
-        MoniLogSpec moniLogSpec = (MoniLogSpec)theEObject;
-        T result = caseMoniLogSpec(moniLogSpec);
+        Appender appender = (Appender)theEObject;
+        T result = caseAppender(appender);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case MoniLog4DSLPackage.LOCAL_APPENDER:
+      {
+        LocalAppender localAppender = (LocalAppender)theEObject;
+        T result = caseLocalAppender(localAppender);
+        if (result == null) result = caseAppender(localAppender);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case MoniLog4DSLPackage.EXTERNAL_APPENDER:
+      {
+        ExternalAppender externalAppender = (ExternalAppender)theEObject;
+        T result = caseExternalAppender(externalAppender);
+        if (result == null) result = caseAppender(externalAppender);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case MoniLog4DSLPackage.LAYOUT:
+      {
+        Layout layout = (Layout)theEObject;
+        T result = caseLayout(layout);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case MoniLog4DSLPackage.LOCAL_LAYOUT:
+      {
+        LocalLayout localLayout = (LocalLayout)theEObject;
+        T result = caseLocalLayout(localLayout);
+        if (result == null) result = caseLayout(localLayout);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case MoniLog4DSLPackage.EXTERNAL_LAYOUT:
+      {
+        ExternalLayout externalLayout = (ExternalLayout)theEObject;
+        T result = caseExternalLayout(externalLayout);
+        if (result == null) result = caseLayout(externalLayout);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case MoniLog4DSLPackage.MONI_LOGGER:
+      {
+        MoniLogger moniLogger = (MoniLogger)theEObject;
+        T result = caseMoniLogger(moniLogger);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case MoniLog4DSLPackage.PARAMETER:
+      {
+        Parameter parameter = (Parameter)theEObject;
+        T result = caseParameter(parameter);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -94,27 +147,27 @@ public class MoniLog4DSLSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case MoniLog4DSLPackage.BEFORE_EVENT:
+      case MoniLog4DSLPackage.AST_EVENT:
       {
-        BeforeEvent beforeEvent = (BeforeEvent)theEObject;
-        T result = caseBeforeEvent(beforeEvent);
-        if (result == null) result = caseEvent(beforeEvent);
+        ASTEvent astEvent = (ASTEvent)theEObject;
+        T result = caseASTEvent(astEvent);
+        if (result == null) result = caseEvent(astEvent);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case MoniLog4DSLPackage.AFTER_EVENT:
+      case MoniLog4DSLPackage.COMPLEX_EVENT:
       {
-        AfterEvent afterEvent = (AfterEvent)theEObject;
-        T result = caseAfterEvent(afterEvent);
-        if (result == null) result = caseEvent(afterEvent);
+        ComplexEvent complexEvent = (ComplexEvent)theEObject;
+        T result = caseComplexEvent(complexEvent);
+        if (result == null) result = caseEvent(complexEvent);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case MoniLog4DSLPackage.BEFORE_AFTER_EVENT:
+      case MoniLog4DSLPackage.USER_EVENT:
       {
-        BeforeAfterEvent beforeAfterEvent = (BeforeAfterEvent)theEObject;
-        T result = caseBeforeAfterEvent(beforeAfterEvent);
-        if (result == null) result = caseEvent(beforeAfterEvent);
+        UserEvent userEvent = (UserEvent)theEObject;
+        T result = caseUserEvent(userEvent);
+        if (result == null) result = caseEvent(userEvent);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -184,65 +237,56 @@ public class MoniLog4DSLSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case MoniLog4DSLPackage.APPEND:
+      case MoniLog4DSLPackage.APPENDER_CALL:
       {
-        Append append = (Append)theEObject;
-        T result = caseAppend(append);
-        if (result == null) result = caseAction(append);
+        AppenderCall appenderCall = (AppenderCall)theEObject;
+        T result = caseAppenderCall(appenderCall);
+        if (result == null) result = caseAction(appenderCall);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case MoniLog4DSLPackage.APPENDER:
+      case MoniLog4DSLPackage.APPENDER_REF:
       {
-        Appender appender = (Appender)theEObject;
-        T result = caseAppender(appender);
+        AppenderRef appenderRef = (AppenderRef)theEObject;
+        T result = caseAppenderRef(appenderRef);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case MoniLog4DSLPackage.STREAM_APPENDER:
+      case MoniLog4DSLPackage.APPENDER_CALL_ARGUMENT:
       {
-        StreamAppender streamAppender = (StreamAppender)theEObject;
-        T result = caseStreamAppender(streamAppender);
-        if (result == null) result = caseAppender(streamAppender);
+        AppenderCallArgument appenderCallArgument = (AppenderCallArgument)theEObject;
+        T result = caseAppenderCallArgument(appenderCallArgument);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case MoniLog4DSLPackage.FILE_APPENDER:
+      case MoniLog4DSLPackage.LAYOUT_CALL:
       {
-        FileAppender fileAppender = (FileAppender)theEObject;
-        T result = caseFileAppender(fileAppender);
-        if (result == null) result = caseAppender(fileAppender);
+        LayoutCall layoutCall = (LayoutCall)theEObject;
+        T result = caseLayoutCall(layoutCall);
+        if (result == null) result = caseAppenderCallArgument(layoutCall);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case MoniLog4DSLPackage.CONSOLE_APPENDER:
+      case MoniLog4DSLPackage.LAYOUT_REF:
       {
-        ConsoleAppender consoleAppender = (ConsoleAppender)theEObject;
-        T result = caseConsoleAppender(consoleAppender);
-        if (result == null) result = caseAppender(consoleAppender);
+        LayoutRef layoutRef = (LayoutRef)theEObject;
+        T result = caseLayoutRef(layoutRef);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case MoniLog4DSLPackage.LAYOUT:
+      case MoniLog4DSLPackage.EMIT_EVENT:
       {
-        Layout layout = (Layout)theEObject;
-        T result = caseLayout(layout);
+        EmitEvent emitEvent = (EmitEvent)theEObject;
+        T result = caseEmitEvent(emitEvent);
+        if (result == null) result = caseAction(emitEvent);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case MoniLog4DSLPackage.STRING_LAYOUT:
+      case MoniLog4DSLPackage.MONI_LOGGER_CALL:
       {
-        StringLayout stringLayout = (StringLayout)theEObject;
-        T result = caseStringLayout(stringLayout);
-        if (result == null) result = caseLayout(stringLayout);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case MoniLog4DSLPackage.EXTERNAL_LAYOUT:
-      {
-        ExternalLayout externalLayout = (ExternalLayout)theEObject;
-        T result = caseExternalLayout(externalLayout);
-        if (result == null) result = caseLayout(externalLayout);
+        MoniLoggerCall moniLoggerCall = (MoniLoggerCall)theEObject;
+        T result = caseMoniLoggerCall(moniLoggerCall);
+        if (result == null) result = caseAction(moniLoggerCall);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -260,18 +304,30 @@ public class MoniLog4DSLSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case MoniLog4DSLPackage.EXPRESSION:
+      {
+        Expression expression = (Expression)theEObject;
+        T result = caseExpression(expression);
+        if (result == null) result = caseAppenderCallArgument(expression);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case MoniLog4DSLPackage.PARAMETER_REFERENCE:
+      {
+        ParameterReference parameterReference = (ParameterReference)theEObject;
+        T result = caseParameterReference(parameterReference);
+        if (result == null) result = caseExpression(parameterReference);
+        if (result == null) result = caseAppenderCallArgument(parameterReference);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case MoniLog4DSLPackage.LANGUAGE_EXPRESSION:
       {
         LanguageExpression languageExpression = (LanguageExpression)theEObject;
         T result = caseLanguageExpression(languageExpression);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case MoniLog4DSLPackage.TEMPORAL_PROPERTY_CONDITION:
-      {
-        TemporalPropertyCondition temporalPropertyCondition = (TemporalPropertyCondition)theEObject;
-        T result = caseTemporalPropertyCondition(temporalPropertyCondition);
-        if (result == null) result = caseCondition(temporalPropertyCondition);
+        if (result == null) result = caseAction(languageExpression);
+        if (result == null) result = caseExpression(languageExpression);
+        if (result == null) result = caseAppenderCallArgument(languageExpression);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -283,19 +339,19 @@ public class MoniLog4DSLSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case MoniLog4DSLPackage.UNIVERSALITY:
-      {
-        Universality universality = (Universality)theEObject;
-        T result = caseUniversality(universality);
-        if (result == null) result = casePattern(universality);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
       case MoniLog4DSLPackage.EXISTENCE:
       {
         Existence existence = (Existence)theEObject;
         T result = caseExistence(existence);
         if (result == null) result = casePattern(existence);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case MoniLog4DSLPackage.UNIVERSALITY:
+      {
+        Universality universality = (Universality)theEObject;
+        T result = caseUniversality(universality);
+        if (result == null) result = casePattern(universality);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -363,11 +419,21 @@ public class MoniLog4DSLSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case MoniLog4DSLPackage.NOTIFY:
+      case MoniLog4DSLPackage.START_MONI_LOGGER:
       {
-        Notify notify = (Notify)theEObject;
-        T result = caseNotify(notify);
-        if (result == null) result = caseAction(notify);
+        StartMoniLogger startMoniLogger = (StartMoniLogger)theEObject;
+        T result = caseStartMoniLogger(startMoniLogger);
+        if (result == null) result = caseMoniLoggerCall(startMoniLogger);
+        if (result == null) result = caseAction(startMoniLogger);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case MoniLog4DSLPackage.STOP_MONI_LOGGER:
+      {
+        StopMoniLogger stopMoniLogger = (StopMoniLogger)theEObject;
+        T result = caseStopMoniLogger(stopMoniLogger);
+        if (result == null) result = caseMoniLoggerCall(stopMoniLogger);
+        if (result == null) result = caseAction(stopMoniLogger);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -392,6 +458,9 @@ public class MoniLog4DSLSwitch<T> extends Switch<T>
         ExplicitLanguageExpression explicitLanguageExpression = (ExplicitLanguageExpression)theEObject;
         T result = caseExplicitLanguageExpression(explicitLanguageExpression);
         if (result == null) result = caseLanguageExpression(explicitLanguageExpression);
+        if (result == null) result = caseAction(explicitLanguageExpression);
+        if (result == null) result = caseExpression(explicitLanguageExpression);
+        if (result == null) result = caseAppenderCallArgument(explicitLanguageExpression);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -400,6 +469,9 @@ public class MoniLog4DSLSwitch<T> extends Switch<T>
         DefaultLanguageExpression defaultLanguageExpression = (DefaultLanguageExpression)theEObject;
         T result = caseDefaultLanguageExpression(defaultLanguageExpression);
         if (result == null) result = caseLanguageExpression(defaultLanguageExpression);
+        if (result == null) result = caseAction(defaultLanguageExpression);
+        if (result == null) result = caseExpression(defaultLanguageExpression);
+        if (result == null) result = caseAppenderCallArgument(defaultLanguageExpression);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -408,33 +480,145 @@ public class MoniLog4DSLSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Model</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Document</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Model</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Document</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseModel(Model object)
+  public T caseDocument(Document object)
   {
     return null;
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Moni Log Spec</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Appender</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Moni Log Spec</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Appender</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseMoniLogSpec(MoniLogSpec object)
+  public T caseAppender(Appender object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Local Appender</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Local Appender</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseLocalAppender(LocalAppender object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>External Appender</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>External Appender</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseExternalAppender(ExternalAppender object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Layout</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Layout</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseLayout(Layout object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Local Layout</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Local Layout</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseLocalLayout(LocalLayout object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>External Layout</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>External Layout</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseExternalLayout(ExternalLayout object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Moni Logger</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Moni Logger</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseMoniLogger(MoniLogger object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Parameter</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Parameter</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseParameter(Parameter object)
   {
     return null;
   }
@@ -456,49 +640,49 @@ public class MoniLog4DSLSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Before Event</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>AST Event</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Before Event</em>'.
+   * @return the result of interpreting the object as an instance of '<em>AST Event</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseBeforeEvent(BeforeEvent object)
+  public T caseASTEvent(ASTEvent object)
   {
     return null;
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>After Event</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Complex Event</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>After Event</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Complex Event</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseAfterEvent(AfterEvent object)
+  public T caseComplexEvent(ComplexEvent object)
   {
     return null;
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Before After Event</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>User Event</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Before After Event</em>'.
+   * @return the result of interpreting the object as an instance of '<em>User Event</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseBeforeAfterEvent(BeforeAfterEvent object)
+  public T caseUserEvent(UserEvent object)
   {
     return null;
   }
@@ -648,129 +832,113 @@ public class MoniLog4DSLSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Append</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Appender Call</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Append</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Appender Call</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseAppend(Append object)
+  public T caseAppenderCall(AppenderCall object)
   {
     return null;
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Appender</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Appender Ref</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Appender</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Appender Ref</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseAppender(Appender object)
+  public T caseAppenderRef(AppenderRef object)
   {
     return null;
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Stream Appender</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Appender Call Argument</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Stream Appender</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Appender Call Argument</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseStreamAppender(StreamAppender object)
+  public T caseAppenderCallArgument(AppenderCallArgument object)
   {
     return null;
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>File Appender</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Layout Call</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>File Appender</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Layout Call</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseFileAppender(FileAppender object)
+  public T caseLayoutCall(LayoutCall object)
   {
     return null;
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Console Appender</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Layout Ref</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Console Appender</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Layout Ref</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseConsoleAppender(ConsoleAppender object)
+  public T caseLayoutRef(LayoutRef object)
   {
     return null;
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Layout</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Emit Event</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Layout</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Emit Event</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseLayout(Layout object)
+  public T caseEmitEvent(EmitEvent object)
   {
     return null;
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>String Layout</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Moni Logger Call</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>String Layout</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Moni Logger Call</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseStringLayout(StringLayout object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>External Layout</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>External Layout</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseExternalLayout(ExternalLayout object)
+  public T caseMoniLoggerCall(MoniLoggerCall object)
   {
     return null;
   }
@@ -808,6 +976,38 @@ public class MoniLog4DSLSwitch<T> extends Switch<T>
   }
 
   /**
+   * Returns the result of interpreting the object as an instance of '<em>Expression</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Expression</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseExpression(Expression object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Parameter Reference</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Parameter Reference</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseParameterReference(ParameterReference object)
+  {
+    return null;
+  }
+
+  /**
    * Returns the result of interpreting the object as an instance of '<em>Language Expression</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -819,22 +1019,6 @@ public class MoniLog4DSLSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseLanguageExpression(LanguageExpression object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Temporal Property Condition</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Temporal Property Condition</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseTemporalPropertyCondition(TemporalPropertyCondition object)
   {
     return null;
   }
@@ -856,22 +1040,6 @@ public class MoniLog4DSLSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Universality</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Universality</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseUniversality(Universality object)
-  {
-    return null;
-  }
-
-  /**
    * Returns the result of interpreting the object as an instance of '<em>Existence</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -883,6 +1051,22 @@ public class MoniLog4DSLSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseExistence(Existence object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Universality</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Universality</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseUniversality(Universality object)
   {
     return null;
   }
@@ -1016,17 +1200,33 @@ public class MoniLog4DSLSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Notify</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Start Moni Logger</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Notify</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Start Moni Logger</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T caseNotify(Notify object)
+  public T caseStartMoniLogger(StartMoniLogger object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Stop Moni Logger</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Stop Moni Logger</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseStopMoniLogger(StopMoniLogger object)
   {
     return null;
   }

@@ -1,10 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.0"?>
 <plugin>
+   <extension-point id="appender" name="Monilog Appender" schema="schema/appender.exsd"/>
+   <extension-point id="layout" name="Monilog Layout" schema="schema/layout.exsd"/>
 	<extension point="org.eclipse.emf.ecore.generated_package">
 		<package
 			uri = "http://www.eclipse.org/gemoc/monilog/MoniLog4DSL"
 			class = "org.gemoc.monilog.moniLog4DSL.MoniLog4DSLPackage"
 			genModel = "model/generated/MoniLog4DSL.genmodel" />
 	</extension>
+ <extension
+       point="org.gemoc.monilog.layout">
+       <layout
+             class="org.gemoc.monilog.layout.StringLayout"
+             name="StringLayout"/>
+ </extension>
+ <extension
+       point="org.gemoc.monilog.appender">
+       <appender
+             class="org.gemoc.monilog.appender.ConsoleAppender"
+             name="ConsoleAppender"/>
+ </extension>
 </plugin>

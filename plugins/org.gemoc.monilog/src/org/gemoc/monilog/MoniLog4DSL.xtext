@@ -2,43 +2,76 @@ grammar org.gemoc.monilog.MoniLog4DSL with org.eclipse.xtext.common.Terminals
 
 generate moniLog4DSL "http://www.eclipse.org/gemoc/monilog/MoniLog4DSL"
 
-Model:
+Document:
 	('default-language' defaultLanguageID=(ID | STRING))?
-	moniLogSpecs+=MoniLogSpec+;
-	
-MoniLogSpec:
-	'monilog' name=STRING? ('[' level=LogLevel ']')? '{'
-		('events' '{' (events+=Event) (',' events+=Event)* '}')?
-		('conditions' '{' (conditions+=Condition) (',' conditions+=Condition)* '}')?
-		'actions' '{' (actions+=Action) (',' actions+=Action)* '}'
+	(events+=Event* & appenders+=Appender* & layouts+=Layout* & moniLogSpecs+=MoniLogger*);
+
+@Exported
+Appender:
+	LocalAppender | ExternalAppender;
+
+LocalAppender:
+	annotations+=AppenderAnnotation*
+	'appender' name=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')')? '{'
+		calls+=AppenderCall (';' calls+=AppenderCall)*
 	'}';
 
-enum LogLevel:
-	config='CONFIG' | fine='FINE' | finer='FINER' | finest='FINEST' |
-	info='INFO' | severe='SEVERE' | warning='WARNING';
+ExternalAppender:
+	'appender' name=FQN ('(' parameters+=Parameter (',' parameters+=Parameter)* ')')?;
+
+Layout:
+	LocalLayout | ExternalLayout;
+
+@Exported
+LocalLayout:
+	'layout' name=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')')? '{'
+		call=LayoutCall
+	'}';
+
+@Exported
+ExternalLayout:
+	'layout' name=FQN ('(' parameters+=Parameter (',' parameters+=Parameter)* ')')?;
+
+@Exported
+MoniLogger:
+	annotations+=MoniLoggerAnnotation*
+	'monilogger' name=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')')? ('[' level=LogLevel ']')? '{'
+		'event' event=[Event|ID]
+		('conditions' '{' (conditions+=Condition) (';' conditions+=Condition)* '}')?
+		'actions' '{' (actions+=Action) (';' actions+=Action)* '}'
+	'}';
+
+Parameter:
+	name=ID;
 
 Event:
-	BeforeEvent | AfterEvent | BeforeAfterEvent;
+	ASTEvent | ComplexEvent | UserEvent;
 
-BeforeEvent:
-	'before' ruleID=(ID | STRING) (('frequency^' frequency=INT)? & ('limit' limit=INT)?);
+@Exported
+ASTEvent:
+	'ast' name=ID '{'
+		(before?='before'? & after?='after'?) ruleID=ID
+	'}';
 
-AfterEvent:
-	'after' ruleID=(ID | STRING) (('frequency' frequency=INT)? & ('limit' limit=INT)?);
+@Exported
+ComplexEvent:
+	'complex' name=ID ('[' kind=TemporalPatternKind ']')? '{'
+		pattern=TemporalPattern
+	'}';
 
-BeforeAfterEvent:
-	ruleID=(ID | STRING) (('frequency' frequency=INT)? & ('limit' limit=INT)?);
+@Exported
+UserEvent:
+	'custom' name=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')')?;
 
 Condition:
-	{TemporalPropertyCondition} 'stream' '(' pattern=TemporalPattern (',' kind=TemporalPropertyConditionKind)? ')' |
 	{LanguageExpressionCondition} expression=LanguageExpression;
 
 TemporalPattern:
 	pattern=Pattern scope=Scope;
 
 Pattern:
+	{Existence} 'exists'? bound=BoundType? event=StreamEvent |
 	{Universality} 'always' event=StreamEvent |
-	{Existence} 'exists' bound=BoundType event=StreamEvent |
 	{Absence} 'never' event=StreamEvent |
 	{Precedence} predecessor=StreamEvent 'precedes' successor=StreamEvent |
 	{Response} event=StreamEvent 'respondsTo' trigger=StreamEvent;
@@ -61,45 +94,59 @@ Scope:
 	{Between} 'between' lowerBound=StreamEvent 'and' upperBound=StreamEvent |
 	{AfterUntil} 'after' lowerBound=StreamEvent 'until' upperBound=StreamEvent;
 
-enum TemporalPropertyConditionKind:
-	s='S'|v='V'|nS='nS'|nV='nV';
-
 Action:
-	{Notify} 'notify' | Append;
+	LanguageExpression | AppenderCall | EmitEvent | MoniLoggerCall;
 
-Append:
-	'append' appender=Appender;
+AppenderCall:
+	appender=AppenderRef '.' 'call' ( '(' args+=AppenderCallArgument (',' args+=AppenderCallArgument)* ')' )?;
 
-Appender:
-	StreamAppender | FileAppender | ConsoleAppender;
+AppenderRef:
+	appender=[Appender|FQN];
 
-StreamAppender:
-	'stream' '(' event=(ID | STRING) ('[' values+=LanguageExpression (',' values+=LanguageExpression)* ']' )? ')';
+AppenderCallArgument:
+	Expression | LayoutCall;
 
-FileAppender:
-	'file' '(' filename=STRING ',' layout=Layout ')';
+LayoutCall:
+	layout=LayoutRef '.' 'call' ( '(' args+=Expression (',' args+=Expression)* ')' )?;
 
-ConsoleAppender:
-	'console' '(' layout=Layout ')';
+LayoutRef:
+	layout=[Layout|FQN];
 
-Layout:
-	StringLayout | ExternalLayout;
+EmitEvent:
+	event=[Event|ID] '.' 'emit' ('(' args+=Expression (',' args+=Expression)* ')' )?;
 
-StringLayout:
-	formatString=STRING (',' values+=LanguageExpression)*;
-
-ExternalLayout:
-	path=FQN (',' values+=LanguageExpression)*;
+MoniLoggerCall:
+	{StartMoniLogger} monilogger=[MoniLogger|ID] '.' 'start'  ( '(' args+=Expression (',' args+=Expression)* ')' )? |
+	{StopMoniLogger} monilogger=[MoniLogger|ID] '.' 'stop';
 
 StreamEvent:
-	eventId=(ID | STRING) ('[' values+=EmptyOrPropertyValue (',' values+=EmptyOrPropertyValue)* ']' )?;
+	event=[Event|ID] ('[' values+=EmptyOrPropertyValue (',' values+=EmptyOrPropertyValue)* ']' )?;
 
 EmptyOrPropertyValue:
-	({Empty} | {PropertyValue} id=(ID) ('=' value=LanguageExpression)?);
+	({Empty} | {PropertyValue} id=(ID) ('=' value=Expression)?);
+
+Expression:
+	ParameterReference | LanguageExpression;
+
+ParameterReference:
+	parameter=[Parameter|ID];
 
 LanguageExpression:
-	{ExplicitLanguageExpression} languageId=(ID | STRING) '(' expression=STRING ')' |
+	{ExplicitLanguageExpression} languageId=ID '(' expression=STRING ')' |
 	{DefaultLanguageExpression} expression=STRING;
+
+enum MoniLoggerAnnotation:
+	inactive='@Inactive';
+
+enum AppenderAnnotation:
+	async='@Async';
+
+enum LogLevel:
+	info='INFO' | config='CONFIG' | fine='FINE' | finer='FINER' |
+	finest='FINEST' | severe='SEVERE' | warning='WARNING';
+
+enum TemporalPatternKind:
+	s='S'|v='V'|nS='nS'|nV='nV';
 
 FQN:
 	ID ('.' ID)*;

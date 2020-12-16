@@ -2,38 +2,72 @@
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="moniLog4DSL" nsURI="http://www.eclipse.org/gemoc/monilog/MoniLog4DSL"
     nsPrefix="moniLog4DSL">
-  <eClassifiers xsi:type="ecore:EClass" name="Model">
+  <eClassifiers xsi:type="ecore:EClass" name="Document">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="defaultLanguageID" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="moniLogSpecs" upperBound="-1"
-        eType="#//MoniLogSpec" containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="MoniLogSpec">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="level" eType="#//LogLevel"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="events" upperBound="-1"
         eType="#//Event" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="appenders" upperBound="-1"
+        eType="#//Appender" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="layouts" upperBound="-1"
+        eType="#//Layout" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="moniLogSpecs" upperBound="-1"
+        eType="#//MoniLogger" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Appender">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parameters" upperBound="-1"
+        eType="#//Parameter" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LocalAppender" eSuperTypes="#//Appender">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="annotations" unique="false"
+        upperBound="-1" eType="#//AppenderAnnotation"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="calls" upperBound="-1"
+        eType="#//AppenderCall" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ExternalAppender" eSuperTypes="#//Appender"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Layout">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parameters" upperBound="-1"
+        eType="#//Parameter" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LocalLayout" eSuperTypes="#//Layout">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="call" eType="#//LayoutCall"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ExternalLayout" eSuperTypes="#//Layout"/>
+  <eClassifiers xsi:type="ecore:EClass" name="MoniLogger">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="annotations" unique="false"
+        upperBound="-1" eType="#//MoniLoggerAnnotation"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parameters" upperBound="-1"
+        eType="#//Parameter" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="level" eType="#//LogLevel"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="event" eType="#//Event"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="conditions" upperBound="-1"
         eType="#//Condition" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="actions" upperBound="-1"
         eType="#//Action" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EEnum" name="LogLevel">
-    <eLiterals name="config" literal="CONFIG"/>
-    <eLiterals name="fine" value="1" literal="FINE"/>
-    <eLiterals name="finer" value="2" literal="FINER"/>
-    <eLiterals name="finest" value="3" literal="FINEST"/>
-    <eLiterals name="info" value="4" literal="INFO"/>
-    <eLiterals name="severe" value="5" literal="SEVERE"/>
-    <eLiterals name="warning" value="6" literal="WARNING"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Parameter">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Event">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="ruleID" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="frequency" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="limit" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="BeforeEvent" eSuperTypes="#//Event"/>
-  <eClassifiers xsi:type="ecore:EClass" name="AfterEvent" eSuperTypes="#//Event"/>
-  <eClassifiers xsi:type="ecore:EClass" name="BeforeAfterEvent" eSuperTypes="#//Event"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ASTEvent" eSuperTypes="#//Event">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="before" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="after" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="ruleID" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ComplexEvent" eSuperTypes="#//Event">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="kind" eType="#//TemporalPatternKind"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="pattern" eType="#//TemporalPattern"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="UserEvent" eSuperTypes="#//Event">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parameters" upperBound="-1"
+        eType="#//Parameter" containment="true"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Condition"/>
   <eClassifiers xsi:type="ecore:EClass" name="TemporalPattern">
     <eStructuralFeatures xsi:type="ecore:EReference" name="pattern" eType="#//Pattern"
@@ -49,67 +83,79 @@
   <eClassifiers xsi:type="ecore:EClass" name="LowerBound" eSuperTypes="#//BoundType"/>
   <eClassifiers xsi:type="ecore:EClass" name="UpperBound" eSuperTypes="#//BoundType"/>
   <eClassifiers xsi:type="ecore:EClass" name="Scope"/>
-  <eClassifiers xsi:type="ecore:EEnum" name="TemporalPropertyConditionKind">
+  <eClassifiers xsi:type="ecore:EClass" name="Action"/>
+  <eClassifiers xsi:type="ecore:EClass" name="AppenderCall" eSuperTypes="#//Action">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="appender" eType="#//AppenderRef"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="args" upperBound="-1" eType="#//AppenderCallArgument"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AppenderRef">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="appender" eType="#//Appender"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AppenderCallArgument"/>
+  <eClassifiers xsi:type="ecore:EClass" name="LayoutCall" eSuperTypes="#//AppenderCallArgument">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="layout" eType="#//LayoutRef"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="args" upperBound="-1" eType="#//Expression"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LayoutRef">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="layout" eType="#//Layout"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EmitEvent" eSuperTypes="#//Action">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="event" eType="#//Event"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="args" upperBound="-1" eType="#//Expression"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MoniLoggerCall" eSuperTypes="#//Action">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="monilogger" eType="#//MoniLogger"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="StreamEvent">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="event" eType="#//Event"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="values" upperBound="-1"
+        eType="#//EmptyOrPropertyValue" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EmptyOrPropertyValue"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Expression" eSuperTypes="#//AppenderCallArgument"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ParameterReference" eSuperTypes="#//Expression">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parameter" eType="#//Parameter"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="LanguageExpression" eSuperTypes="#//Action #//Expression">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="expression" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="MoniLoggerAnnotation">
+    <eLiterals name="inactive" literal="@Inactive"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="AppenderAnnotation">
+    <eLiterals name="async" literal="@Async"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="LogLevel">
+    <eLiterals name="info" literal="INFO"/>
+    <eLiterals name="config" value="1" literal="CONFIG"/>
+    <eLiterals name="fine" value="2" literal="FINE"/>
+    <eLiterals name="finer" value="3" literal="FINER"/>
+    <eLiterals name="finest" value="4" literal="FINEST"/>
+    <eLiterals name="severe" value="5" literal="SEVERE"/>
+    <eLiterals name="warning" value="6" literal="WARNING"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EEnum" name="TemporalPatternKind">
     <eLiterals name="s" literal="S"/>
     <eLiterals name="v" value="1" literal="V"/>
     <eLiterals name="nS" value="2" literal="nS"/>
     <eLiterals name="nV" value="3" literal="nV"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Action"/>
-  <eClassifiers xsi:type="ecore:EClass" name="Append" eSuperTypes="#//Action">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="appender" eType="#//Appender"
-        containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Appender"/>
-  <eClassifiers xsi:type="ecore:EClass" name="StreamAppender" eSuperTypes="#//Appender">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="event" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="values" upperBound="-1"
-        eType="#//LanguageExpression" containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="FileAppender" eSuperTypes="#//Appender">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="filename" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="layout" eType="#//Layout"
-        containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ConsoleAppender" eSuperTypes="#//Appender">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="layout" eType="#//Layout"
-        containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Layout">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="values" upperBound="-1"
-        eType="#//LanguageExpression" containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="StringLayout" eSuperTypes="#//Layout">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="formatString" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ExternalLayout" eSuperTypes="#//Layout">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="path" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="StreamEvent">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="eventId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="values" upperBound="-1"
-        eType="#//EmptyOrPropertyValue" containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="EmptyOrPropertyValue"/>
-  <eClassifiers xsi:type="ecore:EClass" name="LanguageExpression">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="expression" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="TemporalPropertyCondition" eSuperTypes="#//Condition">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="pattern" eType="#//TemporalPattern"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="kind" eType="#//TemporalPropertyConditionKind"/>
-  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="LanguageExpressionCondition" eSuperTypes="#//Condition">
     <eStructuralFeatures xsi:type="ecore:EReference" name="expression" eType="#//LanguageExpression"
-        containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Universality" eSuperTypes="#//Pattern">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="event" eType="#//StreamEvent"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Existence" eSuperTypes="#//Pattern">
     <eStructuralFeatures xsi:type="ecore:EReference" name="bound" eType="#//BoundType"
         containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="event" eType="#//StreamEvent"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Universality" eSuperTypes="#//Pattern">
     <eStructuralFeatures xsi:type="ecore:EReference" name="event" eType="#//StreamEvent"
         containment="true"/>
   </eClassifiers>
@@ -150,11 +196,15 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="upperBound" eType="#//StreamEvent"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Notify" eSuperTypes="#//Action"/>
+  <eClassifiers xsi:type="ecore:EClass" name="StartMoniLogger" eSuperTypes="#//MoniLoggerCall">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="args" upperBound="-1" eType="#//Expression"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="StopMoniLogger" eSuperTypes="#//MoniLoggerCall"/>
   <eClassifiers xsi:type="ecore:EClass" name="Empty" eSuperTypes="#//EmptyOrPropertyValue"/>
   <eClassifiers xsi:type="ecore:EClass" name="PropertyValue" eSuperTypes="#//EmptyOrPropertyValue">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="id" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//LanguageExpression"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//Expression"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ExplicitLanguageExpression" eSuperTypes="#//LanguageExpression">

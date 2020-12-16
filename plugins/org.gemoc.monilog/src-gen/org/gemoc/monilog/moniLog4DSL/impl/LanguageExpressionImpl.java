@@ -8,7 +8,6 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.gemoc.monilog.moniLog4DSL.LanguageExpression;
 import org.gemoc.monilog.moniLog4DSL.MoniLog4DSLPackage;
@@ -26,7 +25,7 @@ import org.gemoc.monilog.moniLog4DSL.MoniLog4DSLPackage;
  *
  * @generated
  */
-public class LanguageExpressionImpl extends MinimalEObjectImpl.Container implements LanguageExpression
+public class LanguageExpressionImpl extends ActionImpl implements LanguageExpression
 {
   /**
    * The default value of the '{@link #getExpression() <em>Expression</em>}' attribute.

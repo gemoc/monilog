@@ -24,6 +24,7 @@ import org.eclipse.xtext.parser.antlr.LexerBindings;
 import org.eclipse.xtext.parser.antlr.LexerProvider;
 import org.eclipse.xtext.parser.antlr.UnorderedGroupHelper;
 import org.eclipse.xtext.resource.IContainer;
+import org.eclipse.xtext.resource.IDefaultResourceDescriptionStrategy;
 import org.eclipse.xtext.resource.IResourceDescriptions;
 import org.eclipse.xtext.resource.containers.IAllContainersState;
 import org.eclipse.xtext.resource.containers.ResourceSetBasedAllContainersStateProvider;
@@ -47,6 +48,7 @@ import org.gemoc.monilog.generator.MoniLog4DSLGenerator;
 import org.gemoc.monilog.parser.antlr.MoniLog4DSLAntlrTokenFileProvider;
 import org.gemoc.monilog.parser.antlr.MoniLog4DSLParser;
 import org.gemoc.monilog.parser.antlr.internal.InternalMoniLog4DSLLexer;
+import org.gemoc.monilog.resource.MoniLog4DSLResourceDescriptionStrategy;
 import org.gemoc.monilog.scoping.MoniLog4DSLScopeProvider;
 import org.gemoc.monilog.serializer.MoniLog4DSLSemanticSequencer;
 import org.gemoc.monilog.serializer.MoniLog4DSLSyntacticSequencer;
@@ -173,6 +175,11 @@ public abstract class AbstractMoniLog4DSLRuntimeModule extends DefaultRuntimeMod
 	// contributed by org.eclipse.xtext.xtext.generator.scoping.ImportNamespacesScopingFragment2
 	public void configureIgnoreCaseLinking(Binder binder) {
 		binder.bindConstant().annotatedWith(IgnoreCaseLinking.class).to(false);
+	}
+	
+	// contributed by org.eclipse.xtext.xtext.generator.index.ResourceDescriptionStrategyFragment
+	public Class<? extends IDefaultResourceDescriptionStrategy> bindIDefaultResourceDescriptionStrategy() {
+		return MoniLog4DSLResourceDescriptionStrategy.class;
 	}
 	
 	// contributed by org.eclipse.xtext.xtext.generator.exporting.QualifiedNamesFragment2

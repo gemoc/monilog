@@ -35,7 +35,7 @@ public abstract class AbstractTemporalProperty {
 
 	protected AbstractTemporalProperty(String name, int windowLength) {
 		this.displayName = name;
-		this.safeName = Arrays.stream(name.split(" ")).reduce((s1, s2) -> Strings.toFirstUpper(s1) + Strings.toFirstUpper(s2)).get();
+		this.safeName = Arrays.stream(name.split("\\W+")).reduce((s1, s2) -> Strings.toFirstUpper(s1) + Strings.toFirstUpper(s2)).get();
 		this.windowLength = windowLength;
 		this.propertyState = new PropertyState(name, TruthValue.UNKNOWN);
 	}

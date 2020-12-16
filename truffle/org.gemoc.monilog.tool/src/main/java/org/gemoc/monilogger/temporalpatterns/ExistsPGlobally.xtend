@@ -42,9 +42,9 @@ class ExistsPGlobally extends AbstractExistenceProperty {
 						P1 as P1.«p»? is not null,
 						nP as nP.«p»? is null,
 						«ELSE»
-«««						«IF exists.bound.eClass.classifierID != MoniLog4DSLPackage.LOWER_BOUND && exists.bound.n > 1»
+						«IF exists.bound.eClass.classifierID != MoniLog4DSLPackage.LOWER_BOUND && exists.bound.n > 1»
 						P as P.«p»? is not null and «FOR v : distinctValueExpressions SEPARATOR " and "»P.«v»? = context.distinct«safeName.toFirstUpper».«v»«ENDFOR»,
-«««						«ENDIF»
+						«ENDIF»
 						P1 as P1.«p»? is not null and «FOR v : distinctValueExpressions SEPARATOR " and "»P1.«v»? = context.distinct«safeName.toFirstUpper».«v»«ENDFOR»,
 						nP as nP.«p»? is null or «FOR v : distinctValueExpressions SEPARATOR " or "»nP.«v»? <> context.distinct«safeName.toFirstUpper».«v»«ENDFOR»,
 						«ENDIF»

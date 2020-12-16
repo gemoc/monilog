@@ -44,7 +44,7 @@ import org.gemoc.monilog.services.MoniLog4DSLGrammarAccess;
 
     @Override
     protected String getFirstRuleName() {
-    	return "Model";
+    	return "Document";
    	}
 
    	@Override
@@ -61,15 +61,15 @@ import org.gemoc.monilog.services.MoniLog4DSLGrammarAccess;
     }
 }
 
-// Entry rule entryRuleModel
-entryRuleModel returns [EObject current=null]:
-	{ newCompositeNode(grammarAccess.getModelRule()); }
-	iv_ruleModel=ruleModel
-	{ $current=$iv_ruleModel.current; }
+// Entry rule entryRuleDocument
+entryRuleDocument returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getDocumentRule()); }
+	iv_ruleDocument=ruleDocument
+	{ $current=$iv_ruleDocument.current; }
 	EOF;
 
-// Rule Model
-ruleModel returns [EObject current=null]
+// Rule Document
+ruleDocument returns [EObject current=null]
 @init {
 	enterRule();
 }
@@ -80,18 +80,18 @@ ruleModel returns [EObject current=null]
 		(
 			otherlv_0='default-language'
 			{
-				newLeafNode(otherlv_0, grammarAccess.getModelAccess().getDefaultLanguageKeyword_0_0());
+				newLeafNode(otherlv_0, grammarAccess.getDocumentAccess().getDefaultLanguageKeyword_0_0());
 			}
 			(
 				(
 					(
 						lv_defaultLanguageID_1_1=RULE_ID
 						{
-							newLeafNode(lv_defaultLanguageID_1_1, grammarAccess.getModelAccess().getDefaultLanguageIDIDTerminalRuleCall_0_1_0_0());
+							newLeafNode(lv_defaultLanguageID_1_1, grammarAccess.getDocumentAccess().getDefaultLanguageIDIDTerminalRuleCall_0_1_0_0());
 						}
 						{
 							if ($current==null) {
-								$current = createModelElement(grammarAccess.getModelRule());
+								$current = createModelElement(grammarAccess.getDocumentRule());
 							}
 							setWithLastConsumed(
 								$current,
@@ -102,11 +102,11 @@ ruleModel returns [EObject current=null]
 						    |
 						lv_defaultLanguageID_1_2=RULE_STRING
 						{
-							newLeafNode(lv_defaultLanguageID_1_2, grammarAccess.getModelAccess().getDefaultLanguageIDSTRINGTerminalRuleCall_0_1_0_1());
+							newLeafNode(lv_defaultLanguageID_1_2, grammarAccess.getDocumentAccess().getDefaultLanguageIDSTRINGTerminalRuleCall_0_1_0_1());
 						}
 						{
 							if ($current==null) {
-								$current = createModelElement(grammarAccess.getModelRule());
+								$current = createModelElement(grammarAccess.getDocumentRule());
 							}
 							setWithLastConsumed(
 								$current,
@@ -120,35 +120,142 @@ ruleModel returns [EObject current=null]
 		)?
 		(
 			(
-				{
-					newCompositeNode(grammarAccess.getModelAccess().getMoniLogSpecsMoniLogSpecParserRuleCall_1_0());
+				{ 
+				  getUnorderedGroupHelper().enter(grammarAccess.getDocumentAccess().getUnorderedGroup_1());
 				}
-				lv_moniLogSpecs_2_0=ruleMoniLogSpec
-				{
-					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getModelRule());
+				(
+					(
+			(
+				{getUnorderedGroupHelper().canSelect(grammarAccess.getDocumentAccess().getUnorderedGroup_1(), 0)}?=>(
+					{
+						getUnorderedGroupHelper().select(grammarAccess.getDocumentAccess().getUnorderedGroup_1(), 0);
 					}
-					add(
-						$current,
-						"moniLogSpecs",
-						lv_moniLogSpecs_2_0,
-						"org.gemoc.monilog.MoniLog4DSL.MoniLogSpec");
-					afterParserOrEnumRuleCall();
-				}
+								({true}?=>((
+									{
+										newCompositeNode(grammarAccess.getDocumentAccess().getEventsEventParserRuleCall_1_0_0());
+									}
+									lv_events_3_0=ruleEvent
+									{
+										if ($current==null) {
+											$current = createModelElementForParent(grammarAccess.getDocumentRule());
+										}
+										add(
+											$current,
+											"events",
+											lv_events_3_0,
+											"org.gemoc.monilog.MoniLog4DSL.Event");
+										afterParserOrEnumRuleCall();
+									}
+								)
+								))+
+					{ 
+						getUnorderedGroupHelper().returnFromSelection(grammarAccess.getDocumentAccess().getUnorderedGroup_1());
+					}
+				)
+			)|
+			(
+				{getUnorderedGroupHelper().canSelect(grammarAccess.getDocumentAccess().getUnorderedGroup_1(), 1)}?=>(
+					{
+						getUnorderedGroupHelper().select(grammarAccess.getDocumentAccess().getUnorderedGroup_1(), 1);
+					}
+								({true}?=>((
+									{
+										newCompositeNode(grammarAccess.getDocumentAccess().getAppendersAppenderParserRuleCall_1_1_0());
+									}
+									lv_appenders_4_0=ruleAppender
+									{
+										if ($current==null) {
+											$current = createModelElementForParent(grammarAccess.getDocumentRule());
+										}
+										add(
+											$current,
+											"appenders",
+											lv_appenders_4_0,
+											"org.gemoc.monilog.MoniLog4DSL.Appender");
+										afterParserOrEnumRuleCall();
+									}
+								)
+								))+
+					{ 
+						getUnorderedGroupHelper().returnFromSelection(grammarAccess.getDocumentAccess().getUnorderedGroup_1());
+					}
+				)
+			)|
+			(
+				{getUnorderedGroupHelper().canSelect(grammarAccess.getDocumentAccess().getUnorderedGroup_1(), 2)}?=>(
+					{
+						getUnorderedGroupHelper().select(grammarAccess.getDocumentAccess().getUnorderedGroup_1(), 2);
+					}
+								({true}?=>((
+									{
+										newCompositeNode(grammarAccess.getDocumentAccess().getLayoutsLayoutParserRuleCall_1_2_0());
+									}
+									lv_layouts_5_0=ruleLayout
+									{
+										if ($current==null) {
+											$current = createModelElementForParent(grammarAccess.getDocumentRule());
+										}
+										add(
+											$current,
+											"layouts",
+											lv_layouts_5_0,
+											"org.gemoc.monilog.MoniLog4DSL.Layout");
+										afterParserOrEnumRuleCall();
+									}
+								)
+								))+
+					{ 
+						getUnorderedGroupHelper().returnFromSelection(grammarAccess.getDocumentAccess().getUnorderedGroup_1());
+					}
+				)
+			)|
+			(
+				{getUnorderedGroupHelper().canSelect(grammarAccess.getDocumentAccess().getUnorderedGroup_1(), 3)}?=>(
+					{
+						getUnorderedGroupHelper().select(grammarAccess.getDocumentAccess().getUnorderedGroup_1(), 3);
+					}
+								({true}?=>((
+									{
+										newCompositeNode(grammarAccess.getDocumentAccess().getMoniLogSpecsMoniLoggerParserRuleCall_1_3_0());
+									}
+									lv_moniLogSpecs_6_0=ruleMoniLogger
+									{
+										if ($current==null) {
+											$current = createModelElementForParent(grammarAccess.getDocumentRule());
+										}
+										add(
+											$current,
+											"moniLogSpecs",
+											lv_moniLogSpecs_6_0,
+											"org.gemoc.monilog.MoniLog4DSL.MoniLogger");
+										afterParserOrEnumRuleCall();
+									}
+								)
+								))+
+					{ 
+						getUnorderedGroupHelper().returnFromSelection(grammarAccess.getDocumentAccess().getUnorderedGroup_1());
+					}
+				)
 			)
-		)+
+					)*
+				)
+			)
+				{ 
+				  getUnorderedGroupHelper().leave(grammarAccess.getDocumentAccess().getUnorderedGroup_1());
+				}
+		)
 	)
 ;
 
-// Entry rule entryRuleMoniLogSpec
-entryRuleMoniLogSpec returns [EObject current=null]:
-	{ newCompositeNode(grammarAccess.getMoniLogSpecRule()); }
-	iv_ruleMoniLogSpec=ruleMoniLogSpec
-	{ $current=$iv_ruleMoniLogSpec.current; }
+// Entry rule entryRuleAppender
+entryRuleAppender returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getAppenderRule()); }
+	iv_ruleAppender=ruleAppender
+	{ $current=$iv_ruleAppender.current; }
 	EOF;
 
-// Rule MoniLogSpec
-ruleMoniLogSpec returns [EObject current=null]
+// Rule Appender
+ruleAppender returns [EObject current=null]
 @init {
 	enterRule();
 }
@@ -156,237 +263,856 @@ ruleMoniLogSpec returns [EObject current=null]
 	leaveRule();
 }:
 	(
-		otherlv_0='monilog'
 		{
-			newLeafNode(otherlv_0, grammarAccess.getMoniLogSpecAccess().getMonilogKeyword_0());
+			newCompositeNode(grammarAccess.getAppenderAccess().getLocalAppenderParserRuleCall_0());
+		}
+		this_LocalAppender_0=ruleLocalAppender
+		{
+			$current = $this_LocalAppender_0.current;
+			afterParserOrEnumRuleCall();
+		}
+		    |
+		{
+			newCompositeNode(grammarAccess.getAppenderAccess().getExternalAppenderParserRuleCall_1());
+		}
+		this_ExternalAppender_1=ruleExternalAppender
+		{
+			$current = $this_ExternalAppender_1.current;
+			afterParserOrEnumRuleCall();
+		}
+	)
+;
+
+// Entry rule entryRuleLocalAppender
+entryRuleLocalAppender returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getLocalAppenderRule()); }
+	iv_ruleLocalAppender=ruleLocalAppender
+	{ $current=$iv_ruleLocalAppender.current; }
+	EOF;
+
+// Rule LocalAppender
+ruleLocalAppender returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getLocalAppenderAccess().getAnnotationsAppenderAnnotationEnumRuleCall_0_0());
+				}
+				lv_annotations_0_0=ruleAppenderAnnotation
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getLocalAppenderRule());
+					}
+					add(
+						$current,
+						"annotations",
+						lv_annotations_0_0,
+						"org.gemoc.monilog.MoniLog4DSL.AppenderAnnotation");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)*
+		otherlv_1='appender'
+		{
+			newLeafNode(otherlv_1, grammarAccess.getLocalAppenderAccess().getAppenderKeyword_1());
 		}
 		(
 			(
-				lv_name_1_0=RULE_STRING
+				lv_name_2_0=RULE_ID
 				{
-					newLeafNode(lv_name_1_0, grammarAccess.getMoniLogSpecAccess().getNameSTRINGTerminalRuleCall_1_0());
+					newLeafNode(lv_name_2_0, grammarAccess.getLocalAppenderAccess().getNameIDTerminalRuleCall_2_0());
 				}
 				{
 					if ($current==null) {
-						$current = createModelElement(grammarAccess.getMoniLogSpecRule());
+						$current = createModelElement(grammarAccess.getLocalAppenderRule());
 					}
 					setWithLastConsumed(
 						$current,
 						"name",
-						lv_name_1_0,
-						"org.eclipse.xtext.common.Terminals.STRING");
+						lv_name_2_0,
+						"org.eclipse.xtext.common.Terminals.ID");
 				}
 			)
-		)?
+		)
 		(
-			otherlv_2='['
+			otherlv_3='('
 			{
-				newLeafNode(otherlv_2, grammarAccess.getMoniLogSpecAccess().getLeftSquareBracketKeyword_2_0());
+				newLeafNode(otherlv_3, grammarAccess.getLocalAppenderAccess().getLeftParenthesisKeyword_3_0());
 			}
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getMoniLogSpecAccess().getLevelLogLevelEnumRuleCall_2_1_0());
+						newCompositeNode(grammarAccess.getLocalAppenderAccess().getParametersParameterParserRuleCall_3_1_0());
 					}
-					lv_level_3_0=ruleLogLevel
+					lv_parameters_4_0=ruleParameter
 					{
 						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getMoniLogSpecRule());
-						}
-						set(
-							$current,
-							"level",
-							lv_level_3_0,
-							"org.gemoc.monilog.MoniLog4DSL.LogLevel");
-						afterParserOrEnumRuleCall();
-					}
-				)
-			)
-			otherlv_4=']'
-			{
-				newLeafNode(otherlv_4, grammarAccess.getMoniLogSpecAccess().getRightSquareBracketKeyword_2_2());
-			}
-		)?
-		otherlv_5='{'
-		{
-			newLeafNode(otherlv_5, grammarAccess.getMoniLogSpecAccess().getLeftCurlyBracketKeyword_3());
-		}
-		(
-			otherlv_6='events'
-			{
-				newLeafNode(otherlv_6, grammarAccess.getMoniLogSpecAccess().getEventsKeyword_4_0());
-			}
-			otherlv_7='{'
-			{
-				newLeafNode(otherlv_7, grammarAccess.getMoniLogSpecAccess().getLeftCurlyBracketKeyword_4_1());
-			}
-			(
-				(
-					{
-						newCompositeNode(grammarAccess.getMoniLogSpecAccess().getEventsEventParserRuleCall_4_2_0());
-					}
-					lv_events_8_0=ruleEvent
-					{
-						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getMoniLogSpecRule());
+							$current = createModelElementForParent(grammarAccess.getLocalAppenderRule());
 						}
 						add(
 							$current,
-							"events",
-							lv_events_8_0,
-							"org.gemoc.monilog.MoniLog4DSL.Event");
+							"parameters",
+							lv_parameters_4_0,
+							"org.gemoc.monilog.MoniLog4DSL.Parameter");
 						afterParserOrEnumRuleCall();
 					}
 				)
 			)
 			(
-				otherlv_9=','
+				otherlv_5=','
 				{
-					newLeafNode(otherlv_9, grammarAccess.getMoniLogSpecAccess().getCommaKeyword_4_3_0());
+					newLeafNode(otherlv_5, grammarAccess.getLocalAppenderAccess().getCommaKeyword_3_2_0());
 				}
 				(
 					(
 						{
-							newCompositeNode(grammarAccess.getMoniLogSpecAccess().getEventsEventParserRuleCall_4_3_1_0());
+							newCompositeNode(grammarAccess.getLocalAppenderAccess().getParametersParameterParserRuleCall_3_2_1_0());
 						}
-						lv_events_10_0=ruleEvent
+						lv_parameters_6_0=ruleParameter
 						{
 							if ($current==null) {
-								$current = createModelElementForParent(grammarAccess.getMoniLogSpecRule());
+								$current = createModelElementForParent(grammarAccess.getLocalAppenderRule());
 							}
 							add(
 								$current,
-								"events",
-								lv_events_10_0,
-								"org.gemoc.monilog.MoniLog4DSL.Event");
+								"parameters",
+								lv_parameters_6_0,
+								"org.gemoc.monilog.MoniLog4DSL.Parameter");
 							afterParserOrEnumRuleCall();
 						}
 					)
 				)
 			)*
-			otherlv_11='}'
+			otherlv_7=')'
 			{
-				newLeafNode(otherlv_11, grammarAccess.getMoniLogSpecAccess().getRightCurlyBracketKeyword_4_4());
+				newLeafNode(otherlv_7, grammarAccess.getLocalAppenderAccess().getRightParenthesisKeyword_3_3());
 			}
 		)?
+		otherlv_8='{'
+		{
+			newLeafNode(otherlv_8, grammarAccess.getLocalAppenderAccess().getLeftCurlyBracketKeyword_4());
+		}
 		(
-			otherlv_12='conditions'
+			(
+				{
+					newCompositeNode(grammarAccess.getLocalAppenderAccess().getCallsAppenderCallParserRuleCall_5_0());
+				}
+				lv_calls_9_0=ruleAppenderCall
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getLocalAppenderRule());
+					}
+					add(
+						$current,
+						"calls",
+						lv_calls_9_0,
+						"org.gemoc.monilog.MoniLog4DSL.AppenderCall");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+		(
+			otherlv_10=';'
 			{
-				newLeafNode(otherlv_12, grammarAccess.getMoniLogSpecAccess().getConditionsKeyword_5_0());
-			}
-			otherlv_13='{'
-			{
-				newLeafNode(otherlv_13, grammarAccess.getMoniLogSpecAccess().getLeftCurlyBracketKeyword_5_1());
+				newLeafNode(otherlv_10, grammarAccess.getLocalAppenderAccess().getSemicolonKeyword_6_0());
 			}
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getMoniLogSpecAccess().getConditionsConditionParserRuleCall_5_2_0());
+						newCompositeNode(grammarAccess.getLocalAppenderAccess().getCallsAppenderCallParserRuleCall_6_1_0());
 					}
-					lv_conditions_14_0=ruleCondition
+					lv_calls_11_0=ruleAppenderCall
 					{
 						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getMoniLogSpecRule());
+							$current = createModelElementForParent(grammarAccess.getLocalAppenderRule());
+						}
+						add(
+							$current,
+							"calls",
+							lv_calls_11_0,
+							"org.gemoc.monilog.MoniLog4DSL.AppenderCall");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+		)*
+		otherlv_12='}'
+		{
+			newLeafNode(otherlv_12, grammarAccess.getLocalAppenderAccess().getRightCurlyBracketKeyword_7());
+		}
+	)
+;
+
+// Entry rule entryRuleExternalAppender
+entryRuleExternalAppender returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getExternalAppenderRule()); }
+	iv_ruleExternalAppender=ruleExternalAppender
+	{ $current=$iv_ruleExternalAppender.current; }
+	EOF;
+
+// Rule ExternalAppender
+ruleExternalAppender returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		otherlv_0='appender'
+		{
+			newLeafNode(otherlv_0, grammarAccess.getExternalAppenderAccess().getAppenderKeyword_0());
+		}
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getExternalAppenderAccess().getNameFQNParserRuleCall_1_0());
+				}
+				lv_name_1_0=ruleFQN
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getExternalAppenderRule());
+					}
+					set(
+						$current,
+						"name",
+						lv_name_1_0,
+						"org.gemoc.monilog.MoniLog4DSL.FQN");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+		(
+			otherlv_2='('
+			{
+				newLeafNode(otherlv_2, grammarAccess.getExternalAppenderAccess().getLeftParenthesisKeyword_2_0());
+			}
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getExternalAppenderAccess().getParametersParameterParserRuleCall_2_1_0());
+					}
+					lv_parameters_3_0=ruleParameter
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getExternalAppenderRule());
+						}
+						add(
+							$current,
+							"parameters",
+							lv_parameters_3_0,
+							"org.gemoc.monilog.MoniLog4DSL.Parameter");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+			(
+				otherlv_4=','
+				{
+					newLeafNode(otherlv_4, grammarAccess.getExternalAppenderAccess().getCommaKeyword_2_2_0());
+				}
+				(
+					(
+						{
+							newCompositeNode(grammarAccess.getExternalAppenderAccess().getParametersParameterParserRuleCall_2_2_1_0());
+						}
+						lv_parameters_5_0=ruleParameter
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getExternalAppenderRule());
+							}
+							add(
+								$current,
+								"parameters",
+								lv_parameters_5_0,
+								"org.gemoc.monilog.MoniLog4DSL.Parameter");
+							afterParserOrEnumRuleCall();
+						}
+					)
+				)
+			)*
+			otherlv_6=')'
+			{
+				newLeafNode(otherlv_6, grammarAccess.getExternalAppenderAccess().getRightParenthesisKeyword_2_3());
+			}
+		)?
+	)
+;
+
+// Entry rule entryRuleLayout
+entryRuleLayout returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getLayoutRule()); }
+	iv_ruleLayout=ruleLayout
+	{ $current=$iv_ruleLayout.current; }
+	EOF;
+
+// Rule Layout
+ruleLayout returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		{
+			newCompositeNode(grammarAccess.getLayoutAccess().getLocalLayoutParserRuleCall_0());
+		}
+		this_LocalLayout_0=ruleLocalLayout
+		{
+			$current = $this_LocalLayout_0.current;
+			afterParserOrEnumRuleCall();
+		}
+		    |
+		{
+			newCompositeNode(grammarAccess.getLayoutAccess().getExternalLayoutParserRuleCall_1());
+		}
+		this_ExternalLayout_1=ruleExternalLayout
+		{
+			$current = $this_ExternalLayout_1.current;
+			afterParserOrEnumRuleCall();
+		}
+	)
+;
+
+// Entry rule entryRuleLocalLayout
+entryRuleLocalLayout returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getLocalLayoutRule()); }
+	iv_ruleLocalLayout=ruleLocalLayout
+	{ $current=$iv_ruleLocalLayout.current; }
+	EOF;
+
+// Rule LocalLayout
+ruleLocalLayout returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		otherlv_0='layout'
+		{
+			newLeafNode(otherlv_0, grammarAccess.getLocalLayoutAccess().getLayoutKeyword_0());
+		}
+		(
+			(
+				lv_name_1_0=RULE_ID
+				{
+					newLeafNode(lv_name_1_0, grammarAccess.getLocalLayoutAccess().getNameIDTerminalRuleCall_1_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getLocalLayoutRule());
+					}
+					setWithLastConsumed(
+						$current,
+						"name",
+						lv_name_1_0,
+						"org.eclipse.xtext.common.Terminals.ID");
+				}
+			)
+		)
+		(
+			otherlv_2='('
+			{
+				newLeafNode(otherlv_2, grammarAccess.getLocalLayoutAccess().getLeftParenthesisKeyword_2_0());
+			}
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getLocalLayoutAccess().getParametersParameterParserRuleCall_2_1_0());
+					}
+					lv_parameters_3_0=ruleParameter
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getLocalLayoutRule());
+						}
+						add(
+							$current,
+							"parameters",
+							lv_parameters_3_0,
+							"org.gemoc.monilog.MoniLog4DSL.Parameter");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+			(
+				otherlv_4=','
+				{
+					newLeafNode(otherlv_4, grammarAccess.getLocalLayoutAccess().getCommaKeyword_2_2_0());
+				}
+				(
+					(
+						{
+							newCompositeNode(grammarAccess.getLocalLayoutAccess().getParametersParameterParserRuleCall_2_2_1_0());
+						}
+						lv_parameters_5_0=ruleParameter
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getLocalLayoutRule());
+							}
+							add(
+								$current,
+								"parameters",
+								lv_parameters_5_0,
+								"org.gemoc.monilog.MoniLog4DSL.Parameter");
+							afterParserOrEnumRuleCall();
+						}
+					)
+				)
+			)*
+			otherlv_6=')'
+			{
+				newLeafNode(otherlv_6, grammarAccess.getLocalLayoutAccess().getRightParenthesisKeyword_2_3());
+			}
+		)?
+		otherlv_7='{'
+		{
+			newLeafNode(otherlv_7, grammarAccess.getLocalLayoutAccess().getLeftCurlyBracketKeyword_3());
+		}
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getLocalLayoutAccess().getCallLayoutCallParserRuleCall_4_0());
+				}
+				lv_call_8_0=ruleLayoutCall
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getLocalLayoutRule());
+					}
+					set(
+						$current,
+						"call",
+						lv_call_8_0,
+						"org.gemoc.monilog.MoniLog4DSL.LayoutCall");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+		otherlv_9='}'
+		{
+			newLeafNode(otherlv_9, grammarAccess.getLocalLayoutAccess().getRightCurlyBracketKeyword_5());
+		}
+	)
+;
+
+// Entry rule entryRuleExternalLayout
+entryRuleExternalLayout returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getExternalLayoutRule()); }
+	iv_ruleExternalLayout=ruleExternalLayout
+	{ $current=$iv_ruleExternalLayout.current; }
+	EOF;
+
+// Rule ExternalLayout
+ruleExternalLayout returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		otherlv_0='layout'
+		{
+			newLeafNode(otherlv_0, grammarAccess.getExternalLayoutAccess().getLayoutKeyword_0());
+		}
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getExternalLayoutAccess().getNameFQNParserRuleCall_1_0());
+				}
+				lv_name_1_0=ruleFQN
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getExternalLayoutRule());
+					}
+					set(
+						$current,
+						"name",
+						lv_name_1_0,
+						"org.gemoc.monilog.MoniLog4DSL.FQN");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+		(
+			otherlv_2='('
+			{
+				newLeafNode(otherlv_2, grammarAccess.getExternalLayoutAccess().getLeftParenthesisKeyword_2_0());
+			}
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getExternalLayoutAccess().getParametersParameterParserRuleCall_2_1_0());
+					}
+					lv_parameters_3_0=ruleParameter
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getExternalLayoutRule());
+						}
+						add(
+							$current,
+							"parameters",
+							lv_parameters_3_0,
+							"org.gemoc.monilog.MoniLog4DSL.Parameter");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+			(
+				otherlv_4=','
+				{
+					newLeafNode(otherlv_4, grammarAccess.getExternalLayoutAccess().getCommaKeyword_2_2_0());
+				}
+				(
+					(
+						{
+							newCompositeNode(grammarAccess.getExternalLayoutAccess().getParametersParameterParserRuleCall_2_2_1_0());
+						}
+						lv_parameters_5_0=ruleParameter
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getExternalLayoutRule());
+							}
+							add(
+								$current,
+								"parameters",
+								lv_parameters_5_0,
+								"org.gemoc.monilog.MoniLog4DSL.Parameter");
+							afterParserOrEnumRuleCall();
+						}
+					)
+				)
+			)*
+			otherlv_6=')'
+			{
+				newLeafNode(otherlv_6, grammarAccess.getExternalLayoutAccess().getRightParenthesisKeyword_2_3());
+			}
+		)?
+	)
+;
+
+// Entry rule entryRuleMoniLogger
+entryRuleMoniLogger returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getMoniLoggerRule()); }
+	iv_ruleMoniLogger=ruleMoniLogger
+	{ $current=$iv_ruleMoniLogger.current; }
+	EOF;
+
+// Rule MoniLogger
+ruleMoniLogger returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getMoniLoggerAccess().getAnnotationsMoniLoggerAnnotationEnumRuleCall_0_0());
+				}
+				lv_annotations_0_0=ruleMoniLoggerAnnotation
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getMoniLoggerRule());
+					}
+					add(
+						$current,
+						"annotations",
+						lv_annotations_0_0,
+						"org.gemoc.monilog.MoniLog4DSL.MoniLoggerAnnotation");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)*
+		otherlv_1='monilogger'
+		{
+			newLeafNode(otherlv_1, grammarAccess.getMoniLoggerAccess().getMoniloggerKeyword_1());
+		}
+		(
+			(
+				lv_name_2_0=RULE_ID
+				{
+					newLeafNode(lv_name_2_0, grammarAccess.getMoniLoggerAccess().getNameIDTerminalRuleCall_2_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getMoniLoggerRule());
+					}
+					setWithLastConsumed(
+						$current,
+						"name",
+						lv_name_2_0,
+						"org.eclipse.xtext.common.Terminals.ID");
+				}
+			)
+		)
+		(
+			otherlv_3='('
+			{
+				newLeafNode(otherlv_3, grammarAccess.getMoniLoggerAccess().getLeftParenthesisKeyword_3_0());
+			}
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getMoniLoggerAccess().getParametersParameterParserRuleCall_3_1_0());
+					}
+					lv_parameters_4_0=ruleParameter
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getMoniLoggerRule());
+						}
+						add(
+							$current,
+							"parameters",
+							lv_parameters_4_0,
+							"org.gemoc.monilog.MoniLog4DSL.Parameter");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+			(
+				otherlv_5=','
+				{
+					newLeafNode(otherlv_5, grammarAccess.getMoniLoggerAccess().getCommaKeyword_3_2_0());
+				}
+				(
+					(
+						{
+							newCompositeNode(grammarAccess.getMoniLoggerAccess().getParametersParameterParserRuleCall_3_2_1_0());
+						}
+						lv_parameters_6_0=ruleParameter
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getMoniLoggerRule());
+							}
+							add(
+								$current,
+								"parameters",
+								lv_parameters_6_0,
+								"org.gemoc.monilog.MoniLog4DSL.Parameter");
+							afterParserOrEnumRuleCall();
+						}
+					)
+				)
+			)*
+			otherlv_7=')'
+			{
+				newLeafNode(otherlv_7, grammarAccess.getMoniLoggerAccess().getRightParenthesisKeyword_3_3());
+			}
+		)?
+		(
+			otherlv_8='['
+			{
+				newLeafNode(otherlv_8, grammarAccess.getMoniLoggerAccess().getLeftSquareBracketKeyword_4_0());
+			}
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getMoniLoggerAccess().getLevelLogLevelEnumRuleCall_4_1_0());
+					}
+					lv_level_9_0=ruleLogLevel
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getMoniLoggerRule());
+						}
+						set(
+							$current,
+							"level",
+							lv_level_9_0,
+							"org.gemoc.monilog.MoniLog4DSL.LogLevel");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+			otherlv_10=']'
+			{
+				newLeafNode(otherlv_10, grammarAccess.getMoniLoggerAccess().getRightSquareBracketKeyword_4_2());
+			}
+		)?
+		otherlv_11='{'
+		{
+			newLeafNode(otherlv_11, grammarAccess.getMoniLoggerAccess().getLeftCurlyBracketKeyword_5());
+		}
+		otherlv_12='event'
+		{
+			newLeafNode(otherlv_12, grammarAccess.getMoniLoggerAccess().getEventKeyword_6());
+		}
+		(
+			(
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getMoniLoggerRule());
+					}
+				}
+				otherlv_13=RULE_ID
+				{
+					newLeafNode(otherlv_13, grammarAccess.getMoniLoggerAccess().getEventEventCrossReference_7_0());
+				}
+			)
+		)
+		(
+			otherlv_14='conditions'
+			{
+				newLeafNode(otherlv_14, grammarAccess.getMoniLoggerAccess().getConditionsKeyword_8_0());
+			}
+			otherlv_15='{'
+			{
+				newLeafNode(otherlv_15, grammarAccess.getMoniLoggerAccess().getLeftCurlyBracketKeyword_8_1());
+			}
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getMoniLoggerAccess().getConditionsConditionParserRuleCall_8_2_0());
+					}
+					lv_conditions_16_0=ruleCondition
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getMoniLoggerRule());
 						}
 						add(
 							$current,
 							"conditions",
-							lv_conditions_14_0,
+							lv_conditions_16_0,
 							"org.gemoc.monilog.MoniLog4DSL.Condition");
 						afterParserOrEnumRuleCall();
 					}
 				)
 			)
 			(
-				otherlv_15=','
+				otherlv_17=';'
 				{
-					newLeafNode(otherlv_15, grammarAccess.getMoniLogSpecAccess().getCommaKeyword_5_3_0());
+					newLeafNode(otherlv_17, grammarAccess.getMoniLoggerAccess().getSemicolonKeyword_8_3_0());
 				}
 				(
 					(
 						{
-							newCompositeNode(grammarAccess.getMoniLogSpecAccess().getConditionsConditionParserRuleCall_5_3_1_0());
+							newCompositeNode(grammarAccess.getMoniLoggerAccess().getConditionsConditionParserRuleCall_8_3_1_0());
 						}
-						lv_conditions_16_0=ruleCondition
+						lv_conditions_18_0=ruleCondition
 						{
 							if ($current==null) {
-								$current = createModelElementForParent(grammarAccess.getMoniLogSpecRule());
+								$current = createModelElementForParent(grammarAccess.getMoniLoggerRule());
 							}
 							add(
 								$current,
 								"conditions",
-								lv_conditions_16_0,
+								lv_conditions_18_0,
 								"org.gemoc.monilog.MoniLog4DSL.Condition");
 							afterParserOrEnumRuleCall();
 						}
 					)
 				)
 			)*
-			otherlv_17='}'
+			otherlv_19='}'
 			{
-				newLeafNode(otherlv_17, grammarAccess.getMoniLogSpecAccess().getRightCurlyBracketKeyword_5_4());
+				newLeafNode(otherlv_19, grammarAccess.getMoniLoggerAccess().getRightCurlyBracketKeyword_8_4());
 			}
 		)?
-		otherlv_18='actions'
+		otherlv_20='actions'
 		{
-			newLeafNode(otherlv_18, grammarAccess.getMoniLogSpecAccess().getActionsKeyword_6());
+			newLeafNode(otherlv_20, grammarAccess.getMoniLoggerAccess().getActionsKeyword_9());
 		}
-		otherlv_19='{'
+		otherlv_21='{'
 		{
-			newLeafNode(otherlv_19, grammarAccess.getMoniLogSpecAccess().getLeftCurlyBracketKeyword_7());
+			newLeafNode(otherlv_21, grammarAccess.getMoniLoggerAccess().getLeftCurlyBracketKeyword_10());
 		}
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getMoniLogSpecAccess().getActionsActionParserRuleCall_8_0());
+					newCompositeNode(grammarAccess.getMoniLoggerAccess().getActionsActionParserRuleCall_11_0());
 				}
-				lv_actions_20_0=ruleAction
+				lv_actions_22_0=ruleAction
 				{
 					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getMoniLogSpecRule());
+						$current = createModelElementForParent(grammarAccess.getMoniLoggerRule());
 					}
 					add(
 						$current,
 						"actions",
-						lv_actions_20_0,
+						lv_actions_22_0,
 						"org.gemoc.monilog.MoniLog4DSL.Action");
 					afterParserOrEnumRuleCall();
 				}
 			)
 		)
 		(
-			otherlv_21=','
+			otherlv_23=';'
 			{
-				newLeafNode(otherlv_21, grammarAccess.getMoniLogSpecAccess().getCommaKeyword_9_0());
+				newLeafNode(otherlv_23, grammarAccess.getMoniLoggerAccess().getSemicolonKeyword_12_0());
 			}
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getMoniLogSpecAccess().getActionsActionParserRuleCall_9_1_0());
+						newCompositeNode(grammarAccess.getMoniLoggerAccess().getActionsActionParserRuleCall_12_1_0());
 					}
-					lv_actions_22_0=ruleAction
+					lv_actions_24_0=ruleAction
 					{
 						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getMoniLogSpecRule());
+							$current = createModelElementForParent(grammarAccess.getMoniLoggerRule());
 						}
 						add(
 							$current,
 							"actions",
-							lv_actions_22_0,
+							lv_actions_24_0,
 							"org.gemoc.monilog.MoniLog4DSL.Action");
 						afterParserOrEnumRuleCall();
 					}
 				)
 			)
 		)*
-		otherlv_23='}'
+		otherlv_25='}'
 		{
-			newLeafNode(otherlv_23, grammarAccess.getMoniLogSpecAccess().getRightCurlyBracketKeyword_10());
+			newLeafNode(otherlv_25, grammarAccess.getMoniLoggerAccess().getRightCurlyBracketKeyword_13());
 		}
-		otherlv_24='}'
+		otherlv_26='}'
 		{
-			newLeafNode(otherlv_24, grammarAccess.getMoniLogSpecAccess().getRightCurlyBracketKeyword_11());
+			newLeafNode(otherlv_26, grammarAccess.getMoniLoggerAccess().getRightCurlyBracketKeyword_14());
 		}
+	)
+;
+
+// Entry rule entryRuleParameter
+entryRuleParameter returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getParameterRule()); }
+	iv_ruleParameter=ruleParameter
+	{ $current=$iv_ruleParameter.current; }
+	EOF;
+
+// Rule Parameter
+ruleParameter returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			lv_name_0_0=RULE_ID
+			{
+				newLeafNode(lv_name_0_0, grammarAccess.getParameterAccess().getNameIDTerminalRuleCall_0());
+			}
+			{
+				if ($current==null) {
+					$current = createModelElement(grammarAccess.getParameterRule());
+				}
+				setWithLastConsumed(
+					$current,
+					"name",
+					lv_name_0_0,
+					"org.eclipse.xtext.common.Terminals.ID");
+			}
+		)
 	)
 ;
 
@@ -407,43 +1133,43 @@ ruleEvent returns [EObject current=null]
 }:
 	(
 		{
-			newCompositeNode(grammarAccess.getEventAccess().getBeforeEventParserRuleCall_0());
+			newCompositeNode(grammarAccess.getEventAccess().getASTEventParserRuleCall_0());
 		}
-		this_BeforeEvent_0=ruleBeforeEvent
+		this_ASTEvent_0=ruleASTEvent
 		{
-			$current = $this_BeforeEvent_0.current;
+			$current = $this_ASTEvent_0.current;
 			afterParserOrEnumRuleCall();
 		}
 		    |
 		{
-			newCompositeNode(grammarAccess.getEventAccess().getAfterEventParserRuleCall_1());
+			newCompositeNode(grammarAccess.getEventAccess().getComplexEventParserRuleCall_1());
 		}
-		this_AfterEvent_1=ruleAfterEvent
+		this_ComplexEvent_1=ruleComplexEvent
 		{
-			$current = $this_AfterEvent_1.current;
+			$current = $this_ComplexEvent_1.current;
 			afterParserOrEnumRuleCall();
 		}
 		    |
 		{
-			newCompositeNode(grammarAccess.getEventAccess().getBeforeAfterEventParserRuleCall_2());
+			newCompositeNode(grammarAccess.getEventAccess().getUserEventParserRuleCall_2());
 		}
-		this_BeforeAfterEvent_2=ruleBeforeAfterEvent
+		this_UserEvent_2=ruleUserEvent
 		{
-			$current = $this_BeforeAfterEvent_2.current;
+			$current = $this_UserEvent_2.current;
 			afterParserOrEnumRuleCall();
 		}
 	)
 ;
 
-// Entry rule entryRuleBeforeEvent
-entryRuleBeforeEvent returns [EObject current=null]:
-	{ newCompositeNode(grammarAccess.getBeforeEventRule()); }
-	iv_ruleBeforeEvent=ruleBeforeEvent
-	{ $current=$iv_ruleBeforeEvent.current; }
+// Entry rule entryRuleASTEvent
+entryRuleASTEvent returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getASTEventRule()); }
+	iv_ruleASTEvent=ruleASTEvent
+	{ $current=$iv_ruleASTEvent.current; }
 	EOF;
 
-// Rule BeforeEvent
-ruleBeforeEvent returns [EObject current=null]
+// Rule ASTEvent
+ruleASTEvent returns [EObject current=null]
 @init {
 	enterRule();
 }
@@ -451,253 +1177,82 @@ ruleBeforeEvent returns [EObject current=null]
 	leaveRule();
 }:
 	(
-		otherlv_0='before'
+		otherlv_0='ast'
 		{
-			newLeafNode(otherlv_0, grammarAccess.getBeforeEventAccess().getBeforeKeyword_0());
+			newLeafNode(otherlv_0, grammarAccess.getASTEventAccess().getAstKeyword_0());
 		}
 		(
 			(
-				(
-					lv_ruleID_1_1=RULE_ID
-					{
-						newLeafNode(lv_ruleID_1_1, grammarAccess.getBeforeEventAccess().getRuleIDIDTerminalRuleCall_1_0_0());
+				lv_name_1_0=RULE_ID
+				{
+					newLeafNode(lv_name_1_0, grammarAccess.getASTEventAccess().getNameIDTerminalRuleCall_1_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getASTEventRule());
 					}
-					{
-						if ($current==null) {
-							$current = createModelElement(grammarAccess.getBeforeEventRule());
-						}
-						setWithLastConsumed(
-							$current,
-							"ruleID",
-							lv_ruleID_1_1,
-							"org.eclipse.xtext.common.Terminals.ID");
-					}
-					    |
-					lv_ruleID_1_2=RULE_STRING
-					{
-						newLeafNode(lv_ruleID_1_2, grammarAccess.getBeforeEventAccess().getRuleIDSTRINGTerminalRuleCall_1_0_1());
-					}
-					{
-						if ($current==null) {
-							$current = createModelElement(grammarAccess.getBeforeEventRule());
-						}
-						setWithLastConsumed(
-							$current,
-							"ruleID",
-							lv_ruleID_1_2,
-							"org.eclipse.xtext.common.Terminals.STRING");
-					}
-				)
+					setWithLastConsumed(
+						$current,
+						"name",
+						lv_name_1_0,
+						"org.eclipse.xtext.common.Terminals.ID");
+				}
 			)
 		)
-		(
-			(
-				{ 
-				  getUnorderedGroupHelper().enter(grammarAccess.getBeforeEventAccess().getUnorderedGroup_2());
-				}
-				(
-					(
-			(
-				{getUnorderedGroupHelper().canSelect(grammarAccess.getBeforeEventAccess().getUnorderedGroup_2(), 0)}?=>(
-					{
-						getUnorderedGroupHelper().select(grammarAccess.getBeforeEventAccess().getUnorderedGroup_2(), 0);
-					}
-								({true}?=>(otherlv_3='frequency^'
-								{
-									newLeafNode(otherlv_3, grammarAccess.getBeforeEventAccess().getFrequencyKeyword_2_0_0());
-								}
-								(
-									(
-										lv_frequency_4_0=RULE_INT
-										{
-											newLeafNode(lv_frequency_4_0, grammarAccess.getBeforeEventAccess().getFrequencyINTTerminalRuleCall_2_0_1_0());
-										}
-										{
-											if ($current==null) {
-												$current = createModelElement(grammarAccess.getBeforeEventRule());
-											}
-											setWithLastConsumed(
-												$current,
-												"frequency",
-												lv_frequency_4_0,
-												"org.eclipse.xtext.common.Terminals.INT");
-										}
-									)
-								)
-								))
-					{ 
-						getUnorderedGroupHelper().returnFromSelection(grammarAccess.getBeforeEventAccess().getUnorderedGroup_2());
-					}
-				)
-			)|
-			(
-				{getUnorderedGroupHelper().canSelect(grammarAccess.getBeforeEventAccess().getUnorderedGroup_2(), 1)}?=>(
-					{
-						getUnorderedGroupHelper().select(grammarAccess.getBeforeEventAccess().getUnorderedGroup_2(), 1);
-					}
-								({true}?=>(otherlv_5='limit'
-								{
-									newLeafNode(otherlv_5, grammarAccess.getBeforeEventAccess().getLimitKeyword_2_1_0());
-								}
-								(
-									(
-										lv_limit_6_0=RULE_INT
-										{
-											newLeafNode(lv_limit_6_0, grammarAccess.getBeforeEventAccess().getLimitINTTerminalRuleCall_2_1_1_0());
-										}
-										{
-											if ($current==null) {
-												$current = createModelElement(grammarAccess.getBeforeEventRule());
-											}
-											setWithLastConsumed(
-												$current,
-												"limit",
-												lv_limit_6_0,
-												"org.eclipse.xtext.common.Terminals.INT");
-										}
-									)
-								)
-								))
-					{ 
-						getUnorderedGroupHelper().returnFromSelection(grammarAccess.getBeforeEventAccess().getUnorderedGroup_2());
-					}
-				)
-			)
-					)*
-				)
-			)
-				{ 
-				  getUnorderedGroupHelper().leave(grammarAccess.getBeforeEventAccess().getUnorderedGroup_2());
-				}
-		)
-	)
-;
-
-// Entry rule entryRuleAfterEvent
-entryRuleAfterEvent returns [EObject current=null]:
-	{ newCompositeNode(grammarAccess.getAfterEventRule()); }
-	iv_ruleAfterEvent=ruleAfterEvent
-	{ $current=$iv_ruleAfterEvent.current; }
-	EOF;
-
-// Rule AfterEvent
-ruleAfterEvent returns [EObject current=null]
-@init {
-	enterRule();
-}
-@after {
-	leaveRule();
-}:
-	(
-		otherlv_0='after'
+		otherlv_2='{'
 		{
-			newLeafNode(otherlv_0, grammarAccess.getAfterEventAccess().getAfterKeyword_0());
+			newLeafNode(otherlv_2, grammarAccess.getASTEventAccess().getLeftCurlyBracketKeyword_2());
 		}
 		(
 			(
-				(
-					lv_ruleID_1_1=RULE_ID
-					{
-						newLeafNode(lv_ruleID_1_1, grammarAccess.getAfterEventAccess().getRuleIDIDTerminalRuleCall_1_0_0());
-					}
-					{
-						if ($current==null) {
-							$current = createModelElement(grammarAccess.getAfterEventRule());
-						}
-						setWithLastConsumed(
-							$current,
-							"ruleID",
-							lv_ruleID_1_1,
-							"org.eclipse.xtext.common.Terminals.ID");
-					}
-					    |
-					lv_ruleID_1_2=RULE_STRING
-					{
-						newLeafNode(lv_ruleID_1_2, grammarAccess.getAfterEventAccess().getRuleIDSTRINGTerminalRuleCall_1_0_1());
-					}
-					{
-						if ($current==null) {
-							$current = createModelElement(grammarAccess.getAfterEventRule());
-						}
-						setWithLastConsumed(
-							$current,
-							"ruleID",
-							lv_ruleID_1_2,
-							"org.eclipse.xtext.common.Terminals.STRING");
-					}
-				)
-			)
-		)
-		(
-			(
 				{ 
-				  getUnorderedGroupHelper().enter(grammarAccess.getAfterEventAccess().getUnorderedGroup_2());
+				  getUnorderedGroupHelper().enter(grammarAccess.getASTEventAccess().getUnorderedGroup_3());
 				}
 				(
 					(
 			(
-				{getUnorderedGroupHelper().canSelect(grammarAccess.getAfterEventAccess().getUnorderedGroup_2(), 0)}?=>(
+				{getUnorderedGroupHelper().canSelect(grammarAccess.getASTEventAccess().getUnorderedGroup_3(), 0)}?=>(
 					{
-						getUnorderedGroupHelper().select(grammarAccess.getAfterEventAccess().getUnorderedGroup_2(), 0);
+						getUnorderedGroupHelper().select(grammarAccess.getASTEventAccess().getUnorderedGroup_3(), 0);
 					}
-								({true}?=>(otherlv_3='frequency'
-								{
-									newLeafNode(otherlv_3, grammarAccess.getAfterEventAccess().getFrequencyKeyword_2_0_0());
-								}
-								(
-									(
-										lv_frequency_4_0=RULE_INT
-										{
-											newLeafNode(lv_frequency_4_0, grammarAccess.getAfterEventAccess().getFrequencyINTTerminalRuleCall_2_0_1_0());
+								({true}?=>((
+									lv_before_4_0='before'
+									{
+										newLeafNode(lv_before_4_0, grammarAccess.getASTEventAccess().getBeforeBeforeKeyword_3_0_0());
+									}
+									{
+										if ($current==null) {
+											$current = createModelElement(grammarAccess.getASTEventRule());
 										}
-										{
-											if ($current==null) {
-												$current = createModelElement(grammarAccess.getAfterEventRule());
-											}
-											setWithLastConsumed(
-												$current,
-												"frequency",
-												lv_frequency_4_0,
-												"org.eclipse.xtext.common.Terminals.INT");
-										}
-									)
+										setWithLastConsumed($current, "before", lv_before_4_0 != null, "before");
+									}
 								)
 								))
 					{ 
-						getUnorderedGroupHelper().returnFromSelection(grammarAccess.getAfterEventAccess().getUnorderedGroup_2());
+						getUnorderedGroupHelper().returnFromSelection(grammarAccess.getASTEventAccess().getUnorderedGroup_3());
 					}
 				)
 			)|
 			(
-				{getUnorderedGroupHelper().canSelect(grammarAccess.getAfterEventAccess().getUnorderedGroup_2(), 1)}?=>(
+				{getUnorderedGroupHelper().canSelect(grammarAccess.getASTEventAccess().getUnorderedGroup_3(), 1)}?=>(
 					{
-						getUnorderedGroupHelper().select(grammarAccess.getAfterEventAccess().getUnorderedGroup_2(), 1);
+						getUnorderedGroupHelper().select(grammarAccess.getASTEventAccess().getUnorderedGroup_3(), 1);
 					}
-								({true}?=>(otherlv_5='limit'
-								{
-									newLeafNode(otherlv_5, grammarAccess.getAfterEventAccess().getLimitKeyword_2_1_0());
-								}
-								(
-									(
-										lv_limit_6_0=RULE_INT
-										{
-											newLeafNode(lv_limit_6_0, grammarAccess.getAfterEventAccess().getLimitINTTerminalRuleCall_2_1_1_0());
+								({true}?=>((
+									lv_after_5_0='after'
+									{
+										newLeafNode(lv_after_5_0, grammarAccess.getASTEventAccess().getAfterAfterKeyword_3_1_0());
+									}
+									{
+										if ($current==null) {
+											$current = createModelElement(grammarAccess.getASTEventRule());
 										}
-										{
-											if ($current==null) {
-												$current = createModelElement(grammarAccess.getAfterEventRule());
-											}
-											setWithLastConsumed(
-												$current,
-												"limit",
-												lv_limit_6_0,
-												"org.eclipse.xtext.common.Terminals.INT");
-										}
-									)
+										setWithLastConsumed($current, "after", lv_after_5_0 != null, "after");
+									}
 								)
 								))
 					{ 
-						getUnorderedGroupHelper().returnFromSelection(grammarAccess.getAfterEventAccess().getUnorderedGroup_2());
+						getUnorderedGroupHelper().returnFromSelection(grammarAccess.getASTEventAccess().getUnorderedGroup_3());
 					}
 				)
 			)
@@ -705,21 +1260,43 @@ ruleAfterEvent returns [EObject current=null]
 				)
 			)
 				{ 
-				  getUnorderedGroupHelper().leave(grammarAccess.getAfterEventAccess().getUnorderedGroup_2());
+				  getUnorderedGroupHelper().leave(grammarAccess.getASTEventAccess().getUnorderedGroup_3());
 				}
 		)
+		(
+			(
+				lv_ruleID_6_0=RULE_ID
+				{
+					newLeafNode(lv_ruleID_6_0, grammarAccess.getASTEventAccess().getRuleIDIDTerminalRuleCall_4_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getASTEventRule());
+					}
+					setWithLastConsumed(
+						$current,
+						"ruleID",
+						lv_ruleID_6_0,
+						"org.eclipse.xtext.common.Terminals.ID");
+				}
+			)
+		)
+		otherlv_7='}'
+		{
+			newLeafNode(otherlv_7, grammarAccess.getASTEventAccess().getRightCurlyBracketKeyword_5());
+		}
 	)
 ;
 
-// Entry rule entryRuleBeforeAfterEvent
-entryRuleBeforeAfterEvent returns [EObject current=null]:
-	{ newCompositeNode(grammarAccess.getBeforeAfterEventRule()); }
-	iv_ruleBeforeAfterEvent=ruleBeforeAfterEvent
-	{ $current=$iv_ruleBeforeAfterEvent.current; }
+// Entry rule entryRuleComplexEvent
+entryRuleComplexEvent returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getComplexEventRule()); }
+	iv_ruleComplexEvent=ruleComplexEvent
+	{ $current=$iv_ruleComplexEvent.current; }
 	EOF;
 
-// Rule BeforeAfterEvent
-ruleBeforeAfterEvent returns [EObject current=null]
+// Rule ComplexEvent
+ruleComplexEvent returns [EObject current=null]
 @init {
 	enterRule();
 }
@@ -727,121 +1304,179 @@ ruleBeforeAfterEvent returns [EObject current=null]
 	leaveRule();
 }:
 	(
+		otherlv_0='complex'
+		{
+			newLeafNode(otherlv_0, grammarAccess.getComplexEventAccess().getComplexKeyword_0());
+		}
 		(
 			(
-				(
-					lv_ruleID_0_1=RULE_ID
-					{
-						newLeafNode(lv_ruleID_0_1, grammarAccess.getBeforeAfterEventAccess().getRuleIDIDTerminalRuleCall_0_0_0());
+				lv_name_1_0=RULE_ID
+				{
+					newLeafNode(lv_name_1_0, grammarAccess.getComplexEventAccess().getNameIDTerminalRuleCall_1_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getComplexEventRule());
 					}
-					{
-						if ($current==null) {
-							$current = createModelElement(grammarAccess.getBeforeAfterEventRule());
-						}
-						setWithLastConsumed(
-							$current,
-							"ruleID",
-							lv_ruleID_0_1,
-							"org.eclipse.xtext.common.Terminals.ID");
-					}
-					    |
-					lv_ruleID_0_2=RULE_STRING
-					{
-						newLeafNode(lv_ruleID_0_2, grammarAccess.getBeforeAfterEventAccess().getRuleIDSTRINGTerminalRuleCall_0_0_1());
-					}
-					{
-						if ($current==null) {
-							$current = createModelElement(grammarAccess.getBeforeAfterEventRule());
-						}
-						setWithLastConsumed(
-							$current,
-							"ruleID",
-							lv_ruleID_0_2,
-							"org.eclipse.xtext.common.Terminals.STRING");
-					}
-				)
+					setWithLastConsumed(
+						$current,
+						"name",
+						lv_name_1_0,
+						"org.eclipse.xtext.common.Terminals.ID");
+				}
 			)
 		)
 		(
+			otherlv_2='['
+			{
+				newLeafNode(otherlv_2, grammarAccess.getComplexEventAccess().getLeftSquareBracketKeyword_2_0());
+			}
 			(
-				{ 
-				  getUnorderedGroupHelper().enter(grammarAccess.getBeforeAfterEventAccess().getUnorderedGroup_1());
+				(
+					{
+						newCompositeNode(grammarAccess.getComplexEventAccess().getKindTemporalPatternKindEnumRuleCall_2_1_0());
+					}
+					lv_kind_3_0=ruleTemporalPatternKind
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getComplexEventRule());
+						}
+						set(
+							$current,
+							"kind",
+							lv_kind_3_0,
+							"org.gemoc.monilog.MoniLog4DSL.TemporalPatternKind");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+			otherlv_4=']'
+			{
+				newLeafNode(otherlv_4, grammarAccess.getComplexEventAccess().getRightSquareBracketKeyword_2_2());
+			}
+		)?
+		otherlv_5='{'
+		{
+			newLeafNode(otherlv_5, grammarAccess.getComplexEventAccess().getLeftCurlyBracketKeyword_3());
+		}
+		(
+			(
+				{
+					newCompositeNode(grammarAccess.getComplexEventAccess().getPatternTemporalPatternParserRuleCall_4_0());
+				}
+				lv_pattern_6_0=ruleTemporalPattern
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getComplexEventRule());
+					}
+					set(
+						$current,
+						"pattern",
+						lv_pattern_6_0,
+						"org.gemoc.monilog.MoniLog4DSL.TemporalPattern");
+					afterParserOrEnumRuleCall();
+				}
+			)
+		)
+		otherlv_7='}'
+		{
+			newLeafNode(otherlv_7, grammarAccess.getComplexEventAccess().getRightCurlyBracketKeyword_5());
+		}
+	)
+;
+
+// Entry rule entryRuleUserEvent
+entryRuleUserEvent returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getUserEventRule()); }
+	iv_ruleUserEvent=ruleUserEvent
+	{ $current=$iv_ruleUserEvent.current; }
+	EOF;
+
+// Rule UserEvent
+ruleUserEvent returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		otherlv_0='custom'
+		{
+			newLeafNode(otherlv_0, grammarAccess.getUserEventAccess().getCustomKeyword_0());
+		}
+		(
+			(
+				lv_name_1_0=RULE_ID
+				{
+					newLeafNode(lv_name_1_0, grammarAccess.getUserEventAccess().getNameIDTerminalRuleCall_1_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getUserEventRule());
+					}
+					setWithLastConsumed(
+						$current,
+						"name",
+						lv_name_1_0,
+						"org.eclipse.xtext.common.Terminals.ID");
+				}
+			)
+		)
+		(
+			otherlv_2='('
+			{
+				newLeafNode(otherlv_2, grammarAccess.getUserEventAccess().getLeftParenthesisKeyword_2_0());
+			}
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getUserEventAccess().getParametersParameterParserRuleCall_2_1_0());
+					}
+					lv_parameters_3_0=ruleParameter
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getUserEventRule());
+						}
+						add(
+							$current,
+							"parameters",
+							lv_parameters_3_0,
+							"org.gemoc.monilog.MoniLog4DSL.Parameter");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+			(
+				otherlv_4=','
+				{
+					newLeafNode(otherlv_4, grammarAccess.getUserEventAccess().getCommaKeyword_2_2_0());
 				}
 				(
 					(
-			(
-				{getUnorderedGroupHelper().canSelect(grammarAccess.getBeforeAfterEventAccess().getUnorderedGroup_1(), 0)}?=>(
-					{
-						getUnorderedGroupHelper().select(grammarAccess.getBeforeAfterEventAccess().getUnorderedGroup_1(), 0);
-					}
-								({true}?=>(otherlv_2='frequency'
-								{
-									newLeafNode(otherlv_2, grammarAccess.getBeforeAfterEventAccess().getFrequencyKeyword_1_0_0());
-								}
-								(
-									(
-										lv_frequency_3_0=RULE_INT
-										{
-											newLeafNode(lv_frequency_3_0, grammarAccess.getBeforeAfterEventAccess().getFrequencyINTTerminalRuleCall_1_0_1_0());
-										}
-										{
-											if ($current==null) {
-												$current = createModelElement(grammarAccess.getBeforeAfterEventRule());
-											}
-											setWithLastConsumed(
-												$current,
-												"frequency",
-												lv_frequency_3_0,
-												"org.eclipse.xtext.common.Terminals.INT");
-										}
-									)
-								)
-								))
-					{ 
-						getUnorderedGroupHelper().returnFromSelection(grammarAccess.getBeforeAfterEventAccess().getUnorderedGroup_1());
-					}
+						{
+							newCompositeNode(grammarAccess.getUserEventAccess().getParametersParameterParserRuleCall_2_2_1_0());
+						}
+						lv_parameters_5_0=ruleParameter
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getUserEventRule());
+							}
+							add(
+								$current,
+								"parameters",
+								lv_parameters_5_0,
+								"org.gemoc.monilog.MoniLog4DSL.Parameter");
+							afterParserOrEnumRuleCall();
+						}
+					)
 				)
-			)|
-			(
-				{getUnorderedGroupHelper().canSelect(grammarAccess.getBeforeAfterEventAccess().getUnorderedGroup_1(), 1)}?=>(
-					{
-						getUnorderedGroupHelper().select(grammarAccess.getBeforeAfterEventAccess().getUnorderedGroup_1(), 1);
-					}
-								({true}?=>(otherlv_4='limit'
-								{
-									newLeafNode(otherlv_4, grammarAccess.getBeforeAfterEventAccess().getLimitKeyword_1_1_0());
-								}
-								(
-									(
-										lv_limit_5_0=RULE_INT
-										{
-											newLeafNode(lv_limit_5_0, grammarAccess.getBeforeAfterEventAccess().getLimitINTTerminalRuleCall_1_1_1_0());
-										}
-										{
-											if ($current==null) {
-												$current = createModelElement(grammarAccess.getBeforeAfterEventRule());
-											}
-											setWithLastConsumed(
-												$current,
-												"limit",
-												lv_limit_5_0,
-												"org.eclipse.xtext.common.Terminals.INT");
-										}
-									)
-								)
-								))
-					{ 
-						getUnorderedGroupHelper().returnFromSelection(grammarAccess.getBeforeAfterEventAccess().getUnorderedGroup_1());
-					}
-				)
-			)
-					)*
-				)
-			)
-				{ 
-				  getUnorderedGroupHelper().leave(grammarAccess.getBeforeAfterEventAccess().getUnorderedGroup_1());
-				}
-		)
+			)*
+			otherlv_6=')'
+			{
+				newLeafNode(otherlv_6, grammarAccess.getUserEventAccess().getRightParenthesisKeyword_2_3());
+			}
+		)?
 	)
 ;
 
@@ -862,97 +1497,29 @@ ruleCondition returns [EObject current=null]
 }:
 	(
 		(
-			(
-				{
-					$current = forceCreateModelElement(
-						grammarAccess.getConditionAccess().getTemporalPropertyConditionAction_0_0(),
-						$current);
-				}
-			)
-			otherlv_1='stream'
 			{
-				newLeafNode(otherlv_1, grammarAccess.getConditionAccess().getStreamKeyword_0_1());
-			}
-			otherlv_2='('
-			{
-				newLeafNode(otherlv_2, grammarAccess.getConditionAccess().getLeftParenthesisKeyword_0_2());
-			}
-			(
-				(
-					{
-						newCompositeNode(grammarAccess.getConditionAccess().getPatternTemporalPatternParserRuleCall_0_3_0());
-					}
-					lv_pattern_3_0=ruleTemporalPattern
-					{
-						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getConditionRule());
-						}
-						set(
-							$current,
-							"pattern",
-							lv_pattern_3_0,
-							"org.gemoc.monilog.MoniLog4DSL.TemporalPattern");
-						afterParserOrEnumRuleCall();
-					}
-				)
-			)
-			(
-				otherlv_4=','
-				{
-					newLeafNode(otherlv_4, grammarAccess.getConditionAccess().getCommaKeyword_0_4_0());
-				}
-				(
-					(
-						{
-							newCompositeNode(grammarAccess.getConditionAccess().getKindTemporalPropertyConditionKindEnumRuleCall_0_4_1_0());
-						}
-						lv_kind_5_0=ruleTemporalPropertyConditionKind
-						{
-							if ($current==null) {
-								$current = createModelElementForParent(grammarAccess.getConditionRule());
-							}
-							set(
-								$current,
-								"kind",
-								lv_kind_5_0,
-								"org.gemoc.monilog.MoniLog4DSL.TemporalPropertyConditionKind");
-							afterParserOrEnumRuleCall();
-						}
-					)
-				)
-			)?
-			otherlv_6=')'
-			{
-				newLeafNode(otherlv_6, grammarAccess.getConditionAccess().getRightParenthesisKeyword_0_5());
+				$current = forceCreateModelElement(
+					grammarAccess.getConditionAccess().getLanguageExpressionConditionAction_0(),
+					$current);
 			}
 		)
-		    |
 		(
 			(
 				{
-					$current = forceCreateModelElement(
-						grammarAccess.getConditionAccess().getLanguageExpressionConditionAction_1_0(),
-						$current);
+					newCompositeNode(grammarAccess.getConditionAccess().getExpressionLanguageExpressionParserRuleCall_1_0());
 				}
-			)
-			(
-				(
-					{
-						newCompositeNode(grammarAccess.getConditionAccess().getExpressionLanguageExpressionParserRuleCall_1_1_0());
+				lv_expression_1_0=ruleLanguageExpression
+				{
+					if ($current==null) {
+						$current = createModelElementForParent(grammarAccess.getConditionRule());
 					}
-					lv_expression_8_0=ruleLanguageExpression
-					{
-						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getConditionRule());
-						}
-						set(
-							$current,
-							"expression",
-							lv_expression_8_0,
-							"org.gemoc.monilog.MoniLog4DSL.LanguageExpression");
-						afterParserOrEnumRuleCall();
-					}
-				)
+					set(
+						$current,
+						"expression",
+						lv_expression_1_0,
+						"org.gemoc.monilog.MoniLog4DSL.LanguageExpression");
+					afterParserOrEnumRuleCall();
+				}
 			)
 		)
 	)
@@ -1035,20 +1602,41 @@ rulePattern returns [EObject current=null]
 			(
 				{
 					$current = forceCreateModelElement(
-						grammarAccess.getPatternAccess().getUniversalityAction_0_0(),
+						grammarAccess.getPatternAccess().getExistenceAction_0_0(),
 						$current);
 				}
 			)
-			otherlv_1='always'
-			{
-				newLeafNode(otherlv_1, grammarAccess.getPatternAccess().getAlwaysKeyword_0_1());
-			}
+			(
+				otherlv_1='exists'
+				{
+					newLeafNode(otherlv_1, grammarAccess.getPatternAccess().getExistsKeyword_0_1());
+				}
+			)?
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getPatternAccess().getEventStreamEventParserRuleCall_0_2_0());
+						newCompositeNode(grammarAccess.getPatternAccess().getBoundBoundTypeParserRuleCall_0_2_0());
 					}
-					lv_event_2_0=ruleStreamEvent
+					lv_bound_2_0=ruleBoundType
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getPatternRule());
+						}
+						set(
+							$current,
+							"bound",
+							lv_bound_2_0,
+							"org.gemoc.monilog.MoniLog4DSL.BoundType");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)?
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getPatternAccess().getEventStreamEventParserRuleCall_0_3_0());
+					}
+					lv_event_3_0=ruleStreamEvent
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getPatternRule());
@@ -1056,7 +1644,7 @@ rulePattern returns [EObject current=null]
 						set(
 							$current,
 							"event",
-							lv_event_2_0,
+							lv_event_3_0,
 							"org.gemoc.monilog.MoniLog4DSL.StreamEvent");
 						afterParserOrEnumRuleCall();
 					}
@@ -1068,37 +1656,18 @@ rulePattern returns [EObject current=null]
 			(
 				{
 					$current = forceCreateModelElement(
-						grammarAccess.getPatternAccess().getExistenceAction_1_0(),
+						grammarAccess.getPatternAccess().getUniversalityAction_1_0(),
 						$current);
 				}
 			)
-			otherlv_4='exists'
+			otherlv_5='always'
 			{
-				newLeafNode(otherlv_4, grammarAccess.getPatternAccess().getExistsKeyword_1_1());
+				newLeafNode(otherlv_5, grammarAccess.getPatternAccess().getAlwaysKeyword_1_1());
 			}
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getPatternAccess().getBoundBoundTypeParserRuleCall_1_2_0());
-					}
-					lv_bound_5_0=ruleBoundType
-					{
-						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getPatternRule());
-						}
-						set(
-							$current,
-							"bound",
-							lv_bound_5_0,
-							"org.gemoc.monilog.MoniLog4DSL.BoundType");
-						afterParserOrEnumRuleCall();
-					}
-				)
-			)
-			(
-				(
-					{
-						newCompositeNode(grammarAccess.getPatternAccess().getEventStreamEventParserRuleCall_1_3_0());
+						newCompositeNode(grammarAccess.getPatternAccess().getEventStreamEventParserRuleCall_1_2_0());
 					}
 					lv_event_6_0=ruleStreamEvent
 					{
@@ -1645,40 +2214,53 @@ ruleAction returns [EObject current=null]
 	leaveRule();
 }:
 	(
-		(
-			(
-				{
-					$current = forceCreateModelElement(
-						grammarAccess.getActionAccess().getNotifyAction_0_0(),
-						$current);
-				}
-			)
-			otherlv_1='notify'
-			{
-				newLeafNode(otherlv_1, grammarAccess.getActionAccess().getNotifyKeyword_0_1());
-			}
-		)
+		{
+			newCompositeNode(grammarAccess.getActionAccess().getLanguageExpressionParserRuleCall_0());
+		}
+		this_LanguageExpression_0=ruleLanguageExpression
+		{
+			$current = $this_LanguageExpression_0.current;
+			afterParserOrEnumRuleCall();
+		}
 		    |
 		{
-			newCompositeNode(grammarAccess.getActionAccess().getAppendParserRuleCall_1());
+			newCompositeNode(grammarAccess.getActionAccess().getAppenderCallParserRuleCall_1());
 		}
-		this_Append_2=ruleAppend
+		this_AppenderCall_1=ruleAppenderCall
 		{
-			$current = $this_Append_2.current;
+			$current = $this_AppenderCall_1.current;
+			afterParserOrEnumRuleCall();
+		}
+		    |
+		{
+			newCompositeNode(grammarAccess.getActionAccess().getEmitEventParserRuleCall_2());
+		}
+		this_EmitEvent_2=ruleEmitEvent
+		{
+			$current = $this_EmitEvent_2.current;
+			afterParserOrEnumRuleCall();
+		}
+		    |
+		{
+			newCompositeNode(grammarAccess.getActionAccess().getMoniLoggerCallParserRuleCall_3());
+		}
+		this_MoniLoggerCall_3=ruleMoniLoggerCall
+		{
+			$current = $this_MoniLoggerCall_3.current;
 			afterParserOrEnumRuleCall();
 		}
 	)
 ;
 
-// Entry rule entryRuleAppend
-entryRuleAppend returns [EObject current=null]:
-	{ newCompositeNode(grammarAccess.getAppendRule()); }
-	iv_ruleAppend=ruleAppend
-	{ $current=$iv_ruleAppend.current; }
+// Entry rule entryRuleAppenderCall
+entryRuleAppenderCall returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getAppenderCallRule()); }
+	iv_ruleAppenderCall=ruleAppenderCall
+	{ $current=$iv_ruleAppenderCall.current; }
 	EOF;
 
-// Rule Append
-ruleAppend returns [EObject current=null]
+// Rule AppenderCall
+ruleAppenderCall returns [EObject current=null]
 @init {
 	enterRule();
 }
@@ -1686,156 +2268,53 @@ ruleAppend returns [EObject current=null]
 	leaveRule();
 }:
 	(
-		otherlv_0='append'
-		{
-			newLeafNode(otherlv_0, grammarAccess.getAppendAccess().getAppendKeyword_0());
-		}
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getAppendAccess().getAppenderAppenderParserRuleCall_1_0());
+					newCompositeNode(grammarAccess.getAppenderCallAccess().getAppenderAppenderRefParserRuleCall_0_0());
 				}
-				lv_appender_1_0=ruleAppender
+				lv_appender_0_0=ruleAppenderRef
 				{
 					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getAppendRule());
+						$current = createModelElementForParent(grammarAccess.getAppenderCallRule());
 					}
 					set(
 						$current,
 						"appender",
-						lv_appender_1_0,
-						"org.gemoc.monilog.MoniLog4DSL.Appender");
+						lv_appender_0_0,
+						"org.gemoc.monilog.MoniLog4DSL.AppenderRef");
 					afterParserOrEnumRuleCall();
 				}
 			)
 		)
-	)
-;
-
-// Entry rule entryRuleAppender
-entryRuleAppender returns [EObject current=null]:
-	{ newCompositeNode(grammarAccess.getAppenderRule()); }
-	iv_ruleAppender=ruleAppender
-	{ $current=$iv_ruleAppender.current; }
-	EOF;
-
-// Rule Appender
-ruleAppender returns [EObject current=null]
-@init {
-	enterRule();
-}
-@after {
-	leaveRule();
-}:
-	(
+		otherlv_1='.'
 		{
-			newCompositeNode(grammarAccess.getAppenderAccess().getStreamAppenderParserRuleCall_0());
+			newLeafNode(otherlv_1, grammarAccess.getAppenderCallAccess().getFullStopKeyword_1());
 		}
-		this_StreamAppender_0=ruleStreamAppender
+		otherlv_2='call'
 		{
-			$current = $this_StreamAppender_0.current;
-			afterParserOrEnumRuleCall();
-		}
-		    |
-		{
-			newCompositeNode(grammarAccess.getAppenderAccess().getFileAppenderParserRuleCall_1());
-		}
-		this_FileAppender_1=ruleFileAppender
-		{
-			$current = $this_FileAppender_1.current;
-			afterParserOrEnumRuleCall();
-		}
-		    |
-		{
-			newCompositeNode(grammarAccess.getAppenderAccess().getConsoleAppenderParserRuleCall_2());
-		}
-		this_ConsoleAppender_2=ruleConsoleAppender
-		{
-			$current = $this_ConsoleAppender_2.current;
-			afterParserOrEnumRuleCall();
-		}
-	)
-;
-
-// Entry rule entryRuleStreamAppender
-entryRuleStreamAppender returns [EObject current=null]:
-	{ newCompositeNode(grammarAccess.getStreamAppenderRule()); }
-	iv_ruleStreamAppender=ruleStreamAppender
-	{ $current=$iv_ruleStreamAppender.current; }
-	EOF;
-
-// Rule StreamAppender
-ruleStreamAppender returns [EObject current=null]
-@init {
-	enterRule();
-}
-@after {
-	leaveRule();
-}:
-	(
-		otherlv_0='stream'
-		{
-			newLeafNode(otherlv_0, grammarAccess.getStreamAppenderAccess().getStreamKeyword_0());
-		}
-		otherlv_1='('
-		{
-			newLeafNode(otherlv_1, grammarAccess.getStreamAppenderAccess().getLeftParenthesisKeyword_1());
+			newLeafNode(otherlv_2, grammarAccess.getAppenderCallAccess().getCallKeyword_2());
 		}
 		(
-			(
-				(
-					lv_event_2_1=RULE_ID
-					{
-						newLeafNode(lv_event_2_1, grammarAccess.getStreamAppenderAccess().getEventIDTerminalRuleCall_2_0_0());
-					}
-					{
-						if ($current==null) {
-							$current = createModelElement(grammarAccess.getStreamAppenderRule());
-						}
-						setWithLastConsumed(
-							$current,
-							"event",
-							lv_event_2_1,
-							"org.eclipse.xtext.common.Terminals.ID");
-					}
-					    |
-					lv_event_2_2=RULE_STRING
-					{
-						newLeafNode(lv_event_2_2, grammarAccess.getStreamAppenderAccess().getEventSTRINGTerminalRuleCall_2_0_1());
-					}
-					{
-						if ($current==null) {
-							$current = createModelElement(grammarAccess.getStreamAppenderRule());
-						}
-						setWithLastConsumed(
-							$current,
-							"event",
-							lv_event_2_2,
-							"org.eclipse.xtext.common.Terminals.STRING");
-					}
-				)
-			)
-		)
-		(
-			otherlv_3='['
+			otherlv_3='('
 			{
-				newLeafNode(otherlv_3, grammarAccess.getStreamAppenderAccess().getLeftSquareBracketKeyword_3_0());
+				newLeafNode(otherlv_3, grammarAccess.getAppenderCallAccess().getLeftParenthesisKeyword_3_0());
 			}
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getStreamAppenderAccess().getValuesLanguageExpressionParserRuleCall_3_1_0());
+						newCompositeNode(grammarAccess.getAppenderCallAccess().getArgsAppenderCallArgumentParserRuleCall_3_1_0());
 					}
-					lv_values_4_0=ruleLanguageExpression
+					lv_args_4_0=ruleAppenderCallArgument
 					{
 						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getStreamAppenderRule());
+							$current = createModelElementForParent(grammarAccess.getAppenderCallRule());
 						}
 						add(
 							$current,
-							"values",
-							lv_values_4_0,
-							"org.gemoc.monilog.MoniLog4DSL.LanguageExpression");
+							"args",
+							lv_args_4_0,
+							"org.gemoc.monilog.MoniLog4DSL.AppenderCallArgument");
 						afterParserOrEnumRuleCall();
 					}
 				)
@@ -1843,49 +2322,45 @@ ruleStreamAppender returns [EObject current=null]
 			(
 				otherlv_5=','
 				{
-					newLeafNode(otherlv_5, grammarAccess.getStreamAppenderAccess().getCommaKeyword_3_2_0());
+					newLeafNode(otherlv_5, grammarAccess.getAppenderCallAccess().getCommaKeyword_3_2_0());
 				}
 				(
 					(
 						{
-							newCompositeNode(grammarAccess.getStreamAppenderAccess().getValuesLanguageExpressionParserRuleCall_3_2_1_0());
+							newCompositeNode(grammarAccess.getAppenderCallAccess().getArgsAppenderCallArgumentParserRuleCall_3_2_1_0());
 						}
-						lv_values_6_0=ruleLanguageExpression
+						lv_args_6_0=ruleAppenderCallArgument
 						{
 							if ($current==null) {
-								$current = createModelElementForParent(grammarAccess.getStreamAppenderRule());
+								$current = createModelElementForParent(grammarAccess.getAppenderCallRule());
 							}
 							add(
 								$current,
-								"values",
-								lv_values_6_0,
-								"org.gemoc.monilog.MoniLog4DSL.LanguageExpression");
+								"args",
+								lv_args_6_0,
+								"org.gemoc.monilog.MoniLog4DSL.AppenderCallArgument");
 							afterParserOrEnumRuleCall();
 						}
 					)
 				)
 			)*
-			otherlv_7=']'
+			otherlv_7=')'
 			{
-				newLeafNode(otherlv_7, grammarAccess.getStreamAppenderAccess().getRightSquareBracketKeyword_3_3());
+				newLeafNode(otherlv_7, grammarAccess.getAppenderCallAccess().getRightParenthesisKeyword_3_3());
 			}
 		)?
-		otherlv_8=')'
-		{
-			newLeafNode(otherlv_8, grammarAccess.getStreamAppenderAccess().getRightParenthesisKeyword_4());
-		}
 	)
 ;
 
-// Entry rule entryRuleFileAppender
-entryRuleFileAppender returns [EObject current=null]:
-	{ newCompositeNode(grammarAccess.getFileAppenderRule()); }
-	iv_ruleFileAppender=ruleFileAppender
-	{ $current=$iv_ruleFileAppender.current; }
+// Entry rule entryRuleAppenderRef
+entryRuleAppenderRef returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getAppenderRefRule()); }
+	iv_ruleAppenderRef=ruleAppenderRef
+	{ $current=$iv_ruleAppenderRef.current; }
 	EOF;
 
-// Rule FileAppender
-ruleFileAppender returns [EObject current=null]
+// Rule AppenderRef
+ruleAppenderRef returns [EObject current=null]
 @init {
 	enterRule();
 }
@@ -1893,121 +2368,32 @@ ruleFileAppender returns [EObject current=null]
 	leaveRule();
 }:
 	(
-		otherlv_0='file'
-		{
-			newLeafNode(otherlv_0, grammarAccess.getFileAppenderAccess().getFileKeyword_0());
-		}
-		otherlv_1='('
-		{
-			newLeafNode(otherlv_1, grammarAccess.getFileAppenderAccess().getLeftParenthesisKeyword_1());
-		}
 		(
-			(
-				lv_filename_2_0=RULE_STRING
-				{
-					newLeafNode(lv_filename_2_0, grammarAccess.getFileAppenderAccess().getFilenameSTRINGTerminalRuleCall_2_0());
+			{
+				if ($current==null) {
+					$current = createModelElement(grammarAccess.getAppenderRefRule());
 				}
-				{
-					if ($current==null) {
-						$current = createModelElement(grammarAccess.getFileAppenderRule());
-					}
-					setWithLastConsumed(
-						$current,
-						"filename",
-						lv_filename_2_0,
-						"org.eclipse.xtext.common.Terminals.STRING");
-				}
-			)
+			}
+			{
+				newCompositeNode(grammarAccess.getAppenderRefAccess().getAppenderAppenderCrossReference_0());
+			}
+			ruleFQN
+			{
+				afterParserOrEnumRuleCall();
+			}
 		)
-		otherlv_3=','
-		{
-			newLeafNode(otherlv_3, grammarAccess.getFileAppenderAccess().getCommaKeyword_3());
-		}
-		(
-			(
-				{
-					newCompositeNode(grammarAccess.getFileAppenderAccess().getLayoutLayoutParserRuleCall_4_0());
-				}
-				lv_layout_4_0=ruleLayout
-				{
-					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getFileAppenderRule());
-					}
-					set(
-						$current,
-						"layout",
-						lv_layout_4_0,
-						"org.gemoc.monilog.MoniLog4DSL.Layout");
-					afterParserOrEnumRuleCall();
-				}
-			)
-		)
-		otherlv_5=')'
-		{
-			newLeafNode(otherlv_5, grammarAccess.getFileAppenderAccess().getRightParenthesisKeyword_5());
-		}
 	)
 ;
 
-// Entry rule entryRuleConsoleAppender
-entryRuleConsoleAppender returns [EObject current=null]:
-	{ newCompositeNode(grammarAccess.getConsoleAppenderRule()); }
-	iv_ruleConsoleAppender=ruleConsoleAppender
-	{ $current=$iv_ruleConsoleAppender.current; }
+// Entry rule entryRuleAppenderCallArgument
+entryRuleAppenderCallArgument returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getAppenderCallArgumentRule()); }
+	iv_ruleAppenderCallArgument=ruleAppenderCallArgument
+	{ $current=$iv_ruleAppenderCallArgument.current; }
 	EOF;
 
-// Rule ConsoleAppender
-ruleConsoleAppender returns [EObject current=null]
-@init {
-	enterRule();
-}
-@after {
-	leaveRule();
-}:
-	(
-		otherlv_0='console'
-		{
-			newLeafNode(otherlv_0, grammarAccess.getConsoleAppenderAccess().getConsoleKeyword_0());
-		}
-		otherlv_1='('
-		{
-			newLeafNode(otherlv_1, grammarAccess.getConsoleAppenderAccess().getLeftParenthesisKeyword_1());
-		}
-		(
-			(
-				{
-					newCompositeNode(grammarAccess.getConsoleAppenderAccess().getLayoutLayoutParserRuleCall_2_0());
-				}
-				lv_layout_2_0=ruleLayout
-				{
-					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getConsoleAppenderRule());
-					}
-					set(
-						$current,
-						"layout",
-						lv_layout_2_0,
-						"org.gemoc.monilog.MoniLog4DSL.Layout");
-					afterParserOrEnumRuleCall();
-				}
-			)
-		)
-		otherlv_3=')'
-		{
-			newLeafNode(otherlv_3, grammarAccess.getConsoleAppenderAccess().getRightParenthesisKeyword_3());
-		}
-	)
-;
-
-// Entry rule entryRuleLayout
-entryRuleLayout returns [EObject current=null]:
-	{ newCompositeNode(grammarAccess.getLayoutRule()); }
-	iv_ruleLayout=ruleLayout
-	{ $current=$iv_ruleLayout.current; }
-	EOF;
-
-// Rule Layout
-ruleLayout returns [EObject current=null]
+// Rule AppenderCallArgument
+ruleAppenderCallArgument returns [EObject current=null]
 @init {
 	enterRule();
 }
@@ -2016,96 +2402,34 @@ ruleLayout returns [EObject current=null]
 }:
 	(
 		{
-			newCompositeNode(grammarAccess.getLayoutAccess().getStringLayoutParserRuleCall_0());
+			newCompositeNode(grammarAccess.getAppenderCallArgumentAccess().getExpressionParserRuleCall_0());
 		}
-		this_StringLayout_0=ruleStringLayout
+		this_Expression_0=ruleExpression
 		{
-			$current = $this_StringLayout_0.current;
+			$current = $this_Expression_0.current;
 			afterParserOrEnumRuleCall();
 		}
 		    |
 		{
-			newCompositeNode(grammarAccess.getLayoutAccess().getExternalLayoutParserRuleCall_1());
+			newCompositeNode(grammarAccess.getAppenderCallArgumentAccess().getLayoutCallParserRuleCall_1());
 		}
-		this_ExternalLayout_1=ruleExternalLayout
+		this_LayoutCall_1=ruleLayoutCall
 		{
-			$current = $this_ExternalLayout_1.current;
+			$current = $this_LayoutCall_1.current;
 			afterParserOrEnumRuleCall();
 		}
 	)
 ;
 
-// Entry rule entryRuleStringLayout
-entryRuleStringLayout returns [EObject current=null]:
-	{ newCompositeNode(grammarAccess.getStringLayoutRule()); }
-	iv_ruleStringLayout=ruleStringLayout
-	{ $current=$iv_ruleStringLayout.current; }
+// Entry rule entryRuleLayoutCall
+entryRuleLayoutCall returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getLayoutCallRule()); }
+	iv_ruleLayoutCall=ruleLayoutCall
+	{ $current=$iv_ruleLayoutCall.current; }
 	EOF;
 
-// Rule StringLayout
-ruleStringLayout returns [EObject current=null]
-@init {
-	enterRule();
-}
-@after {
-	leaveRule();
-}:
-	(
-		(
-			(
-				lv_formatString_0_0=RULE_STRING
-				{
-					newLeafNode(lv_formatString_0_0, grammarAccess.getStringLayoutAccess().getFormatStringSTRINGTerminalRuleCall_0_0());
-				}
-				{
-					if ($current==null) {
-						$current = createModelElement(grammarAccess.getStringLayoutRule());
-					}
-					setWithLastConsumed(
-						$current,
-						"formatString",
-						lv_formatString_0_0,
-						"org.eclipse.xtext.common.Terminals.STRING");
-				}
-			)
-		)
-		(
-			otherlv_1=','
-			{
-				newLeafNode(otherlv_1, grammarAccess.getStringLayoutAccess().getCommaKeyword_1_0());
-			}
-			(
-				(
-					{
-						newCompositeNode(grammarAccess.getStringLayoutAccess().getValuesLanguageExpressionParserRuleCall_1_1_0());
-					}
-					lv_values_2_0=ruleLanguageExpression
-					{
-						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getStringLayoutRule());
-						}
-						add(
-							$current,
-							"values",
-							lv_values_2_0,
-							"org.gemoc.monilog.MoniLog4DSL.LanguageExpression");
-						afterParserOrEnumRuleCall();
-					}
-				)
-			)
-		)*
-	)
-;
-
-// Entry rule entryRuleExternalLayout
-entryRuleExternalLayout returns [EObject current=null]:
-	{ newCompositeNode(grammarAccess.getExternalLayoutRule()); }
-	iv_ruleExternalLayout=ruleExternalLayout
-	{ $current=$iv_ruleExternalLayout.current; }
-	EOF;
-
-// Rule ExternalLayout
-ruleExternalLayout returns [EObject current=null]
+// Rule LayoutCall
+ruleLayoutCall returns [EObject current=null]
 @init {
 	enterRule();
 }
@@ -2116,47 +2440,345 @@ ruleExternalLayout returns [EObject current=null]
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getExternalLayoutAccess().getPathFQNParserRuleCall_0_0());
+					newCompositeNode(grammarAccess.getLayoutCallAccess().getLayoutLayoutRefParserRuleCall_0_0());
 				}
-				lv_path_0_0=ruleFQN
+				lv_layout_0_0=ruleLayoutRef
 				{
 					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getExternalLayoutRule());
+						$current = createModelElementForParent(grammarAccess.getLayoutCallRule());
 					}
 					set(
 						$current,
-						"path",
-						lv_path_0_0,
-						"org.gemoc.monilog.MoniLog4DSL.FQN");
+						"layout",
+						lv_layout_0_0,
+						"org.gemoc.monilog.MoniLog4DSL.LayoutRef");
 					afterParserOrEnumRuleCall();
 				}
 			)
 		)
+		otherlv_1='.'
+		{
+			newLeafNode(otherlv_1, grammarAccess.getLayoutCallAccess().getFullStopKeyword_1());
+		}
+		otherlv_2='call'
+		{
+			newLeafNode(otherlv_2, grammarAccess.getLayoutCallAccess().getCallKeyword_2());
+		}
 		(
-			otherlv_1=','
+			otherlv_3='('
 			{
-				newLeafNode(otherlv_1, grammarAccess.getExternalLayoutAccess().getCommaKeyword_1_0());
+				newLeafNode(otherlv_3, grammarAccess.getLayoutCallAccess().getLeftParenthesisKeyword_3_0());
 			}
 			(
 				(
 					{
-						newCompositeNode(grammarAccess.getExternalLayoutAccess().getValuesLanguageExpressionParserRuleCall_1_1_0());
+						newCompositeNode(grammarAccess.getLayoutCallAccess().getArgsExpressionParserRuleCall_3_1_0());
 					}
-					lv_values_2_0=ruleLanguageExpression
+					lv_args_4_0=ruleExpression
 					{
 						if ($current==null) {
-							$current = createModelElementForParent(grammarAccess.getExternalLayoutRule());
+							$current = createModelElementForParent(grammarAccess.getLayoutCallRule());
 						}
 						add(
 							$current,
-							"values",
-							lv_values_2_0,
-							"org.gemoc.monilog.MoniLog4DSL.LanguageExpression");
+							"args",
+							lv_args_4_0,
+							"org.gemoc.monilog.MoniLog4DSL.Expression");
 						afterParserOrEnumRuleCall();
 					}
 				)
 			)
-		)*
+			(
+				otherlv_5=','
+				{
+					newLeafNode(otherlv_5, grammarAccess.getLayoutCallAccess().getCommaKeyword_3_2_0());
+				}
+				(
+					(
+						{
+							newCompositeNode(grammarAccess.getLayoutCallAccess().getArgsExpressionParserRuleCall_3_2_1_0());
+						}
+						lv_args_6_0=ruleExpression
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getLayoutCallRule());
+							}
+							add(
+								$current,
+								"args",
+								lv_args_6_0,
+								"org.gemoc.monilog.MoniLog4DSL.Expression");
+							afterParserOrEnumRuleCall();
+						}
+					)
+				)
+			)*
+			otherlv_7=')'
+			{
+				newLeafNode(otherlv_7, grammarAccess.getLayoutCallAccess().getRightParenthesisKeyword_3_3());
+			}
+		)?
+	)
+;
+
+// Entry rule entryRuleLayoutRef
+entryRuleLayoutRef returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getLayoutRefRule()); }
+	iv_ruleLayoutRef=ruleLayoutRef
+	{ $current=$iv_ruleLayoutRef.current; }
+	EOF;
+
+// Rule LayoutRef
+ruleLayoutRef returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			{
+				if ($current==null) {
+					$current = createModelElement(grammarAccess.getLayoutRefRule());
+				}
+			}
+			{
+				newCompositeNode(grammarAccess.getLayoutRefAccess().getLayoutLayoutCrossReference_0());
+			}
+			ruleFQN
+			{
+				afterParserOrEnumRuleCall();
+			}
+		)
+	)
+;
+
+// Entry rule entryRuleEmitEvent
+entryRuleEmitEvent returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getEmitEventRule()); }
+	iv_ruleEmitEvent=ruleEmitEvent
+	{ $current=$iv_ruleEmitEvent.current; }
+	EOF;
+
+// Rule EmitEvent
+ruleEmitEvent returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			(
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getEmitEventRule());
+					}
+				}
+				otherlv_0=RULE_ID
+				{
+					newLeafNode(otherlv_0, grammarAccess.getEmitEventAccess().getEventEventCrossReference_0_0());
+				}
+			)
+		)
+		otherlv_1='.'
+		{
+			newLeafNode(otherlv_1, grammarAccess.getEmitEventAccess().getFullStopKeyword_1());
+		}
+		otherlv_2='emit'
+		{
+			newLeafNode(otherlv_2, grammarAccess.getEmitEventAccess().getEmitKeyword_2());
+		}
+		(
+			otherlv_3='('
+			{
+				newLeafNode(otherlv_3, grammarAccess.getEmitEventAccess().getLeftParenthesisKeyword_3_0());
+			}
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getEmitEventAccess().getArgsExpressionParserRuleCall_3_1_0());
+					}
+					lv_args_4_0=ruleExpression
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getEmitEventRule());
+						}
+						add(
+							$current,
+							"args",
+							lv_args_4_0,
+							"org.gemoc.monilog.MoniLog4DSL.Expression");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+			(
+				otherlv_5=','
+				{
+					newLeafNode(otherlv_5, grammarAccess.getEmitEventAccess().getCommaKeyword_3_2_0());
+				}
+				(
+					(
+						{
+							newCompositeNode(grammarAccess.getEmitEventAccess().getArgsExpressionParserRuleCall_3_2_1_0());
+						}
+						lv_args_6_0=ruleExpression
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getEmitEventRule());
+							}
+							add(
+								$current,
+								"args",
+								lv_args_6_0,
+								"org.gemoc.monilog.MoniLog4DSL.Expression");
+							afterParserOrEnumRuleCall();
+						}
+					)
+				)
+			)*
+			otherlv_7=')'
+			{
+				newLeafNode(otherlv_7, grammarAccess.getEmitEventAccess().getRightParenthesisKeyword_3_3());
+			}
+		)?
+	)
+;
+
+// Entry rule entryRuleMoniLoggerCall
+entryRuleMoniLoggerCall returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getMoniLoggerCallRule()); }
+	iv_ruleMoniLoggerCall=ruleMoniLoggerCall
+	{ $current=$iv_ruleMoniLoggerCall.current; }
+	EOF;
+
+// Rule MoniLoggerCall
+ruleMoniLoggerCall returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			(
+				{
+					$current = forceCreateModelElement(
+						grammarAccess.getMoniLoggerCallAccess().getStartMoniLoggerAction_0_0(),
+						$current);
+				}
+			)
+			(
+				(
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getMoniLoggerCallRule());
+						}
+					}
+					otherlv_1=RULE_ID
+					{
+						newLeafNode(otherlv_1, grammarAccess.getMoniLoggerCallAccess().getMoniloggerMoniLoggerCrossReference_0_1_0());
+					}
+				)
+			)
+			otherlv_2='.'
+			{
+				newLeafNode(otherlv_2, grammarAccess.getMoniLoggerCallAccess().getFullStopKeyword_0_2());
+			}
+			otherlv_3='start'
+			{
+				newLeafNode(otherlv_3, grammarAccess.getMoniLoggerCallAccess().getStartKeyword_0_3());
+			}
+			(
+				otherlv_4='('
+				{
+					newLeafNode(otherlv_4, grammarAccess.getMoniLoggerCallAccess().getLeftParenthesisKeyword_0_4_0());
+				}
+				(
+					(
+						{
+							newCompositeNode(grammarAccess.getMoniLoggerCallAccess().getArgsExpressionParserRuleCall_0_4_1_0());
+						}
+						lv_args_5_0=ruleExpression
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getMoniLoggerCallRule());
+							}
+							add(
+								$current,
+								"args",
+								lv_args_5_0,
+								"org.gemoc.monilog.MoniLog4DSL.Expression");
+							afterParserOrEnumRuleCall();
+						}
+					)
+				)
+				(
+					otherlv_6=','
+					{
+						newLeafNode(otherlv_6, grammarAccess.getMoniLoggerCallAccess().getCommaKeyword_0_4_2_0());
+					}
+					(
+						(
+							{
+								newCompositeNode(grammarAccess.getMoniLoggerCallAccess().getArgsExpressionParserRuleCall_0_4_2_1_0());
+							}
+							lv_args_7_0=ruleExpression
+							{
+								if ($current==null) {
+									$current = createModelElementForParent(grammarAccess.getMoniLoggerCallRule());
+								}
+								add(
+									$current,
+									"args",
+									lv_args_7_0,
+									"org.gemoc.monilog.MoniLog4DSL.Expression");
+								afterParserOrEnumRuleCall();
+							}
+						)
+					)
+				)*
+				otherlv_8=')'
+				{
+					newLeafNode(otherlv_8, grammarAccess.getMoniLoggerCallAccess().getRightParenthesisKeyword_0_4_3());
+				}
+			)?
+		)
+		    |
+		(
+			(
+				{
+					$current = forceCreateModelElement(
+						grammarAccess.getMoniLoggerCallAccess().getStopMoniLoggerAction_1_0(),
+						$current);
+				}
+			)
+			(
+				(
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getMoniLoggerCallRule());
+						}
+					}
+					otherlv_10=RULE_ID
+					{
+						newLeafNode(otherlv_10, grammarAccess.getMoniLoggerCallAccess().getMoniloggerMoniLoggerCrossReference_1_1_0());
+					}
+				)
+			)
+			otherlv_11='.'
+			{
+				newLeafNode(otherlv_11, grammarAccess.getMoniLoggerCallAccess().getFullStopKeyword_1_2());
+			}
+			otherlv_12='stop'
+			{
+				newLeafNode(otherlv_12, grammarAccess.getMoniLoggerCallAccess().getStopKeyword_1_3());
+			}
+		)
 	)
 ;
 
@@ -2178,37 +2800,15 @@ ruleStreamEvent returns [EObject current=null]
 	(
 		(
 			(
-				(
-					lv_eventId_0_1=RULE_ID
-					{
-						newLeafNode(lv_eventId_0_1, grammarAccess.getStreamEventAccess().getEventIdIDTerminalRuleCall_0_0_0());
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getStreamEventRule());
 					}
-					{
-						if ($current==null) {
-							$current = createModelElement(grammarAccess.getStreamEventRule());
-						}
-						setWithLastConsumed(
-							$current,
-							"eventId",
-							lv_eventId_0_1,
-							"org.eclipse.xtext.common.Terminals.ID");
-					}
-					    |
-					lv_eventId_0_2=RULE_STRING
-					{
-						newLeafNode(lv_eventId_0_2, grammarAccess.getStreamEventAccess().getEventIdSTRINGTerminalRuleCall_0_0_1());
-					}
-					{
-						if ($current==null) {
-							$current = createModelElement(grammarAccess.getStreamEventRule());
-						}
-						setWithLastConsumed(
-							$current,
-							"eventId",
-							lv_eventId_0_2,
-							"org.eclipse.xtext.common.Terminals.STRING");
-					}
-				)
+				}
+				otherlv_0=RULE_ID
+				{
+					newLeafNode(otherlv_0, grammarAccess.getStreamEventAccess().getEventEventCrossReference_0_0());
+				}
 			)
 		)
 		(
@@ -2326,9 +2926,9 @@ ruleEmptyOrPropertyValue returns [EObject current=null]
 				(
 					(
 						{
-							newCompositeNode(grammarAccess.getEmptyOrPropertyValueAccess().getValueLanguageExpressionParserRuleCall_1_2_1_0());
+							newCompositeNode(grammarAccess.getEmptyOrPropertyValueAccess().getValueExpressionParserRuleCall_1_2_1_0());
 						}
-						lv_value_4_0=ruleLanguageExpression
+						lv_value_4_0=ruleExpression
 						{
 							if ($current==null) {
 								$current = createModelElementForParent(grammarAccess.getEmptyOrPropertyValueRule());
@@ -2337,12 +2937,78 @@ ruleEmptyOrPropertyValue returns [EObject current=null]
 								$current,
 								"value",
 								lv_value_4_0,
-								"org.gemoc.monilog.MoniLog4DSL.LanguageExpression");
+								"org.gemoc.monilog.MoniLog4DSL.Expression");
 							afterParserOrEnumRuleCall();
 						}
 					)
 				)
 			)?
+		)
+	)
+;
+
+// Entry rule entryRuleExpression
+entryRuleExpression returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getExpressionRule()); }
+	iv_ruleExpression=ruleExpression
+	{ $current=$iv_ruleExpression.current; }
+	EOF;
+
+// Rule Expression
+ruleExpression returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		{
+			newCompositeNode(grammarAccess.getExpressionAccess().getParameterReferenceParserRuleCall_0());
+		}
+		this_ParameterReference_0=ruleParameterReference
+		{
+			$current = $this_ParameterReference_0.current;
+			afterParserOrEnumRuleCall();
+		}
+		    |
+		{
+			newCompositeNode(grammarAccess.getExpressionAccess().getLanguageExpressionParserRuleCall_1());
+		}
+		this_LanguageExpression_1=ruleLanguageExpression
+		{
+			$current = $this_LanguageExpression_1.current;
+			afterParserOrEnumRuleCall();
+		}
+	)
+;
+
+// Entry rule entryRuleParameterReference
+entryRuleParameterReference returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getParameterReferenceRule()); }
+	iv_ruleParameterReference=ruleParameterReference
+	{ $current=$iv_ruleParameterReference.current; }
+	EOF;
+
+// Rule ParameterReference
+ruleParameterReference returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			{
+				if ($current==null) {
+					$current = createModelElement(grammarAccess.getParameterReferenceRule());
+				}
+			}
+			otherlv_0=RULE_ID
+			{
+				newLeafNode(otherlv_0, grammarAccess.getParameterReferenceAccess().getParameterParameterCrossReference_0());
+			}
 		)
 	)
 ;
@@ -2373,37 +3039,20 @@ ruleLanguageExpression returns [EObject current=null]
 			)
 			(
 				(
-					(
-						lv_languageId_1_1=RULE_ID
-						{
-							newLeafNode(lv_languageId_1_1, grammarAccess.getLanguageExpressionAccess().getLanguageIdIDTerminalRuleCall_0_1_0_0());
+					lv_languageId_1_0=RULE_ID
+					{
+						newLeafNode(lv_languageId_1_0, grammarAccess.getLanguageExpressionAccess().getLanguageIdIDTerminalRuleCall_0_1_0());
+					}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getLanguageExpressionRule());
 						}
-						{
-							if ($current==null) {
-								$current = createModelElement(grammarAccess.getLanguageExpressionRule());
-							}
-							setWithLastConsumed(
-								$current,
-								"languageId",
-								lv_languageId_1_1,
-								"org.eclipse.xtext.common.Terminals.ID");
-						}
-						    |
-						lv_languageId_1_2=RULE_STRING
-						{
-							newLeafNode(lv_languageId_1_2, grammarAccess.getLanguageExpressionAccess().getLanguageIdSTRINGTerminalRuleCall_0_1_0_1());
-						}
-						{
-							if ($current==null) {
-								$current = createModelElement(grammarAccess.getLanguageExpressionRule());
-							}
-							setWithLastConsumed(
-								$current,
-								"languageId",
-								lv_languageId_1_2,
-								"org.eclipse.xtext.common.Terminals.STRING");
-						}
-					)
+						setWithLastConsumed(
+							$current,
+							"languageId",
+							lv_languageId_1_0,
+							"org.eclipse.xtext.common.Terminals.ID");
+					}
 				)
 			)
 			otherlv_2='('
@@ -2504,6 +3153,40 @@ ruleFQN returns [AntlrDatatypeRuleToken current=new AntlrDatatypeRuleToken()]
 	)
 ;
 
+// Rule MoniLoggerAnnotation
+ruleMoniLoggerAnnotation returns [Enumerator current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		enumLiteral_0='@Inactive'
+		{
+			$current = grammarAccess.getMoniLoggerAnnotationAccess().getInactiveEnumLiteralDeclaration().getEnumLiteral().getInstance();
+			newLeafNode(enumLiteral_0, grammarAccess.getMoniLoggerAnnotationAccess().getInactiveEnumLiteralDeclaration());
+		}
+	)
+;
+
+// Rule AppenderAnnotation
+ruleAppenderAnnotation returns [Enumerator current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		enumLiteral_0='@Async'
+		{
+			$current = grammarAccess.getAppenderAnnotationAccess().getAsyncEnumLiteralDeclaration().getEnumLiteral().getInstance();
+			newLeafNode(enumLiteral_0, grammarAccess.getAppenderAnnotationAccess().getAsyncEnumLiteralDeclaration());
+		}
+	)
+;
+
 // Rule LogLevel
 ruleLogLevel returns [Enumerator current=null]
 @init {
@@ -2514,42 +3197,42 @@ ruleLogLevel returns [Enumerator current=null]
 }:
 	(
 		(
-			enumLiteral_0='CONFIG'
+			enumLiteral_0='INFO'
 			{
-				$current = grammarAccess.getLogLevelAccess().getConfigEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
-				newLeafNode(enumLiteral_0, grammarAccess.getLogLevelAccess().getConfigEnumLiteralDeclaration_0());
+				$current = grammarAccess.getLogLevelAccess().getInfoEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_0, grammarAccess.getLogLevelAccess().getInfoEnumLiteralDeclaration_0());
 			}
 		)
 		    |
 		(
-			enumLiteral_1='FINE'
+			enumLiteral_1='CONFIG'
 			{
-				$current = grammarAccess.getLogLevelAccess().getFineEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
-				newLeafNode(enumLiteral_1, grammarAccess.getLogLevelAccess().getFineEnumLiteralDeclaration_1());
+				$current = grammarAccess.getLogLevelAccess().getConfigEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_1, grammarAccess.getLogLevelAccess().getConfigEnumLiteralDeclaration_1());
 			}
 		)
 		    |
 		(
-			enumLiteral_2='FINER'
+			enumLiteral_2='FINE'
 			{
-				$current = grammarAccess.getLogLevelAccess().getFinerEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
-				newLeafNode(enumLiteral_2, grammarAccess.getLogLevelAccess().getFinerEnumLiteralDeclaration_2());
+				$current = grammarAccess.getLogLevelAccess().getFineEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_2, grammarAccess.getLogLevelAccess().getFineEnumLiteralDeclaration_2());
 			}
 		)
 		    |
 		(
-			enumLiteral_3='FINEST'
+			enumLiteral_3='FINER'
 			{
-				$current = grammarAccess.getLogLevelAccess().getFinestEnumLiteralDeclaration_3().getEnumLiteral().getInstance();
-				newLeafNode(enumLiteral_3, grammarAccess.getLogLevelAccess().getFinestEnumLiteralDeclaration_3());
+				$current = grammarAccess.getLogLevelAccess().getFinerEnumLiteralDeclaration_3().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_3, grammarAccess.getLogLevelAccess().getFinerEnumLiteralDeclaration_3());
 			}
 		)
 		    |
 		(
-			enumLiteral_4='INFO'
+			enumLiteral_4='FINEST'
 			{
-				$current = grammarAccess.getLogLevelAccess().getInfoEnumLiteralDeclaration_4().getEnumLiteral().getInstance();
-				newLeafNode(enumLiteral_4, grammarAccess.getLogLevelAccess().getInfoEnumLiteralDeclaration_4());
+				$current = grammarAccess.getLogLevelAccess().getFinestEnumLiteralDeclaration_4().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_4, grammarAccess.getLogLevelAccess().getFinestEnumLiteralDeclaration_4());
 			}
 		)
 		    |
@@ -2571,8 +3254,8 @@ ruleLogLevel returns [Enumerator current=null]
 	)
 ;
 
-// Rule TemporalPropertyConditionKind
-ruleTemporalPropertyConditionKind returns [Enumerator current=null]
+// Rule TemporalPatternKind
+ruleTemporalPatternKind returns [Enumerator current=null]
 @init {
 	enterRule();
 }
@@ -2583,32 +3266,32 @@ ruleTemporalPropertyConditionKind returns [Enumerator current=null]
 		(
 			enumLiteral_0='S'
 			{
-				$current = grammarAccess.getTemporalPropertyConditionKindAccess().getSEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
-				newLeafNode(enumLiteral_0, grammarAccess.getTemporalPropertyConditionKindAccess().getSEnumLiteralDeclaration_0());
+				$current = grammarAccess.getTemporalPatternKindAccess().getSEnumLiteralDeclaration_0().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_0, grammarAccess.getTemporalPatternKindAccess().getSEnumLiteralDeclaration_0());
 			}
 		)
 		    |
 		(
 			enumLiteral_1='V'
 			{
-				$current = grammarAccess.getTemporalPropertyConditionKindAccess().getVEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
-				newLeafNode(enumLiteral_1, grammarAccess.getTemporalPropertyConditionKindAccess().getVEnumLiteralDeclaration_1());
+				$current = grammarAccess.getTemporalPatternKindAccess().getVEnumLiteralDeclaration_1().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_1, grammarAccess.getTemporalPatternKindAccess().getVEnumLiteralDeclaration_1());
 			}
 		)
 		    |
 		(
 			enumLiteral_2='nS'
 			{
-				$current = grammarAccess.getTemporalPropertyConditionKindAccess().getNSEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
-				newLeafNode(enumLiteral_2, grammarAccess.getTemporalPropertyConditionKindAccess().getNSEnumLiteralDeclaration_2());
+				$current = grammarAccess.getTemporalPatternKindAccess().getNSEnumLiteralDeclaration_2().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_2, grammarAccess.getTemporalPatternKindAccess().getNSEnumLiteralDeclaration_2());
 			}
 		)
 		    |
 		(
 			enumLiteral_3='nV'
 			{
-				$current = grammarAccess.getTemporalPropertyConditionKindAccess().getNVEnumLiteralDeclaration_3().getEnumLiteral().getInstance();
-				newLeafNode(enumLiteral_3, grammarAccess.getTemporalPropertyConditionKindAccess().getNVEnumLiteralDeclaration_3());
+				$current = grammarAccess.getTemporalPatternKindAccess().getNVEnumLiteralDeclaration_3().getEnumLiteral().getInstance();
+				newLeafNode(enumLiteral_3, grammarAccess.getTemporalPatternKindAccess().getNVEnumLiteralDeclaration_3());
 			}
 		)
 	)

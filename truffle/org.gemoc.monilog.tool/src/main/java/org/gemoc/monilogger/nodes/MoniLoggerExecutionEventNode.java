@@ -11,12 +11,13 @@ public abstract class MoniLoggerExecutionEventNode extends ExecutionEventNode {
 
 	@Child
 	private MoniLoggerExecutableNode action;
-
+	
 	private final boolean onEnter;
 	private final boolean onReturnValue;
 
 	private final ConditionProfile conditionProfile = ConditionProfile.createCountingProfile();
 
+	
 	public MoniLoggerExecutionEventNode(boolean onEnter, boolean onReturnValue, MoniLoggerExecutableNode action) {
 		this.onEnter = onEnter;
 		this.onReturnValue = onReturnValue;
@@ -36,11 +37,12 @@ public abstract class MoniLoggerExecutionEventNode extends ExecutionEventNode {
 			execute(frame);
 		}
 	}
-
+	
 	protected abstract void execute(VirtualFrame frame);
 
 	@Specialization
 	protected void doAction(VirtualFrame frame, boolean condition) {
+
 		if (conditionProfile.profile(condition)) {
 			action.execute(frame);
 		}

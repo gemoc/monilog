@@ -22,8 +22,9 @@ public class MoniLoggerExecutionEventNodeFactory implements ExecutionEventNodeFa
 	private final Map<String, Boolean> after = new HashMap<>();
 	private final BiFunction<String, Node, MoniLoggerExecutableNode> conditionNodeFactory;
 	private final BiFunction<String, Node, MoniLoggerExecutableNode> actionNodeFactory;
-
-	MoniLoggerExecutionEventNodeFactory(List<Event> events, BiFunction<String, Node, MoniLoggerExecutableNode> conditionNodefactory,
+	
+	MoniLoggerExecutionEventNodeFactory(List<Event> events,
+			BiFunction<String, Node, MoniLoggerExecutableNode> conditionNodefactory,
 			BiFunction<String, Node, MoniLoggerExecutableNode> actionNodefactory) {
 		events.stream().forEach(e -> {
 			switch (e.eClass().getClassifierID()) {
@@ -52,7 +53,8 @@ public class MoniLoggerExecutionEventNodeFactory implements ExecutionEventNodeFa
 		final String rootName = ec.getInstrumentedNode().getRootNode().getName();
 		final MoniLoggerExecutableNode conditionNode = conditionNodeFactory == null ? new MoniLoggerTrueNode()
 				: conditionNodeFactory.apply(id, node);
-		final MoniLoggerExecutableNode actionNode = actionNodeFactory == null ? null : actionNodeFactory.apply(id, node);
+		final MoniLoggerExecutableNode actionNode = actionNodeFactory == null ? null
+				: actionNodeFactory.apply(id, node);
 		if (actionNode != null) {
 			if (before.isEmpty() && after.isEmpty()) {
 				return MoniLoggerExecutionEventNodeGen.create(false, true, actionNode, conditionNode);

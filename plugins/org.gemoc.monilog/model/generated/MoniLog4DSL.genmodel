@@ -6,40 +6,78 @@
     complianceLevel="8.0" copyrightFields="false" runtimeVersion="2.20">
   <genPackages prefix="MoniLog4DSL" basePackage="org.gemoc.monilog" disposableProviderFactory="true"
       fileExtensions="mnlg" ecorePackage="MoniLog4DSL.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="MoniLog4DSL.ecore#//MoniLoggerAnnotation">
+      <genEnumLiterals ecoreEnumLiteral="MoniLog4DSL.ecore#//MoniLoggerAnnotation/inactive"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="MoniLog4DSL.ecore#//AppenderAnnotation">
+      <genEnumLiterals ecoreEnumLiteral="MoniLog4DSL.ecore#//AppenderAnnotation/async"/>
+    </genEnums>
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="MoniLog4DSL.ecore#//LogLevel">
+      <genEnumLiterals ecoreEnumLiteral="MoniLog4DSL.ecore#//LogLevel/info"/>
       <genEnumLiterals ecoreEnumLiteral="MoniLog4DSL.ecore#//LogLevel/config"/>
       <genEnumLiterals ecoreEnumLiteral="MoniLog4DSL.ecore#//LogLevel/fine"/>
       <genEnumLiterals ecoreEnumLiteral="MoniLog4DSL.ecore#//LogLevel/finer"/>
       <genEnumLiterals ecoreEnumLiteral="MoniLog4DSL.ecore#//LogLevel/finest"/>
-      <genEnumLiterals ecoreEnumLiteral="MoniLog4DSL.ecore#//LogLevel/info"/>
       <genEnumLiterals ecoreEnumLiteral="MoniLog4DSL.ecore#//LogLevel/severe"/>
       <genEnumLiterals ecoreEnumLiteral="MoniLog4DSL.ecore#//LogLevel/warning"/>
     </genEnums>
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="MoniLog4DSL.ecore#//TemporalPropertyConditionKind">
-      <genEnumLiterals ecoreEnumLiteral="MoniLog4DSL.ecore#//TemporalPropertyConditionKind/s"/>
-      <genEnumLiterals ecoreEnumLiteral="MoniLog4DSL.ecore#//TemporalPropertyConditionKind/v"/>
-      <genEnumLiterals ecoreEnumLiteral="MoniLog4DSL.ecore#//TemporalPropertyConditionKind/nS"/>
-      <genEnumLiterals ecoreEnumLiteral="MoniLog4DSL.ecore#//TemporalPropertyConditionKind/nV"/>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="MoniLog4DSL.ecore#//TemporalPatternKind">
+      <genEnumLiterals ecoreEnumLiteral="MoniLog4DSL.ecore#//TemporalPatternKind/s"/>
+      <genEnumLiterals ecoreEnumLiteral="MoniLog4DSL.ecore#//TemporalPatternKind/v"/>
+      <genEnumLiterals ecoreEnumLiteral="MoniLog4DSL.ecore#//TemporalPatternKind/nS"/>
+      <genEnumLiterals ecoreEnumLiteral="MoniLog4DSL.ecore#//TemporalPatternKind/nV"/>
     </genEnums>
-    <genClasses ecoreClass="MoniLog4DSL.ecore#//Model">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog4DSL.ecore#//Model/defaultLanguageID"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog4DSL.ecore#//Model/moniLogSpecs"/>
+    <genClasses ecoreClass="MoniLog4DSL.ecore#//Document">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog4DSL.ecore#//Document/defaultLanguageID"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog4DSL.ecore#//Document/events"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog4DSL.ecore#//Document/appenders"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog4DSL.ecore#//Document/layouts"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog4DSL.ecore#//Document/moniLogSpecs"/>
     </genClasses>
-    <genClasses ecoreClass="MoniLog4DSL.ecore#//MoniLogSpec">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog4DSL.ecore#//MoniLogSpec/name"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog4DSL.ecore#//MoniLogSpec/level"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog4DSL.ecore#//MoniLogSpec/events"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog4DSL.ecore#//MoniLogSpec/conditions"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog4DSL.ecore#//MoniLogSpec/actions"/>
+    <genClasses ecoreClass="MoniLog4DSL.ecore#//Appender">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog4DSL.ecore#//Appender/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog4DSL.ecore#//Appender/parameters"/>
+    </genClasses>
+    <genClasses ecoreClass="MoniLog4DSL.ecore#//LocalAppender">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog4DSL.ecore#//LocalAppender/annotations"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog4DSL.ecore#//LocalAppender/calls"/>
+    </genClasses>
+    <genClasses ecoreClass="MoniLog4DSL.ecore#//ExternalAppender"/>
+    <genClasses ecoreClass="MoniLog4DSL.ecore#//Layout">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog4DSL.ecore#//Layout/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog4DSL.ecore#//Layout/parameters"/>
+    </genClasses>
+    <genClasses ecoreClass="MoniLog4DSL.ecore#//LocalLayout">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog4DSL.ecore#//LocalLayout/call"/>
+    </genClasses>
+    <genClasses ecoreClass="MoniLog4DSL.ecore#//ExternalLayout"/>
+    <genClasses ecoreClass="MoniLog4DSL.ecore#//MoniLogger">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog4DSL.ecore#//MoniLogger/annotations"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog4DSL.ecore#//MoniLogger/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog4DSL.ecore#//MoniLogger/parameters"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog4DSL.ecore#//MoniLogger/level"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference MoniLog4DSL.ecore#//MoniLogger/event"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog4DSL.ecore#//MoniLogger/conditions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog4DSL.ecore#//MoniLogger/actions"/>
+    </genClasses>
+    <genClasses ecoreClass="MoniLog4DSL.ecore#//Parameter">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog4DSL.ecore#//Parameter/name"/>
     </genClasses>
     <genClasses ecoreClass="MoniLog4DSL.ecore#//Event">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog4DSL.ecore#//Event/ruleID"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog4DSL.ecore#//Event/frequency"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog4DSL.ecore#//Event/limit"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog4DSL.ecore#//Event/name"/>
     </genClasses>
-    <genClasses ecoreClass="MoniLog4DSL.ecore#//BeforeEvent"/>
-    <genClasses ecoreClass="MoniLog4DSL.ecore#//AfterEvent"/>
-    <genClasses ecoreClass="MoniLog4DSL.ecore#//BeforeAfterEvent"/>
+    <genClasses ecoreClass="MoniLog4DSL.ecore#//ASTEvent">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog4DSL.ecore#//ASTEvent/before"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog4DSL.ecore#//ASTEvent/after"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog4DSL.ecore#//ASTEvent/ruleID"/>
+    </genClasses>
+    <genClasses ecoreClass="MoniLog4DSL.ecore#//ComplexEvent">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog4DSL.ecore#//ComplexEvent/kind"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog4DSL.ecore#//ComplexEvent/pattern"/>
+    </genClasses>
+    <genClasses ecoreClass="MoniLog4DSL.ecore#//UserEvent">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog4DSL.ecore#//UserEvent/parameters"/>
+    </genClasses>
     <genClasses ecoreClass="MoniLog4DSL.ecore#//Condition"/>
     <genClasses ecoreClass="MoniLog4DSL.ecore#//TemporalPattern">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog4DSL.ecore#//TemporalPattern/pattern"/>
@@ -54,51 +92,49 @@
     <genClasses ecoreClass="MoniLog4DSL.ecore#//UpperBound"/>
     <genClasses ecoreClass="MoniLog4DSL.ecore#//Scope"/>
     <genClasses ecoreClass="MoniLog4DSL.ecore#//Action"/>
-    <genClasses ecoreClass="MoniLog4DSL.ecore#//Append">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog4DSL.ecore#//Append/appender"/>
+    <genClasses ecoreClass="MoniLog4DSL.ecore#//AppenderCall">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog4DSL.ecore#//AppenderCall/appender"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog4DSL.ecore#//AppenderCall/args"/>
     </genClasses>
-    <genClasses ecoreClass="MoniLog4DSL.ecore#//Appender"/>
-    <genClasses ecoreClass="MoniLog4DSL.ecore#//StreamAppender">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog4DSL.ecore#//StreamAppender/event"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog4DSL.ecore#//StreamAppender/values"/>
+    <genClasses ecoreClass="MoniLog4DSL.ecore#//AppenderRef">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference MoniLog4DSL.ecore#//AppenderRef/appender"/>
     </genClasses>
-    <genClasses ecoreClass="MoniLog4DSL.ecore#//FileAppender">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog4DSL.ecore#//FileAppender/filename"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog4DSL.ecore#//FileAppender/layout"/>
+    <genClasses ecoreClass="MoniLog4DSL.ecore#//AppenderCallArgument"/>
+    <genClasses ecoreClass="MoniLog4DSL.ecore#//LayoutCall">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog4DSL.ecore#//LayoutCall/layout"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog4DSL.ecore#//LayoutCall/args"/>
     </genClasses>
-    <genClasses ecoreClass="MoniLog4DSL.ecore#//ConsoleAppender">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog4DSL.ecore#//ConsoleAppender/layout"/>
+    <genClasses ecoreClass="MoniLog4DSL.ecore#//LayoutRef">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference MoniLog4DSL.ecore#//LayoutRef/layout"/>
     </genClasses>
-    <genClasses ecoreClass="MoniLog4DSL.ecore#//Layout">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog4DSL.ecore#//Layout/values"/>
+    <genClasses ecoreClass="MoniLog4DSL.ecore#//EmitEvent">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference MoniLog4DSL.ecore#//EmitEvent/event"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog4DSL.ecore#//EmitEvent/args"/>
     </genClasses>
-    <genClasses ecoreClass="MoniLog4DSL.ecore#//StringLayout">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog4DSL.ecore#//StringLayout/formatString"/>
-    </genClasses>
-    <genClasses ecoreClass="MoniLog4DSL.ecore#//ExternalLayout">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog4DSL.ecore#//ExternalLayout/path"/>
+    <genClasses ecoreClass="MoniLog4DSL.ecore#//MoniLoggerCall">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference MoniLog4DSL.ecore#//MoniLoggerCall/monilogger"/>
     </genClasses>
     <genClasses ecoreClass="MoniLog4DSL.ecore#//StreamEvent">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog4DSL.ecore#//StreamEvent/eventId"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference MoniLog4DSL.ecore#//StreamEvent/event"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog4DSL.ecore#//StreamEvent/values"/>
     </genClasses>
     <genClasses ecoreClass="MoniLog4DSL.ecore#//EmptyOrPropertyValue"/>
+    <genClasses ecoreClass="MoniLog4DSL.ecore#//Expression"/>
+    <genClasses ecoreClass="MoniLog4DSL.ecore#//ParameterReference">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference MoniLog4DSL.ecore#//ParameterReference/parameter"/>
+    </genClasses>
     <genClasses ecoreClass="MoniLog4DSL.ecore#//LanguageExpression">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog4DSL.ecore#//LanguageExpression/expression"/>
-    </genClasses>
-    <genClasses ecoreClass="MoniLog4DSL.ecore#//TemporalPropertyCondition">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog4DSL.ecore#//TemporalPropertyCondition/pattern"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog4DSL.ecore#//TemporalPropertyCondition/kind"/>
     </genClasses>
     <genClasses ecoreClass="MoniLog4DSL.ecore#//LanguageExpressionCondition">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog4DSL.ecore#//LanguageExpressionCondition/expression"/>
     </genClasses>
-    <genClasses ecoreClass="MoniLog4DSL.ecore#//Universality">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog4DSL.ecore#//Universality/event"/>
-    </genClasses>
     <genClasses ecoreClass="MoniLog4DSL.ecore#//Existence">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog4DSL.ecore#//Existence/bound"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog4DSL.ecore#//Existence/event"/>
+    </genClasses>
+    <genClasses ecoreClass="MoniLog4DSL.ecore#//Universality">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog4DSL.ecore#//Universality/event"/>
     </genClasses>
     <genClasses ecoreClass="MoniLog4DSL.ecore#//Absence">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog4DSL.ecore#//Absence/event"/>
@@ -126,7 +162,10 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog4DSL.ecore#//AfterUntil/lowerBound"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog4DSL.ecore#//AfterUntil/upperBound"/>
     </genClasses>
-    <genClasses ecoreClass="MoniLog4DSL.ecore#//Notify"/>
+    <genClasses ecoreClass="MoniLog4DSL.ecore#//StartMoniLogger">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog4DSL.ecore#//StartMoniLogger/args"/>
+    </genClasses>
+    <genClasses ecoreClass="MoniLog4DSL.ecore#//StopMoniLogger"/>
     <genClasses ecoreClass="MoniLog4DSL.ecore#//Empty"/>
     <genClasses ecoreClass="MoniLog4DSL.ecore#//PropertyValue">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog4DSL.ecore#//PropertyValue/id"/>

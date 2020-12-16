@@ -11,53 +11,63 @@ import org.eclipse.emf.ecore.EReference;
 
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
+import org.gemoc.monilog.moniLog4DSL.ASTEvent;
 import org.gemoc.monilog.moniLog4DSL.Absence;
 import org.gemoc.monilog.moniLog4DSL.Action;
 import org.gemoc.monilog.moniLog4DSL.After;
-import org.gemoc.monilog.moniLog4DSL.AfterEvent;
 import org.gemoc.monilog.moniLog4DSL.AfterUntil;
-import org.gemoc.monilog.moniLog4DSL.Append;
 import org.gemoc.monilog.moniLog4DSL.Appender;
+import org.gemoc.monilog.moniLog4DSL.AppenderAnnotation;
+import org.gemoc.monilog.moniLog4DSL.AppenderCall;
+import org.gemoc.monilog.moniLog4DSL.AppenderCallArgument;
+import org.gemoc.monilog.moniLog4DSL.AppenderRef;
 import org.gemoc.monilog.moniLog4DSL.Before;
-import org.gemoc.monilog.moniLog4DSL.BeforeAfterEvent;
-import org.gemoc.monilog.moniLog4DSL.BeforeEvent;
 import org.gemoc.monilog.moniLog4DSL.Between;
 import org.gemoc.monilog.moniLog4DSL.BoundType;
+import org.gemoc.monilog.moniLog4DSL.ComplexEvent;
 import org.gemoc.monilog.moniLog4DSL.Condition;
-import org.gemoc.monilog.moniLog4DSL.ConsoleAppender;
 import org.gemoc.monilog.moniLog4DSL.DefaultLanguageExpression;
+import org.gemoc.monilog.moniLog4DSL.Document;
+import org.gemoc.monilog.moniLog4DSL.EmitEvent;
 import org.gemoc.monilog.moniLog4DSL.Empty;
 import org.gemoc.monilog.moniLog4DSL.EmptyOrPropertyValue;
 import org.gemoc.monilog.moniLog4DSL.Event;
 import org.gemoc.monilog.moniLog4DSL.ExactBound;
 import org.gemoc.monilog.moniLog4DSL.Existence;
 import org.gemoc.monilog.moniLog4DSL.ExplicitLanguageExpression;
+import org.gemoc.monilog.moniLog4DSL.Expression;
+import org.gemoc.monilog.moniLog4DSL.ExternalAppender;
 import org.gemoc.monilog.moniLog4DSL.ExternalLayout;
-import org.gemoc.monilog.moniLog4DSL.FileAppender;
 import org.gemoc.monilog.moniLog4DSL.Globally;
 import org.gemoc.monilog.moniLog4DSL.LanguageExpression;
 import org.gemoc.monilog.moniLog4DSL.LanguageExpressionCondition;
 import org.gemoc.monilog.moniLog4DSL.Layout;
+import org.gemoc.monilog.moniLog4DSL.LayoutCall;
+import org.gemoc.monilog.moniLog4DSL.LayoutRef;
+import org.gemoc.monilog.moniLog4DSL.LocalAppender;
+import org.gemoc.monilog.moniLog4DSL.LocalLayout;
 import org.gemoc.monilog.moniLog4DSL.LogLevel;
 import org.gemoc.monilog.moniLog4DSL.LowerBound;
-import org.gemoc.monilog.moniLog4DSL.Model;
 import org.gemoc.monilog.moniLog4DSL.MoniLog4DSLFactory;
 import org.gemoc.monilog.moniLog4DSL.MoniLog4DSLPackage;
-import org.gemoc.monilog.moniLog4DSL.MoniLogSpec;
-import org.gemoc.monilog.moniLog4DSL.Notify;
+import org.gemoc.monilog.moniLog4DSL.MoniLogger;
+import org.gemoc.monilog.moniLog4DSL.MoniLoggerAnnotation;
+import org.gemoc.monilog.moniLog4DSL.MoniLoggerCall;
+import org.gemoc.monilog.moniLog4DSL.Parameter;
+import org.gemoc.monilog.moniLog4DSL.ParameterReference;
 import org.gemoc.monilog.moniLog4DSL.Pattern;
 import org.gemoc.monilog.moniLog4DSL.Precedence;
 import org.gemoc.monilog.moniLog4DSL.PropertyValue;
 import org.gemoc.monilog.moniLog4DSL.Response;
 import org.gemoc.monilog.moniLog4DSL.Scope;
-import org.gemoc.monilog.moniLog4DSL.StreamAppender;
+import org.gemoc.monilog.moniLog4DSL.StartMoniLogger;
+import org.gemoc.monilog.moniLog4DSL.StopMoniLogger;
 import org.gemoc.monilog.moniLog4DSL.StreamEvent;
-import org.gemoc.monilog.moniLog4DSL.StringLayout;
 import org.gemoc.monilog.moniLog4DSL.TemporalPattern;
-import org.gemoc.monilog.moniLog4DSL.TemporalPropertyCondition;
-import org.gemoc.monilog.moniLog4DSL.TemporalPropertyConditionKind;
+import org.gemoc.monilog.moniLog4DSL.TemporalPatternKind;
 import org.gemoc.monilog.moniLog4DSL.Universality;
 import org.gemoc.monilog.moniLog4DSL.UpperBound;
+import org.gemoc.monilog.moniLog4DSL.UserEvent;
 
 /**
  * <!-- begin-user-doc -->
@@ -72,14 +82,63 @@ public class MoniLog4DSLPackageImpl extends EPackageImpl implements MoniLog4DSLP
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass modelEClass = null;
+  private EClass documentEClass = null;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass moniLogSpecEClass = null;
+  private EClass appenderEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass localAppenderEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass externalAppenderEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass layoutEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass localLayoutEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass externalLayoutEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass moniLoggerEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass parameterEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -93,21 +152,21 @@ public class MoniLog4DSLPackageImpl extends EPackageImpl implements MoniLog4DSLP
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass beforeEventEClass = null;
+  private EClass astEventEClass = null;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass afterEventEClass = null;
+  private EClass complexEventEClass = null;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass beforeAfterEventEClass = null;
+  private EClass userEventEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -177,56 +236,49 @@ public class MoniLog4DSLPackageImpl extends EPackageImpl implements MoniLog4DSLP
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass appendEClass = null;
+  private EClass appenderCallEClass = null;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass appenderEClass = null;
+  private EClass appenderRefEClass = null;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass streamAppenderEClass = null;
+  private EClass appenderCallArgumentEClass = null;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass fileAppenderEClass = null;
+  private EClass layoutCallEClass = null;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass consoleAppenderEClass = null;
+  private EClass layoutRefEClass = null;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass layoutEClass = null;
+  private EClass emitEventEClass = null;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass stringLayoutEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass externalLayoutEClass = null;
+  private EClass moniLoggerCallEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -247,14 +299,21 @@ public class MoniLog4DSLPackageImpl extends EPackageImpl implements MoniLog4DSLP
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass languageExpressionEClass = null;
+  private EClass expressionEClass = null;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass temporalPropertyConditionEClass = null;
+  private EClass parameterReferenceEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass languageExpressionEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -268,14 +327,14 @@ public class MoniLog4DSLPackageImpl extends EPackageImpl implements MoniLog4DSLP
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass universalityEClass = null;
+  private EClass existenceEClass = null;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass existenceEClass = null;
+  private EClass universalityEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -338,7 +397,14 @@ public class MoniLog4DSLPackageImpl extends EPackageImpl implements MoniLog4DSLP
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass notifyEClass = null;
+  private EClass startMoniLoggerEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass stopMoniLoggerEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -373,6 +439,20 @@ public class MoniLog4DSLPackageImpl extends EPackageImpl implements MoniLog4DSLP
    * <!-- end-user-doc -->
    * @generated
    */
+  private EEnum moniLoggerAnnotationEEnum = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EEnum appenderAnnotationEEnum = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   private EEnum logLevelEEnum = null;
 
   /**
@@ -380,7 +460,7 @@ public class MoniLog4DSLPackageImpl extends EPackageImpl implements MoniLog4DSLP
    * <!-- end-user-doc -->
    * @generated
    */
-  private EEnum temporalPropertyConditionKindEEnum = null;
+  private EEnum temporalPatternKindEEnum = null;
 
   /**
    * Creates an instance of the model <b>Package</b>, registered with
@@ -451,9 +531,9 @@ public class MoniLog4DSLPackageImpl extends EPackageImpl implements MoniLog4DSLP
    * @generated
    */
   @Override
-  public EClass getModel()
+  public EClass getDocument()
   {
-    return modelEClass;
+    return documentEClass;
   }
 
   /**
@@ -462,9 +542,9 @@ public class MoniLog4DSLPackageImpl extends EPackageImpl implements MoniLog4DSLP
    * @generated
    */
   @Override
-  public EAttribute getModel_DefaultLanguageID()
+  public EAttribute getDocument_DefaultLanguageID()
   {
-    return (EAttribute)modelEClass.getEStructuralFeatures().get(0);
+    return (EAttribute)documentEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -473,9 +553,9 @@ public class MoniLog4DSLPackageImpl extends EPackageImpl implements MoniLog4DSLP
    * @generated
    */
   @Override
-  public EReference getModel_MoniLogSpecs()
+  public EReference getDocument_Events()
   {
-    return (EReference)modelEClass.getEStructuralFeatures().get(1);
+    return (EReference)documentEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -484,9 +564,9 @@ public class MoniLog4DSLPackageImpl extends EPackageImpl implements MoniLog4DSLP
    * @generated
    */
   @Override
-  public EClass getMoniLogSpec()
+  public EReference getDocument_Appenders()
   {
-    return moniLogSpecEClass;
+    return (EReference)documentEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -495,9 +575,9 @@ public class MoniLog4DSLPackageImpl extends EPackageImpl implements MoniLog4DSLP
    * @generated
    */
   @Override
-  public EAttribute getMoniLogSpec_Name()
+  public EReference getDocument_Layouts()
   {
-    return (EAttribute)moniLogSpecEClass.getEStructuralFeatures().get(0);
+    return (EReference)documentEClass.getEStructuralFeatures().get(3);
   }
 
   /**
@@ -506,9 +586,9 @@ public class MoniLog4DSLPackageImpl extends EPackageImpl implements MoniLog4DSLP
    * @generated
    */
   @Override
-  public EAttribute getMoniLogSpec_Level()
+  public EReference getDocument_MoniLogSpecs()
   {
-    return (EAttribute)moniLogSpecEClass.getEStructuralFeatures().get(1);
+    return (EReference)documentEClass.getEStructuralFeatures().get(4);
   }
 
   /**
@@ -517,9 +597,9 @@ public class MoniLog4DSLPackageImpl extends EPackageImpl implements MoniLog4DSLP
    * @generated
    */
   @Override
-  public EReference getMoniLogSpec_Events()
+  public EClass getAppender()
   {
-    return (EReference)moniLogSpecEClass.getEStructuralFeatures().get(2);
+    return appenderEClass;
   }
 
   /**
@@ -528,9 +608,9 @@ public class MoniLog4DSLPackageImpl extends EPackageImpl implements MoniLog4DSLP
    * @generated
    */
   @Override
-  public EReference getMoniLogSpec_Conditions()
+  public EAttribute getAppender_Name()
   {
-    return (EReference)moniLogSpecEClass.getEStructuralFeatures().get(3);
+    return (EAttribute)appenderEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -539,9 +619,229 @@ public class MoniLog4DSLPackageImpl extends EPackageImpl implements MoniLog4DSLP
    * @generated
    */
   @Override
-  public EReference getMoniLogSpec_Actions()
+  public EReference getAppender_Parameters()
   {
-    return (EReference)moniLogSpecEClass.getEStructuralFeatures().get(4);
+    return (EReference)appenderEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getLocalAppender()
+  {
+    return localAppenderEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getLocalAppender_Annotations()
+  {
+    return (EAttribute)localAppenderEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getLocalAppender_Calls()
+  {
+    return (EReference)localAppenderEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getExternalAppender()
+  {
+    return externalAppenderEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getLayout()
+  {
+    return layoutEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getLayout_Name()
+  {
+    return (EAttribute)layoutEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getLayout_Parameters()
+  {
+    return (EReference)layoutEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getLocalLayout()
+  {
+    return localLayoutEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getLocalLayout_Call()
+  {
+    return (EReference)localLayoutEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getExternalLayout()
+  {
+    return externalLayoutEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getMoniLogger()
+  {
+    return moniLoggerEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getMoniLogger_Annotations()
+  {
+    return (EAttribute)moniLoggerEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getMoniLogger_Name()
+  {
+    return (EAttribute)moniLoggerEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getMoniLogger_Parameters()
+  {
+    return (EReference)moniLoggerEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getMoniLogger_Level()
+  {
+    return (EAttribute)moniLoggerEClass.getEStructuralFeatures().get(3);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getMoniLogger_Event()
+  {
+    return (EReference)moniLoggerEClass.getEStructuralFeatures().get(4);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getMoniLogger_Conditions()
+  {
+    return (EReference)moniLoggerEClass.getEStructuralFeatures().get(5);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getMoniLogger_Actions()
+  {
+    return (EReference)moniLoggerEClass.getEStructuralFeatures().get(6);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getParameter()
+  {
+    return parameterEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getParameter_Name()
+  {
+    return (EAttribute)parameterEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -561,7 +861,7 @@ public class MoniLog4DSLPackageImpl extends EPackageImpl implements MoniLog4DSLP
    * @generated
    */
   @Override
-  public EAttribute getEvent_RuleID()
+  public EAttribute getEvent_Name()
   {
     return (EAttribute)eventEClass.getEStructuralFeatures().get(0);
   }
@@ -572,9 +872,9 @@ public class MoniLog4DSLPackageImpl extends EPackageImpl implements MoniLog4DSLP
    * @generated
    */
   @Override
-  public EAttribute getEvent_Frequency()
+  public EClass getASTEvent()
   {
-    return (EAttribute)eventEClass.getEStructuralFeatures().get(1);
+    return astEventEClass;
   }
 
   /**
@@ -583,9 +883,9 @@ public class MoniLog4DSLPackageImpl extends EPackageImpl implements MoniLog4DSLP
    * @generated
    */
   @Override
-  public EAttribute getEvent_Limit()
+  public EAttribute getASTEvent_Before()
   {
-    return (EAttribute)eventEClass.getEStructuralFeatures().get(2);
+    return (EAttribute)astEventEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -594,9 +894,9 @@ public class MoniLog4DSLPackageImpl extends EPackageImpl implements MoniLog4DSLP
    * @generated
    */
   @Override
-  public EClass getBeforeEvent()
+  public EAttribute getASTEvent_After()
   {
-    return beforeEventEClass;
+    return (EAttribute)astEventEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -605,9 +905,9 @@ public class MoniLog4DSLPackageImpl extends EPackageImpl implements MoniLog4DSLP
    * @generated
    */
   @Override
-  public EClass getAfterEvent()
+  public EAttribute getASTEvent_RuleID()
   {
-    return afterEventEClass;
+    return (EAttribute)astEventEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -616,9 +916,53 @@ public class MoniLog4DSLPackageImpl extends EPackageImpl implements MoniLog4DSLP
    * @generated
    */
   @Override
-  public EClass getBeforeAfterEvent()
+  public EClass getComplexEvent()
   {
-    return beforeAfterEventEClass;
+    return complexEventEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getComplexEvent_Kind()
+  {
+    return (EAttribute)complexEventEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getComplexEvent_Pattern()
+  {
+    return (EReference)complexEventEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getUserEvent()
+  {
+    return userEventEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getUserEvent_Parameters()
+  {
+    return (EReference)userEventEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -759,9 +1103,9 @@ public class MoniLog4DSLPackageImpl extends EPackageImpl implements MoniLog4DSLP
    * @generated
    */
   @Override
-  public EClass getAppend()
+  public EClass getAppenderCall()
   {
-    return appendEClass;
+    return appenderCallEClass;
   }
 
   /**
@@ -770,9 +1114,9 @@ public class MoniLog4DSLPackageImpl extends EPackageImpl implements MoniLog4DSLP
    * @generated
    */
   @Override
-  public EReference getAppend_Appender()
+  public EReference getAppenderCall_Appender()
   {
-    return (EReference)appendEClass.getEStructuralFeatures().get(0);
+    return (EReference)appenderCallEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -781,9 +1125,9 @@ public class MoniLog4DSLPackageImpl extends EPackageImpl implements MoniLog4DSLP
    * @generated
    */
   @Override
-  public EClass getAppender()
+  public EReference getAppenderCall_Args()
   {
-    return appenderEClass;
+    return (EReference)appenderCallEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -792,9 +1136,9 @@ public class MoniLog4DSLPackageImpl extends EPackageImpl implements MoniLog4DSLP
    * @generated
    */
   @Override
-  public EClass getStreamAppender()
+  public EClass getAppenderRef()
   {
-    return streamAppenderEClass;
+    return appenderRefEClass;
   }
 
   /**
@@ -803,9 +1147,9 @@ public class MoniLog4DSLPackageImpl extends EPackageImpl implements MoniLog4DSLP
    * @generated
    */
   @Override
-  public EAttribute getStreamAppender_Event()
+  public EReference getAppenderRef_Appender()
   {
-    return (EAttribute)streamAppenderEClass.getEStructuralFeatures().get(0);
+    return (EReference)appenderRefEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -814,9 +1158,9 @@ public class MoniLog4DSLPackageImpl extends EPackageImpl implements MoniLog4DSLP
    * @generated
    */
   @Override
-  public EReference getStreamAppender_Values()
+  public EClass getAppenderCallArgument()
   {
-    return (EReference)streamAppenderEClass.getEStructuralFeatures().get(1);
+    return appenderCallArgumentEClass;
   }
 
   /**
@@ -825,9 +1169,9 @@ public class MoniLog4DSLPackageImpl extends EPackageImpl implements MoniLog4DSLP
    * @generated
    */
   @Override
-  public EClass getFileAppender()
+  public EClass getLayoutCall()
   {
-    return fileAppenderEClass;
+    return layoutCallEClass;
   }
 
   /**
@@ -836,9 +1180,9 @@ public class MoniLog4DSLPackageImpl extends EPackageImpl implements MoniLog4DSLP
    * @generated
    */
   @Override
-  public EAttribute getFileAppender_Filename()
+  public EReference getLayoutCall_Layout()
   {
-    return (EAttribute)fileAppenderEClass.getEStructuralFeatures().get(0);
+    return (EReference)layoutCallEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -847,9 +1191,9 @@ public class MoniLog4DSLPackageImpl extends EPackageImpl implements MoniLog4DSLP
    * @generated
    */
   @Override
-  public EReference getFileAppender_Layout()
+  public EReference getLayoutCall_Args()
   {
-    return (EReference)fileAppenderEClass.getEStructuralFeatures().get(1);
+    return (EReference)layoutCallEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -858,9 +1202,9 @@ public class MoniLog4DSLPackageImpl extends EPackageImpl implements MoniLog4DSLP
    * @generated
    */
   @Override
-  public EClass getConsoleAppender()
+  public EClass getLayoutRef()
   {
-    return consoleAppenderEClass;
+    return layoutRefEClass;
   }
 
   /**
@@ -869,9 +1213,9 @@ public class MoniLog4DSLPackageImpl extends EPackageImpl implements MoniLog4DSLP
    * @generated
    */
   @Override
-  public EReference getConsoleAppender_Layout()
+  public EReference getLayoutRef_Layout()
   {
-    return (EReference)consoleAppenderEClass.getEStructuralFeatures().get(0);
+    return (EReference)layoutRefEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -880,9 +1224,9 @@ public class MoniLog4DSLPackageImpl extends EPackageImpl implements MoniLog4DSLP
    * @generated
    */
   @Override
-  public EClass getLayout()
+  public EClass getEmitEvent()
   {
-    return layoutEClass;
+    return emitEventEClass;
   }
 
   /**
@@ -891,9 +1235,9 @@ public class MoniLog4DSLPackageImpl extends EPackageImpl implements MoniLog4DSLP
    * @generated
    */
   @Override
-  public EReference getLayout_Values()
+  public EReference getEmitEvent_Event()
   {
-    return (EReference)layoutEClass.getEStructuralFeatures().get(0);
+    return (EReference)emitEventEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -902,9 +1246,9 @@ public class MoniLog4DSLPackageImpl extends EPackageImpl implements MoniLog4DSLP
    * @generated
    */
   @Override
-  public EClass getStringLayout()
+  public EReference getEmitEvent_Args()
   {
-    return stringLayoutEClass;
+    return (EReference)emitEventEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -913,9 +1257,9 @@ public class MoniLog4DSLPackageImpl extends EPackageImpl implements MoniLog4DSLP
    * @generated
    */
   @Override
-  public EAttribute getStringLayout_FormatString()
+  public EClass getMoniLoggerCall()
   {
-    return (EAttribute)stringLayoutEClass.getEStructuralFeatures().get(0);
+    return moniLoggerCallEClass;
   }
 
   /**
@@ -924,20 +1268,9 @@ public class MoniLog4DSLPackageImpl extends EPackageImpl implements MoniLog4DSLP
    * @generated
    */
   @Override
-  public EClass getExternalLayout()
+  public EReference getMoniLoggerCall_Monilogger()
   {
-    return externalLayoutEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EAttribute getExternalLayout_Path()
-  {
-    return (EAttribute)externalLayoutEClass.getEStructuralFeatures().get(0);
+    return (EReference)moniLoggerCallEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -957,9 +1290,9 @@ public class MoniLog4DSLPackageImpl extends EPackageImpl implements MoniLog4DSLP
    * @generated
    */
   @Override
-  public EAttribute getStreamEvent_EventId()
+  public EReference getStreamEvent_Event()
   {
-    return (EAttribute)streamEventEClass.getEStructuralFeatures().get(0);
+    return (EReference)streamEventEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -990,6 +1323,39 @@ public class MoniLog4DSLPackageImpl extends EPackageImpl implements MoniLog4DSLP
    * @generated
    */
   @Override
+  public EClass getExpression()
+  {
+    return expressionEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getParameterReference()
+  {
+    return parameterReferenceEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getParameterReference_Parameter()
+  {
+    return (EReference)parameterReferenceEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EClass getLanguageExpression()
   {
     return languageExpressionEClass;
@@ -1012,39 +1378,6 @@ public class MoniLog4DSLPackageImpl extends EPackageImpl implements MoniLog4DSLP
    * @generated
    */
   @Override
-  public EClass getTemporalPropertyCondition()
-  {
-    return temporalPropertyConditionEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EReference getTemporalPropertyCondition_Pattern()
-  {
-    return (EReference)temporalPropertyConditionEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EAttribute getTemporalPropertyCondition_Kind()
-  {
-    return (EAttribute)temporalPropertyConditionEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
   public EClass getLanguageExpressionCondition()
   {
     return languageExpressionConditionEClass;
@@ -1059,28 +1392,6 @@ public class MoniLog4DSLPackageImpl extends EPackageImpl implements MoniLog4DSLP
   public EReference getLanguageExpressionCondition_Expression()
   {
     return (EReference)languageExpressionConditionEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EClass getUniversality()
-  {
-    return universalityEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EReference getUniversality_Event()
-  {
-    return (EReference)universalityEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -1114,6 +1425,28 @@ public class MoniLog4DSLPackageImpl extends EPackageImpl implements MoniLog4DSLP
   public EReference getExistence_Event()
   {
     return (EReference)existenceEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getUniversality()
+  {
+    return universalityEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getUniversality_Event()
+  {
+    return (EReference)universalityEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -1331,9 +1664,31 @@ public class MoniLog4DSLPackageImpl extends EPackageImpl implements MoniLog4DSLP
    * @generated
    */
   @Override
-  public EClass getNotify()
+  public EClass getStartMoniLogger()
   {
-    return notifyEClass;
+    return startMoniLoggerEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getStartMoniLogger_Args()
+  {
+    return (EReference)startMoniLoggerEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getStopMoniLogger()
+  {
+    return stopMoniLoggerEClass;
   }
 
   /**
@@ -1419,6 +1774,28 @@ public class MoniLog4DSLPackageImpl extends EPackageImpl implements MoniLog4DSLP
    * @generated
    */
   @Override
+  public EEnum getMoniLoggerAnnotation()
+  {
+    return moniLoggerAnnotationEEnum;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EEnum getAppenderAnnotation()
+  {
+    return appenderAnnotationEEnum;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EEnum getLogLevel()
   {
     return logLevelEEnum;
@@ -1430,9 +1807,9 @@ public class MoniLog4DSLPackageImpl extends EPackageImpl implements MoniLog4DSLP
    * @generated
    */
   @Override
-  public EEnum getTemporalPropertyConditionKind()
+  public EEnum getTemporalPatternKind()
   {
-    return temporalPropertyConditionKindEEnum;
+    return temporalPatternKindEEnum;
   }
 
   /**
@@ -1466,27 +1843,58 @@ public class MoniLog4DSLPackageImpl extends EPackageImpl implements MoniLog4DSLP
     isCreated = true;
 
     // Create classes and their features
-    modelEClass = createEClass(MODEL);
-    createEAttribute(modelEClass, MODEL__DEFAULT_LANGUAGE_ID);
-    createEReference(modelEClass, MODEL__MONI_LOG_SPECS);
+    documentEClass = createEClass(DOCUMENT);
+    createEAttribute(documentEClass, DOCUMENT__DEFAULT_LANGUAGE_ID);
+    createEReference(documentEClass, DOCUMENT__EVENTS);
+    createEReference(documentEClass, DOCUMENT__APPENDERS);
+    createEReference(documentEClass, DOCUMENT__LAYOUTS);
+    createEReference(documentEClass, DOCUMENT__MONI_LOG_SPECS);
 
-    moniLogSpecEClass = createEClass(MONI_LOG_SPEC);
-    createEAttribute(moniLogSpecEClass, MONI_LOG_SPEC__NAME);
-    createEAttribute(moniLogSpecEClass, MONI_LOG_SPEC__LEVEL);
-    createEReference(moniLogSpecEClass, MONI_LOG_SPEC__EVENTS);
-    createEReference(moniLogSpecEClass, MONI_LOG_SPEC__CONDITIONS);
-    createEReference(moniLogSpecEClass, MONI_LOG_SPEC__ACTIONS);
+    appenderEClass = createEClass(APPENDER);
+    createEAttribute(appenderEClass, APPENDER__NAME);
+    createEReference(appenderEClass, APPENDER__PARAMETERS);
+
+    localAppenderEClass = createEClass(LOCAL_APPENDER);
+    createEAttribute(localAppenderEClass, LOCAL_APPENDER__ANNOTATIONS);
+    createEReference(localAppenderEClass, LOCAL_APPENDER__CALLS);
+
+    externalAppenderEClass = createEClass(EXTERNAL_APPENDER);
+
+    layoutEClass = createEClass(LAYOUT);
+    createEAttribute(layoutEClass, LAYOUT__NAME);
+    createEReference(layoutEClass, LAYOUT__PARAMETERS);
+
+    localLayoutEClass = createEClass(LOCAL_LAYOUT);
+    createEReference(localLayoutEClass, LOCAL_LAYOUT__CALL);
+
+    externalLayoutEClass = createEClass(EXTERNAL_LAYOUT);
+
+    moniLoggerEClass = createEClass(MONI_LOGGER);
+    createEAttribute(moniLoggerEClass, MONI_LOGGER__ANNOTATIONS);
+    createEAttribute(moniLoggerEClass, MONI_LOGGER__NAME);
+    createEReference(moniLoggerEClass, MONI_LOGGER__PARAMETERS);
+    createEAttribute(moniLoggerEClass, MONI_LOGGER__LEVEL);
+    createEReference(moniLoggerEClass, MONI_LOGGER__EVENT);
+    createEReference(moniLoggerEClass, MONI_LOGGER__CONDITIONS);
+    createEReference(moniLoggerEClass, MONI_LOGGER__ACTIONS);
+
+    parameterEClass = createEClass(PARAMETER);
+    createEAttribute(parameterEClass, PARAMETER__NAME);
 
     eventEClass = createEClass(EVENT);
-    createEAttribute(eventEClass, EVENT__RULE_ID);
-    createEAttribute(eventEClass, EVENT__FREQUENCY);
-    createEAttribute(eventEClass, EVENT__LIMIT);
+    createEAttribute(eventEClass, EVENT__NAME);
 
-    beforeEventEClass = createEClass(BEFORE_EVENT);
+    astEventEClass = createEClass(AST_EVENT);
+    createEAttribute(astEventEClass, AST_EVENT__BEFORE);
+    createEAttribute(astEventEClass, AST_EVENT__AFTER);
+    createEAttribute(astEventEClass, AST_EVENT__RULE_ID);
 
-    afterEventEClass = createEClass(AFTER_EVENT);
+    complexEventEClass = createEClass(COMPLEX_EVENT);
+    createEAttribute(complexEventEClass, COMPLEX_EVENT__KIND);
+    createEReference(complexEventEClass, COMPLEX_EVENT__PATTERN);
 
-    beforeAfterEventEClass = createEClass(BEFORE_AFTER_EVENT);
+    userEventEClass = createEClass(USER_EVENT);
+    createEReference(userEventEClass, USER_EVENT__PARAMETERS);
 
     conditionEClass = createEClass(CONDITION);
 
@@ -1509,53 +1917,52 @@ public class MoniLog4DSLPackageImpl extends EPackageImpl implements MoniLog4DSLP
 
     actionEClass = createEClass(ACTION);
 
-    appendEClass = createEClass(APPEND);
-    createEReference(appendEClass, APPEND__APPENDER);
+    appenderCallEClass = createEClass(APPENDER_CALL);
+    createEReference(appenderCallEClass, APPENDER_CALL__APPENDER);
+    createEReference(appenderCallEClass, APPENDER_CALL__ARGS);
 
-    appenderEClass = createEClass(APPENDER);
+    appenderRefEClass = createEClass(APPENDER_REF);
+    createEReference(appenderRefEClass, APPENDER_REF__APPENDER);
 
-    streamAppenderEClass = createEClass(STREAM_APPENDER);
-    createEAttribute(streamAppenderEClass, STREAM_APPENDER__EVENT);
-    createEReference(streamAppenderEClass, STREAM_APPENDER__VALUES);
+    appenderCallArgumentEClass = createEClass(APPENDER_CALL_ARGUMENT);
 
-    fileAppenderEClass = createEClass(FILE_APPENDER);
-    createEAttribute(fileAppenderEClass, FILE_APPENDER__FILENAME);
-    createEReference(fileAppenderEClass, FILE_APPENDER__LAYOUT);
+    layoutCallEClass = createEClass(LAYOUT_CALL);
+    createEReference(layoutCallEClass, LAYOUT_CALL__LAYOUT);
+    createEReference(layoutCallEClass, LAYOUT_CALL__ARGS);
 
-    consoleAppenderEClass = createEClass(CONSOLE_APPENDER);
-    createEReference(consoleAppenderEClass, CONSOLE_APPENDER__LAYOUT);
+    layoutRefEClass = createEClass(LAYOUT_REF);
+    createEReference(layoutRefEClass, LAYOUT_REF__LAYOUT);
 
-    layoutEClass = createEClass(LAYOUT);
-    createEReference(layoutEClass, LAYOUT__VALUES);
+    emitEventEClass = createEClass(EMIT_EVENT);
+    createEReference(emitEventEClass, EMIT_EVENT__EVENT);
+    createEReference(emitEventEClass, EMIT_EVENT__ARGS);
 
-    stringLayoutEClass = createEClass(STRING_LAYOUT);
-    createEAttribute(stringLayoutEClass, STRING_LAYOUT__FORMAT_STRING);
-
-    externalLayoutEClass = createEClass(EXTERNAL_LAYOUT);
-    createEAttribute(externalLayoutEClass, EXTERNAL_LAYOUT__PATH);
+    moniLoggerCallEClass = createEClass(MONI_LOGGER_CALL);
+    createEReference(moniLoggerCallEClass, MONI_LOGGER_CALL__MONILOGGER);
 
     streamEventEClass = createEClass(STREAM_EVENT);
-    createEAttribute(streamEventEClass, STREAM_EVENT__EVENT_ID);
+    createEReference(streamEventEClass, STREAM_EVENT__EVENT);
     createEReference(streamEventEClass, STREAM_EVENT__VALUES);
 
     emptyOrPropertyValueEClass = createEClass(EMPTY_OR_PROPERTY_VALUE);
 
+    expressionEClass = createEClass(EXPRESSION);
+
+    parameterReferenceEClass = createEClass(PARAMETER_REFERENCE);
+    createEReference(parameterReferenceEClass, PARAMETER_REFERENCE__PARAMETER);
+
     languageExpressionEClass = createEClass(LANGUAGE_EXPRESSION);
     createEAttribute(languageExpressionEClass, LANGUAGE_EXPRESSION__EXPRESSION);
-
-    temporalPropertyConditionEClass = createEClass(TEMPORAL_PROPERTY_CONDITION);
-    createEReference(temporalPropertyConditionEClass, TEMPORAL_PROPERTY_CONDITION__PATTERN);
-    createEAttribute(temporalPropertyConditionEClass, TEMPORAL_PROPERTY_CONDITION__KIND);
 
     languageExpressionConditionEClass = createEClass(LANGUAGE_EXPRESSION_CONDITION);
     createEReference(languageExpressionConditionEClass, LANGUAGE_EXPRESSION_CONDITION__EXPRESSION);
 
-    universalityEClass = createEClass(UNIVERSALITY);
-    createEReference(universalityEClass, UNIVERSALITY__EVENT);
-
     existenceEClass = createEClass(EXISTENCE);
     createEReference(existenceEClass, EXISTENCE__BOUND);
     createEReference(existenceEClass, EXISTENCE__EVENT);
+
+    universalityEClass = createEClass(UNIVERSALITY);
+    createEReference(universalityEClass, UNIVERSALITY__EVENT);
 
     absenceEClass = createEClass(ABSENCE);
     createEReference(absenceEClass, ABSENCE__EVENT);
@@ -1584,7 +1991,10 @@ public class MoniLog4DSLPackageImpl extends EPackageImpl implements MoniLog4DSLP
     createEReference(afterUntilEClass, AFTER_UNTIL__LOWER_BOUND);
     createEReference(afterUntilEClass, AFTER_UNTIL__UPPER_BOUND);
 
-    notifyEClass = createEClass(NOTIFY);
+    startMoniLoggerEClass = createEClass(START_MONI_LOGGER);
+    createEReference(startMoniLoggerEClass, START_MONI_LOGGER__ARGS);
+
+    stopMoniLoggerEClass = createEClass(STOP_MONI_LOGGER);
 
     emptyEClass = createEClass(EMPTY);
 
@@ -1598,8 +2008,10 @@ public class MoniLog4DSLPackageImpl extends EPackageImpl implements MoniLog4DSLP
     defaultLanguageExpressionEClass = createEClass(DEFAULT_LANGUAGE_EXPRESSION);
 
     // Create enums
+    moniLoggerAnnotationEEnum = createEEnum(MONI_LOGGER_ANNOTATION);
+    appenderAnnotationEEnum = createEEnum(APPENDER_ANNOTATION);
     logLevelEEnum = createEEnum(LOG_LEVEL);
-    temporalPropertyConditionKindEEnum = createEEnum(TEMPORAL_PROPERTY_CONDITION_KIND);
+    temporalPatternKindEEnum = createEEnum(TEMPORAL_PATTERN_KIND);
   }
 
   /**
@@ -1631,22 +2043,27 @@ public class MoniLog4DSLPackageImpl extends EPackageImpl implements MoniLog4DSLP
     // Set bounds for type parameters
 
     // Add supertypes to classes
-    beforeEventEClass.getESuperTypes().add(this.getEvent());
-    afterEventEClass.getESuperTypes().add(this.getEvent());
-    beforeAfterEventEClass.getESuperTypes().add(this.getEvent());
+    localAppenderEClass.getESuperTypes().add(this.getAppender());
+    externalAppenderEClass.getESuperTypes().add(this.getAppender());
+    localLayoutEClass.getESuperTypes().add(this.getLayout());
+    externalLayoutEClass.getESuperTypes().add(this.getLayout());
+    astEventEClass.getESuperTypes().add(this.getEvent());
+    complexEventEClass.getESuperTypes().add(this.getEvent());
+    userEventEClass.getESuperTypes().add(this.getEvent());
     exactBoundEClass.getESuperTypes().add(this.getBoundType());
     lowerBoundEClass.getESuperTypes().add(this.getBoundType());
     upperBoundEClass.getESuperTypes().add(this.getBoundType());
-    appendEClass.getESuperTypes().add(this.getAction());
-    streamAppenderEClass.getESuperTypes().add(this.getAppender());
-    fileAppenderEClass.getESuperTypes().add(this.getAppender());
-    consoleAppenderEClass.getESuperTypes().add(this.getAppender());
-    stringLayoutEClass.getESuperTypes().add(this.getLayout());
-    externalLayoutEClass.getESuperTypes().add(this.getLayout());
-    temporalPropertyConditionEClass.getESuperTypes().add(this.getCondition());
+    appenderCallEClass.getESuperTypes().add(this.getAction());
+    layoutCallEClass.getESuperTypes().add(this.getAppenderCallArgument());
+    emitEventEClass.getESuperTypes().add(this.getAction());
+    moniLoggerCallEClass.getESuperTypes().add(this.getAction());
+    expressionEClass.getESuperTypes().add(this.getAppenderCallArgument());
+    parameterReferenceEClass.getESuperTypes().add(this.getExpression());
+    languageExpressionEClass.getESuperTypes().add(this.getAction());
+    languageExpressionEClass.getESuperTypes().add(this.getExpression());
     languageExpressionConditionEClass.getESuperTypes().add(this.getCondition());
-    universalityEClass.getESuperTypes().add(this.getPattern());
     existenceEClass.getESuperTypes().add(this.getPattern());
+    universalityEClass.getESuperTypes().add(this.getPattern());
     absenceEClass.getESuperTypes().add(this.getPattern());
     precedenceEClass.getESuperTypes().add(this.getPattern());
     responseEClass.getESuperTypes().add(this.getPattern());
@@ -1655,34 +2072,66 @@ public class MoniLog4DSLPackageImpl extends EPackageImpl implements MoniLog4DSLP
     beforeEClass.getESuperTypes().add(this.getScope());
     betweenEClass.getESuperTypes().add(this.getScope());
     afterUntilEClass.getESuperTypes().add(this.getScope());
-    notifyEClass.getESuperTypes().add(this.getAction());
+    startMoniLoggerEClass.getESuperTypes().add(this.getMoniLoggerCall());
+    stopMoniLoggerEClass.getESuperTypes().add(this.getMoniLoggerCall());
     emptyEClass.getESuperTypes().add(this.getEmptyOrPropertyValue());
     propertyValueEClass.getESuperTypes().add(this.getEmptyOrPropertyValue());
     explicitLanguageExpressionEClass.getESuperTypes().add(this.getLanguageExpression());
     defaultLanguageExpressionEClass.getESuperTypes().add(this.getLanguageExpression());
 
     // Initialize classes and features; add operations and parameters
-    initEClass(modelEClass, Model.class, "Model", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getModel_DefaultLanguageID(), ecorePackage.getEString(), "defaultLanguageID", null, 0, 1, Model.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getModel_MoniLogSpecs(), this.getMoniLogSpec(), null, "moniLogSpecs", null, 0, -1, Model.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(documentEClass, Document.class, "Document", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getDocument_DefaultLanguageID(), ecorePackage.getEString(), "defaultLanguageID", null, 0, 1, Document.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getDocument_Events(), this.getEvent(), null, "events", null, 0, -1, Document.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getDocument_Appenders(), this.getAppender(), null, "appenders", null, 0, -1, Document.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getDocument_Layouts(), this.getLayout(), null, "layouts", null, 0, -1, Document.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getDocument_MoniLogSpecs(), this.getMoniLogger(), null, "moniLogSpecs", null, 0, -1, Document.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(moniLogSpecEClass, MoniLogSpec.class, "MoniLogSpec", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getMoniLogSpec_Name(), ecorePackage.getEString(), "name", null, 0, 1, MoniLogSpec.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getMoniLogSpec_Level(), this.getLogLevel(), "level", null, 0, 1, MoniLogSpec.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getMoniLogSpec_Events(), this.getEvent(), null, "events", null, 0, -1, MoniLogSpec.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getMoniLogSpec_Conditions(), this.getCondition(), null, "conditions", null, 0, -1, MoniLogSpec.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getMoniLogSpec_Actions(), this.getAction(), null, "actions", null, 0, -1, MoniLogSpec.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(appenderEClass, Appender.class, "Appender", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getAppender_Name(), ecorePackage.getEString(), "name", null, 0, 1, Appender.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getAppender_Parameters(), this.getParameter(), null, "parameters", null, 0, -1, Appender.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(localAppenderEClass, LocalAppender.class, "LocalAppender", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getLocalAppender_Annotations(), this.getAppenderAnnotation(), "annotations", null, 0, -1, LocalAppender.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getLocalAppender_Calls(), this.getAppenderCall(), null, "calls", null, 0, -1, LocalAppender.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(externalAppenderEClass, ExternalAppender.class, "ExternalAppender", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(layoutEClass, Layout.class, "Layout", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getLayout_Name(), ecorePackage.getEString(), "name", null, 0, 1, Layout.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getLayout_Parameters(), this.getParameter(), null, "parameters", null, 0, -1, Layout.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(localLayoutEClass, LocalLayout.class, "LocalLayout", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getLocalLayout_Call(), this.getLayoutCall(), null, "call", null, 0, 1, LocalLayout.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(externalLayoutEClass, ExternalLayout.class, "ExternalLayout", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(moniLoggerEClass, MoniLogger.class, "MoniLogger", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getMoniLogger_Annotations(), this.getMoniLoggerAnnotation(), "annotations", null, 0, -1, MoniLogger.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, !IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getMoniLogger_Name(), ecorePackage.getEString(), "name", null, 0, 1, MoniLogger.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getMoniLogger_Parameters(), this.getParameter(), null, "parameters", null, 0, -1, MoniLogger.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getMoniLogger_Level(), this.getLogLevel(), "level", null, 0, 1, MoniLogger.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getMoniLogger_Event(), this.getEvent(), null, "event", null, 0, 1, MoniLogger.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getMoniLogger_Conditions(), this.getCondition(), null, "conditions", null, 0, -1, MoniLogger.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getMoniLogger_Actions(), this.getAction(), null, "actions", null, 0, -1, MoniLogger.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(parameterEClass, Parameter.class, "Parameter", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getParameter_Name(), ecorePackage.getEString(), "name", null, 0, 1, Parameter.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(eventEClass, Event.class, "Event", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getEvent_RuleID(), ecorePackage.getEString(), "ruleID", null, 0, 1, Event.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getEvent_Frequency(), ecorePackage.getEInt(), "frequency", null, 0, 1, Event.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getEvent_Limit(), ecorePackage.getEInt(), "limit", null, 0, 1, Event.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getEvent_Name(), ecorePackage.getEString(), "name", null, 0, 1, Event.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(beforeEventEClass, BeforeEvent.class, "BeforeEvent", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEClass(astEventEClass, ASTEvent.class, "ASTEvent", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getASTEvent_Before(), ecorePackage.getEBoolean(), "before", null, 0, 1, ASTEvent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getASTEvent_After(), ecorePackage.getEBoolean(), "after", null, 0, 1, ASTEvent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getASTEvent_RuleID(), ecorePackage.getEString(), "ruleID", null, 0, 1, ASTEvent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(afterEventEClass, AfterEvent.class, "AfterEvent", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEClass(complexEventEClass, ComplexEvent.class, "ComplexEvent", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getComplexEvent_Kind(), this.getTemporalPatternKind(), "kind", null, 0, 1, ComplexEvent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getComplexEvent_Pattern(), this.getTemporalPattern(), null, "pattern", null, 0, 1, ComplexEvent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(beforeAfterEventEClass, BeforeAfterEvent.class, "BeforeAfterEvent", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEClass(userEventEClass, UserEvent.class, "UserEvent", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getUserEvent_Parameters(), this.getParameter(), null, "parameters", null, 0, -1, UserEvent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(conditionEClass, Condition.class, "Condition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
@@ -1705,53 +2154,52 @@ public class MoniLog4DSLPackageImpl extends EPackageImpl implements MoniLog4DSLP
 
     initEClass(actionEClass, Action.class, "Action", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-    initEClass(appendEClass, Append.class, "Append", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getAppend_Appender(), this.getAppender(), null, "appender", null, 0, 1, Append.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(appenderCallEClass, AppenderCall.class, "AppenderCall", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getAppenderCall_Appender(), this.getAppenderRef(), null, "appender", null, 0, 1, AppenderCall.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getAppenderCall_Args(), this.getAppenderCallArgument(), null, "args", null, 0, -1, AppenderCall.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(appenderEClass, Appender.class, "Appender", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEClass(appenderRefEClass, AppenderRef.class, "AppenderRef", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getAppenderRef_Appender(), this.getAppender(), null, "appender", null, 0, 1, AppenderRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(streamAppenderEClass, StreamAppender.class, "StreamAppender", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getStreamAppender_Event(), ecorePackage.getEString(), "event", null, 0, 1, StreamAppender.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getStreamAppender_Values(), this.getLanguageExpression(), null, "values", null, 0, -1, StreamAppender.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(appenderCallArgumentEClass, AppenderCallArgument.class, "AppenderCallArgument", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
-    initEClass(fileAppenderEClass, FileAppender.class, "FileAppender", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getFileAppender_Filename(), ecorePackage.getEString(), "filename", null, 0, 1, FileAppender.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getFileAppender_Layout(), this.getLayout(), null, "layout", null, 0, 1, FileAppender.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(layoutCallEClass, LayoutCall.class, "LayoutCall", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getLayoutCall_Layout(), this.getLayoutRef(), null, "layout", null, 0, 1, LayoutCall.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getLayoutCall_Args(), this.getExpression(), null, "args", null, 0, -1, LayoutCall.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(consoleAppenderEClass, ConsoleAppender.class, "ConsoleAppender", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getConsoleAppender_Layout(), this.getLayout(), null, "layout", null, 0, 1, ConsoleAppender.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(layoutRefEClass, LayoutRef.class, "LayoutRef", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getLayoutRef_Layout(), this.getLayout(), null, "layout", null, 0, 1, LayoutRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(layoutEClass, Layout.class, "Layout", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getLayout_Values(), this.getLanguageExpression(), null, "values", null, 0, -1, Layout.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(emitEventEClass, EmitEvent.class, "EmitEvent", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getEmitEvent_Event(), this.getEvent(), null, "event", null, 0, 1, EmitEvent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getEmitEvent_Args(), this.getExpression(), null, "args", null, 0, -1, EmitEvent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(stringLayoutEClass, StringLayout.class, "StringLayout", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getStringLayout_FormatString(), ecorePackage.getEString(), "formatString", null, 0, 1, StringLayout.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(externalLayoutEClass, ExternalLayout.class, "ExternalLayout", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getExternalLayout_Path(), ecorePackage.getEString(), "path", null, 0, 1, ExternalLayout.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(moniLoggerCallEClass, MoniLoggerCall.class, "MoniLoggerCall", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getMoniLoggerCall_Monilogger(), this.getMoniLogger(), null, "monilogger", null, 0, 1, MoniLoggerCall.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(streamEventEClass, StreamEvent.class, "StreamEvent", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getStreamEvent_EventId(), ecorePackage.getEString(), "eventId", null, 0, 1, StreamEvent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getStreamEvent_Event(), this.getEvent(), null, "event", null, 0, 1, StreamEvent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getStreamEvent_Values(), this.getEmptyOrPropertyValue(), null, "values", null, 0, -1, StreamEvent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(emptyOrPropertyValueEClass, EmptyOrPropertyValue.class, "EmptyOrPropertyValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
+    initEClass(expressionEClass, Expression.class, "Expression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(parameterReferenceEClass, ParameterReference.class, "ParameterReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getParameterReference_Parameter(), this.getParameter(), null, "parameter", null, 0, 1, ParameterReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
     initEClass(languageExpressionEClass, LanguageExpression.class, "LanguageExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getLanguageExpression_Expression(), ecorePackage.getEString(), "expression", null, 0, 1, LanguageExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(temporalPropertyConditionEClass, TemporalPropertyCondition.class, "TemporalPropertyCondition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getTemporalPropertyCondition_Pattern(), this.getTemporalPattern(), null, "pattern", null, 0, 1, TemporalPropertyCondition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getTemporalPropertyCondition_Kind(), this.getTemporalPropertyConditionKind(), "kind", null, 0, 1, TemporalPropertyCondition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(languageExpressionConditionEClass, LanguageExpressionCondition.class, "LanguageExpressionCondition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getLanguageExpressionCondition_Expression(), this.getLanguageExpression(), null, "expression", null, 0, 1, LanguageExpressionCondition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(universalityEClass, Universality.class, "Universality", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getUniversality_Event(), this.getStreamEvent(), null, "event", null, 0, 1, Universality.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
     initEClass(existenceEClass, Existence.class, "Existence", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getExistence_Bound(), this.getBoundType(), null, "bound", null, 0, 1, Existence.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getExistence_Event(), this.getStreamEvent(), null, "event", null, 0, 1, Existence.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(universalityEClass, Universality.class, "Universality", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getUniversality_Event(), this.getStreamEvent(), null, "event", null, 0, 1, Universality.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(absenceEClass, Absence.class, "Absence", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getAbsence_Event(), this.getStreamEvent(), null, "event", null, 0, 1, Absence.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1780,13 +2228,16 @@ public class MoniLog4DSLPackageImpl extends EPackageImpl implements MoniLog4DSLP
     initEReference(getAfterUntil_LowerBound(), this.getStreamEvent(), null, "lowerBound", null, 0, 1, AfterUntil.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getAfterUntil_UpperBound(), this.getStreamEvent(), null, "upperBound", null, 0, 1, AfterUntil.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(notifyEClass, Notify.class, "Notify", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEClass(startMoniLoggerEClass, StartMoniLogger.class, "StartMoniLogger", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getStartMoniLogger_Args(), this.getExpression(), null, "args", null, 0, -1, StartMoniLogger.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(stopMoniLoggerEClass, StopMoniLogger.class, "StopMoniLogger", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(emptyEClass, Empty.class, "Empty", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(propertyValueEClass, PropertyValue.class, "PropertyValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getPropertyValue_Id(), ecorePackage.getEString(), "id", null, 0, 1, PropertyValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getPropertyValue_Value(), this.getLanguageExpression(), null, "value", null, 0, 1, PropertyValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getPropertyValue_Value(), this.getExpression(), null, "value", null, 0, 1, PropertyValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(explicitLanguageExpressionEClass, ExplicitLanguageExpression.class, "ExplicitLanguageExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getExplicitLanguageExpression_LanguageId(), ecorePackage.getEString(), "languageId", null, 0, 1, ExplicitLanguageExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -1794,20 +2245,26 @@ public class MoniLog4DSLPackageImpl extends EPackageImpl implements MoniLog4DSLP
     initEClass(defaultLanguageExpressionEClass, DefaultLanguageExpression.class, "DefaultLanguageExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     // Initialize enums and add enum literals
+    initEEnum(moniLoggerAnnotationEEnum, MoniLoggerAnnotation.class, "MoniLoggerAnnotation");
+    addEEnumLiteral(moniLoggerAnnotationEEnum, MoniLoggerAnnotation.INACTIVE);
+
+    initEEnum(appenderAnnotationEEnum, AppenderAnnotation.class, "AppenderAnnotation");
+    addEEnumLiteral(appenderAnnotationEEnum, AppenderAnnotation.ASYNC);
+
     initEEnum(logLevelEEnum, LogLevel.class, "LogLevel");
+    addEEnumLiteral(logLevelEEnum, LogLevel.INFO);
     addEEnumLiteral(logLevelEEnum, LogLevel.CONFIG);
     addEEnumLiteral(logLevelEEnum, LogLevel.FINE);
     addEEnumLiteral(logLevelEEnum, LogLevel.FINER);
     addEEnumLiteral(logLevelEEnum, LogLevel.FINEST);
-    addEEnumLiteral(logLevelEEnum, LogLevel.INFO);
     addEEnumLiteral(logLevelEEnum, LogLevel.SEVERE);
     addEEnumLiteral(logLevelEEnum, LogLevel.WARNING);
 
-    initEEnum(temporalPropertyConditionKindEEnum, TemporalPropertyConditionKind.class, "TemporalPropertyConditionKind");
-    addEEnumLiteral(temporalPropertyConditionKindEEnum, TemporalPropertyConditionKind.S);
-    addEEnumLiteral(temporalPropertyConditionKindEEnum, TemporalPropertyConditionKind.V);
-    addEEnumLiteral(temporalPropertyConditionKindEEnum, TemporalPropertyConditionKind.NS);
-    addEEnumLiteral(temporalPropertyConditionKindEEnum, TemporalPropertyConditionKind.NV);
+    initEEnum(temporalPatternKindEEnum, TemporalPatternKind.class, "TemporalPatternKind");
+    addEEnumLiteral(temporalPatternKindEEnum, TemporalPatternKind.S);
+    addEEnumLiteral(temporalPatternKindEEnum, TemporalPatternKind.V);
+    addEEnumLiteral(temporalPatternKindEEnum, TemporalPatternKind.NS);
+    addEEnumLiteral(temporalPatternKindEEnum, TemporalPatternKind.NV);
 
     // Create resource
     createResource(eNS_URI);

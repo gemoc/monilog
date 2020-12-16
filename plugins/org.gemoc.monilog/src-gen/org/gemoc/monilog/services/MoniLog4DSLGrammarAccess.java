@@ -9,6 +9,7 @@ import java.util.List;
 import org.eclipse.xtext.Action;
 import org.eclipse.xtext.Alternatives;
 import org.eclipse.xtext.Assignment;
+import org.eclipse.xtext.CrossReference;
 import org.eclipse.xtext.EnumLiteralDeclaration;
 import org.eclipse.xtext.EnumRule;
 import org.eclipse.xtext.Grammar;
@@ -26,8 +27,8 @@ import org.eclipse.xtext.service.GrammarProvider;
 @Singleton
 public class MoniLog4DSLGrammarAccess extends AbstractElementFinder.AbstractGrammarElementFinder {
 	
-	public class ModelElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.gemoc.monilog.MoniLog4DSL.Model");
+	public class DocumentElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.gemoc.monilog.MoniLog4DSL.Document");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Group cGroup_0 = (Group)cGroup.eContents().get(0);
 		private final Keyword cDefaultLanguageKeyword_0_0 = (Keyword)cGroup_0.eContents().get(0);
@@ -35,15 +36,23 @@ public class MoniLog4DSLGrammarAccess extends AbstractElementFinder.AbstractGram
 		private final Alternatives cDefaultLanguageIDAlternatives_0_1_0 = (Alternatives)cDefaultLanguageIDAssignment_0_1.eContents().get(0);
 		private final RuleCall cDefaultLanguageIDIDTerminalRuleCall_0_1_0_0 = (RuleCall)cDefaultLanguageIDAlternatives_0_1_0.eContents().get(0);
 		private final RuleCall cDefaultLanguageIDSTRINGTerminalRuleCall_0_1_0_1 = (RuleCall)cDefaultLanguageIDAlternatives_0_1_0.eContents().get(1);
-		private final Assignment cMoniLogSpecsAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cMoniLogSpecsMoniLogSpecParserRuleCall_1_0 = (RuleCall)cMoniLogSpecsAssignment_1.eContents().get(0);
+		private final UnorderedGroup cUnorderedGroup_1 = (UnorderedGroup)cGroup.eContents().get(1);
+		private final Assignment cEventsAssignment_1_0 = (Assignment)cUnorderedGroup_1.eContents().get(0);
+		private final RuleCall cEventsEventParserRuleCall_1_0_0 = (RuleCall)cEventsAssignment_1_0.eContents().get(0);
+		private final Assignment cAppendersAssignment_1_1 = (Assignment)cUnorderedGroup_1.eContents().get(1);
+		private final RuleCall cAppendersAppenderParserRuleCall_1_1_0 = (RuleCall)cAppendersAssignment_1_1.eContents().get(0);
+		private final Assignment cLayoutsAssignment_1_2 = (Assignment)cUnorderedGroup_1.eContents().get(2);
+		private final RuleCall cLayoutsLayoutParserRuleCall_1_2_0 = (RuleCall)cLayoutsAssignment_1_2.eContents().get(0);
+		private final Assignment cMoniLogSpecsAssignment_1_3 = (Assignment)cUnorderedGroup_1.eContents().get(3);
+		private final RuleCall cMoniLogSpecsMoniLoggerParserRuleCall_1_3_0 = (RuleCall)cMoniLogSpecsAssignment_1_3.eContents().get(0);
 		
-		//Model:
-		//	('default-language' defaultLanguageID=(ID | STRING))?
-		//	moniLogSpecs+=MoniLogSpec+;
+		//Document:
+		//	('default-language' defaultLanguageID=(ID | STRING))? (events+=Event* & appenders+=Appender* & layouts+=Layout* &
+		//	moniLogSpecs+=MoniLogger*);
 		@Override public ParserRule getRule() { return rule; }
 		
-		//('default-language' defaultLanguageID=(ID | STRING))? moniLogSpecs+=MoniLogSpec+
+		//('default-language' defaultLanguageID=(ID | STRING))? (events+=Event* & appenders+=Appender* & layouts+=Layout* &
+		//moniLogSpecs+=MoniLogger*)
 		public Group getGroup() { return cGroup; }
 		
 		//('default-language' defaultLanguageID=(ID | STRING))?
@@ -64,87 +73,711 @@ public class MoniLog4DSLGrammarAccess extends AbstractElementFinder.AbstractGram
 		//STRING
 		public RuleCall getDefaultLanguageIDSTRINGTerminalRuleCall_0_1_0_1() { return cDefaultLanguageIDSTRINGTerminalRuleCall_0_1_0_1; }
 		
-		//moniLogSpecs+=MoniLogSpec+
-		public Assignment getMoniLogSpecsAssignment_1() { return cMoniLogSpecsAssignment_1; }
+		//(events+=Event* & appenders+=Appender* & layouts+=Layout* & moniLogSpecs+=MoniLogger*)
+		public UnorderedGroup getUnorderedGroup_1() { return cUnorderedGroup_1; }
 		
-		//MoniLogSpec
-		public RuleCall getMoniLogSpecsMoniLogSpecParserRuleCall_1_0() { return cMoniLogSpecsMoniLogSpecParserRuleCall_1_0; }
+		//events+=Event*
+		public Assignment getEventsAssignment_1_0() { return cEventsAssignment_1_0; }
+		
+		//Event
+		public RuleCall getEventsEventParserRuleCall_1_0_0() { return cEventsEventParserRuleCall_1_0_0; }
+		
+		//appenders+=Appender*
+		public Assignment getAppendersAssignment_1_1() { return cAppendersAssignment_1_1; }
+		
+		//Appender
+		public RuleCall getAppendersAppenderParserRuleCall_1_1_0() { return cAppendersAppenderParserRuleCall_1_1_0; }
+		
+		//layouts+=Layout*
+		public Assignment getLayoutsAssignment_1_2() { return cLayoutsAssignment_1_2; }
+		
+		//Layout
+		public RuleCall getLayoutsLayoutParserRuleCall_1_2_0() { return cLayoutsLayoutParserRuleCall_1_2_0; }
+		
+		//moniLogSpecs+=MoniLogger*
+		public Assignment getMoniLogSpecsAssignment_1_3() { return cMoniLogSpecsAssignment_1_3; }
+		
+		//MoniLogger
+		public RuleCall getMoniLogSpecsMoniLoggerParserRuleCall_1_3_0() { return cMoniLogSpecsMoniLoggerParserRuleCall_1_3_0; }
 	}
-	public class MoniLogSpecElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.gemoc.monilog.MoniLog4DSL.MoniLogSpec");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cMonilogKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cNameSTRINGTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
-		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
-		private final Keyword cLeftSquareBracketKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
-		private final Assignment cLevelAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
-		private final RuleCall cLevelLogLevelEnumRuleCall_2_1_0 = (RuleCall)cLevelAssignment_2_1.eContents().get(0);
-		private final Keyword cRightSquareBracketKeyword_2_2 = (Keyword)cGroup_2.eContents().get(2);
-		private final Keyword cLeftCurlyBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
-		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
-		private final Keyword cEventsKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
-		private final Keyword cLeftCurlyBracketKeyword_4_1 = (Keyword)cGroup_4.eContents().get(1);
-		private final Assignment cEventsAssignment_4_2 = (Assignment)cGroup_4.eContents().get(2);
-		private final RuleCall cEventsEventParserRuleCall_4_2_0 = (RuleCall)cEventsAssignment_4_2.eContents().get(0);
-		private final Group cGroup_4_3 = (Group)cGroup_4.eContents().get(3);
-		private final Keyword cCommaKeyword_4_3_0 = (Keyword)cGroup_4_3.eContents().get(0);
-		private final Assignment cEventsAssignment_4_3_1 = (Assignment)cGroup_4_3.eContents().get(1);
-		private final RuleCall cEventsEventParserRuleCall_4_3_1_0 = (RuleCall)cEventsAssignment_4_3_1.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_4_4 = (Keyword)cGroup_4.eContents().get(4);
-		private final Group cGroup_5 = (Group)cGroup.eContents().get(5);
-		private final Keyword cConditionsKeyword_5_0 = (Keyword)cGroup_5.eContents().get(0);
-		private final Keyword cLeftCurlyBracketKeyword_5_1 = (Keyword)cGroup_5.eContents().get(1);
-		private final Assignment cConditionsAssignment_5_2 = (Assignment)cGroup_5.eContents().get(2);
-		private final RuleCall cConditionsConditionParserRuleCall_5_2_0 = (RuleCall)cConditionsAssignment_5_2.eContents().get(0);
-		private final Group cGroup_5_3 = (Group)cGroup_5.eContents().get(3);
-		private final Keyword cCommaKeyword_5_3_0 = (Keyword)cGroup_5_3.eContents().get(0);
-		private final Assignment cConditionsAssignment_5_3_1 = (Assignment)cGroup_5_3.eContents().get(1);
-		private final RuleCall cConditionsConditionParserRuleCall_5_3_1_0 = (RuleCall)cConditionsAssignment_5_3_1.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_5_4 = (Keyword)cGroup_5.eContents().get(4);
-		private final Keyword cActionsKeyword_6 = (Keyword)cGroup.eContents().get(6);
-		private final Keyword cLeftCurlyBracketKeyword_7 = (Keyword)cGroup.eContents().get(7);
-		private final Assignment cActionsAssignment_8 = (Assignment)cGroup.eContents().get(8);
-		private final RuleCall cActionsActionParserRuleCall_8_0 = (RuleCall)cActionsAssignment_8.eContents().get(0);
-		private final Group cGroup_9 = (Group)cGroup.eContents().get(9);
-		private final Keyword cCommaKeyword_9_0 = (Keyword)cGroup_9.eContents().get(0);
-		private final Assignment cActionsAssignment_9_1 = (Assignment)cGroup_9.eContents().get(1);
-		private final RuleCall cActionsActionParserRuleCall_9_1_0 = (RuleCall)cActionsAssignment_9_1.eContents().get(0);
-		private final Keyword cRightCurlyBracketKeyword_10 = (Keyword)cGroup.eContents().get(10);
-		private final Keyword cRightCurlyBracketKeyword_11 = (Keyword)cGroup.eContents().get(11);
+	public class AppenderElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.gemoc.monilog.MoniLog4DSL.Appender");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cLocalAppenderParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cExternalAppenderParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
-		//MoniLogSpec:
-		//	'monilog' name=STRING? ('[' level=LogLevel ']')? '{' ('events' '{' events+=Event (',' events+=Event)* '}')?
-		//	('conditions' '{' conditions+=Condition (',' conditions+=Condition)* '}')?
-		//	'actions' '{' actions+=Action (',' actions+=Action)* '}'
+		//@Exported
+		//Appender:
+		//	LocalAppender | ExternalAppender;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//LocalAppender | ExternalAppender
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//LocalAppender
+		public RuleCall getLocalAppenderParserRuleCall_0() { return cLocalAppenderParserRuleCall_0; }
+		
+		//ExternalAppender
+		public RuleCall getExternalAppenderParserRuleCall_1() { return cExternalAppenderParserRuleCall_1; }
+	}
+	public class LocalAppenderElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.gemoc.monilog.MoniLog4DSL.LocalAppender");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cAnnotationsAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cAnnotationsAppenderAnnotationEnumRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
+		private final Keyword cAppenderKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cNameIDTerminalRuleCall_2_0 = (RuleCall)cNameAssignment_2.eContents().get(0);
+		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
+		private final Keyword cLeftParenthesisKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Assignment cParametersAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
+		private final RuleCall cParametersParameterParserRuleCall_3_1_0 = (RuleCall)cParametersAssignment_3_1.eContents().get(0);
+		private final Group cGroup_3_2 = (Group)cGroup_3.eContents().get(2);
+		private final Keyword cCommaKeyword_3_2_0 = (Keyword)cGroup_3_2.eContents().get(0);
+		private final Assignment cParametersAssignment_3_2_1 = (Assignment)cGroup_3_2.eContents().get(1);
+		private final RuleCall cParametersParameterParserRuleCall_3_2_1_0 = (RuleCall)cParametersAssignment_3_2_1.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_3_3 = (Keyword)cGroup_3.eContents().get(3);
+		private final Keyword cLeftCurlyBracketKeyword_4 = (Keyword)cGroup.eContents().get(4);
+		private final Assignment cCallsAssignment_5 = (Assignment)cGroup.eContents().get(5);
+		private final RuleCall cCallsAppenderCallParserRuleCall_5_0 = (RuleCall)cCallsAssignment_5.eContents().get(0);
+		private final Group cGroup_6 = (Group)cGroup.eContents().get(6);
+		private final Keyword cSemicolonKeyword_6_0 = (Keyword)cGroup_6.eContents().get(0);
+		private final Assignment cCallsAssignment_6_1 = (Assignment)cGroup_6.eContents().get(1);
+		private final RuleCall cCallsAppenderCallParserRuleCall_6_1_0 = (RuleCall)cCallsAssignment_6_1.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_7 = (Keyword)cGroup.eContents().get(7);
+		
+		//LocalAppender:
+		//	annotations+=AppenderAnnotation*
+		//	'appender' name=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')')? '{'
+		//	calls+=AppenderCall (';' calls+=AppenderCall)*
 		//	'}';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'monilog' name=STRING? ('[' level=LogLevel ']')? '{' ('events' '{' events+=Event (',' events+=Event)* '}')?
-		//('conditions' '{' conditions+=Condition (',' conditions+=Condition)* '}')? 'actions' '{' actions+=Action (','
-		//actions+=Action)* '}' '}'
+		//annotations+=AppenderAnnotation* 'appender' name=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')')? '{'
+		//calls+=AppenderCall (';' calls+=AppenderCall)* '}'
 		public Group getGroup() { return cGroup; }
 		
-		//'monilog'
-		public Keyword getMonilogKeyword_0() { return cMonilogKeyword_0; }
+		//annotations+=AppenderAnnotation*
+		public Assignment getAnnotationsAssignment_0() { return cAnnotationsAssignment_0; }
 		
-		//name=STRING?
+		//AppenderAnnotation
+		public RuleCall getAnnotationsAppenderAnnotationEnumRuleCall_0_0() { return cAnnotationsAppenderAnnotationEnumRuleCall_0_0; }
+		
+		//'appender'
+		public Keyword getAppenderKeyword_1() { return cAppenderKeyword_1; }
+		
+		//name=ID
+		public Assignment getNameAssignment_2() { return cNameAssignment_2; }
+		
+		//ID
+		public RuleCall getNameIDTerminalRuleCall_2_0() { return cNameIDTerminalRuleCall_2_0; }
+		
+		//('(' parameters+=Parameter (',' parameters+=Parameter)* ')')?
+		public Group getGroup_3() { return cGroup_3; }
+		
+		//'('
+		public Keyword getLeftParenthesisKeyword_3_0() { return cLeftParenthesisKeyword_3_0; }
+		
+		//parameters+=Parameter
+		public Assignment getParametersAssignment_3_1() { return cParametersAssignment_3_1; }
+		
+		//Parameter
+		public RuleCall getParametersParameterParserRuleCall_3_1_0() { return cParametersParameterParserRuleCall_3_1_0; }
+		
+		//(',' parameters+=Parameter)*
+		public Group getGroup_3_2() { return cGroup_3_2; }
+		
+		//','
+		public Keyword getCommaKeyword_3_2_0() { return cCommaKeyword_3_2_0; }
+		
+		//parameters+=Parameter
+		public Assignment getParametersAssignment_3_2_1() { return cParametersAssignment_3_2_1; }
+		
+		//Parameter
+		public RuleCall getParametersParameterParserRuleCall_3_2_1_0() { return cParametersParameterParserRuleCall_3_2_1_0; }
+		
+		//')'
+		public Keyword getRightParenthesisKeyword_3_3() { return cRightParenthesisKeyword_3_3; }
+		
+		//'{'
+		public Keyword getLeftCurlyBracketKeyword_4() { return cLeftCurlyBracketKeyword_4; }
+		
+		//calls+=AppenderCall
+		public Assignment getCallsAssignment_5() { return cCallsAssignment_5; }
+		
+		//AppenderCall
+		public RuleCall getCallsAppenderCallParserRuleCall_5_0() { return cCallsAppenderCallParserRuleCall_5_0; }
+		
+		//(';' calls+=AppenderCall)*
+		public Group getGroup_6() { return cGroup_6; }
+		
+		//';'
+		public Keyword getSemicolonKeyword_6_0() { return cSemicolonKeyword_6_0; }
+		
+		//calls+=AppenderCall
+		public Assignment getCallsAssignment_6_1() { return cCallsAssignment_6_1; }
+		
+		//AppenderCall
+		public RuleCall getCallsAppenderCallParserRuleCall_6_1_0() { return cCallsAppenderCallParserRuleCall_6_1_0; }
+		
+		//'}'
+		public Keyword getRightCurlyBracketKeyword_7() { return cRightCurlyBracketKeyword_7; }
+	}
+	public class ExternalAppenderElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.gemoc.monilog.MoniLog4DSL.ExternalAppender");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cAppenderKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cNameFQNParserRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Keyword cLeftParenthesisKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cParametersAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final RuleCall cParametersParameterParserRuleCall_2_1_0 = (RuleCall)cParametersAssignment_2_1.eContents().get(0);
+		private final Group cGroup_2_2 = (Group)cGroup_2.eContents().get(2);
+		private final Keyword cCommaKeyword_2_2_0 = (Keyword)cGroup_2_2.eContents().get(0);
+		private final Assignment cParametersAssignment_2_2_1 = (Assignment)cGroup_2_2.eContents().get(1);
+		private final RuleCall cParametersParameterParserRuleCall_2_2_1_0 = (RuleCall)cParametersAssignment_2_2_1.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_2_3 = (Keyword)cGroup_2.eContents().get(3);
+		
+		//ExternalAppender:
+		//	'appender' name=FQN ('(' parameters+=Parameter (',' parameters+=Parameter)* ')')?;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//'appender' name=FQN ('(' parameters+=Parameter (',' parameters+=Parameter)* ')')?
+		public Group getGroup() { return cGroup; }
+		
+		//'appender'
+		public Keyword getAppenderKeyword_0() { return cAppenderKeyword_0; }
+		
+		//name=FQN
 		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
 		
-		//STRING
-		public RuleCall getNameSTRINGTerminalRuleCall_1_0() { return cNameSTRINGTerminalRuleCall_1_0; }
+		//FQN
+		public RuleCall getNameFQNParserRuleCall_1_0() { return cNameFQNParserRuleCall_1_0; }
+		
+		//('(' parameters+=Parameter (',' parameters+=Parameter)* ')')?
+		public Group getGroup_2() { return cGroup_2; }
+		
+		//'('
+		public Keyword getLeftParenthesisKeyword_2_0() { return cLeftParenthesisKeyword_2_0; }
+		
+		//parameters+=Parameter
+		public Assignment getParametersAssignment_2_1() { return cParametersAssignment_2_1; }
+		
+		//Parameter
+		public RuleCall getParametersParameterParserRuleCall_2_1_0() { return cParametersParameterParserRuleCall_2_1_0; }
+		
+		//(',' parameters+=Parameter)*
+		public Group getGroup_2_2() { return cGroup_2_2; }
+		
+		//','
+		public Keyword getCommaKeyword_2_2_0() { return cCommaKeyword_2_2_0; }
+		
+		//parameters+=Parameter
+		public Assignment getParametersAssignment_2_2_1() { return cParametersAssignment_2_2_1; }
+		
+		//Parameter
+		public RuleCall getParametersParameterParserRuleCall_2_2_1_0() { return cParametersParameterParserRuleCall_2_2_1_0; }
+		
+		//')'
+		public Keyword getRightParenthesisKeyword_2_3() { return cRightParenthesisKeyword_2_3; }
+	}
+	public class LayoutElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.gemoc.monilog.MoniLog4DSL.Layout");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cLocalLayoutParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cExternalLayoutParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		
+		//Layout:
+		//	LocalLayout | ExternalLayout;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//LocalLayout | ExternalLayout
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//LocalLayout
+		public RuleCall getLocalLayoutParserRuleCall_0() { return cLocalLayoutParserRuleCall_0; }
+		
+		//ExternalLayout
+		public RuleCall getExternalLayoutParserRuleCall_1() { return cExternalLayoutParserRuleCall_1; }
+	}
+	public class LocalLayoutElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.gemoc.monilog.MoniLog4DSL.LocalLayout");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cLayoutKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Keyword cLeftParenthesisKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cParametersAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final RuleCall cParametersParameterParserRuleCall_2_1_0 = (RuleCall)cParametersAssignment_2_1.eContents().get(0);
+		private final Group cGroup_2_2 = (Group)cGroup_2.eContents().get(2);
+		private final Keyword cCommaKeyword_2_2_0 = (Keyword)cGroup_2_2.eContents().get(0);
+		private final Assignment cParametersAssignment_2_2_1 = (Assignment)cGroup_2_2.eContents().get(1);
+		private final RuleCall cParametersParameterParserRuleCall_2_2_1_0 = (RuleCall)cParametersAssignment_2_2_1.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_2_3 = (Keyword)cGroup_2.eContents().get(3);
+		private final Keyword cLeftCurlyBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Assignment cCallAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final RuleCall cCallLayoutCallParserRuleCall_4_0 = (RuleCall)cCallAssignment_4.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_5 = (Keyword)cGroup.eContents().get(5);
+		
+		//@Exported
+		//LocalLayout:
+		//	'layout' name=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')')? '{'
+		//	call=LayoutCall
+		//	'}';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//'layout' name=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')')? '{' call=LayoutCall '}'
+		public Group getGroup() { return cGroup; }
+		
+		//'layout'
+		public Keyword getLayoutKeyword_0() { return cLayoutKeyword_0; }
+		
+		//name=ID
+		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
+		
+		//ID
+		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
+		
+		//('(' parameters+=Parameter (',' parameters+=Parameter)* ')')?
+		public Group getGroup_2() { return cGroup_2; }
+		
+		//'('
+		public Keyword getLeftParenthesisKeyword_2_0() { return cLeftParenthesisKeyword_2_0; }
+		
+		//parameters+=Parameter
+		public Assignment getParametersAssignment_2_1() { return cParametersAssignment_2_1; }
+		
+		//Parameter
+		public RuleCall getParametersParameterParserRuleCall_2_1_0() { return cParametersParameterParserRuleCall_2_1_0; }
+		
+		//(',' parameters+=Parameter)*
+		public Group getGroup_2_2() { return cGroup_2_2; }
+		
+		//','
+		public Keyword getCommaKeyword_2_2_0() { return cCommaKeyword_2_2_0; }
+		
+		//parameters+=Parameter
+		public Assignment getParametersAssignment_2_2_1() { return cParametersAssignment_2_2_1; }
+		
+		//Parameter
+		public RuleCall getParametersParameterParserRuleCall_2_2_1_0() { return cParametersParameterParserRuleCall_2_2_1_0; }
+		
+		//')'
+		public Keyword getRightParenthesisKeyword_2_3() { return cRightParenthesisKeyword_2_3; }
+		
+		//'{'
+		public Keyword getLeftCurlyBracketKeyword_3() { return cLeftCurlyBracketKeyword_3; }
+		
+		//call=LayoutCall
+		public Assignment getCallAssignment_4() { return cCallAssignment_4; }
+		
+		//LayoutCall
+		public RuleCall getCallLayoutCallParserRuleCall_4_0() { return cCallLayoutCallParserRuleCall_4_0; }
+		
+		//'}'
+		public Keyword getRightCurlyBracketKeyword_5() { return cRightCurlyBracketKeyword_5; }
+	}
+	public class ExternalLayoutElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.gemoc.monilog.MoniLog4DSL.ExternalLayout");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cLayoutKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cNameFQNParserRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Keyword cLeftParenthesisKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cParametersAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final RuleCall cParametersParameterParserRuleCall_2_1_0 = (RuleCall)cParametersAssignment_2_1.eContents().get(0);
+		private final Group cGroup_2_2 = (Group)cGroup_2.eContents().get(2);
+		private final Keyword cCommaKeyword_2_2_0 = (Keyword)cGroup_2_2.eContents().get(0);
+		private final Assignment cParametersAssignment_2_2_1 = (Assignment)cGroup_2_2.eContents().get(1);
+		private final RuleCall cParametersParameterParserRuleCall_2_2_1_0 = (RuleCall)cParametersAssignment_2_2_1.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_2_3 = (Keyword)cGroup_2.eContents().get(3);
+		
+		//@Exported
+		//ExternalLayout:
+		//	'layout' name=FQN ('(' parameters+=Parameter (',' parameters+=Parameter)* ')')?;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//'layout' name=FQN ('(' parameters+=Parameter (',' parameters+=Parameter)* ')')?
+		public Group getGroup() { return cGroup; }
+		
+		//'layout'
+		public Keyword getLayoutKeyword_0() { return cLayoutKeyword_0; }
+		
+		//name=FQN
+		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
+		
+		//FQN
+		public RuleCall getNameFQNParserRuleCall_1_0() { return cNameFQNParserRuleCall_1_0; }
+		
+		//('(' parameters+=Parameter (',' parameters+=Parameter)* ')')?
+		public Group getGroup_2() { return cGroup_2; }
+		
+		//'('
+		public Keyword getLeftParenthesisKeyword_2_0() { return cLeftParenthesisKeyword_2_0; }
+		
+		//parameters+=Parameter
+		public Assignment getParametersAssignment_2_1() { return cParametersAssignment_2_1; }
+		
+		//Parameter
+		public RuleCall getParametersParameterParserRuleCall_2_1_0() { return cParametersParameterParserRuleCall_2_1_0; }
+		
+		//(',' parameters+=Parameter)*
+		public Group getGroup_2_2() { return cGroup_2_2; }
+		
+		//','
+		public Keyword getCommaKeyword_2_2_0() { return cCommaKeyword_2_2_0; }
+		
+		//parameters+=Parameter
+		public Assignment getParametersAssignment_2_2_1() { return cParametersAssignment_2_2_1; }
+		
+		//Parameter
+		public RuleCall getParametersParameterParserRuleCall_2_2_1_0() { return cParametersParameterParserRuleCall_2_2_1_0; }
+		
+		//')'
+		public Keyword getRightParenthesisKeyword_2_3() { return cRightParenthesisKeyword_2_3; }
+	}
+	public class MoniLoggerElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.gemoc.monilog.MoniLog4DSL.MoniLogger");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cAnnotationsAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cAnnotationsMoniLoggerAnnotationEnumRuleCall_0_0 = (RuleCall)cAnnotationsAssignment_0.eContents().get(0);
+		private final Keyword cMoniloggerKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cNameIDTerminalRuleCall_2_0 = (RuleCall)cNameAssignment_2.eContents().get(0);
+		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
+		private final Keyword cLeftParenthesisKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Assignment cParametersAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
+		private final RuleCall cParametersParameterParserRuleCall_3_1_0 = (RuleCall)cParametersAssignment_3_1.eContents().get(0);
+		private final Group cGroup_3_2 = (Group)cGroup_3.eContents().get(2);
+		private final Keyword cCommaKeyword_3_2_0 = (Keyword)cGroup_3_2.eContents().get(0);
+		private final Assignment cParametersAssignment_3_2_1 = (Assignment)cGroup_3_2.eContents().get(1);
+		private final RuleCall cParametersParameterParserRuleCall_3_2_1_0 = (RuleCall)cParametersAssignment_3_2_1.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_3_3 = (Keyword)cGroup_3.eContents().get(3);
+		private final Group cGroup_4 = (Group)cGroup.eContents().get(4);
+		private final Keyword cLeftSquareBracketKeyword_4_0 = (Keyword)cGroup_4.eContents().get(0);
+		private final Assignment cLevelAssignment_4_1 = (Assignment)cGroup_4.eContents().get(1);
+		private final RuleCall cLevelLogLevelEnumRuleCall_4_1_0 = (RuleCall)cLevelAssignment_4_1.eContents().get(0);
+		private final Keyword cRightSquareBracketKeyword_4_2 = (Keyword)cGroup_4.eContents().get(2);
+		private final Keyword cLeftCurlyBracketKeyword_5 = (Keyword)cGroup.eContents().get(5);
+		private final Keyword cEventKeyword_6 = (Keyword)cGroup.eContents().get(6);
+		private final Assignment cEventAssignment_7 = (Assignment)cGroup.eContents().get(7);
+		private final CrossReference cEventEventCrossReference_7_0 = (CrossReference)cEventAssignment_7.eContents().get(0);
+		private final RuleCall cEventEventIDTerminalRuleCall_7_0_1 = (RuleCall)cEventEventCrossReference_7_0.eContents().get(1);
+		private final Group cGroup_8 = (Group)cGroup.eContents().get(8);
+		private final Keyword cConditionsKeyword_8_0 = (Keyword)cGroup_8.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_8_1 = (Keyword)cGroup_8.eContents().get(1);
+		private final Assignment cConditionsAssignment_8_2 = (Assignment)cGroup_8.eContents().get(2);
+		private final RuleCall cConditionsConditionParserRuleCall_8_2_0 = (RuleCall)cConditionsAssignment_8_2.eContents().get(0);
+		private final Group cGroup_8_3 = (Group)cGroup_8.eContents().get(3);
+		private final Keyword cSemicolonKeyword_8_3_0 = (Keyword)cGroup_8_3.eContents().get(0);
+		private final Assignment cConditionsAssignment_8_3_1 = (Assignment)cGroup_8_3.eContents().get(1);
+		private final RuleCall cConditionsConditionParserRuleCall_8_3_1_0 = (RuleCall)cConditionsAssignment_8_3_1.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_8_4 = (Keyword)cGroup_8.eContents().get(4);
+		private final Keyword cActionsKeyword_9 = (Keyword)cGroup.eContents().get(9);
+		private final Keyword cLeftCurlyBracketKeyword_10 = (Keyword)cGroup.eContents().get(10);
+		private final Assignment cActionsAssignment_11 = (Assignment)cGroup.eContents().get(11);
+		private final RuleCall cActionsActionParserRuleCall_11_0 = (RuleCall)cActionsAssignment_11.eContents().get(0);
+		private final Group cGroup_12 = (Group)cGroup.eContents().get(12);
+		private final Keyword cSemicolonKeyword_12_0 = (Keyword)cGroup_12.eContents().get(0);
+		private final Assignment cActionsAssignment_12_1 = (Assignment)cGroup_12.eContents().get(1);
+		private final RuleCall cActionsActionParserRuleCall_12_1_0 = (RuleCall)cActionsAssignment_12_1.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_13 = (Keyword)cGroup.eContents().get(13);
+		private final Keyword cRightCurlyBracketKeyword_14 = (Keyword)cGroup.eContents().get(14);
+		
+		//@Exported
+		//MoniLogger:
+		//	annotations+=MoniLoggerAnnotation*
+		//	'monilogger' name=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')')? ('[' level=LogLevel ']')? '{'
+		//	'event' event=[Event] ('conditions' '{' conditions+=Condition (';' conditions+=Condition)* '}')?
+		//	'actions' '{' actions+=Action (';' actions+=Action)* '}'
+		//	'}';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//annotations+=MoniLoggerAnnotation* 'monilogger' name=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')')?
+		//('[' level=LogLevel ']')? '{' 'event' event=[Event] ('conditions' '{' conditions+=Condition (';'
+		//conditions+=Condition)* '}')? 'actions' '{' actions+=Action (';' actions+=Action)* '}' '}'
+		public Group getGroup() { return cGroup; }
+		
+		//annotations+=MoniLoggerAnnotation*
+		public Assignment getAnnotationsAssignment_0() { return cAnnotationsAssignment_0; }
+		
+		//MoniLoggerAnnotation
+		public RuleCall getAnnotationsMoniLoggerAnnotationEnumRuleCall_0_0() { return cAnnotationsMoniLoggerAnnotationEnumRuleCall_0_0; }
+		
+		//'monilogger'
+		public Keyword getMoniloggerKeyword_1() { return cMoniloggerKeyword_1; }
+		
+		//name=ID
+		public Assignment getNameAssignment_2() { return cNameAssignment_2; }
+		
+		//ID
+		public RuleCall getNameIDTerminalRuleCall_2_0() { return cNameIDTerminalRuleCall_2_0; }
+		
+		//('(' parameters+=Parameter (',' parameters+=Parameter)* ')')?
+		public Group getGroup_3() { return cGroup_3; }
+		
+		//'('
+		public Keyword getLeftParenthesisKeyword_3_0() { return cLeftParenthesisKeyword_3_0; }
+		
+		//parameters+=Parameter
+		public Assignment getParametersAssignment_3_1() { return cParametersAssignment_3_1; }
+		
+		//Parameter
+		public RuleCall getParametersParameterParserRuleCall_3_1_0() { return cParametersParameterParserRuleCall_3_1_0; }
+		
+		//(',' parameters+=Parameter)*
+		public Group getGroup_3_2() { return cGroup_3_2; }
+		
+		//','
+		public Keyword getCommaKeyword_3_2_0() { return cCommaKeyword_3_2_0; }
+		
+		//parameters+=Parameter
+		public Assignment getParametersAssignment_3_2_1() { return cParametersAssignment_3_2_1; }
+		
+		//Parameter
+		public RuleCall getParametersParameterParserRuleCall_3_2_1_0() { return cParametersParameterParserRuleCall_3_2_1_0; }
+		
+		//')'
+		public Keyword getRightParenthesisKeyword_3_3() { return cRightParenthesisKeyword_3_3; }
 		
 		//('[' level=LogLevel ']')?
+		public Group getGroup_4() { return cGroup_4; }
+		
+		//'['
+		public Keyword getLeftSquareBracketKeyword_4_0() { return cLeftSquareBracketKeyword_4_0; }
+		
+		//level=LogLevel
+		public Assignment getLevelAssignment_4_1() { return cLevelAssignment_4_1; }
+		
+		//LogLevel
+		public RuleCall getLevelLogLevelEnumRuleCall_4_1_0() { return cLevelLogLevelEnumRuleCall_4_1_0; }
+		
+		//']'
+		public Keyword getRightSquareBracketKeyword_4_2() { return cRightSquareBracketKeyword_4_2; }
+		
+		//'{'
+		public Keyword getLeftCurlyBracketKeyword_5() { return cLeftCurlyBracketKeyword_5; }
+		
+		//'event'
+		public Keyword getEventKeyword_6() { return cEventKeyword_6; }
+		
+		//event=[Event]
+		public Assignment getEventAssignment_7() { return cEventAssignment_7; }
+		
+		//[Event]
+		public CrossReference getEventEventCrossReference_7_0() { return cEventEventCrossReference_7_0; }
+		
+		//ID
+		public RuleCall getEventEventIDTerminalRuleCall_7_0_1() { return cEventEventIDTerminalRuleCall_7_0_1; }
+		
+		//('conditions' '{' conditions+=Condition (';' conditions+=Condition)* '}')?
+		public Group getGroup_8() { return cGroup_8; }
+		
+		//'conditions'
+		public Keyword getConditionsKeyword_8_0() { return cConditionsKeyword_8_0; }
+		
+		//'{'
+		public Keyword getLeftCurlyBracketKeyword_8_1() { return cLeftCurlyBracketKeyword_8_1; }
+		
+		//conditions+=Condition
+		public Assignment getConditionsAssignment_8_2() { return cConditionsAssignment_8_2; }
+		
+		//Condition
+		public RuleCall getConditionsConditionParserRuleCall_8_2_0() { return cConditionsConditionParserRuleCall_8_2_0; }
+		
+		//(';' conditions+=Condition)*
+		public Group getGroup_8_3() { return cGroup_8_3; }
+		
+		//';'
+		public Keyword getSemicolonKeyword_8_3_0() { return cSemicolonKeyword_8_3_0; }
+		
+		//conditions+=Condition
+		public Assignment getConditionsAssignment_8_3_1() { return cConditionsAssignment_8_3_1; }
+		
+		//Condition
+		public RuleCall getConditionsConditionParserRuleCall_8_3_1_0() { return cConditionsConditionParserRuleCall_8_3_1_0; }
+		
+		//'}'
+		public Keyword getRightCurlyBracketKeyword_8_4() { return cRightCurlyBracketKeyword_8_4; }
+		
+		//'actions'
+		public Keyword getActionsKeyword_9() { return cActionsKeyword_9; }
+		
+		//'{'
+		public Keyword getLeftCurlyBracketKeyword_10() { return cLeftCurlyBracketKeyword_10; }
+		
+		//actions+=Action
+		public Assignment getActionsAssignment_11() { return cActionsAssignment_11; }
+		
+		//Action
+		public RuleCall getActionsActionParserRuleCall_11_0() { return cActionsActionParserRuleCall_11_0; }
+		
+		//(';' actions+=Action)*
+		public Group getGroup_12() { return cGroup_12; }
+		
+		//';'
+		public Keyword getSemicolonKeyword_12_0() { return cSemicolonKeyword_12_0; }
+		
+		//actions+=Action
+		public Assignment getActionsAssignment_12_1() { return cActionsAssignment_12_1; }
+		
+		//Action
+		public RuleCall getActionsActionParserRuleCall_12_1_0() { return cActionsActionParserRuleCall_12_1_0; }
+		
+		//'}'
+		public Keyword getRightCurlyBracketKeyword_13() { return cRightCurlyBracketKeyword_13; }
+		
+		//'}'
+		public Keyword getRightCurlyBracketKeyword_14() { return cRightCurlyBracketKeyword_14; }
+	}
+	public class ParameterElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.gemoc.monilog.MoniLog4DSL.Parameter");
+		private final Assignment cNameAssignment = (Assignment)rule.eContents().get(1);
+		private final RuleCall cNameIDTerminalRuleCall_0 = (RuleCall)cNameAssignment.eContents().get(0);
+		
+		//Parameter:
+		//	name=ID;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//name=ID
+		public Assignment getNameAssignment() { return cNameAssignment; }
+		
+		//ID
+		public RuleCall getNameIDTerminalRuleCall_0() { return cNameIDTerminalRuleCall_0; }
+	}
+	public class EventElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.gemoc.monilog.MoniLog4DSL.Event");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cASTEventParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cComplexEventParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cUserEventParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		
+		//Event:
+		//	ASTEvent | ComplexEvent | UserEvent;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//ASTEvent | ComplexEvent | UserEvent
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//ASTEvent
+		public RuleCall getASTEventParserRuleCall_0() { return cASTEventParserRuleCall_0; }
+		
+		//ComplexEvent
+		public RuleCall getComplexEventParserRuleCall_1() { return cComplexEventParserRuleCall_1; }
+		
+		//UserEvent
+		public RuleCall getUserEventParserRuleCall_2() { return cUserEventParserRuleCall_2; }
+	}
+	public class ASTEventElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.gemoc.monilog.MoniLog4DSL.ASTEvent");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cAstKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
+		private final Keyword cLeftCurlyBracketKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final UnorderedGroup cUnorderedGroup_3 = (UnorderedGroup)cGroup.eContents().get(3);
+		private final Assignment cBeforeAssignment_3_0 = (Assignment)cUnorderedGroup_3.eContents().get(0);
+		private final Keyword cBeforeBeforeKeyword_3_0_0 = (Keyword)cBeforeAssignment_3_0.eContents().get(0);
+		private final Assignment cAfterAssignment_3_1 = (Assignment)cUnorderedGroup_3.eContents().get(1);
+		private final Keyword cAfterAfterKeyword_3_1_0 = (Keyword)cAfterAssignment_3_1.eContents().get(0);
+		private final Assignment cRuleIDAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final RuleCall cRuleIDIDTerminalRuleCall_4_0 = (RuleCall)cRuleIDAssignment_4.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_5 = (Keyword)cGroup.eContents().get(5);
+		
+		//@Exported
+		//ASTEvent:
+		//	'ast' name=ID '{' (before?='before'? & after?='after'?) ruleID=ID
+		//	'}';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//'ast' name=ID '{' (before?='before'? & after?='after'?) ruleID=ID '}'
+		public Group getGroup() { return cGroup; }
+		
+		//'ast'
+		public Keyword getAstKeyword_0() { return cAstKeyword_0; }
+		
+		//name=ID
+		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
+		
+		//ID
+		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
+		
+		//'{'
+		public Keyword getLeftCurlyBracketKeyword_2() { return cLeftCurlyBracketKeyword_2; }
+		
+		//(before?='before'? & after?='after'?)
+		public UnorderedGroup getUnorderedGroup_3() { return cUnorderedGroup_3; }
+		
+		//before?='before'?
+		public Assignment getBeforeAssignment_3_0() { return cBeforeAssignment_3_0; }
+		
+		//'before'
+		public Keyword getBeforeBeforeKeyword_3_0_0() { return cBeforeBeforeKeyword_3_0_0; }
+		
+		//after?='after'?
+		public Assignment getAfterAssignment_3_1() { return cAfterAssignment_3_1; }
+		
+		//'after'
+		public Keyword getAfterAfterKeyword_3_1_0() { return cAfterAfterKeyword_3_1_0; }
+		
+		//ruleID=ID
+		public Assignment getRuleIDAssignment_4() { return cRuleIDAssignment_4; }
+		
+		//ID
+		public RuleCall getRuleIDIDTerminalRuleCall_4_0() { return cRuleIDIDTerminalRuleCall_4_0; }
+		
+		//'}'
+		public Keyword getRightCurlyBracketKeyword_5() { return cRightCurlyBracketKeyword_5; }
+	}
+	public class ComplexEventElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.gemoc.monilog.MoniLog4DSL.ComplexEvent");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Keyword cComplexKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Keyword cLeftSquareBracketKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cKindAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final RuleCall cKindTemporalPatternKindEnumRuleCall_2_1_0 = (RuleCall)cKindAssignment_2_1.eContents().get(0);
+		private final Keyword cRightSquareBracketKeyword_2_2 = (Keyword)cGroup_2.eContents().get(2);
+		private final Keyword cLeftCurlyBracketKeyword_3 = (Keyword)cGroup.eContents().get(3);
+		private final Assignment cPatternAssignment_4 = (Assignment)cGroup.eContents().get(4);
+		private final RuleCall cPatternTemporalPatternParserRuleCall_4_0 = (RuleCall)cPatternAssignment_4.eContents().get(0);
+		private final Keyword cRightCurlyBracketKeyword_5 = (Keyword)cGroup.eContents().get(5);
+		
+		//@Exported
+		//ComplexEvent:
+		//	'complex' name=ID ('[' kind=TemporalPatternKind ']')? '{'
+		//	pattern=TemporalPattern
+		//	'}';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//'complex' name=ID ('[' kind=TemporalPatternKind ']')? '{' pattern=TemporalPattern '}'
+		public Group getGroup() { return cGroup; }
+		
+		//'complex'
+		public Keyword getComplexKeyword_0() { return cComplexKeyword_0; }
+		
+		//name=ID
+		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
+		
+		//ID
+		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
+		
+		//('[' kind=TemporalPatternKind ']')?
 		public Group getGroup_2() { return cGroup_2; }
 		
 		//'['
 		public Keyword getLeftSquareBracketKeyword_2_0() { return cLeftSquareBracketKeyword_2_0; }
 		
-		//level=LogLevel
-		public Assignment getLevelAssignment_2_1() { return cLevelAssignment_2_1; }
+		//kind=TemporalPatternKind
+		public Assignment getKindAssignment_2_1() { return cKindAssignment_2_1; }
 		
-		//LogLevel
-		public RuleCall getLevelLogLevelEnumRuleCall_2_1_0() { return cLevelLogLevelEnumRuleCall_2_1_0; }
+		//TemporalPatternKind
+		public RuleCall getKindTemporalPatternKindEnumRuleCall_2_1_0() { return cKindTemporalPatternKindEnumRuleCall_2_1_0; }
 		
 		//']'
 		public Keyword getRightSquareBracketKeyword_2_2() { return cRightSquareBracketKeyword_2_2; }
@@ -152,388 +785,97 @@ public class MoniLog4DSLGrammarAccess extends AbstractElementFinder.AbstractGram
 		//'{'
 		public Keyword getLeftCurlyBracketKeyword_3() { return cLeftCurlyBracketKeyword_3; }
 		
-		//('events' '{' events+=Event (',' events+=Event)* '}')?
-		public Group getGroup_4() { return cGroup_4; }
+		//pattern=TemporalPattern
+		public Assignment getPatternAssignment_4() { return cPatternAssignment_4; }
 		
-		//'events'
-		public Keyword getEventsKeyword_4_0() { return cEventsKeyword_4_0; }
-		
-		//'{'
-		public Keyword getLeftCurlyBracketKeyword_4_1() { return cLeftCurlyBracketKeyword_4_1; }
-		
-		//events+=Event
-		public Assignment getEventsAssignment_4_2() { return cEventsAssignment_4_2; }
-		
-		//Event
-		public RuleCall getEventsEventParserRuleCall_4_2_0() { return cEventsEventParserRuleCall_4_2_0; }
-		
-		//(',' events+=Event)*
-		public Group getGroup_4_3() { return cGroup_4_3; }
-		
-		//','
-		public Keyword getCommaKeyword_4_3_0() { return cCommaKeyword_4_3_0; }
-		
-		//events+=Event
-		public Assignment getEventsAssignment_4_3_1() { return cEventsAssignment_4_3_1; }
-		
-		//Event
-		public RuleCall getEventsEventParserRuleCall_4_3_1_0() { return cEventsEventParserRuleCall_4_3_1_0; }
+		//TemporalPattern
+		public RuleCall getPatternTemporalPatternParserRuleCall_4_0() { return cPatternTemporalPatternParserRuleCall_4_0; }
 		
 		//'}'
-		public Keyword getRightCurlyBracketKeyword_4_4() { return cRightCurlyBracketKeyword_4_4; }
-		
-		//('conditions' '{' conditions+=Condition (',' conditions+=Condition)* '}')?
-		public Group getGroup_5() { return cGroup_5; }
-		
-		//'conditions'
-		public Keyword getConditionsKeyword_5_0() { return cConditionsKeyword_5_0; }
-		
-		//'{'
-		public Keyword getLeftCurlyBracketKeyword_5_1() { return cLeftCurlyBracketKeyword_5_1; }
-		
-		//conditions+=Condition
-		public Assignment getConditionsAssignment_5_2() { return cConditionsAssignment_5_2; }
-		
-		//Condition
-		public RuleCall getConditionsConditionParserRuleCall_5_2_0() { return cConditionsConditionParserRuleCall_5_2_0; }
-		
-		//(',' conditions+=Condition)*
-		public Group getGroup_5_3() { return cGroup_5_3; }
-		
-		//','
-		public Keyword getCommaKeyword_5_3_0() { return cCommaKeyword_5_3_0; }
-		
-		//conditions+=Condition
-		public Assignment getConditionsAssignment_5_3_1() { return cConditionsAssignment_5_3_1; }
-		
-		//Condition
-		public RuleCall getConditionsConditionParserRuleCall_5_3_1_0() { return cConditionsConditionParserRuleCall_5_3_1_0; }
-		
-		//'}'
-		public Keyword getRightCurlyBracketKeyword_5_4() { return cRightCurlyBracketKeyword_5_4; }
-		
-		//'actions'
-		public Keyword getActionsKeyword_6() { return cActionsKeyword_6; }
-		
-		//'{'
-		public Keyword getLeftCurlyBracketKeyword_7() { return cLeftCurlyBracketKeyword_7; }
-		
-		//actions+=Action
-		public Assignment getActionsAssignment_8() { return cActionsAssignment_8; }
-		
-		//Action
-		public RuleCall getActionsActionParserRuleCall_8_0() { return cActionsActionParserRuleCall_8_0; }
-		
-		//(',' actions+=Action)*
-		public Group getGroup_9() { return cGroup_9; }
-		
-		//','
-		public Keyword getCommaKeyword_9_0() { return cCommaKeyword_9_0; }
-		
-		//actions+=Action
-		public Assignment getActionsAssignment_9_1() { return cActionsAssignment_9_1; }
-		
-		//Action
-		public RuleCall getActionsActionParserRuleCall_9_1_0() { return cActionsActionParserRuleCall_9_1_0; }
-		
-		//'}'
-		public Keyword getRightCurlyBracketKeyword_10() { return cRightCurlyBracketKeyword_10; }
-		
-		//'}'
-		public Keyword getRightCurlyBracketKeyword_11() { return cRightCurlyBracketKeyword_11; }
+		public Keyword getRightCurlyBracketKeyword_5() { return cRightCurlyBracketKeyword_5; }
 	}
-	public class EventElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.gemoc.monilog.MoniLog4DSL.Event");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final RuleCall cBeforeEventParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final RuleCall cAfterEventParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
-		private final RuleCall cBeforeAfterEventParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
-		
-		//Event:
-		//	BeforeEvent | AfterEvent | BeforeAfterEvent;
-		@Override public ParserRule getRule() { return rule; }
-		
-		//BeforeEvent | AfterEvent | BeforeAfterEvent
-		public Alternatives getAlternatives() { return cAlternatives; }
-		
-		//BeforeEvent
-		public RuleCall getBeforeEventParserRuleCall_0() { return cBeforeEventParserRuleCall_0; }
-		
-		//AfterEvent
-		public RuleCall getAfterEventParserRuleCall_1() { return cAfterEventParserRuleCall_1; }
-		
-		//BeforeAfterEvent
-		public RuleCall getBeforeAfterEventParserRuleCall_2() { return cBeforeAfterEventParserRuleCall_2; }
-	}
-	public class BeforeEventElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.gemoc.monilog.MoniLog4DSL.BeforeEvent");
+	public class UserEventElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.gemoc.monilog.MoniLog4DSL.UserEvent");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cBeforeKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final Assignment cRuleIDAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final Alternatives cRuleIDAlternatives_1_0 = (Alternatives)cRuleIDAssignment_1.eContents().get(0);
-		private final RuleCall cRuleIDIDTerminalRuleCall_1_0_0 = (RuleCall)cRuleIDAlternatives_1_0.eContents().get(0);
-		private final RuleCall cRuleIDSTRINGTerminalRuleCall_1_0_1 = (RuleCall)cRuleIDAlternatives_1_0.eContents().get(1);
-		private final UnorderedGroup cUnorderedGroup_2 = (UnorderedGroup)cGroup.eContents().get(2);
-		private final Group cGroup_2_0 = (Group)cUnorderedGroup_2.eContents().get(0);
-		private final Keyword cFrequencyKeyword_2_0_0 = (Keyword)cGroup_2_0.eContents().get(0);
-		private final Assignment cFrequencyAssignment_2_0_1 = (Assignment)cGroup_2_0.eContents().get(1);
-		private final RuleCall cFrequencyINTTerminalRuleCall_2_0_1_0 = (RuleCall)cFrequencyAssignment_2_0_1.eContents().get(0);
-		private final Group cGroup_2_1 = (Group)cUnorderedGroup_2.eContents().get(1);
-		private final Keyword cLimitKeyword_2_1_0 = (Keyword)cGroup_2_1.eContents().get(0);
-		private final Assignment cLimitAssignment_2_1_1 = (Assignment)cGroup_2_1.eContents().get(1);
-		private final RuleCall cLimitINTTerminalRuleCall_2_1_1_0 = (RuleCall)cLimitAssignment_2_1_1.eContents().get(0);
+		private final Keyword cCustomKeyword_0 = (Keyword)cGroup.eContents().get(0);
+		private final Assignment cNameAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cNameIDTerminalRuleCall_1_0 = (RuleCall)cNameAssignment_1.eContents().get(0);
+		private final Group cGroup_2 = (Group)cGroup.eContents().get(2);
+		private final Keyword cLeftParenthesisKeyword_2_0 = (Keyword)cGroup_2.eContents().get(0);
+		private final Assignment cParametersAssignment_2_1 = (Assignment)cGroup_2.eContents().get(1);
+		private final RuleCall cParametersParameterParserRuleCall_2_1_0 = (RuleCall)cParametersAssignment_2_1.eContents().get(0);
+		private final Group cGroup_2_2 = (Group)cGroup_2.eContents().get(2);
+		private final Keyword cCommaKeyword_2_2_0 = (Keyword)cGroup_2_2.eContents().get(0);
+		private final Assignment cParametersAssignment_2_2_1 = (Assignment)cGroup_2_2.eContents().get(1);
+		private final RuleCall cParametersParameterParserRuleCall_2_2_1_0 = (RuleCall)cParametersAssignment_2_2_1.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_2_3 = (Keyword)cGroup_2.eContents().get(3);
 		
-		//BeforeEvent:
-		//	'before' ruleID=(ID | STRING) (('frequency^' frequency=INT)? & ('limit' limit=INT)?);
+		//@Exported
+		//UserEvent:
+		//	'custom' name=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')')?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'before' ruleID=(ID | STRING) (('frequency^' frequency=INT)? & ('limit' limit=INT)?)
+		//'custom' name=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')')?
 		public Group getGroup() { return cGroup; }
 		
-		//'before'
-		public Keyword getBeforeKeyword_0() { return cBeforeKeyword_0; }
+		//'custom'
+		public Keyword getCustomKeyword_0() { return cCustomKeyword_0; }
 		
-		//ruleID=(ID | STRING)
-		public Assignment getRuleIDAssignment_1() { return cRuleIDAssignment_1; }
-		
-		//(ID | STRING)
-		public Alternatives getRuleIDAlternatives_1_0() { return cRuleIDAlternatives_1_0; }
+		//name=ID
+		public Assignment getNameAssignment_1() { return cNameAssignment_1; }
 		
 		//ID
-		public RuleCall getRuleIDIDTerminalRuleCall_1_0_0() { return cRuleIDIDTerminalRuleCall_1_0_0; }
+		public RuleCall getNameIDTerminalRuleCall_1_0() { return cNameIDTerminalRuleCall_1_0; }
 		
-		//STRING
-		public RuleCall getRuleIDSTRINGTerminalRuleCall_1_0_1() { return cRuleIDSTRINGTerminalRuleCall_1_0_1; }
+		//('(' parameters+=Parameter (',' parameters+=Parameter)* ')')?
+		public Group getGroup_2() { return cGroup_2; }
 		
-		//(('frequency^' frequency=INT)? & ('limit' limit=INT)?)
-		public UnorderedGroup getUnorderedGroup_2() { return cUnorderedGroup_2; }
+		//'('
+		public Keyword getLeftParenthesisKeyword_2_0() { return cLeftParenthesisKeyword_2_0; }
 		
-		//('frequency^' frequency=INT)?
-		public Group getGroup_2_0() { return cGroup_2_0; }
+		//parameters+=Parameter
+		public Assignment getParametersAssignment_2_1() { return cParametersAssignment_2_1; }
 		
-		//'frequency^'
-		public Keyword getFrequencyKeyword_2_0_0() { return cFrequencyKeyword_2_0_0; }
+		//Parameter
+		public RuleCall getParametersParameterParserRuleCall_2_1_0() { return cParametersParameterParserRuleCall_2_1_0; }
 		
-		//frequency=INT
-		public Assignment getFrequencyAssignment_2_0_1() { return cFrequencyAssignment_2_0_1; }
+		//(',' parameters+=Parameter)*
+		public Group getGroup_2_2() { return cGroup_2_2; }
 		
-		//INT
-		public RuleCall getFrequencyINTTerminalRuleCall_2_0_1_0() { return cFrequencyINTTerminalRuleCall_2_0_1_0; }
+		//','
+		public Keyword getCommaKeyword_2_2_0() { return cCommaKeyword_2_2_0; }
 		
-		//('limit' limit=INT)?
-		public Group getGroup_2_1() { return cGroup_2_1; }
+		//parameters+=Parameter
+		public Assignment getParametersAssignment_2_2_1() { return cParametersAssignment_2_2_1; }
 		
-		//'limit'
-		public Keyword getLimitKeyword_2_1_0() { return cLimitKeyword_2_1_0; }
+		//Parameter
+		public RuleCall getParametersParameterParserRuleCall_2_2_1_0() { return cParametersParameterParserRuleCall_2_2_1_0; }
 		
-		//limit=INT
-		public Assignment getLimitAssignment_2_1_1() { return cLimitAssignment_2_1_1; }
-		
-		//INT
-		public RuleCall getLimitINTTerminalRuleCall_2_1_1_0() { return cLimitINTTerminalRuleCall_2_1_1_0; }
-	}
-	public class AfterEventElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.gemoc.monilog.MoniLog4DSL.AfterEvent");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cAfterKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final Assignment cRuleIDAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final Alternatives cRuleIDAlternatives_1_0 = (Alternatives)cRuleIDAssignment_1.eContents().get(0);
-		private final RuleCall cRuleIDIDTerminalRuleCall_1_0_0 = (RuleCall)cRuleIDAlternatives_1_0.eContents().get(0);
-		private final RuleCall cRuleIDSTRINGTerminalRuleCall_1_0_1 = (RuleCall)cRuleIDAlternatives_1_0.eContents().get(1);
-		private final UnorderedGroup cUnorderedGroup_2 = (UnorderedGroup)cGroup.eContents().get(2);
-		private final Group cGroup_2_0 = (Group)cUnorderedGroup_2.eContents().get(0);
-		private final Keyword cFrequencyKeyword_2_0_0 = (Keyword)cGroup_2_0.eContents().get(0);
-		private final Assignment cFrequencyAssignment_2_0_1 = (Assignment)cGroup_2_0.eContents().get(1);
-		private final RuleCall cFrequencyINTTerminalRuleCall_2_0_1_0 = (RuleCall)cFrequencyAssignment_2_0_1.eContents().get(0);
-		private final Group cGroup_2_1 = (Group)cUnorderedGroup_2.eContents().get(1);
-		private final Keyword cLimitKeyword_2_1_0 = (Keyword)cGroup_2_1.eContents().get(0);
-		private final Assignment cLimitAssignment_2_1_1 = (Assignment)cGroup_2_1.eContents().get(1);
-		private final RuleCall cLimitINTTerminalRuleCall_2_1_1_0 = (RuleCall)cLimitAssignment_2_1_1.eContents().get(0);
-		
-		//AfterEvent:
-		//	'after' ruleID=(ID | STRING) (('frequency' frequency=INT)? & ('limit' limit=INT)?);
-		@Override public ParserRule getRule() { return rule; }
-		
-		//'after' ruleID=(ID | STRING) (('frequency' frequency=INT)? & ('limit' limit=INT)?)
-		public Group getGroup() { return cGroup; }
-		
-		//'after'
-		public Keyword getAfterKeyword_0() { return cAfterKeyword_0; }
-		
-		//ruleID=(ID | STRING)
-		public Assignment getRuleIDAssignment_1() { return cRuleIDAssignment_1; }
-		
-		//(ID | STRING)
-		public Alternatives getRuleIDAlternatives_1_0() { return cRuleIDAlternatives_1_0; }
-		
-		//ID
-		public RuleCall getRuleIDIDTerminalRuleCall_1_0_0() { return cRuleIDIDTerminalRuleCall_1_0_0; }
-		
-		//STRING
-		public RuleCall getRuleIDSTRINGTerminalRuleCall_1_0_1() { return cRuleIDSTRINGTerminalRuleCall_1_0_1; }
-		
-		//(('frequency' frequency=INT)? & ('limit' limit=INT)?)
-		public UnorderedGroup getUnorderedGroup_2() { return cUnorderedGroup_2; }
-		
-		//('frequency' frequency=INT)?
-		public Group getGroup_2_0() { return cGroup_2_0; }
-		
-		//'frequency'
-		public Keyword getFrequencyKeyword_2_0_0() { return cFrequencyKeyword_2_0_0; }
-		
-		//frequency=INT
-		public Assignment getFrequencyAssignment_2_0_1() { return cFrequencyAssignment_2_0_1; }
-		
-		//INT
-		public RuleCall getFrequencyINTTerminalRuleCall_2_0_1_0() { return cFrequencyINTTerminalRuleCall_2_0_1_0; }
-		
-		//('limit' limit=INT)?
-		public Group getGroup_2_1() { return cGroup_2_1; }
-		
-		//'limit'
-		public Keyword getLimitKeyword_2_1_0() { return cLimitKeyword_2_1_0; }
-		
-		//limit=INT
-		public Assignment getLimitAssignment_2_1_1() { return cLimitAssignment_2_1_1; }
-		
-		//INT
-		public RuleCall getLimitINTTerminalRuleCall_2_1_1_0() { return cLimitINTTerminalRuleCall_2_1_1_0; }
-	}
-	public class BeforeAfterEventElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.gemoc.monilog.MoniLog4DSL.BeforeAfterEvent");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cRuleIDAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final Alternatives cRuleIDAlternatives_0_0 = (Alternatives)cRuleIDAssignment_0.eContents().get(0);
-		private final RuleCall cRuleIDIDTerminalRuleCall_0_0_0 = (RuleCall)cRuleIDAlternatives_0_0.eContents().get(0);
-		private final RuleCall cRuleIDSTRINGTerminalRuleCall_0_0_1 = (RuleCall)cRuleIDAlternatives_0_0.eContents().get(1);
-		private final UnorderedGroup cUnorderedGroup_1 = (UnorderedGroup)cGroup.eContents().get(1);
-		private final Group cGroup_1_0 = (Group)cUnorderedGroup_1.eContents().get(0);
-		private final Keyword cFrequencyKeyword_1_0_0 = (Keyword)cGroup_1_0.eContents().get(0);
-		private final Assignment cFrequencyAssignment_1_0_1 = (Assignment)cGroup_1_0.eContents().get(1);
-		private final RuleCall cFrequencyINTTerminalRuleCall_1_0_1_0 = (RuleCall)cFrequencyAssignment_1_0_1.eContents().get(0);
-		private final Group cGroup_1_1 = (Group)cUnorderedGroup_1.eContents().get(1);
-		private final Keyword cLimitKeyword_1_1_0 = (Keyword)cGroup_1_1.eContents().get(0);
-		private final Assignment cLimitAssignment_1_1_1 = (Assignment)cGroup_1_1.eContents().get(1);
-		private final RuleCall cLimitINTTerminalRuleCall_1_1_1_0 = (RuleCall)cLimitAssignment_1_1_1.eContents().get(0);
-		
-		//BeforeAfterEvent:
-		//	ruleID=(ID | STRING) (('frequency' frequency=INT)? & ('limit' limit=INT)?);
-		@Override public ParserRule getRule() { return rule; }
-		
-		//ruleID=(ID | STRING) (('frequency' frequency=INT)? & ('limit' limit=INT)?)
-		public Group getGroup() { return cGroup; }
-		
-		//ruleID=(ID | STRING)
-		public Assignment getRuleIDAssignment_0() { return cRuleIDAssignment_0; }
-		
-		//(ID | STRING)
-		public Alternatives getRuleIDAlternatives_0_0() { return cRuleIDAlternatives_0_0; }
-		
-		//ID
-		public RuleCall getRuleIDIDTerminalRuleCall_0_0_0() { return cRuleIDIDTerminalRuleCall_0_0_0; }
-		
-		//STRING
-		public RuleCall getRuleIDSTRINGTerminalRuleCall_0_0_1() { return cRuleIDSTRINGTerminalRuleCall_0_0_1; }
-		
-		//(('frequency' frequency=INT)? & ('limit' limit=INT)?)
-		public UnorderedGroup getUnorderedGroup_1() { return cUnorderedGroup_1; }
-		
-		//('frequency' frequency=INT)?
-		public Group getGroup_1_0() { return cGroup_1_0; }
-		
-		//'frequency'
-		public Keyword getFrequencyKeyword_1_0_0() { return cFrequencyKeyword_1_0_0; }
-		
-		//frequency=INT
-		public Assignment getFrequencyAssignment_1_0_1() { return cFrequencyAssignment_1_0_1; }
-		
-		//INT
-		public RuleCall getFrequencyINTTerminalRuleCall_1_0_1_0() { return cFrequencyINTTerminalRuleCall_1_0_1_0; }
-		
-		//('limit' limit=INT)?
-		public Group getGroup_1_1() { return cGroup_1_1; }
-		
-		//'limit'
-		public Keyword getLimitKeyword_1_1_0() { return cLimitKeyword_1_1_0; }
-		
-		//limit=INT
-		public Assignment getLimitAssignment_1_1_1() { return cLimitAssignment_1_1_1; }
-		
-		//INT
-		public RuleCall getLimitINTTerminalRuleCall_1_1_1_0() { return cLimitINTTerminalRuleCall_1_1_1_0; }
+		//')'
+		public Keyword getRightParenthesisKeyword_2_3() { return cRightParenthesisKeyword_2_3; }
 	}
 	public class ConditionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.gemoc.monilog.MoniLog4DSL.Condition");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
-		private final Action cTemporalPropertyConditionAction_0_0 = (Action)cGroup_0.eContents().get(0);
-		private final Keyword cStreamKeyword_0_1 = (Keyword)cGroup_0.eContents().get(1);
-		private final Keyword cLeftParenthesisKeyword_0_2 = (Keyword)cGroup_0.eContents().get(2);
-		private final Assignment cPatternAssignment_0_3 = (Assignment)cGroup_0.eContents().get(3);
-		private final RuleCall cPatternTemporalPatternParserRuleCall_0_3_0 = (RuleCall)cPatternAssignment_0_3.eContents().get(0);
-		private final Group cGroup_0_4 = (Group)cGroup_0.eContents().get(4);
-		private final Keyword cCommaKeyword_0_4_0 = (Keyword)cGroup_0_4.eContents().get(0);
-		private final Assignment cKindAssignment_0_4_1 = (Assignment)cGroup_0_4.eContents().get(1);
-		private final RuleCall cKindTemporalPropertyConditionKindEnumRuleCall_0_4_1_0 = (RuleCall)cKindAssignment_0_4_1.eContents().get(0);
-		private final Keyword cRightParenthesisKeyword_0_5 = (Keyword)cGroup_0.eContents().get(5);
-		private final Group cGroup_1 = (Group)cAlternatives.eContents().get(1);
-		private final Action cLanguageExpressionConditionAction_1_0 = (Action)cGroup_1.eContents().get(0);
-		private final Assignment cExpressionAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
-		private final RuleCall cExpressionLanguageExpressionParserRuleCall_1_1_0 = (RuleCall)cExpressionAssignment_1_1.eContents().get(0);
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Action cLanguageExpressionConditionAction_0 = (Action)cGroup.eContents().get(0);
+		private final Assignment cExpressionAssignment_1 = (Assignment)cGroup.eContents().get(1);
+		private final RuleCall cExpressionLanguageExpressionParserRuleCall_1_0 = (RuleCall)cExpressionAssignment_1.eContents().get(0);
 		
 		//Condition:
-		//	{TemporalPropertyCondition} 'stream' '(' pattern=TemporalPattern (',' kind=TemporalPropertyConditionKind)? ')' |
 		//	{LanguageExpressionCondition} expression=LanguageExpression;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{TemporalPropertyCondition} 'stream' '(' pattern=TemporalPattern (',' kind=TemporalPropertyConditionKind)? ')' |
 		//{LanguageExpressionCondition} expression=LanguageExpression
-		public Alternatives getAlternatives() { return cAlternatives; }
-		
-		//{TemporalPropertyCondition} 'stream' '(' pattern=TemporalPattern (',' kind=TemporalPropertyConditionKind)? ')'
-		public Group getGroup_0() { return cGroup_0; }
-		
-		//{TemporalPropertyCondition}
-		public Action getTemporalPropertyConditionAction_0_0() { return cTemporalPropertyConditionAction_0_0; }
-		
-		//'stream'
-		public Keyword getStreamKeyword_0_1() { return cStreamKeyword_0_1; }
-		
-		//'('
-		public Keyword getLeftParenthesisKeyword_0_2() { return cLeftParenthesisKeyword_0_2; }
-		
-		//pattern=TemporalPattern
-		public Assignment getPatternAssignment_0_3() { return cPatternAssignment_0_3; }
-		
-		//TemporalPattern
-		public RuleCall getPatternTemporalPatternParserRuleCall_0_3_0() { return cPatternTemporalPatternParserRuleCall_0_3_0; }
-		
-		//(',' kind=TemporalPropertyConditionKind)?
-		public Group getGroup_0_4() { return cGroup_0_4; }
-		
-		//','
-		public Keyword getCommaKeyword_0_4_0() { return cCommaKeyword_0_4_0; }
-		
-		//kind=TemporalPropertyConditionKind
-		public Assignment getKindAssignment_0_4_1() { return cKindAssignment_0_4_1; }
-		
-		//TemporalPropertyConditionKind
-		public RuleCall getKindTemporalPropertyConditionKindEnumRuleCall_0_4_1_0() { return cKindTemporalPropertyConditionKindEnumRuleCall_0_4_1_0; }
-		
-		//')'
-		public Keyword getRightParenthesisKeyword_0_5() { return cRightParenthesisKeyword_0_5; }
-		
-		//{LanguageExpressionCondition} expression=LanguageExpression
-		public Group getGroup_1() { return cGroup_1; }
+		public Group getGroup() { return cGroup; }
 		
 		//{LanguageExpressionCondition}
-		public Action getLanguageExpressionConditionAction_1_0() { return cLanguageExpressionConditionAction_1_0; }
+		public Action getLanguageExpressionConditionAction_0() { return cLanguageExpressionConditionAction_0; }
 		
 		//expression=LanguageExpression
-		public Assignment getExpressionAssignment_1_1() { return cExpressionAssignment_1_1; }
+		public Assignment getExpressionAssignment_1() { return cExpressionAssignment_1; }
 		
 		//LanguageExpression
-		public RuleCall getExpressionLanguageExpressionParserRuleCall_1_1_0() { return cExpressionLanguageExpressionParserRuleCall_1_1_0; }
+		public RuleCall getExpressionLanguageExpressionParserRuleCall_1_0() { return cExpressionLanguageExpressionParserRuleCall_1_0; }
 	}
 	public class TemporalPatternElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.gemoc.monilog.MoniLog4DSL.TemporalPattern");
@@ -566,17 +908,17 @@ public class MoniLog4DSLGrammarAccess extends AbstractElementFinder.AbstractGram
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.gemoc.monilog.MoniLog4DSL.Pattern");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
-		private final Action cUniversalityAction_0_0 = (Action)cGroup_0.eContents().get(0);
-		private final Keyword cAlwaysKeyword_0_1 = (Keyword)cGroup_0.eContents().get(1);
-		private final Assignment cEventAssignment_0_2 = (Assignment)cGroup_0.eContents().get(2);
-		private final RuleCall cEventStreamEventParserRuleCall_0_2_0 = (RuleCall)cEventAssignment_0_2.eContents().get(0);
+		private final Action cExistenceAction_0_0 = (Action)cGroup_0.eContents().get(0);
+		private final Keyword cExistsKeyword_0_1 = (Keyword)cGroup_0.eContents().get(1);
+		private final Assignment cBoundAssignment_0_2 = (Assignment)cGroup_0.eContents().get(2);
+		private final RuleCall cBoundBoundTypeParserRuleCall_0_2_0 = (RuleCall)cBoundAssignment_0_2.eContents().get(0);
+		private final Assignment cEventAssignment_0_3 = (Assignment)cGroup_0.eContents().get(3);
+		private final RuleCall cEventStreamEventParserRuleCall_0_3_0 = (RuleCall)cEventAssignment_0_3.eContents().get(0);
 		private final Group cGroup_1 = (Group)cAlternatives.eContents().get(1);
-		private final Action cExistenceAction_1_0 = (Action)cGroup_1.eContents().get(0);
-		private final Keyword cExistsKeyword_1_1 = (Keyword)cGroup_1.eContents().get(1);
-		private final Assignment cBoundAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
-		private final RuleCall cBoundBoundTypeParserRuleCall_1_2_0 = (RuleCall)cBoundAssignment_1_2.eContents().get(0);
-		private final Assignment cEventAssignment_1_3 = (Assignment)cGroup_1.eContents().get(3);
-		private final RuleCall cEventStreamEventParserRuleCall_1_3_0 = (RuleCall)cEventAssignment_1_3.eContents().get(0);
+		private final Action cUniversalityAction_1_0 = (Action)cGroup_1.eContents().get(0);
+		private final Keyword cAlwaysKeyword_1_1 = (Keyword)cGroup_1.eContents().get(1);
+		private final Assignment cEventAssignment_1_2 = (Assignment)cGroup_1.eContents().get(2);
+		private final RuleCall cEventStreamEventParserRuleCall_1_2_0 = (RuleCall)cEventAssignment_1_2.eContents().get(0);
 		private final Group cGroup_2 = (Group)cAlternatives.eContents().get(2);
 		private final Action cAbsenceAction_2_0 = (Action)cGroup_2.eContents().get(0);
 		private final Keyword cNeverKeyword_2_1 = (Keyword)cGroup_2.eContents().get(1);
@@ -598,51 +940,51 @@ public class MoniLog4DSLGrammarAccess extends AbstractElementFinder.AbstractGram
 		private final RuleCall cTriggerStreamEventParserRuleCall_4_3_0 = (RuleCall)cTriggerAssignment_4_3.eContents().get(0);
 		
 		//Pattern:
-		//	{Universality} 'always' event=StreamEvent | {Existence} 'exists' bound=BoundType event=StreamEvent | {Absence} 'never'
-		//	event=StreamEvent | {Precedence} predecessor=StreamEvent 'precedes' successor=StreamEvent | {Response}
+		//	{Existence} 'exists'? bound=BoundType? event=StreamEvent | {Universality} 'always' event=StreamEvent | {Absence}
+		//	'never' event=StreamEvent | {Precedence} predecessor=StreamEvent 'precedes' successor=StreamEvent | {Response}
 		//	event=StreamEvent 'respondsTo' trigger=StreamEvent;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{Universality} 'always' event=StreamEvent | {Existence} 'exists' bound=BoundType event=StreamEvent | {Absence} 'never'
+		//{Existence} 'exists'? bound=BoundType? event=StreamEvent | {Universality} 'always' event=StreamEvent | {Absence} 'never'
 		//event=StreamEvent | {Precedence} predecessor=StreamEvent 'precedes' successor=StreamEvent | {Response}
 		//event=StreamEvent 'respondsTo' trigger=StreamEvent
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
-		//{Universality} 'always' event=StreamEvent
+		//{Existence} 'exists'? bound=BoundType? event=StreamEvent
 		public Group getGroup_0() { return cGroup_0; }
 		
-		//{Universality}
-		public Action getUniversalityAction_0_0() { return cUniversalityAction_0_0; }
-		
-		//'always'
-		public Keyword getAlwaysKeyword_0_1() { return cAlwaysKeyword_0_1; }
-		
-		//event=StreamEvent
-		public Assignment getEventAssignment_0_2() { return cEventAssignment_0_2; }
-		
-		//StreamEvent
-		public RuleCall getEventStreamEventParserRuleCall_0_2_0() { return cEventStreamEventParserRuleCall_0_2_0; }
-		
-		//{Existence} 'exists' bound=BoundType event=StreamEvent
-		public Group getGroup_1() { return cGroup_1; }
-		
 		//{Existence}
-		public Action getExistenceAction_1_0() { return cExistenceAction_1_0; }
+		public Action getExistenceAction_0_0() { return cExistenceAction_0_0; }
 		
-		//'exists'
-		public Keyword getExistsKeyword_1_1() { return cExistsKeyword_1_1; }
+		//'exists'?
+		public Keyword getExistsKeyword_0_1() { return cExistsKeyword_0_1; }
 		
-		//bound=BoundType
-		public Assignment getBoundAssignment_1_2() { return cBoundAssignment_1_2; }
+		//bound=BoundType?
+		public Assignment getBoundAssignment_0_2() { return cBoundAssignment_0_2; }
 		
 		//BoundType
-		public RuleCall getBoundBoundTypeParserRuleCall_1_2_0() { return cBoundBoundTypeParserRuleCall_1_2_0; }
+		public RuleCall getBoundBoundTypeParserRuleCall_0_2_0() { return cBoundBoundTypeParserRuleCall_0_2_0; }
 		
 		//event=StreamEvent
-		public Assignment getEventAssignment_1_3() { return cEventAssignment_1_3; }
+		public Assignment getEventAssignment_0_3() { return cEventAssignment_0_3; }
 		
 		//StreamEvent
-		public RuleCall getEventStreamEventParserRuleCall_1_3_0() { return cEventStreamEventParserRuleCall_1_3_0; }
+		public RuleCall getEventStreamEventParserRuleCall_0_3_0() { return cEventStreamEventParserRuleCall_0_3_0; }
+		
+		//{Universality} 'always' event=StreamEvent
+		public Group getGroup_1() { return cGroup_1; }
+		
+		//{Universality}
+		public Action getUniversalityAction_1_0() { return cUniversalityAction_1_0; }
+		
+		//'always'
+		public Keyword getAlwaysKeyword_1_1() { return cAlwaysKeyword_1_1; }
+		
+		//event=StreamEvent
+		public Assignment getEventAssignment_1_2() { return cEventAssignment_1_2; }
+		
+		//StreamEvent
+		public RuleCall getEventStreamEventParserRuleCall_1_2_0() { return cEventStreamEventParserRuleCall_1_2_0; }
 		
 		//{Absence} 'never' event=StreamEvent
 		public Group getGroup_2() { return cGroup_2; }
@@ -919,321 +1261,391 @@ public class MoniLog4DSLGrammarAccess extends AbstractElementFinder.AbstractGram
 	public class ActionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.gemoc.monilog.MoniLog4DSL.Action");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
-		private final Action cNotifyAction_0_0 = (Action)cGroup_0.eContents().get(0);
-		private final Keyword cNotifyKeyword_0_1 = (Keyword)cGroup_0.eContents().get(1);
-		private final RuleCall cAppendParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cLanguageExpressionParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cAppenderCallParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cEmitEventParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
+		private final RuleCall cMoniLoggerCallParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
 		
 		//Action:
-		//	{Notify} 'notify' | Append;
+		//	LanguageExpression | AppenderCall | EmitEvent | MoniLoggerCall;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{Notify} 'notify' | Append
+		//LanguageExpression | AppenderCall | EmitEvent | MoniLoggerCall
 		public Alternatives getAlternatives() { return cAlternatives; }
-		
-		//{Notify} 'notify'
-		public Group getGroup_0() { return cGroup_0; }
-		
-		//{Notify}
-		public Action getNotifyAction_0_0() { return cNotifyAction_0_0; }
-		
-		//'notify'
-		public Keyword getNotifyKeyword_0_1() { return cNotifyKeyword_0_1; }
-		
-		//Append
-		public RuleCall getAppendParserRuleCall_1() { return cAppendParserRuleCall_1; }
-	}
-	public class AppendElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.gemoc.monilog.MoniLog4DSL.Append");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cAppendKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final Assignment cAppenderAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cAppenderAppenderParserRuleCall_1_0 = (RuleCall)cAppenderAssignment_1.eContents().get(0);
-		
-		//Append:
-		//	'append' appender=Appender;
-		@Override public ParserRule getRule() { return rule; }
-		
-		//'append' appender=Appender
-		public Group getGroup() { return cGroup; }
-		
-		//'append'
-		public Keyword getAppendKeyword_0() { return cAppendKeyword_0; }
-		
-		//appender=Appender
-		public Assignment getAppenderAssignment_1() { return cAppenderAssignment_1; }
-		
-		//Appender
-		public RuleCall getAppenderAppenderParserRuleCall_1_0() { return cAppenderAppenderParserRuleCall_1_0; }
-	}
-	public class AppenderElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.gemoc.monilog.MoniLog4DSL.Appender");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final RuleCall cStreamAppenderParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final RuleCall cFileAppenderParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
-		private final RuleCall cConsoleAppenderParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
-		
-		//Appender:
-		//	StreamAppender | FileAppender | ConsoleAppender;
-		@Override public ParserRule getRule() { return rule; }
-		
-		//StreamAppender | FileAppender | ConsoleAppender
-		public Alternatives getAlternatives() { return cAlternatives; }
-		
-		//StreamAppender
-		public RuleCall getStreamAppenderParserRuleCall_0() { return cStreamAppenderParserRuleCall_0; }
-		
-		//FileAppender
-		public RuleCall getFileAppenderParserRuleCall_1() { return cFileAppenderParserRuleCall_1; }
-		
-		//ConsoleAppender
-		public RuleCall getConsoleAppenderParserRuleCall_2() { return cConsoleAppenderParserRuleCall_2; }
-	}
-	public class StreamAppenderElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.gemoc.monilog.MoniLog4DSL.StreamAppender");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cStreamKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final Keyword cLeftParenthesisKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Assignment cEventAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final Alternatives cEventAlternatives_2_0 = (Alternatives)cEventAssignment_2.eContents().get(0);
-		private final RuleCall cEventIDTerminalRuleCall_2_0_0 = (RuleCall)cEventAlternatives_2_0.eContents().get(0);
-		private final RuleCall cEventSTRINGTerminalRuleCall_2_0_1 = (RuleCall)cEventAlternatives_2_0.eContents().get(1);
-		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
-		private final Keyword cLeftSquareBracketKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
-		private final Assignment cValuesAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
-		private final RuleCall cValuesLanguageExpressionParserRuleCall_3_1_0 = (RuleCall)cValuesAssignment_3_1.eContents().get(0);
-		private final Group cGroup_3_2 = (Group)cGroup_3.eContents().get(2);
-		private final Keyword cCommaKeyword_3_2_0 = (Keyword)cGroup_3_2.eContents().get(0);
-		private final Assignment cValuesAssignment_3_2_1 = (Assignment)cGroup_3_2.eContents().get(1);
-		private final RuleCall cValuesLanguageExpressionParserRuleCall_3_2_1_0 = (RuleCall)cValuesAssignment_3_2_1.eContents().get(0);
-		private final Keyword cRightSquareBracketKeyword_3_3 = (Keyword)cGroup_3.eContents().get(3);
-		private final Keyword cRightParenthesisKeyword_4 = (Keyword)cGroup.eContents().get(4);
-		
-		//StreamAppender:
-		//	'stream' '(' event=(ID | STRING) ('[' values+=LanguageExpression (',' values+=LanguageExpression)* ']')? ')';
-		@Override public ParserRule getRule() { return rule; }
-		
-		//'stream' '(' event=(ID | STRING) ('[' values+=LanguageExpression (',' values+=LanguageExpression)* ']')? ')'
-		public Group getGroup() { return cGroup; }
-		
-		//'stream'
-		public Keyword getStreamKeyword_0() { return cStreamKeyword_0; }
-		
-		//'('
-		public Keyword getLeftParenthesisKeyword_1() { return cLeftParenthesisKeyword_1; }
-		
-		//event=(ID | STRING)
-		public Assignment getEventAssignment_2() { return cEventAssignment_2; }
-		
-		//(ID | STRING)
-		public Alternatives getEventAlternatives_2_0() { return cEventAlternatives_2_0; }
-		
-		//ID
-		public RuleCall getEventIDTerminalRuleCall_2_0_0() { return cEventIDTerminalRuleCall_2_0_0; }
-		
-		//STRING
-		public RuleCall getEventSTRINGTerminalRuleCall_2_0_1() { return cEventSTRINGTerminalRuleCall_2_0_1; }
-		
-		//('[' values+=LanguageExpression (',' values+=LanguageExpression)* ']')?
-		public Group getGroup_3() { return cGroup_3; }
-		
-		//'['
-		public Keyword getLeftSquareBracketKeyword_3_0() { return cLeftSquareBracketKeyword_3_0; }
-		
-		//values+=LanguageExpression
-		public Assignment getValuesAssignment_3_1() { return cValuesAssignment_3_1; }
 		
 		//LanguageExpression
-		public RuleCall getValuesLanguageExpressionParserRuleCall_3_1_0() { return cValuesLanguageExpressionParserRuleCall_3_1_0; }
+		public RuleCall getLanguageExpressionParserRuleCall_0() { return cLanguageExpressionParserRuleCall_0; }
 		
-		//(',' values+=LanguageExpression)*
+		//AppenderCall
+		public RuleCall getAppenderCallParserRuleCall_1() { return cAppenderCallParserRuleCall_1; }
+		
+		//EmitEvent
+		public RuleCall getEmitEventParserRuleCall_2() { return cEmitEventParserRuleCall_2; }
+		
+		//MoniLoggerCall
+		public RuleCall getMoniLoggerCallParserRuleCall_3() { return cMoniLoggerCallParserRuleCall_3; }
+	}
+	public class AppenderCallElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.gemoc.monilog.MoniLog4DSL.AppenderCall");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cAppenderAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cAppenderAppenderRefParserRuleCall_0_0 = (RuleCall)cAppenderAssignment_0.eContents().get(0);
+		private final Keyword cFullStopKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Keyword cCallKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
+		private final Keyword cLeftParenthesisKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Assignment cArgsAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
+		private final RuleCall cArgsAppenderCallArgumentParserRuleCall_3_1_0 = (RuleCall)cArgsAssignment_3_1.eContents().get(0);
+		private final Group cGroup_3_2 = (Group)cGroup_3.eContents().get(2);
+		private final Keyword cCommaKeyword_3_2_0 = (Keyword)cGroup_3_2.eContents().get(0);
+		private final Assignment cArgsAssignment_3_2_1 = (Assignment)cGroup_3_2.eContents().get(1);
+		private final RuleCall cArgsAppenderCallArgumentParserRuleCall_3_2_1_0 = (RuleCall)cArgsAssignment_3_2_1.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_3_3 = (Keyword)cGroup_3.eContents().get(3);
+		
+		//AppenderCall:
+		//	appender=AppenderRef '.' 'call' ('(' args+=AppenderCallArgument (',' args+=AppenderCallArgument)* ')')?;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//appender=AppenderRef '.' 'call' ('(' args+=AppenderCallArgument (',' args+=AppenderCallArgument)* ')')?
+		public Group getGroup() { return cGroup; }
+		
+		//appender=AppenderRef
+		public Assignment getAppenderAssignment_0() { return cAppenderAssignment_0; }
+		
+		//AppenderRef
+		public RuleCall getAppenderAppenderRefParserRuleCall_0_0() { return cAppenderAppenderRefParserRuleCall_0_0; }
+		
+		//'.'
+		public Keyword getFullStopKeyword_1() { return cFullStopKeyword_1; }
+		
+		//'call'
+		public Keyword getCallKeyword_2() { return cCallKeyword_2; }
+		
+		//('(' args+=AppenderCallArgument (',' args+=AppenderCallArgument)* ')')?
+		public Group getGroup_3() { return cGroup_3; }
+		
+		//'('
+		public Keyword getLeftParenthesisKeyword_3_0() { return cLeftParenthesisKeyword_3_0; }
+		
+		//args+=AppenderCallArgument
+		public Assignment getArgsAssignment_3_1() { return cArgsAssignment_3_1; }
+		
+		//AppenderCallArgument
+		public RuleCall getArgsAppenderCallArgumentParserRuleCall_3_1_0() { return cArgsAppenderCallArgumentParserRuleCall_3_1_0; }
+		
+		//(',' args+=AppenderCallArgument)*
 		public Group getGroup_3_2() { return cGroup_3_2; }
 		
 		//','
 		public Keyword getCommaKeyword_3_2_0() { return cCommaKeyword_3_2_0; }
 		
-		//values+=LanguageExpression
-		public Assignment getValuesAssignment_3_2_1() { return cValuesAssignment_3_2_1; }
+		//args+=AppenderCallArgument
+		public Assignment getArgsAssignment_3_2_1() { return cArgsAssignment_3_2_1; }
 		
-		//LanguageExpression
-		public RuleCall getValuesLanguageExpressionParserRuleCall_3_2_1_0() { return cValuesLanguageExpressionParserRuleCall_3_2_1_0; }
-		
-		//']'
-		public Keyword getRightSquareBracketKeyword_3_3() { return cRightSquareBracketKeyword_3_3; }
+		//AppenderCallArgument
+		public RuleCall getArgsAppenderCallArgumentParserRuleCall_3_2_1_0() { return cArgsAppenderCallArgumentParserRuleCall_3_2_1_0; }
 		
 		//')'
-		public Keyword getRightParenthesisKeyword_4() { return cRightParenthesisKeyword_4; }
+		public Keyword getRightParenthesisKeyword_3_3() { return cRightParenthesisKeyword_3_3; }
 	}
-	public class FileAppenderElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.gemoc.monilog.MoniLog4DSL.FileAppender");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cFileKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final Keyword cLeftParenthesisKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Assignment cFilenameAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cFilenameSTRINGTerminalRuleCall_2_0 = (RuleCall)cFilenameAssignment_2.eContents().get(0);
-		private final Keyword cCommaKeyword_3 = (Keyword)cGroup.eContents().get(3);
-		private final Assignment cLayoutAssignment_4 = (Assignment)cGroup.eContents().get(4);
-		private final RuleCall cLayoutLayoutParserRuleCall_4_0 = (RuleCall)cLayoutAssignment_4.eContents().get(0);
-		private final Keyword cRightParenthesisKeyword_5 = (Keyword)cGroup.eContents().get(5);
+	public class AppenderRefElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.gemoc.monilog.MoniLog4DSL.AppenderRef");
+		private final Assignment cAppenderAssignment = (Assignment)rule.eContents().get(1);
+		private final CrossReference cAppenderAppenderCrossReference_0 = (CrossReference)cAppenderAssignment.eContents().get(0);
+		private final RuleCall cAppenderAppenderFQNParserRuleCall_0_1 = (RuleCall)cAppenderAppenderCrossReference_0.eContents().get(1);
 		
-		//FileAppender:
-		//	'file' '(' filename=STRING ',' layout=Layout ')';
+		//AppenderRef:
+		//	appender=[Appender|FQN];
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'file' '(' filename=STRING ',' layout=Layout ')'
-		public Group getGroup() { return cGroup; }
+		//appender=[Appender|FQN]
+		public Assignment getAppenderAssignment() { return cAppenderAssignment; }
 		
-		//'file'
-		public Keyword getFileKeyword_0() { return cFileKeyword_0; }
-		
-		//'('
-		public Keyword getLeftParenthesisKeyword_1() { return cLeftParenthesisKeyword_1; }
-		
-		//filename=STRING
-		public Assignment getFilenameAssignment_2() { return cFilenameAssignment_2; }
-		
-		//STRING
-		public RuleCall getFilenameSTRINGTerminalRuleCall_2_0() { return cFilenameSTRINGTerminalRuleCall_2_0; }
-		
-		//','
-		public Keyword getCommaKeyword_3() { return cCommaKeyword_3; }
-		
-		//layout=Layout
-		public Assignment getLayoutAssignment_4() { return cLayoutAssignment_4; }
-		
-		//Layout
-		public RuleCall getLayoutLayoutParserRuleCall_4_0() { return cLayoutLayoutParserRuleCall_4_0; }
-		
-		//')'
-		public Keyword getRightParenthesisKeyword_5() { return cRightParenthesisKeyword_5; }
-	}
-	public class ConsoleAppenderElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.gemoc.monilog.MoniLog4DSL.ConsoleAppender");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cConsoleKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final Keyword cLeftParenthesisKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Assignment cLayoutAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cLayoutLayoutParserRuleCall_2_0 = (RuleCall)cLayoutAssignment_2.eContents().get(0);
-		private final Keyword cRightParenthesisKeyword_3 = (Keyword)cGroup.eContents().get(3);
-		
-		//ConsoleAppender:
-		//	'console' '(' layout=Layout ')';
-		@Override public ParserRule getRule() { return rule; }
-		
-		//'console' '(' layout=Layout ')'
-		public Group getGroup() { return cGroup; }
-		
-		//'console'
-		public Keyword getConsoleKeyword_0() { return cConsoleKeyword_0; }
-		
-		//'('
-		public Keyword getLeftParenthesisKeyword_1() { return cLeftParenthesisKeyword_1; }
-		
-		//layout=Layout
-		public Assignment getLayoutAssignment_2() { return cLayoutAssignment_2; }
-		
-		//Layout
-		public RuleCall getLayoutLayoutParserRuleCall_2_0() { return cLayoutLayoutParserRuleCall_2_0; }
-		
-		//')'
-		public Keyword getRightParenthesisKeyword_3() { return cRightParenthesisKeyword_3; }
-	}
-	public class LayoutElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.gemoc.monilog.MoniLog4DSL.Layout");
-		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final RuleCall cStringLayoutParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final RuleCall cExternalLayoutParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
-		
-		//Layout:
-		//	StringLayout | ExternalLayout;
-		@Override public ParserRule getRule() { return rule; }
-		
-		//StringLayout | ExternalLayout
-		public Alternatives getAlternatives() { return cAlternatives; }
-		
-		//StringLayout
-		public RuleCall getStringLayoutParserRuleCall_0() { return cStringLayoutParserRuleCall_0; }
-		
-		//ExternalLayout
-		public RuleCall getExternalLayoutParserRuleCall_1() { return cExternalLayoutParserRuleCall_1; }
-	}
-	public class StringLayoutElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.gemoc.monilog.MoniLog4DSL.StringLayout");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cFormatStringAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final RuleCall cFormatStringSTRINGTerminalRuleCall_0_0 = (RuleCall)cFormatStringAssignment_0.eContents().get(0);
-		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
-		private final Keyword cCommaKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
-		private final Assignment cValuesAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
-		private final RuleCall cValuesLanguageExpressionParserRuleCall_1_1_0 = (RuleCall)cValuesAssignment_1_1.eContents().get(0);
-		
-		//StringLayout:
-		//	formatString=STRING (',' values+=LanguageExpression)*;
-		@Override public ParserRule getRule() { return rule; }
-		
-		//formatString=STRING (',' values+=LanguageExpression)*
-		public Group getGroup() { return cGroup; }
-		
-		//formatString=STRING
-		public Assignment getFormatStringAssignment_0() { return cFormatStringAssignment_0; }
-		
-		//STRING
-		public RuleCall getFormatStringSTRINGTerminalRuleCall_0_0() { return cFormatStringSTRINGTerminalRuleCall_0_0; }
-		
-		//(',' values+=LanguageExpression)*
-		public Group getGroup_1() { return cGroup_1; }
-		
-		//','
-		public Keyword getCommaKeyword_1_0() { return cCommaKeyword_1_0; }
-		
-		//values+=LanguageExpression
-		public Assignment getValuesAssignment_1_1() { return cValuesAssignment_1_1; }
-		
-		//LanguageExpression
-		public RuleCall getValuesLanguageExpressionParserRuleCall_1_1_0() { return cValuesLanguageExpressionParserRuleCall_1_1_0; }
-	}
-	public class ExternalLayoutElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.gemoc.monilog.MoniLog4DSL.ExternalLayout");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cPathAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final RuleCall cPathFQNParserRuleCall_0_0 = (RuleCall)cPathAssignment_0.eContents().get(0);
-		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
-		private final Keyword cCommaKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
-		private final Assignment cValuesAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
-		private final RuleCall cValuesLanguageExpressionParserRuleCall_1_1_0 = (RuleCall)cValuesAssignment_1_1.eContents().get(0);
-		
-		//ExternalLayout:
-		//	path=FQN (',' values+=LanguageExpression)*;
-		@Override public ParserRule getRule() { return rule; }
-		
-		//path=FQN (',' values+=LanguageExpression)*
-		public Group getGroup() { return cGroup; }
-		
-		//path=FQN
-		public Assignment getPathAssignment_0() { return cPathAssignment_0; }
+		//[Appender|FQN]
+		public CrossReference getAppenderAppenderCrossReference_0() { return cAppenderAppenderCrossReference_0; }
 		
 		//FQN
-		public RuleCall getPathFQNParserRuleCall_0_0() { return cPathFQNParserRuleCall_0_0; }
+		public RuleCall getAppenderAppenderFQNParserRuleCall_0_1() { return cAppenderAppenderFQNParserRuleCall_0_1; }
+	}
+	public class AppenderCallArgumentElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.gemoc.monilog.MoniLog4DSL.AppenderCallArgument");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cExpressionParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cLayoutCallParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
-		//(',' values+=LanguageExpression)*
-		public Group getGroup_1() { return cGroup_1; }
+		//AppenderCallArgument:
+		//	Expression | LayoutCall;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//Expression | LayoutCall
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//Expression
+		public RuleCall getExpressionParserRuleCall_0() { return cExpressionParserRuleCall_0; }
+		
+		//LayoutCall
+		public RuleCall getLayoutCallParserRuleCall_1() { return cLayoutCallParserRuleCall_1; }
+	}
+	public class LayoutCallElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.gemoc.monilog.MoniLog4DSL.LayoutCall");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cLayoutAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cLayoutLayoutRefParserRuleCall_0_0 = (RuleCall)cLayoutAssignment_0.eContents().get(0);
+		private final Keyword cFullStopKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Keyword cCallKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
+		private final Keyword cLeftParenthesisKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Assignment cArgsAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
+		private final RuleCall cArgsExpressionParserRuleCall_3_1_0 = (RuleCall)cArgsAssignment_3_1.eContents().get(0);
+		private final Group cGroup_3_2 = (Group)cGroup_3.eContents().get(2);
+		private final Keyword cCommaKeyword_3_2_0 = (Keyword)cGroup_3_2.eContents().get(0);
+		private final Assignment cArgsAssignment_3_2_1 = (Assignment)cGroup_3_2.eContents().get(1);
+		private final RuleCall cArgsExpressionParserRuleCall_3_2_1_0 = (RuleCall)cArgsAssignment_3_2_1.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_3_3 = (Keyword)cGroup_3.eContents().get(3);
+		
+		//LayoutCall:
+		//	layout=LayoutRef '.' 'call' ('(' args+=Expression (',' args+=Expression)* ')')?;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//layout=LayoutRef '.' 'call' ('(' args+=Expression (',' args+=Expression)* ')')?
+		public Group getGroup() { return cGroup; }
+		
+		//layout=LayoutRef
+		public Assignment getLayoutAssignment_0() { return cLayoutAssignment_0; }
+		
+		//LayoutRef
+		public RuleCall getLayoutLayoutRefParserRuleCall_0_0() { return cLayoutLayoutRefParserRuleCall_0_0; }
+		
+		//'.'
+		public Keyword getFullStopKeyword_1() { return cFullStopKeyword_1; }
+		
+		//'call'
+		public Keyword getCallKeyword_2() { return cCallKeyword_2; }
+		
+		//('(' args+=Expression (',' args+=Expression)* ')')?
+		public Group getGroup_3() { return cGroup_3; }
+		
+		//'('
+		public Keyword getLeftParenthesisKeyword_3_0() { return cLeftParenthesisKeyword_3_0; }
+		
+		//args+=Expression
+		public Assignment getArgsAssignment_3_1() { return cArgsAssignment_3_1; }
+		
+		//Expression
+		public RuleCall getArgsExpressionParserRuleCall_3_1_0() { return cArgsExpressionParserRuleCall_3_1_0; }
+		
+		//(',' args+=Expression)*
+		public Group getGroup_3_2() { return cGroup_3_2; }
 		
 		//','
-		public Keyword getCommaKeyword_1_0() { return cCommaKeyword_1_0; }
+		public Keyword getCommaKeyword_3_2_0() { return cCommaKeyword_3_2_0; }
 		
-		//values+=LanguageExpression
-		public Assignment getValuesAssignment_1_1() { return cValuesAssignment_1_1; }
+		//args+=Expression
+		public Assignment getArgsAssignment_3_2_1() { return cArgsAssignment_3_2_1; }
 		
-		//LanguageExpression
-		public RuleCall getValuesLanguageExpressionParserRuleCall_1_1_0() { return cValuesLanguageExpressionParserRuleCall_1_1_0; }
+		//Expression
+		public RuleCall getArgsExpressionParserRuleCall_3_2_1_0() { return cArgsExpressionParserRuleCall_3_2_1_0; }
+		
+		//')'
+		public Keyword getRightParenthesisKeyword_3_3() { return cRightParenthesisKeyword_3_3; }
+	}
+	public class LayoutRefElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.gemoc.monilog.MoniLog4DSL.LayoutRef");
+		private final Assignment cLayoutAssignment = (Assignment)rule.eContents().get(1);
+		private final CrossReference cLayoutLayoutCrossReference_0 = (CrossReference)cLayoutAssignment.eContents().get(0);
+		private final RuleCall cLayoutLayoutFQNParserRuleCall_0_1 = (RuleCall)cLayoutLayoutCrossReference_0.eContents().get(1);
+		
+		//LayoutRef:
+		//	layout=[Layout|FQN];
+		@Override public ParserRule getRule() { return rule; }
+		
+		//layout=[Layout|FQN]
+		public Assignment getLayoutAssignment() { return cLayoutAssignment; }
+		
+		//[Layout|FQN]
+		public CrossReference getLayoutLayoutCrossReference_0() { return cLayoutLayoutCrossReference_0; }
+		
+		//FQN
+		public RuleCall getLayoutLayoutFQNParserRuleCall_0_1() { return cLayoutLayoutFQNParserRuleCall_0_1; }
+	}
+	public class EmitEventElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.gemoc.monilog.MoniLog4DSL.EmitEvent");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cEventAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final CrossReference cEventEventCrossReference_0_0 = (CrossReference)cEventAssignment_0.eContents().get(0);
+		private final RuleCall cEventEventIDTerminalRuleCall_0_0_1 = (RuleCall)cEventEventCrossReference_0_0.eContents().get(1);
+		private final Keyword cFullStopKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Keyword cEmitKeyword_2 = (Keyword)cGroup.eContents().get(2);
+		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
+		private final Keyword cLeftParenthesisKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Assignment cArgsAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
+		private final RuleCall cArgsExpressionParserRuleCall_3_1_0 = (RuleCall)cArgsAssignment_3_1.eContents().get(0);
+		private final Group cGroup_3_2 = (Group)cGroup_3.eContents().get(2);
+		private final Keyword cCommaKeyword_3_2_0 = (Keyword)cGroup_3_2.eContents().get(0);
+		private final Assignment cArgsAssignment_3_2_1 = (Assignment)cGroup_3_2.eContents().get(1);
+		private final RuleCall cArgsExpressionParserRuleCall_3_2_1_0 = (RuleCall)cArgsAssignment_3_2_1.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_3_3 = (Keyword)cGroup_3.eContents().get(3);
+		
+		//EmitEvent:
+		//	event=[Event] '.' 'emit' ('(' args+=Expression (',' args+=Expression)* ')')?;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//event=[Event] '.' 'emit' ('(' args+=Expression (',' args+=Expression)* ')')?
+		public Group getGroup() { return cGroup; }
+		
+		//event=[Event]
+		public Assignment getEventAssignment_0() { return cEventAssignment_0; }
+		
+		//[Event]
+		public CrossReference getEventEventCrossReference_0_0() { return cEventEventCrossReference_0_0; }
+		
+		//ID
+		public RuleCall getEventEventIDTerminalRuleCall_0_0_1() { return cEventEventIDTerminalRuleCall_0_0_1; }
+		
+		//'.'
+		public Keyword getFullStopKeyword_1() { return cFullStopKeyword_1; }
+		
+		//'emit'
+		public Keyword getEmitKeyword_2() { return cEmitKeyword_2; }
+		
+		//('(' args+=Expression (',' args+=Expression)* ')')?
+		public Group getGroup_3() { return cGroup_3; }
+		
+		//'('
+		public Keyword getLeftParenthesisKeyword_3_0() { return cLeftParenthesisKeyword_3_0; }
+		
+		//args+=Expression
+		public Assignment getArgsAssignment_3_1() { return cArgsAssignment_3_1; }
+		
+		//Expression
+		public RuleCall getArgsExpressionParserRuleCall_3_1_0() { return cArgsExpressionParserRuleCall_3_1_0; }
+		
+		//(',' args+=Expression)*
+		public Group getGroup_3_2() { return cGroup_3_2; }
+		
+		//','
+		public Keyword getCommaKeyword_3_2_0() { return cCommaKeyword_3_2_0; }
+		
+		//args+=Expression
+		public Assignment getArgsAssignment_3_2_1() { return cArgsAssignment_3_2_1; }
+		
+		//Expression
+		public RuleCall getArgsExpressionParserRuleCall_3_2_1_0() { return cArgsExpressionParserRuleCall_3_2_1_0; }
+		
+		//')'
+		public Keyword getRightParenthesisKeyword_3_3() { return cRightParenthesisKeyword_3_3; }
+	}
+	public class MoniLoggerCallElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.gemoc.monilog.MoniLog4DSL.MoniLoggerCall");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
+		private final Action cStartMoniLoggerAction_0_0 = (Action)cGroup_0.eContents().get(0);
+		private final Assignment cMoniloggerAssignment_0_1 = (Assignment)cGroup_0.eContents().get(1);
+		private final CrossReference cMoniloggerMoniLoggerCrossReference_0_1_0 = (CrossReference)cMoniloggerAssignment_0_1.eContents().get(0);
+		private final RuleCall cMoniloggerMoniLoggerIDTerminalRuleCall_0_1_0_1 = (RuleCall)cMoniloggerMoniLoggerCrossReference_0_1_0.eContents().get(1);
+		private final Keyword cFullStopKeyword_0_2 = (Keyword)cGroup_0.eContents().get(2);
+		private final Keyword cStartKeyword_0_3 = (Keyword)cGroup_0.eContents().get(3);
+		private final Group cGroup_0_4 = (Group)cGroup_0.eContents().get(4);
+		private final Keyword cLeftParenthesisKeyword_0_4_0 = (Keyword)cGroup_0_4.eContents().get(0);
+		private final Assignment cArgsAssignment_0_4_1 = (Assignment)cGroup_0_4.eContents().get(1);
+		private final RuleCall cArgsExpressionParserRuleCall_0_4_1_0 = (RuleCall)cArgsAssignment_0_4_1.eContents().get(0);
+		private final Group cGroup_0_4_2 = (Group)cGroup_0_4.eContents().get(2);
+		private final Keyword cCommaKeyword_0_4_2_0 = (Keyword)cGroup_0_4_2.eContents().get(0);
+		private final Assignment cArgsAssignment_0_4_2_1 = (Assignment)cGroup_0_4_2.eContents().get(1);
+		private final RuleCall cArgsExpressionParserRuleCall_0_4_2_1_0 = (RuleCall)cArgsAssignment_0_4_2_1.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_0_4_3 = (Keyword)cGroup_0_4.eContents().get(3);
+		private final Group cGroup_1 = (Group)cAlternatives.eContents().get(1);
+		private final Action cStopMoniLoggerAction_1_0 = (Action)cGroup_1.eContents().get(0);
+		private final Assignment cMoniloggerAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final CrossReference cMoniloggerMoniLoggerCrossReference_1_1_0 = (CrossReference)cMoniloggerAssignment_1_1.eContents().get(0);
+		private final RuleCall cMoniloggerMoniLoggerIDTerminalRuleCall_1_1_0_1 = (RuleCall)cMoniloggerMoniLoggerCrossReference_1_1_0.eContents().get(1);
+		private final Keyword cFullStopKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
+		private final Keyword cStopKeyword_1_3 = (Keyword)cGroup_1.eContents().get(3);
+		
+		//MoniLoggerCall:
+		//	{StartMoniLogger} monilogger=[MoniLogger] '.' 'start' ('(' args+=Expression (',' args+=Expression)* ')')? |
+		//	{StopMoniLogger} monilogger=[MoniLogger] '.' 'stop';
+		@Override public ParserRule getRule() { return rule; }
+		
+		//{StartMoniLogger} monilogger=[MoniLogger] '.' 'start' ('(' args+=Expression (',' args+=Expression)* ')')? |
+		//{StopMoniLogger} monilogger=[MoniLogger] '.' 'stop'
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//{StartMoniLogger} monilogger=[MoniLogger] '.' 'start' ('(' args+=Expression (',' args+=Expression)* ')')?
+		public Group getGroup_0() { return cGroup_0; }
+		
+		//{StartMoniLogger}
+		public Action getStartMoniLoggerAction_0_0() { return cStartMoniLoggerAction_0_0; }
+		
+		//monilogger=[MoniLogger]
+		public Assignment getMoniloggerAssignment_0_1() { return cMoniloggerAssignment_0_1; }
+		
+		//[MoniLogger]
+		public CrossReference getMoniloggerMoniLoggerCrossReference_0_1_0() { return cMoniloggerMoniLoggerCrossReference_0_1_0; }
+		
+		//ID
+		public RuleCall getMoniloggerMoniLoggerIDTerminalRuleCall_0_1_0_1() { return cMoniloggerMoniLoggerIDTerminalRuleCall_0_1_0_1; }
+		
+		//'.'
+		public Keyword getFullStopKeyword_0_2() { return cFullStopKeyword_0_2; }
+		
+		//'start'
+		public Keyword getStartKeyword_0_3() { return cStartKeyword_0_3; }
+		
+		//('(' args+=Expression (',' args+=Expression)* ')')?
+		public Group getGroup_0_4() { return cGroup_0_4; }
+		
+		//'('
+		public Keyword getLeftParenthesisKeyword_0_4_0() { return cLeftParenthesisKeyword_0_4_0; }
+		
+		//args+=Expression
+		public Assignment getArgsAssignment_0_4_1() { return cArgsAssignment_0_4_1; }
+		
+		//Expression
+		public RuleCall getArgsExpressionParserRuleCall_0_4_1_0() { return cArgsExpressionParserRuleCall_0_4_1_0; }
+		
+		//(',' args+=Expression)*
+		public Group getGroup_0_4_2() { return cGroup_0_4_2; }
+		
+		//','
+		public Keyword getCommaKeyword_0_4_2_0() { return cCommaKeyword_0_4_2_0; }
+		
+		//args+=Expression
+		public Assignment getArgsAssignment_0_4_2_1() { return cArgsAssignment_0_4_2_1; }
+		
+		//Expression
+		public RuleCall getArgsExpressionParserRuleCall_0_4_2_1_0() { return cArgsExpressionParserRuleCall_0_4_2_1_0; }
+		
+		//')'
+		public Keyword getRightParenthesisKeyword_0_4_3() { return cRightParenthesisKeyword_0_4_3; }
+		
+		//{StopMoniLogger} monilogger=[MoniLogger] '.' 'stop'
+		public Group getGroup_1() { return cGroup_1; }
+		
+		//{StopMoniLogger}
+		public Action getStopMoniLoggerAction_1_0() { return cStopMoniLoggerAction_1_0; }
+		
+		//monilogger=[MoniLogger]
+		public Assignment getMoniloggerAssignment_1_1() { return cMoniloggerAssignment_1_1; }
+		
+		//[MoniLogger]
+		public CrossReference getMoniloggerMoniLoggerCrossReference_1_1_0() { return cMoniloggerMoniLoggerCrossReference_1_1_0; }
+		
+		//ID
+		public RuleCall getMoniloggerMoniLoggerIDTerminalRuleCall_1_1_0_1() { return cMoniloggerMoniLoggerIDTerminalRuleCall_1_1_0_1; }
+		
+		//'.'
+		public Keyword getFullStopKeyword_1_2() { return cFullStopKeyword_1_2; }
+		
+		//'stop'
+		public Keyword getStopKeyword_1_3() { return cStopKeyword_1_3; }
 	}
 	public class StreamEventElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.gemoc.monilog.MoniLog4DSL.StreamEvent");
 		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Assignment cEventIdAssignment_0 = (Assignment)cGroup.eContents().get(0);
-		private final Alternatives cEventIdAlternatives_0_0 = (Alternatives)cEventIdAssignment_0.eContents().get(0);
-		private final RuleCall cEventIdIDTerminalRuleCall_0_0_0 = (RuleCall)cEventIdAlternatives_0_0.eContents().get(0);
-		private final RuleCall cEventIdSTRINGTerminalRuleCall_0_0_1 = (RuleCall)cEventIdAlternatives_0_0.eContents().get(1);
+		private final Assignment cEventAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final CrossReference cEventEventCrossReference_0_0 = (CrossReference)cEventAssignment_0.eContents().get(0);
+		private final RuleCall cEventEventIDTerminalRuleCall_0_0_1 = (RuleCall)cEventEventCrossReference_0_0.eContents().get(1);
 		private final Group cGroup_1 = (Group)cGroup.eContents().get(1);
 		private final Keyword cLeftSquareBracketKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
 		private final Assignment cValuesAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
@@ -1245,23 +1657,20 @@ public class MoniLog4DSLGrammarAccess extends AbstractElementFinder.AbstractGram
 		private final Keyword cRightSquareBracketKeyword_1_3 = (Keyword)cGroup_1.eContents().get(3);
 		
 		//StreamEvent:
-		//	eventId=(ID | STRING) ('[' values+=EmptyOrPropertyValue (',' values+=EmptyOrPropertyValue)* ']')?;
+		//	event=[Event] ('[' values+=EmptyOrPropertyValue (',' values+=EmptyOrPropertyValue)* ']')?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//eventId=(ID | STRING) ('[' values+=EmptyOrPropertyValue (',' values+=EmptyOrPropertyValue)* ']')?
+		//event=[Event] ('[' values+=EmptyOrPropertyValue (',' values+=EmptyOrPropertyValue)* ']')?
 		public Group getGroup() { return cGroup; }
 		
-		//eventId=(ID | STRING)
-		public Assignment getEventIdAssignment_0() { return cEventIdAssignment_0; }
+		//event=[Event]
+		public Assignment getEventAssignment_0() { return cEventAssignment_0; }
 		
-		//(ID | STRING)
-		public Alternatives getEventIdAlternatives_0_0() { return cEventIdAlternatives_0_0; }
+		//[Event]
+		public CrossReference getEventEventCrossReference_0_0() { return cEventEventCrossReference_0_0; }
 		
 		//ID
-		public RuleCall getEventIdIDTerminalRuleCall_0_0_0() { return cEventIdIDTerminalRuleCall_0_0_0; }
-		
-		//STRING
-		public RuleCall getEventIdSTRINGTerminalRuleCall_0_0_1() { return cEventIdSTRINGTerminalRuleCall_0_0_1; }
+		public RuleCall getEventEventIDTerminalRuleCall_0_0_1() { return cEventEventIDTerminalRuleCall_0_0_1; }
 		
 		//('[' values+=EmptyOrPropertyValue (',' values+=EmptyOrPropertyValue)* ']')?
 		public Group getGroup_1() { return cGroup_1; }
@@ -1301,19 +1710,19 @@ public class MoniLog4DSLGrammarAccess extends AbstractElementFinder.AbstractGram
 		private final Group cGroup_1_2 = (Group)cGroup_1.eContents().get(2);
 		private final Keyword cEqualsSignKeyword_1_2_0 = (Keyword)cGroup_1_2.eContents().get(0);
 		private final Assignment cValueAssignment_1_2_1 = (Assignment)cGroup_1_2.eContents().get(1);
-		private final RuleCall cValueLanguageExpressionParserRuleCall_1_2_1_0 = (RuleCall)cValueAssignment_1_2_1.eContents().get(0);
+		private final RuleCall cValueExpressionParserRuleCall_1_2_1_0 = (RuleCall)cValueAssignment_1_2_1.eContents().get(0);
 		
 		//EmptyOrPropertyValue:
-		//	{Empty} | {PropertyValue} id=ID ('=' value=LanguageExpression)?;
+		//	{Empty} | {PropertyValue} id=ID ('=' value=Expression)?;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{Empty} | {PropertyValue} id=ID ('=' value=LanguageExpression)?
+		//{Empty} | {PropertyValue} id=ID ('=' value=Expression)?
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//{Empty}
 		public Action getEmptyAction_0() { return cEmptyAction_0; }
 		
-		//{PropertyValue} id=ID ('=' value=LanguageExpression)?
+		//{PropertyValue} id=ID ('=' value=Expression)?
 		public Group getGroup_1() { return cGroup_1; }
 		
 		//{PropertyValue}
@@ -1325,17 +1734,55 @@ public class MoniLog4DSLGrammarAccess extends AbstractElementFinder.AbstractGram
 		//ID
 		public RuleCall getIdIDTerminalRuleCall_1_1_0() { return cIdIDTerminalRuleCall_1_1_0; }
 		
-		//('=' value=LanguageExpression)?
+		//('=' value=Expression)?
 		public Group getGroup_1_2() { return cGroup_1_2; }
 		
 		//'='
 		public Keyword getEqualsSignKeyword_1_2_0() { return cEqualsSignKeyword_1_2_0; }
 		
-		//value=LanguageExpression
+		//value=Expression
 		public Assignment getValueAssignment_1_2_1() { return cValueAssignment_1_2_1; }
 		
+		//Expression
+		public RuleCall getValueExpressionParserRuleCall_1_2_1_0() { return cValueExpressionParserRuleCall_1_2_1_0; }
+	}
+	public class ExpressionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.gemoc.monilog.MoniLog4DSL.Expression");
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final RuleCall cParameterReferenceParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cLanguageExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		
+		//Expression:
+		//	ParameterReference | LanguageExpression;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//ParameterReference | LanguageExpression
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
+		//ParameterReference
+		public RuleCall getParameterReferenceParserRuleCall_0() { return cParameterReferenceParserRuleCall_0; }
+		
 		//LanguageExpression
-		public RuleCall getValueLanguageExpressionParserRuleCall_1_2_1_0() { return cValueLanguageExpressionParserRuleCall_1_2_1_0; }
+		public RuleCall getLanguageExpressionParserRuleCall_1() { return cLanguageExpressionParserRuleCall_1; }
+	}
+	public class ParameterReferenceElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.gemoc.monilog.MoniLog4DSL.ParameterReference");
+		private final Assignment cParameterAssignment = (Assignment)rule.eContents().get(1);
+		private final CrossReference cParameterParameterCrossReference_0 = (CrossReference)cParameterAssignment.eContents().get(0);
+		private final RuleCall cParameterParameterIDTerminalRuleCall_0_1 = (RuleCall)cParameterParameterCrossReference_0.eContents().get(1);
+		
+		//ParameterReference:
+		//	parameter=[Parameter];
+		@Override public ParserRule getRule() { return rule; }
+		
+		//parameter=[Parameter]
+		public Assignment getParameterAssignment() { return cParameterAssignment; }
+		
+		//[Parameter]
+		public CrossReference getParameterParameterCrossReference_0() { return cParameterParameterCrossReference_0; }
+		
+		//ID
+		public RuleCall getParameterParameterIDTerminalRuleCall_0_1() { return cParameterParameterIDTerminalRuleCall_0_1; }
 	}
 	public class LanguageExpressionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.gemoc.monilog.MoniLog4DSL.LanguageExpression");
@@ -1343,9 +1790,7 @@ public class MoniLog4DSLGrammarAccess extends AbstractElementFinder.AbstractGram
 		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
 		private final Action cExplicitLanguageExpressionAction_0_0 = (Action)cGroup_0.eContents().get(0);
 		private final Assignment cLanguageIdAssignment_0_1 = (Assignment)cGroup_0.eContents().get(1);
-		private final Alternatives cLanguageIdAlternatives_0_1_0 = (Alternatives)cLanguageIdAssignment_0_1.eContents().get(0);
-		private final RuleCall cLanguageIdIDTerminalRuleCall_0_1_0_0 = (RuleCall)cLanguageIdAlternatives_0_1_0.eContents().get(0);
-		private final RuleCall cLanguageIdSTRINGTerminalRuleCall_0_1_0_1 = (RuleCall)cLanguageIdAlternatives_0_1_0.eContents().get(1);
+		private final RuleCall cLanguageIdIDTerminalRuleCall_0_1_0 = (RuleCall)cLanguageIdAssignment_0_1.eContents().get(0);
 		private final Keyword cLeftParenthesisKeyword_0_2 = (Keyword)cGroup_0.eContents().get(2);
 		private final Assignment cExpressionAssignment_0_3 = (Assignment)cGroup_0.eContents().get(3);
 		private final RuleCall cExpressionSTRINGTerminalRuleCall_0_3_0 = (RuleCall)cExpressionAssignment_0_3.eContents().get(0);
@@ -1356,31 +1801,23 @@ public class MoniLog4DSLGrammarAccess extends AbstractElementFinder.AbstractGram
 		private final RuleCall cExpressionSTRINGTerminalRuleCall_1_1_0 = (RuleCall)cExpressionAssignment_1_1.eContents().get(0);
 		
 		//LanguageExpression:
-		//	{ExplicitLanguageExpression} languageId=(ID | STRING) '(' expression=STRING ')' | {DefaultLanguageExpression}
-		//	expression=STRING;
+		//	{ExplicitLanguageExpression} languageId=ID '(' expression=STRING ')' | {DefaultLanguageExpression} expression=STRING;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//{ExplicitLanguageExpression} languageId=(ID | STRING) '(' expression=STRING ')' | {DefaultLanguageExpression}
-		//expression=STRING
+		//{ExplicitLanguageExpression} languageId=ID '(' expression=STRING ')' | {DefaultLanguageExpression} expression=STRING
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
-		//{ExplicitLanguageExpression} languageId=(ID | STRING) '(' expression=STRING ')'
+		//{ExplicitLanguageExpression} languageId=ID '(' expression=STRING ')'
 		public Group getGroup_0() { return cGroup_0; }
 		
 		//{ExplicitLanguageExpression}
 		public Action getExplicitLanguageExpressionAction_0_0() { return cExplicitLanguageExpressionAction_0_0; }
 		
-		//languageId=(ID | STRING)
+		//languageId=ID
 		public Assignment getLanguageIdAssignment_0_1() { return cLanguageIdAssignment_0_1; }
 		
-		//(ID | STRING)
-		public Alternatives getLanguageIdAlternatives_0_1_0() { return cLanguageIdAlternatives_0_1_0; }
-		
 		//ID
-		public RuleCall getLanguageIdIDTerminalRuleCall_0_1_0_0() { return cLanguageIdIDTerminalRuleCall_0_1_0_0; }
-		
-		//STRING
-		public RuleCall getLanguageIdSTRINGTerminalRuleCall_0_1_0_1() { return cLanguageIdSTRINGTerminalRuleCall_0_1_0_1; }
+		public RuleCall getLanguageIdIDTerminalRuleCall_0_1_0() { return cLanguageIdIDTerminalRuleCall_0_1_0; }
 		
 		//'('
 		public Keyword getLeftParenthesisKeyword_0_2() { return cLeftParenthesisKeyword_0_2; }
@@ -1434,61 +1871,91 @@ public class MoniLog4DSLGrammarAccess extends AbstractElementFinder.AbstractGram
 		public RuleCall getIDTerminalRuleCall_1_1() { return cIDTerminalRuleCall_1_1; }
 	}
 	
+	public class MoniLoggerAnnotationElements extends AbstractElementFinder.AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "org.gemoc.monilog.MoniLog4DSL.MoniLoggerAnnotation");
+		private final EnumLiteralDeclaration cInactiveEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
+		private final Keyword cInactiveInactiveKeyword_0 = (Keyword)cInactiveEnumLiteralDeclaration.eContents().get(0);
+		
+		//enum MoniLoggerAnnotation:
+		//	inactive='@Inactive';
+		public EnumRule getRule() { return rule; }
+		
+		//inactive='@Inactive'
+		public EnumLiteralDeclaration getInactiveEnumLiteralDeclaration() { return cInactiveEnumLiteralDeclaration; }
+		
+		//'@Inactive'
+		public Keyword getInactiveInactiveKeyword_0() { return cInactiveInactiveKeyword_0; }
+	}
+	public class AppenderAnnotationElements extends AbstractElementFinder.AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "org.gemoc.monilog.MoniLog4DSL.AppenderAnnotation");
+		private final EnumLiteralDeclaration cAsyncEnumLiteralDeclaration = (EnumLiteralDeclaration)rule.eContents().get(1);
+		private final Keyword cAsyncAsyncKeyword_0 = (Keyword)cAsyncEnumLiteralDeclaration.eContents().get(0);
+		
+		//enum AppenderAnnotation:
+		//	async='@Async';
+		public EnumRule getRule() { return rule; }
+		
+		//async='@Async'
+		public EnumLiteralDeclaration getAsyncEnumLiteralDeclaration() { return cAsyncEnumLiteralDeclaration; }
+		
+		//'@Async'
+		public Keyword getAsyncAsyncKeyword_0() { return cAsyncAsyncKeyword_0; }
+	}
 	public class LogLevelElements extends AbstractElementFinder.AbstractEnumRuleElementFinder {
 		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "org.gemoc.monilog.MoniLog4DSL.LogLevel");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final EnumLiteralDeclaration cConfigEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
-		private final Keyword cConfigCONFIGKeyword_0_0 = (Keyword)cConfigEnumLiteralDeclaration_0.eContents().get(0);
-		private final EnumLiteralDeclaration cFineEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
-		private final Keyword cFineFINEKeyword_1_0 = (Keyword)cFineEnumLiteralDeclaration_1.eContents().get(0);
-		private final EnumLiteralDeclaration cFinerEnumLiteralDeclaration_2 = (EnumLiteralDeclaration)cAlternatives.eContents().get(2);
-		private final Keyword cFinerFINERKeyword_2_0 = (Keyword)cFinerEnumLiteralDeclaration_2.eContents().get(0);
-		private final EnumLiteralDeclaration cFinestEnumLiteralDeclaration_3 = (EnumLiteralDeclaration)cAlternatives.eContents().get(3);
-		private final Keyword cFinestFINESTKeyword_3_0 = (Keyword)cFinestEnumLiteralDeclaration_3.eContents().get(0);
-		private final EnumLiteralDeclaration cInfoEnumLiteralDeclaration_4 = (EnumLiteralDeclaration)cAlternatives.eContents().get(4);
-		private final Keyword cInfoINFOKeyword_4_0 = (Keyword)cInfoEnumLiteralDeclaration_4.eContents().get(0);
+		private final EnumLiteralDeclaration cInfoEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
+		private final Keyword cInfoINFOKeyword_0_0 = (Keyword)cInfoEnumLiteralDeclaration_0.eContents().get(0);
+		private final EnumLiteralDeclaration cConfigEnumLiteralDeclaration_1 = (EnumLiteralDeclaration)cAlternatives.eContents().get(1);
+		private final Keyword cConfigCONFIGKeyword_1_0 = (Keyword)cConfigEnumLiteralDeclaration_1.eContents().get(0);
+		private final EnumLiteralDeclaration cFineEnumLiteralDeclaration_2 = (EnumLiteralDeclaration)cAlternatives.eContents().get(2);
+		private final Keyword cFineFINEKeyword_2_0 = (Keyword)cFineEnumLiteralDeclaration_2.eContents().get(0);
+		private final EnumLiteralDeclaration cFinerEnumLiteralDeclaration_3 = (EnumLiteralDeclaration)cAlternatives.eContents().get(3);
+		private final Keyword cFinerFINERKeyword_3_0 = (Keyword)cFinerEnumLiteralDeclaration_3.eContents().get(0);
+		private final EnumLiteralDeclaration cFinestEnumLiteralDeclaration_4 = (EnumLiteralDeclaration)cAlternatives.eContents().get(4);
+		private final Keyword cFinestFINESTKeyword_4_0 = (Keyword)cFinestEnumLiteralDeclaration_4.eContents().get(0);
 		private final EnumLiteralDeclaration cSevereEnumLiteralDeclaration_5 = (EnumLiteralDeclaration)cAlternatives.eContents().get(5);
 		private final Keyword cSevereSEVEREKeyword_5_0 = (Keyword)cSevereEnumLiteralDeclaration_5.eContents().get(0);
 		private final EnumLiteralDeclaration cWarningEnumLiteralDeclaration_6 = (EnumLiteralDeclaration)cAlternatives.eContents().get(6);
 		private final Keyword cWarningWARNINGKeyword_6_0 = (Keyword)cWarningEnumLiteralDeclaration_6.eContents().get(0);
 		
 		//enum LogLevel:
-		//	config='CONFIG' | fine='FINE' | finer='FINER' | finest='FINEST' |
-		//	info='INFO' | severe='SEVERE' | warning='WARNING';
+		//	info='INFO' | config='CONFIG' | fine='FINE' | finer='FINER' |
+		//	finest='FINEST' | severe='SEVERE' | warning='WARNING';
 		public EnumRule getRule() { return rule; }
 		
-		//config='CONFIG' | fine='FINE' | finer='FINER' | finest='FINEST' | info='INFO' | severe='SEVERE' | warning='WARNING'
+		//info='INFO' | config='CONFIG' | fine='FINE' | finer='FINER' | finest='FINEST' | severe='SEVERE' | warning='WARNING'
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
-		//config='CONFIG'
-		public EnumLiteralDeclaration getConfigEnumLiteralDeclaration_0() { return cConfigEnumLiteralDeclaration_0; }
-		
-		//'CONFIG'
-		public Keyword getConfigCONFIGKeyword_0_0() { return cConfigCONFIGKeyword_0_0; }
-		
-		//fine='FINE'
-		public EnumLiteralDeclaration getFineEnumLiteralDeclaration_1() { return cFineEnumLiteralDeclaration_1; }
-		
-		//'FINE'
-		public Keyword getFineFINEKeyword_1_0() { return cFineFINEKeyword_1_0; }
-		
-		//finer='FINER'
-		public EnumLiteralDeclaration getFinerEnumLiteralDeclaration_2() { return cFinerEnumLiteralDeclaration_2; }
-		
-		//'FINER'
-		public Keyword getFinerFINERKeyword_2_0() { return cFinerFINERKeyword_2_0; }
-		
-		//finest='FINEST'
-		public EnumLiteralDeclaration getFinestEnumLiteralDeclaration_3() { return cFinestEnumLiteralDeclaration_3; }
-		
-		//'FINEST'
-		public Keyword getFinestFINESTKeyword_3_0() { return cFinestFINESTKeyword_3_0; }
-		
 		//info='INFO'
-		public EnumLiteralDeclaration getInfoEnumLiteralDeclaration_4() { return cInfoEnumLiteralDeclaration_4; }
+		public EnumLiteralDeclaration getInfoEnumLiteralDeclaration_0() { return cInfoEnumLiteralDeclaration_0; }
 		
 		//'INFO'
-		public Keyword getInfoINFOKeyword_4_0() { return cInfoINFOKeyword_4_0; }
+		public Keyword getInfoINFOKeyword_0_0() { return cInfoINFOKeyword_0_0; }
+		
+		//config='CONFIG'
+		public EnumLiteralDeclaration getConfigEnumLiteralDeclaration_1() { return cConfigEnumLiteralDeclaration_1; }
+		
+		//'CONFIG'
+		public Keyword getConfigCONFIGKeyword_1_0() { return cConfigCONFIGKeyword_1_0; }
+		
+		//fine='FINE'
+		public EnumLiteralDeclaration getFineEnumLiteralDeclaration_2() { return cFineEnumLiteralDeclaration_2; }
+		
+		//'FINE'
+		public Keyword getFineFINEKeyword_2_0() { return cFineFINEKeyword_2_0; }
+		
+		//finer='FINER'
+		public EnumLiteralDeclaration getFinerEnumLiteralDeclaration_3() { return cFinerEnumLiteralDeclaration_3; }
+		
+		//'FINER'
+		public Keyword getFinerFINERKeyword_3_0() { return cFinerFINERKeyword_3_0; }
+		
+		//finest='FINEST'
+		public EnumLiteralDeclaration getFinestEnumLiteralDeclaration_4() { return cFinestEnumLiteralDeclaration_4; }
+		
+		//'FINEST'
+		public Keyword getFinestFINESTKeyword_4_0() { return cFinestFINESTKeyword_4_0; }
 		
 		//severe='SEVERE'
 		public EnumLiteralDeclaration getSevereEnumLiteralDeclaration_5() { return cSevereEnumLiteralDeclaration_5; }
@@ -1502,8 +1969,8 @@ public class MoniLog4DSLGrammarAccess extends AbstractElementFinder.AbstractGram
 		//'WARNING'
 		public Keyword getWarningWARNINGKeyword_6_0() { return cWarningWARNINGKeyword_6_0; }
 	}
-	public class TemporalPropertyConditionKindElements extends AbstractElementFinder.AbstractEnumRuleElementFinder {
-		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "org.gemoc.monilog.MoniLog4DSL.TemporalPropertyConditionKind");
+	public class TemporalPatternKindElements extends AbstractElementFinder.AbstractEnumRuleElementFinder {
+		private final EnumRule rule = (EnumRule) GrammarUtil.findRuleForName(getGrammar(), "org.gemoc.monilog.MoniLog4DSL.TemporalPatternKind");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final EnumLiteralDeclaration cSEnumLiteralDeclaration_0 = (EnumLiteralDeclaration)cAlternatives.eContents().get(0);
 		private final Keyword cSSKeyword_0_0 = (Keyword)cSEnumLiteralDeclaration_0.eContents().get(0);
@@ -1514,7 +1981,7 @@ public class MoniLog4DSLGrammarAccess extends AbstractElementFinder.AbstractGram
 		private final EnumLiteralDeclaration cNVEnumLiteralDeclaration_3 = (EnumLiteralDeclaration)cAlternatives.eContents().get(3);
 		private final Keyword cNVNVKeyword_3_0 = (Keyword)cNVEnumLiteralDeclaration_3.eContents().get(0);
 		
-		//enum TemporalPropertyConditionKind:
+		//enum TemporalPatternKind:
 		//	s='S' | v='V' | nS | nV;
 		public EnumRule getRule() { return rule; }
 		
@@ -1546,13 +2013,19 @@ public class MoniLog4DSLGrammarAccess extends AbstractElementFinder.AbstractGram
 		public Keyword getNVNVKeyword_3_0() { return cNVNVKeyword_3_0; }
 	}
 	
-	private final ModelElements pModel;
-	private final MoniLogSpecElements pMoniLogSpec;
-	private final LogLevelElements eLogLevel;
+	private final DocumentElements pDocument;
+	private final AppenderElements pAppender;
+	private final LocalAppenderElements pLocalAppender;
+	private final ExternalAppenderElements pExternalAppender;
+	private final LayoutElements pLayout;
+	private final LocalLayoutElements pLocalLayout;
+	private final ExternalLayoutElements pExternalLayout;
+	private final MoniLoggerElements pMoniLogger;
+	private final ParameterElements pParameter;
 	private final EventElements pEvent;
-	private final BeforeEventElements pBeforeEvent;
-	private final AfterEventElements pAfterEvent;
-	private final BeforeAfterEventElements pBeforeAfterEvent;
+	private final ASTEventElements pASTEvent;
+	private final ComplexEventElements pComplexEvent;
+	private final UserEventElements pUserEvent;
 	private final ConditionElements pCondition;
 	private final TemporalPatternElements pTemporalPattern;
 	private final PatternElements pPattern;
@@ -1561,19 +2034,23 @@ public class MoniLog4DSLGrammarAccess extends AbstractElementFinder.AbstractGram
 	private final LowerBoundElements pLowerBound;
 	private final UpperBoundElements pUpperBound;
 	private final ScopeElements pScope;
-	private final TemporalPropertyConditionKindElements eTemporalPropertyConditionKind;
 	private final ActionElements pAction;
-	private final AppendElements pAppend;
-	private final AppenderElements pAppender;
-	private final StreamAppenderElements pStreamAppender;
-	private final FileAppenderElements pFileAppender;
-	private final ConsoleAppenderElements pConsoleAppender;
-	private final LayoutElements pLayout;
-	private final StringLayoutElements pStringLayout;
-	private final ExternalLayoutElements pExternalLayout;
+	private final AppenderCallElements pAppenderCall;
+	private final AppenderRefElements pAppenderRef;
+	private final AppenderCallArgumentElements pAppenderCallArgument;
+	private final LayoutCallElements pLayoutCall;
+	private final LayoutRefElements pLayoutRef;
+	private final EmitEventElements pEmitEvent;
+	private final MoniLoggerCallElements pMoniLoggerCall;
 	private final StreamEventElements pStreamEvent;
 	private final EmptyOrPropertyValueElements pEmptyOrPropertyValue;
+	private final ExpressionElements pExpression;
+	private final ParameterReferenceElements pParameterReference;
 	private final LanguageExpressionElements pLanguageExpression;
+	private final MoniLoggerAnnotationElements eMoniLoggerAnnotation;
+	private final AppenderAnnotationElements eAppenderAnnotation;
+	private final LogLevelElements eLogLevel;
+	private final TemporalPatternKindElements eTemporalPatternKind;
 	private final FQNElements pFQN;
 	
 	private final Grammar grammar;
@@ -1585,13 +2062,19 @@ public class MoniLog4DSLGrammarAccess extends AbstractElementFinder.AbstractGram
 			TerminalsGrammarAccess gaTerminals) {
 		this.grammar = internalFindGrammar(grammarProvider);
 		this.gaTerminals = gaTerminals;
-		this.pModel = new ModelElements();
-		this.pMoniLogSpec = new MoniLogSpecElements();
-		this.eLogLevel = new LogLevelElements();
+		this.pDocument = new DocumentElements();
+		this.pAppender = new AppenderElements();
+		this.pLocalAppender = new LocalAppenderElements();
+		this.pExternalAppender = new ExternalAppenderElements();
+		this.pLayout = new LayoutElements();
+		this.pLocalLayout = new LocalLayoutElements();
+		this.pExternalLayout = new ExternalLayoutElements();
+		this.pMoniLogger = new MoniLoggerElements();
+		this.pParameter = new ParameterElements();
 		this.pEvent = new EventElements();
-		this.pBeforeEvent = new BeforeEventElements();
-		this.pAfterEvent = new AfterEventElements();
-		this.pBeforeAfterEvent = new BeforeAfterEventElements();
+		this.pASTEvent = new ASTEventElements();
+		this.pComplexEvent = new ComplexEventElements();
+		this.pUserEvent = new UserEventElements();
 		this.pCondition = new ConditionElements();
 		this.pTemporalPattern = new TemporalPatternElements();
 		this.pPattern = new PatternElements();
@@ -1600,19 +2083,23 @@ public class MoniLog4DSLGrammarAccess extends AbstractElementFinder.AbstractGram
 		this.pLowerBound = new LowerBoundElements();
 		this.pUpperBound = new UpperBoundElements();
 		this.pScope = new ScopeElements();
-		this.eTemporalPropertyConditionKind = new TemporalPropertyConditionKindElements();
 		this.pAction = new ActionElements();
-		this.pAppend = new AppendElements();
-		this.pAppender = new AppenderElements();
-		this.pStreamAppender = new StreamAppenderElements();
-		this.pFileAppender = new FileAppenderElements();
-		this.pConsoleAppender = new ConsoleAppenderElements();
-		this.pLayout = new LayoutElements();
-		this.pStringLayout = new StringLayoutElements();
-		this.pExternalLayout = new ExternalLayoutElements();
+		this.pAppenderCall = new AppenderCallElements();
+		this.pAppenderRef = new AppenderRefElements();
+		this.pAppenderCallArgument = new AppenderCallArgumentElements();
+		this.pLayoutCall = new LayoutCallElements();
+		this.pLayoutRef = new LayoutRefElements();
+		this.pEmitEvent = new EmitEventElements();
+		this.pMoniLoggerCall = new MoniLoggerCallElements();
 		this.pStreamEvent = new StreamEventElements();
 		this.pEmptyOrPropertyValue = new EmptyOrPropertyValueElements();
+		this.pExpression = new ExpressionElements();
+		this.pParameterReference = new ParameterReferenceElements();
 		this.pLanguageExpression = new LanguageExpressionElements();
+		this.eMoniLoggerAnnotation = new MoniLoggerAnnotationElements();
+		this.eAppenderAnnotation = new AppenderAnnotationElements();
+		this.eLogLevel = new LogLevelElements();
+		this.eTemporalPatternKind = new TemporalPatternKindElements();
 		this.pFQN = new FQNElements();
 	}
 	
@@ -1643,43 +2130,112 @@ public class MoniLog4DSLGrammarAccess extends AbstractElementFinder.AbstractGram
 	}
 
 	
-	//Model:
-	//	('default-language' defaultLanguageID=(ID | STRING))?
-	//	moniLogSpecs+=MoniLogSpec+;
-	public ModelElements getModelAccess() {
-		return pModel;
+	//Document:
+	//	('default-language' defaultLanguageID=(ID | STRING))? (events+=Event* & appenders+=Appender* & layouts+=Layout* &
+	//	moniLogSpecs+=MoniLogger*);
+	public DocumentElements getDocumentAccess() {
+		return pDocument;
 	}
 	
-	public ParserRule getModelRule() {
-		return getModelAccess().getRule();
+	public ParserRule getDocumentRule() {
+		return getDocumentAccess().getRule();
 	}
 	
-	//MoniLogSpec:
-	//	'monilog' name=STRING? ('[' level=LogLevel ']')? '{' ('events' '{' events+=Event (',' events+=Event)* '}')?
-	//	('conditions' '{' conditions+=Condition (',' conditions+=Condition)* '}')?
-	//	'actions' '{' actions+=Action (',' actions+=Action)* '}'
+	//@Exported
+	//Appender:
+	//	LocalAppender | ExternalAppender;
+	public AppenderElements getAppenderAccess() {
+		return pAppender;
+	}
+	
+	public ParserRule getAppenderRule() {
+		return getAppenderAccess().getRule();
+	}
+	
+	//LocalAppender:
+	//	annotations+=AppenderAnnotation*
+	//	'appender' name=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')')? '{'
+	//	calls+=AppenderCall (';' calls+=AppenderCall)*
 	//	'}';
-	public MoniLogSpecElements getMoniLogSpecAccess() {
-		return pMoniLogSpec;
+	public LocalAppenderElements getLocalAppenderAccess() {
+		return pLocalAppender;
 	}
 	
-	public ParserRule getMoniLogSpecRule() {
-		return getMoniLogSpecAccess().getRule();
+	public ParserRule getLocalAppenderRule() {
+		return getLocalAppenderAccess().getRule();
 	}
 	
-	//enum LogLevel:
-	//	config='CONFIG' | fine='FINE' | finer='FINER' | finest='FINEST' |
-	//	info='INFO' | severe='SEVERE' | warning='WARNING';
-	public LogLevelElements getLogLevelAccess() {
-		return eLogLevel;
+	//ExternalAppender:
+	//	'appender' name=FQN ('(' parameters+=Parameter (',' parameters+=Parameter)* ')')?;
+	public ExternalAppenderElements getExternalAppenderAccess() {
+		return pExternalAppender;
 	}
 	
-	public EnumRule getLogLevelRule() {
-		return getLogLevelAccess().getRule();
+	public ParserRule getExternalAppenderRule() {
+		return getExternalAppenderAccess().getRule();
+	}
+	
+	//Layout:
+	//	LocalLayout | ExternalLayout;
+	public LayoutElements getLayoutAccess() {
+		return pLayout;
+	}
+	
+	public ParserRule getLayoutRule() {
+		return getLayoutAccess().getRule();
+	}
+	
+	//@Exported
+	//LocalLayout:
+	//	'layout' name=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')')? '{'
+	//	call=LayoutCall
+	//	'}';
+	public LocalLayoutElements getLocalLayoutAccess() {
+		return pLocalLayout;
+	}
+	
+	public ParserRule getLocalLayoutRule() {
+		return getLocalLayoutAccess().getRule();
+	}
+	
+	//@Exported
+	//ExternalLayout:
+	//	'layout' name=FQN ('(' parameters+=Parameter (',' parameters+=Parameter)* ')')?;
+	public ExternalLayoutElements getExternalLayoutAccess() {
+		return pExternalLayout;
+	}
+	
+	public ParserRule getExternalLayoutRule() {
+		return getExternalLayoutAccess().getRule();
+	}
+	
+	//@Exported
+	//MoniLogger:
+	//	annotations+=MoniLoggerAnnotation*
+	//	'monilogger' name=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')')? ('[' level=LogLevel ']')? '{'
+	//	'event' event=[Event] ('conditions' '{' conditions+=Condition (';' conditions+=Condition)* '}')?
+	//	'actions' '{' actions+=Action (';' actions+=Action)* '}'
+	//	'}';
+	public MoniLoggerElements getMoniLoggerAccess() {
+		return pMoniLogger;
+	}
+	
+	public ParserRule getMoniLoggerRule() {
+		return getMoniLoggerAccess().getRule();
+	}
+	
+	//Parameter:
+	//	name=ID;
+	public ParameterElements getParameterAccess() {
+		return pParameter;
+	}
+	
+	public ParserRule getParameterRule() {
+		return getParameterAccess().getRule();
 	}
 	
 	//Event:
-	//	BeforeEvent | AfterEvent | BeforeAfterEvent;
+	//	ASTEvent | ComplexEvent | UserEvent;
 	public EventElements getEventAccess() {
 		return pEvent;
 	}
@@ -1688,38 +2244,43 @@ public class MoniLog4DSLGrammarAccess extends AbstractElementFinder.AbstractGram
 		return getEventAccess().getRule();
 	}
 	
-	//BeforeEvent:
-	//	'before' ruleID=(ID | STRING) (('frequency^' frequency=INT)? & ('limit' limit=INT)?);
-	public BeforeEventElements getBeforeEventAccess() {
-		return pBeforeEvent;
+	//@Exported
+	//ASTEvent:
+	//	'ast' name=ID '{' (before?='before'? & after?='after'?) ruleID=ID
+	//	'}';
+	public ASTEventElements getASTEventAccess() {
+		return pASTEvent;
 	}
 	
-	public ParserRule getBeforeEventRule() {
-		return getBeforeEventAccess().getRule();
+	public ParserRule getASTEventRule() {
+		return getASTEventAccess().getRule();
 	}
 	
-	//AfterEvent:
-	//	'after' ruleID=(ID | STRING) (('frequency' frequency=INT)? & ('limit' limit=INT)?);
-	public AfterEventElements getAfterEventAccess() {
-		return pAfterEvent;
+	//@Exported
+	//ComplexEvent:
+	//	'complex' name=ID ('[' kind=TemporalPatternKind ']')? '{'
+	//	pattern=TemporalPattern
+	//	'}';
+	public ComplexEventElements getComplexEventAccess() {
+		return pComplexEvent;
 	}
 	
-	public ParserRule getAfterEventRule() {
-		return getAfterEventAccess().getRule();
+	public ParserRule getComplexEventRule() {
+		return getComplexEventAccess().getRule();
 	}
 	
-	//BeforeAfterEvent:
-	//	ruleID=(ID | STRING) (('frequency' frequency=INT)? & ('limit' limit=INT)?);
-	public BeforeAfterEventElements getBeforeAfterEventAccess() {
-		return pBeforeAfterEvent;
+	//@Exported
+	//UserEvent:
+	//	'custom' name=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')')?;
+	public UserEventElements getUserEventAccess() {
+		return pUserEvent;
 	}
 	
-	public ParserRule getBeforeAfterEventRule() {
-		return getBeforeAfterEventAccess().getRule();
+	public ParserRule getUserEventRule() {
+		return getUserEventAccess().getRule();
 	}
 	
 	//Condition:
-	//	{TemporalPropertyCondition} 'stream' '(' pattern=TemporalPattern (',' kind=TemporalPropertyConditionKind)? ')' |
 	//	{LanguageExpressionCondition} expression=LanguageExpression;
 	public ConditionElements getConditionAccess() {
 		return pCondition;
@@ -1740,8 +2301,8 @@ public class MoniLog4DSLGrammarAccess extends AbstractElementFinder.AbstractGram
 	}
 	
 	//Pattern:
-	//	{Universality} 'always' event=StreamEvent | {Existence} 'exists' bound=BoundType event=StreamEvent | {Absence} 'never'
-	//	event=StreamEvent | {Precedence} predecessor=StreamEvent 'precedes' successor=StreamEvent | {Response}
+	//	{Existence} 'exists'? bound=BoundType? event=StreamEvent | {Universality} 'always' event=StreamEvent | {Absence}
+	//	'never' event=StreamEvent | {Precedence} predecessor=StreamEvent 'precedes' successor=StreamEvent | {Response}
 	//	event=StreamEvent 'respondsTo' trigger=StreamEvent;
 	public PatternElements getPatternAccess() {
 		return pPattern;
@@ -1803,18 +2364,8 @@ public class MoniLog4DSLGrammarAccess extends AbstractElementFinder.AbstractGram
 		return getScopeAccess().getRule();
 	}
 	
-	//enum TemporalPropertyConditionKind:
-	//	s='S' | v='V' | nS | nV;
-	public TemporalPropertyConditionKindElements getTemporalPropertyConditionKindAccess() {
-		return eTemporalPropertyConditionKind;
-	}
-	
-	public EnumRule getTemporalPropertyConditionKindRule() {
-		return getTemporalPropertyConditionKindAccess().getRule();
-	}
-	
 	//Action:
-	//	{Notify} 'notify' | Append;
+	//	LanguageExpression | AppenderCall | EmitEvent | MoniLoggerCall;
 	public ActionElements getActionAccess() {
 		return pAction;
 	}
@@ -1823,88 +2374,79 @@ public class MoniLog4DSLGrammarAccess extends AbstractElementFinder.AbstractGram
 		return getActionAccess().getRule();
 	}
 	
-	//Append:
-	//	'append' appender=Appender;
-	public AppendElements getAppendAccess() {
-		return pAppend;
+	//AppenderCall:
+	//	appender=AppenderRef '.' 'call' ('(' args+=AppenderCallArgument (',' args+=AppenderCallArgument)* ')')?;
+	public AppenderCallElements getAppenderCallAccess() {
+		return pAppenderCall;
 	}
 	
-	public ParserRule getAppendRule() {
-		return getAppendAccess().getRule();
+	public ParserRule getAppenderCallRule() {
+		return getAppenderCallAccess().getRule();
 	}
 	
-	//Appender:
-	//	StreamAppender | FileAppender | ConsoleAppender;
-	public AppenderElements getAppenderAccess() {
-		return pAppender;
+	//AppenderRef:
+	//	appender=[Appender|FQN];
+	public AppenderRefElements getAppenderRefAccess() {
+		return pAppenderRef;
 	}
 	
-	public ParserRule getAppenderRule() {
-		return getAppenderAccess().getRule();
+	public ParserRule getAppenderRefRule() {
+		return getAppenderRefAccess().getRule();
 	}
 	
-	//StreamAppender:
-	//	'stream' '(' event=(ID | STRING) ('[' values+=LanguageExpression (',' values+=LanguageExpression)* ']')? ')';
-	public StreamAppenderElements getStreamAppenderAccess() {
-		return pStreamAppender;
+	//AppenderCallArgument:
+	//	Expression | LayoutCall;
+	public AppenderCallArgumentElements getAppenderCallArgumentAccess() {
+		return pAppenderCallArgument;
 	}
 	
-	public ParserRule getStreamAppenderRule() {
-		return getStreamAppenderAccess().getRule();
+	public ParserRule getAppenderCallArgumentRule() {
+		return getAppenderCallArgumentAccess().getRule();
 	}
 	
-	//FileAppender:
-	//	'file' '(' filename=STRING ',' layout=Layout ')';
-	public FileAppenderElements getFileAppenderAccess() {
-		return pFileAppender;
+	//LayoutCall:
+	//	layout=LayoutRef '.' 'call' ('(' args+=Expression (',' args+=Expression)* ')')?;
+	public LayoutCallElements getLayoutCallAccess() {
+		return pLayoutCall;
 	}
 	
-	public ParserRule getFileAppenderRule() {
-		return getFileAppenderAccess().getRule();
+	public ParserRule getLayoutCallRule() {
+		return getLayoutCallAccess().getRule();
 	}
 	
-	//ConsoleAppender:
-	//	'console' '(' layout=Layout ')';
-	public ConsoleAppenderElements getConsoleAppenderAccess() {
-		return pConsoleAppender;
+	//LayoutRef:
+	//	layout=[Layout|FQN];
+	public LayoutRefElements getLayoutRefAccess() {
+		return pLayoutRef;
 	}
 	
-	public ParserRule getConsoleAppenderRule() {
-		return getConsoleAppenderAccess().getRule();
+	public ParserRule getLayoutRefRule() {
+		return getLayoutRefAccess().getRule();
 	}
 	
-	//Layout:
-	//	StringLayout | ExternalLayout;
-	public LayoutElements getLayoutAccess() {
-		return pLayout;
+	//EmitEvent:
+	//	event=[Event] '.' 'emit' ('(' args+=Expression (',' args+=Expression)* ')')?;
+	public EmitEventElements getEmitEventAccess() {
+		return pEmitEvent;
 	}
 	
-	public ParserRule getLayoutRule() {
-		return getLayoutAccess().getRule();
+	public ParserRule getEmitEventRule() {
+		return getEmitEventAccess().getRule();
 	}
 	
-	//StringLayout:
-	//	formatString=STRING (',' values+=LanguageExpression)*;
-	public StringLayoutElements getStringLayoutAccess() {
-		return pStringLayout;
+	//MoniLoggerCall:
+	//	{StartMoniLogger} monilogger=[MoniLogger] '.' 'start' ('(' args+=Expression (',' args+=Expression)* ')')? |
+	//	{StopMoniLogger} monilogger=[MoniLogger] '.' 'stop';
+	public MoniLoggerCallElements getMoniLoggerCallAccess() {
+		return pMoniLoggerCall;
 	}
 	
-	public ParserRule getStringLayoutRule() {
-		return getStringLayoutAccess().getRule();
-	}
-	
-	//ExternalLayout:
-	//	path=FQN (',' values+=LanguageExpression)*;
-	public ExternalLayoutElements getExternalLayoutAccess() {
-		return pExternalLayout;
-	}
-	
-	public ParserRule getExternalLayoutRule() {
-		return getExternalLayoutAccess().getRule();
+	public ParserRule getMoniLoggerCallRule() {
+		return getMoniLoggerCallAccess().getRule();
 	}
 	
 	//StreamEvent:
-	//	eventId=(ID | STRING) ('[' values+=EmptyOrPropertyValue (',' values+=EmptyOrPropertyValue)* ']')?;
+	//	event=[Event] ('[' values+=EmptyOrPropertyValue (',' values+=EmptyOrPropertyValue)* ']')?;
 	public StreamEventElements getStreamEventAccess() {
 		return pStreamEvent;
 	}
@@ -1914,7 +2456,7 @@ public class MoniLog4DSLGrammarAccess extends AbstractElementFinder.AbstractGram
 	}
 	
 	//EmptyOrPropertyValue:
-	//	{Empty} | {PropertyValue} id=ID ('=' value=LanguageExpression)?;
+	//	{Empty} | {PropertyValue} id=ID ('=' value=Expression)?;
 	public EmptyOrPropertyValueElements getEmptyOrPropertyValueAccess() {
 		return pEmptyOrPropertyValue;
 	}
@@ -1923,15 +2465,75 @@ public class MoniLog4DSLGrammarAccess extends AbstractElementFinder.AbstractGram
 		return getEmptyOrPropertyValueAccess().getRule();
 	}
 	
+	//Expression:
+	//	ParameterReference | LanguageExpression;
+	public ExpressionElements getExpressionAccess() {
+		return pExpression;
+	}
+	
+	public ParserRule getExpressionRule() {
+		return getExpressionAccess().getRule();
+	}
+	
+	//ParameterReference:
+	//	parameter=[Parameter];
+	public ParameterReferenceElements getParameterReferenceAccess() {
+		return pParameterReference;
+	}
+	
+	public ParserRule getParameterReferenceRule() {
+		return getParameterReferenceAccess().getRule();
+	}
+	
 	//LanguageExpression:
-	//	{ExplicitLanguageExpression} languageId=(ID | STRING) '(' expression=STRING ')' | {DefaultLanguageExpression}
-	//	expression=STRING;
+	//	{ExplicitLanguageExpression} languageId=ID '(' expression=STRING ')' | {DefaultLanguageExpression} expression=STRING;
 	public LanguageExpressionElements getLanguageExpressionAccess() {
 		return pLanguageExpression;
 	}
 	
 	public ParserRule getLanguageExpressionRule() {
 		return getLanguageExpressionAccess().getRule();
+	}
+	
+	//enum MoniLoggerAnnotation:
+	//	inactive='@Inactive';
+	public MoniLoggerAnnotationElements getMoniLoggerAnnotationAccess() {
+		return eMoniLoggerAnnotation;
+	}
+	
+	public EnumRule getMoniLoggerAnnotationRule() {
+		return getMoniLoggerAnnotationAccess().getRule();
+	}
+	
+	//enum AppenderAnnotation:
+	//	async='@Async';
+	public AppenderAnnotationElements getAppenderAnnotationAccess() {
+		return eAppenderAnnotation;
+	}
+	
+	public EnumRule getAppenderAnnotationRule() {
+		return getAppenderAnnotationAccess().getRule();
+	}
+	
+	//enum LogLevel:
+	//	info='INFO' | config='CONFIG' | fine='FINE' | finer='FINER' |
+	//	finest='FINEST' | severe='SEVERE' | warning='WARNING';
+	public LogLevelElements getLogLevelAccess() {
+		return eLogLevel;
+	}
+	
+	public EnumRule getLogLevelRule() {
+		return getLogLevelAccess().getRule();
+	}
+	
+	//enum TemporalPatternKind:
+	//	s='S' | v='V' | nS | nV;
+	public TemporalPatternKindElements getTemporalPatternKindAccess() {
+		return eTemporalPatternKind;
+	}
+	
+	public EnumRule getTemporalPatternKindRule() {
+		return getTemporalPatternKindAccess().getRule();
 	}
 	
 	//FQN:

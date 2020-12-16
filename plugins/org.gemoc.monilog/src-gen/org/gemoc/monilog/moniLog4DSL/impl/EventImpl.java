@@ -21,9 +21,7 @@ import org.gemoc.monilog.moniLog4DSL.MoniLog4DSLPackage;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.gemoc.monilog.moniLog4DSL.impl.EventImpl#getRuleID <em>Rule ID</em>}</li>
- *   <li>{@link org.gemoc.monilog.moniLog4DSL.impl.EventImpl#getFrequency <em>Frequency</em>}</li>
- *   <li>{@link org.gemoc.monilog.moniLog4DSL.impl.EventImpl#getLimit <em>Limit</em>}</li>
+ *   <li>{@link org.gemoc.monilog.moniLog4DSL.impl.EventImpl#getName <em>Name</em>}</li>
  * </ul>
  *
  * @generated
@@ -31,64 +29,24 @@ import org.gemoc.monilog.moniLog4DSL.MoniLog4DSLPackage;
 public class EventImpl extends MinimalEObjectImpl.Container implements Event
 {
   /**
-   * The default value of the '{@link #getRuleID() <em>Rule ID</em>}' attribute.
+   * The default value of the '{@link #getName() <em>Name</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getRuleID()
+   * @see #getName()
    * @generated
    * @ordered
    */
-  protected static final String RULE_ID_EDEFAULT = null;
+  protected static final String NAME_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getRuleID() <em>Rule ID</em>}' attribute.
+   * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getRuleID()
+   * @see #getName()
    * @generated
    * @ordered
    */
-  protected String ruleID = RULE_ID_EDEFAULT;
-
-  /**
-   * The default value of the '{@link #getFrequency() <em>Frequency</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getFrequency()
-   * @generated
-   * @ordered
-   */
-  protected static final int FREQUENCY_EDEFAULT = 0;
-
-  /**
-   * The cached value of the '{@link #getFrequency() <em>Frequency</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getFrequency()
-   * @generated
-   * @ordered
-   */
-  protected int frequency = FREQUENCY_EDEFAULT;
-
-  /**
-   * The default value of the '{@link #getLimit() <em>Limit</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getLimit()
-   * @generated
-   * @ordered
-   */
-  protected static final int LIMIT_EDEFAULT = 0;
-
-  /**
-   * The cached value of the '{@link #getLimit() <em>Limit</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getLimit()
-   * @generated
-   * @ordered
-   */
-  protected int limit = LIMIT_EDEFAULT;
+  protected String name = NAME_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
@@ -117,9 +75,9 @@ public class EventImpl extends MinimalEObjectImpl.Container implements Event
    * @generated
    */
   @Override
-  public String getRuleID()
+  public String getName()
   {
-    return ruleID;
+    return name;
   }
 
   /**
@@ -128,62 +86,12 @@ public class EventImpl extends MinimalEObjectImpl.Container implements Event
    * @generated
    */
   @Override
-  public void setRuleID(String newRuleID)
+  public void setName(String newName)
   {
-    String oldRuleID = ruleID;
-    ruleID = newRuleID;
+    String oldName = name;
+    name = newName;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, MoniLog4DSLPackage.EVENT__RULE_ID, oldRuleID, ruleID));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public int getFrequency()
-  {
-    return frequency;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void setFrequency(int newFrequency)
-  {
-    int oldFrequency = frequency;
-    frequency = newFrequency;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, MoniLog4DSLPackage.EVENT__FREQUENCY, oldFrequency, frequency));
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public int getLimit()
-  {
-    return limit;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public void setLimit(int newLimit)
-  {
-    int oldLimit = limit;
-    limit = newLimit;
-    if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, MoniLog4DSLPackage.EVENT__LIMIT, oldLimit, limit));
+      eNotify(new ENotificationImpl(this, Notification.SET, MoniLog4DSLPackage.EVENT__NAME, oldName, name));
   }
 
   /**
@@ -196,12 +104,8 @@ public class EventImpl extends MinimalEObjectImpl.Container implements Event
   {
     switch (featureID)
     {
-      case MoniLog4DSLPackage.EVENT__RULE_ID:
-        return getRuleID();
-      case MoniLog4DSLPackage.EVENT__FREQUENCY:
-        return getFrequency();
-      case MoniLog4DSLPackage.EVENT__LIMIT:
-        return getLimit();
+      case MoniLog4DSLPackage.EVENT__NAME:
+        return getName();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -216,14 +120,8 @@ public class EventImpl extends MinimalEObjectImpl.Container implements Event
   {
     switch (featureID)
     {
-      case MoniLog4DSLPackage.EVENT__RULE_ID:
-        setRuleID((String)newValue);
-        return;
-      case MoniLog4DSLPackage.EVENT__FREQUENCY:
-        setFrequency((Integer)newValue);
-        return;
-      case MoniLog4DSLPackage.EVENT__LIMIT:
-        setLimit((Integer)newValue);
+      case MoniLog4DSLPackage.EVENT__NAME:
+        setName((String)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -239,14 +137,8 @@ public class EventImpl extends MinimalEObjectImpl.Container implements Event
   {
     switch (featureID)
     {
-      case MoniLog4DSLPackage.EVENT__RULE_ID:
-        setRuleID(RULE_ID_EDEFAULT);
-        return;
-      case MoniLog4DSLPackage.EVENT__FREQUENCY:
-        setFrequency(FREQUENCY_EDEFAULT);
-        return;
-      case MoniLog4DSLPackage.EVENT__LIMIT:
-        setLimit(LIMIT_EDEFAULT);
+      case MoniLog4DSLPackage.EVENT__NAME:
+        setName(NAME_EDEFAULT);
         return;
     }
     super.eUnset(featureID);
@@ -262,12 +154,8 @@ public class EventImpl extends MinimalEObjectImpl.Container implements Event
   {
     switch (featureID)
     {
-      case MoniLog4DSLPackage.EVENT__RULE_ID:
-        return RULE_ID_EDEFAULT == null ? ruleID != null : !RULE_ID_EDEFAULT.equals(ruleID);
-      case MoniLog4DSLPackage.EVENT__FREQUENCY:
-        return frequency != FREQUENCY_EDEFAULT;
-      case MoniLog4DSLPackage.EVENT__LIMIT:
-        return limit != LIMIT_EDEFAULT;
+      case MoniLog4DSLPackage.EVENT__NAME:
+        return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
     }
     return super.eIsSet(featureID);
   }
@@ -283,12 +171,8 @@ public class EventImpl extends MinimalEObjectImpl.Container implements Event
     if (eIsProxy()) return super.toString();
 
     StringBuilder result = new StringBuilder(super.toString());
-    result.append(" (ruleID: ");
-    result.append(ruleID);
-    result.append(", frequency: ");
-    result.append(frequency);
-    result.append(", limit: ");
-    result.append(limit);
+    result.append(" (name: ");
+    result.append(name);
     result.append(')');
     return result.toString();
   }
