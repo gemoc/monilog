@@ -4,16 +4,17 @@ import java.util.List
 import java.util.Map
 import org.gemoc.monilog.moniLog4DSL.Absence
 import org.gemoc.monilog.moniLog4DSL.After
+import org.gemoc.monilog.moniLog4DSL.ComplexEvent
 
 class NeverPAfterQ extends AbstractTemporalProperty {
 	
 	val String p
 	val String q
 	
-	new(String name, Absence never, After after) {
-		super(name)
-		p = never.event.eventId
-		q = after.lowerBound.eventId
+	new(ComplexEvent event, Absence never, After after) {
+		super(event)
+		p = never.event.event.name
+		q = after.lowerBound.event.name
 	}
 	
 	override protected String getStatementString() {

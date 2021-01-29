@@ -2,7 +2,7 @@ package org.gemoc.monilog.api;
 
 public interface IMoniLogAppender {
 
-	void call(String message, Object[] args);
+	void call(String message, Object... args);
 
 	int getNbMinArgs();
 

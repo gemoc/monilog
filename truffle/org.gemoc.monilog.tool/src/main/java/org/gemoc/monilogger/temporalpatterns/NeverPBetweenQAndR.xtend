@@ -4,6 +4,7 @@ import java.util.List
 import java.util.Map
 import org.gemoc.monilog.moniLog4DSL.Absence
 import org.gemoc.monilog.moniLog4DSL.Between
+import org.gemoc.monilog.moniLog4DSL.ComplexEvent
 
 class NeverPBetweenQAndR extends AbstractTemporalProperty {
 	
@@ -11,11 +12,11 @@ class NeverPBetweenQAndR extends AbstractTemporalProperty {
 	val String q
 	val String r
 	
-	new(String name, Absence never, Between between) {
-		super(name)
-		p = never.event.eventId
-		q = between.lowerBound.eventId
-		r = between.upperBound.eventId
+	new(ComplexEvent event, Absence never, Between between) {
+		super(event)
+		p = never.event.event.name
+		q = between.lowerBound.event.name
+		r = between.upperBound.event.name
 	}
 	
 	override protected String getStatementString() {

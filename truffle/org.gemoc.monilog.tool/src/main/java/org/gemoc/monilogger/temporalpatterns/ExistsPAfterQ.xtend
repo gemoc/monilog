@@ -3,7 +3,7 @@ package org.gemoc.monilogger.temporalpatterns
 import java.util.List
 import java.util.Map
 import org.gemoc.monilog.moniLog4DSL.After
-import org.gemoc.monilog.moniLog4DSL.BoundType
+import org.gemoc.monilog.moniLog4DSL.ComplexEvent
 import org.gemoc.monilog.moniLog4DSL.Existence
 import org.gemoc.monilog.moniLog4DSL.MoniLog4DSLPackage
 
@@ -12,10 +12,10 @@ class ExistsPAfterQ extends AbstractExistenceProperty {
 	val String p
 	val String q
 	
-	new(String name, Existence exists, After after) {
-		super(name, exists)
-		p = exists.event.eventId
-		q = after.lowerBound.eventId
+	new(ComplexEvent event, Existence exists, After after) {
+		super(event, exists)
+		p = exists.event.event.name
+		q = after.lowerBound.event.name
 	}
 	
 	override protected String getStatementString() {

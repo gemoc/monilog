@@ -5,6 +5,7 @@ import java.util.Map
 import org.gemoc.monilog.moniLog4DSL.Between
 import org.gemoc.monilog.moniLog4DSL.Existence
 import org.gemoc.monilog.moniLog4DSL.MoniLog4DSLPackage
+import org.gemoc.monilog.moniLog4DSL.ComplexEvent
 
 class ExistsPBetweenQAndR extends AbstractExistenceProperty {
 	
@@ -12,11 +13,19 @@ class ExistsPBetweenQAndR extends AbstractExistenceProperty {
 	val String q
 	val String r
 	
-	new(String name, Existence exists, Between between) {
-		super(name, exists)
-		p = exists.event.eventId
-		q = between.lowerBound.eventId
-		r = between.upperBound.eventId
+	new(ComplexEvent event, Existence exists, Between between) {
+		this(event, 0, #[ TruthValue::SATISFIED ], exists, between)
+	}
+	
+	new(ComplexEvent event, int windowLength, Existence exists, Between between) {
+		this(event, windowLength, #[ TruthValue::SATISFIED ], exists, between)
+	}
+	
+	new(ComplexEvent event, int windowLength, List<TruthValue> notifyOn, Existence exists, Between between) {
+		super(event, windowLength, notifyOn, exists)
+		p = exists.event.event.name
+		q = between.lowerBound.event.name
+		r = between.upperBound.event.name
 	}
 	
 	override protected String getStatementString() {

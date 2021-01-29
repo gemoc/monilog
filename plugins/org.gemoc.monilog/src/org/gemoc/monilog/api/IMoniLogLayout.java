@@ -2,7 +2,7 @@ package org.gemoc.monilog.api;
 
 public interface IMoniLogLayout {
 
-	String call(Object[] args);
+	String call(Object... args);
 
 	int getNbMinArgs();
 

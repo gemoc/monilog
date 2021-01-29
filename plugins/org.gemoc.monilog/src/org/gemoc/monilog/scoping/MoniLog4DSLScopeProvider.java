@@ -3,24 +3,6 @@
  */
 package org.gemoc.monilog.scoping;
 
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
-import org.eclipse.core.runtime.IConfigurationElement;
-import org.eclipse.core.runtime.IExtensionRegistry;
-import org.eclipse.core.runtime.Platform;
-import org.eclipse.emf.ecore.EObject;
-import org.eclipse.emf.ecore.EReference;
-import org.eclipse.xtext.scoping.IScope;
-import org.eclipse.xtext.scoping.Scopes;
-import org.gemoc.monilog.moniLog4DSL.ExternalLayout;
-import org.gemoc.monilog.moniLog4DSL.MoniLog4DSLFactory;
-import org.gemoc.monilog.moniLog4DSL.MoniLog4DSLPackage;
-
-import com.google.common.collect.Streams;
-
 /**
  * This class contains custom scoping description.
  * 
@@ -28,34 +10,5 @@ import com.google.common.collect.Streams;
  * on how and when to use it.
  */
 public class MoniLog4DSLScopeProvider extends AbstractMoniLog4DSLScopeProvider {
-	
-	@Override
-	public IScope getScope(EObject context, EReference reference) {
-		switch (reference.getFeatureID()) {
-		case MoniLog4DSLPackage.LAYOUT_REF__LAYOUT:
-			return getLayoutRefLayoutScope(context, reference);
-		}
-		return super.getScope(context, reference);
-	}
-	
-	private IScope getLayoutRefLayoutScope(EObject context, EReference reference) {
-		final IScope defaultScope = super.getScope(context, reference);
-		IExtensionRegistry registry = Platform.getExtensionRegistry();
-		IConfigurationElement[] elements = registry.getConfigurationElementsFor("org.gemoc.monilog.layout");
-		if (elements.length > 0) {
-			final Stream<EObject> externalLayouts = Arrays.stream(elements).map(element -> {
-				return element.getAttribute("name").toString();
-			}).filter(layout -> !(layout == null || layout.isBlank())).map(s -> {
-				final ExternalLayout externalLayout = MoniLog4DSLFactory.eINSTANCE.createExternalLayout();
-				externalLayout.setName(s);
-				return externalLayout;
-			});
-			final List<EObject> scopeElements = Streams.concat(Streams.stream(defaultScope.getAllElements()).map(d -> d.getEObjectOrProxy()), externalLayouts).collect(Collectors.toList());
-			return Scopes.scopeFor(scopeElements);
-		} else {
-			return defaultScope;
-		}
-		
-	}
 
 }

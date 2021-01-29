@@ -1,0 +1,5 @@
+package org.gemoc.monilog.stl
+
+appender ConsoleAppender(msg)
+
+layout StringLayout(formatString, args...)

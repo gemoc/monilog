@@ -3,8 +3,12 @@ grammar org.gemoc.monilog.MoniLog4DSL with org.eclipse.xtext.common.Terminals
 generate moniLog4DSL "http://www.eclipse.org/gemoc/monilog/MoniLog4DSL"
 
 Document:
-	('default-language' defaultLanguageID=(ID | STRING))?
-	(events+=Event* & appenders+=Appender* & layouts+=Layout* & moniLogSpecs+=MoniLogger*);
+	'package' name=QualifiedName
+	imports+=Import*
+	(events+=Event* & appenders+=Appender* & layouts+=Layout* & moniloggers+=MoniLogger*);
+
+Import:
+	'import' importedNamespace=QualifiedNameWithWildcard;
 
 @Exported
 Appender:
@@ -12,31 +16,39 @@ Appender:
 
 LocalAppender:
 	annotations+=AppenderAnnotation*
-	'appender' name=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')')? '{'
+	'appender' name=ID ('(' parameterDecl=ParameterDeclVarArgs ')')? '{'
 		calls+=AppenderCall (';' calls+=AppenderCall)*
 	'}';
 
 ExternalAppender:
-	'appender' name=FQN ('(' parameters+=Parameter (',' parameters+=Parameter)* ')')?;
+	'appender' name=ID ('(' parameterDecl=ParameterDeclVarArgs ')')?;
 
 Layout:
 	LocalLayout | ExternalLayout;
 
 @Exported
 LocalLayout:
-	'layout' name=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')')? '{'
+	'layout' name=ID ('(' parameterDecl=ParameterDeclVarArgs ')')? '{'
 		call=LayoutCall
 	'}';
 
 @Exported
 ExternalLayout:
-	'layout' name=FQN ('(' parameters+=Parameter (',' parameters+=Parameter)* ')')?;
+	'layout' name=ID ('(' parameterDecl=ParameterDeclVarArgs ')')?;
+
+ParameterDeclVarArgs returns ParameterDecl:
+	{ParameterDecl}
+	(parameters+=Parameter (',' parameters+=Parameter)* (',' varArgs=Parameter '...')?)?;
+
+ParameterDeclNoVarArgs returns ParameterDecl:
+	{ParameterDecl}
+	(parameters+=Parameter (',' parameters+=Parameter)*)?;
 
 @Exported
 MoniLogger:
 	annotations+=MoniLoggerAnnotation*
-	'monilogger' name=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')')? ('[' level=LogLevel ']')? '{'
-		'event' event=[Event|ID]
+	'monilogger' name=ID ('(' parameterDecl=ParameterDeclVarArgs ')')? ('[' level=LogLevel ']')? '{'
+		'event' streamEvent=StreamEvent
 		('conditions' '{' (conditions+=Condition) (';' conditions+=Condition)* '}')?
 		'actions' '{' (actions+=Action) (';' actions+=Action)* '}'
 	'}';
@@ -44,27 +56,22 @@ MoniLogger:
 Parameter:
 	name=ID;
 
+@Exported
 Event:
-	ASTEvent | ComplexEvent | UserEvent;
-
-@Exported
-ASTEvent:
-	'ast' name=ID '{'
-		(before?='before'? & after?='after'?) ruleID=ID
-	'}';
-
-@Exported
-ComplexEvent:
-	'complex' name=ID ('[' kind=TemporalPatternKind ']')? '{'
+	({ASTEvent}
+	'call' name=ID ('(' parameterDecl=ParameterDeclNoVarArgs ')')? '{'
+		kind=ASTEventKind ruleID=ID
+	'}') |
+	({ComplexEvent} 'complex' name=ID ('[' kind=TemporalPatternKind ']')? ('(' parameterDecl=ParameterDeclNoVarArgs ')')? '{'
 		pattern=TemporalPattern
-	'}';
+	'}') |
+	({UserEvent} 'custom' name=ID ('(' parameterDecl=ParameterDeclNoVarArgs ')')?);
 
-@Exported
-UserEvent:
-	'custom' name=ID ('(' parameters+=Parameter (',' parameters+=Parameter)* ')')?;
+ASTEventKind:
+	{BeforeASTEvent} 'before'| {AfterASTEvent} 'after';
 
 Condition:
-	{LanguageExpressionCondition} expression=LanguageExpression;
+	expression=LanguageExpression;
 
 TemporalPattern:
 	pattern=Pattern scope=Scope;
@@ -95,35 +102,35 @@ Scope:
 	{AfterUntil} 'after' lowerBound=StreamEvent 'until' upperBound=StreamEvent;
 
 Action:
-	LanguageExpression | AppenderCall | EmitEvent | MoniLoggerCall;
+	LanguageExpression | AppenderCall | EmitEvent | SetVariable | MoniloggerCall;
 
 AppenderCall:
-	appender=AppenderRef '.' 'call' ( '(' args+=AppenderCallArgument (',' args+=AppenderCallArgument)* ')' )?;
+	appender=[Appender|QualifiedName] '.' 'call' ( '(' args+=AppenderCallArgument (',' args+=AppenderCallArgument)* ')' )?;
 
-AppenderRef:
-	appender=[Appender|FQN];
-
-AppenderCallArgument:
+AppenderCallArgument returns CallArgument:
 	Expression | LayoutCall;
 
 LayoutCall:
-	layout=LayoutRef '.' 'call' ( '(' args+=Expression (',' args+=Expression)* ')' )?;
+	layout=[Layout|QualifiedName] '.' 'call' ( '(' args+=LayoutCallArgument (',' args+=LayoutCallArgument)* ')' )?;
 
-LayoutRef:
-	layout=[Layout|FQN];
+LayoutCallArgument returns CallArgument:
+	Expression;
 
 EmitEvent:
-	event=[Event|ID] '.' 'emit' ('(' args+=Expression (',' args+=Expression)* ')' )?;
+	event=[UserEvent|ID] '.' 'emit' ('(' args+=Expression (',' args+=Expression)* ')' )?;
 
-MoniLoggerCall:
-	{StartMoniLogger} monilogger=[MoniLogger|ID] '.' 'start'  ( '(' args+=Expression (',' args+=Expression)* ')' )? |
+SetVariable:
+	'set' '(' variable=STRING ',' value=LanguageExpression ')';
+
+MoniloggerCall:
+	{StartMoniLogger} monilogger=[MoniLogger|ID] '.' 'start' ( '(' args+=Expression (',' args+=Expression)* ')' )? |
 	{StopMoniLogger} monilogger=[MoniLogger|ID] '.' 'stop';
 
 StreamEvent:
-	event=[Event|ID] ('[' values+=EmptyOrPropertyValue (',' values+=EmptyOrPropertyValue)* ']' )?;
+	event=[Event|ID] ('(' values+=EmptyOrPropertyValue (',' values+=EmptyOrPropertyValue)* ')' )?;
 
 EmptyOrPropertyValue:
-	({Empty} | {PropertyValue} id=(ID) ('=' value=Expression)?);
+	{Empty} | PropertyValue;
 
 Expression:
 	ParameterReference | LanguageExpression;
@@ -131,9 +138,11 @@ Expression:
 ParameterReference:
 	parameter=[Parameter|ID];
 
+PropertyValue:
+	id=ID ('=' value=Expression)? | value=LanguageExpression;
+
 LanguageExpression:
-	{ExplicitLanguageExpression} languageId=ID '(' expression=STRING ')' |
-	{DefaultLanguageExpression} expression=STRING;
+	languageId=ID '(' expression=STRING ')';
 
 enum MoniLoggerAnnotation:
 	inactive='@Inactive';
@@ -148,5 +157,5 @@ enum LogLevel:
 enum TemporalPatternKind:
 	s='S'|v='V'|nS='nS'|nV='nV';
 
-FQN:
-	ID ('.' ID)*;
+QualifiedName: ID ('.' ID)*;
+QualifiedNameWithWildcard: QualifiedName '.*'?;

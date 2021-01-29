@@ -15,7 +15,7 @@ public abstract class MoniLoggerExecutionEventNode extends ExecutionEventNode {
 	private final boolean onEnter;
 	private final boolean onReturnValue;
 
-	private final ConditionProfile conditionProfile = ConditionProfile.createCountingProfile();
+	private final ConditionProfile conditionProfile = ConditionProfile.createBinaryProfile();
 
 	
 	public MoniLoggerExecutionEventNode(boolean onEnter, boolean onReturnValue, MoniLoggerExecutableNode action) {

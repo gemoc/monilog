@@ -11,15 +11,4 @@ package org.gemoc.monilog.validation;
  */
 public class MoniLog4DSLValidator extends AbstractMoniLog4DSLValidator {
 	
-//	public static final String INVALID_NAME = "invalidName";
-//
-//	@Check
-//	public void checkGreetingStartsWithCapital(Greeting greeting) {
-//		if (!Character.isUpperCase(greeting.getName().charAt(0))) {
-//			warning("Name should start with a capital",
-//					MoniLog4DSLPackage.Literals.GREETING__NAME,
-//					INVALID_NAME);
-//		}
-//	}
-	
 }

@@ -3,14 +3,15 @@ package org.gemoc.monilogger.temporalpatterns
 import java.util.List
 import java.util.Map
 import org.gemoc.monilog.moniLog4DSL.Absence
+import org.gemoc.monilog.moniLog4DSL.ComplexEvent
 
 class NeverPGlobally extends AbstractTemporalProperty {
 	
 	val String p
 	
-	new(String name, Absence never) {
-		super(name)
-		p = never.event.eventId
+	new(ComplexEvent event, Absence never) {
+		super(event)
+		p = never.event.event.name
 	}
 	
 	override protected String getStatementString() {

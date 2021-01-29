@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import org.eclipse.xtext.util.Strings;
+import org.gemoc.monilog.moniLog4DSL.Event;
 
 import com.espertech.esper.common.client.EPCompiled;
 import com.espertech.esper.common.client.configuration.Configuration;
@@ -23,29 +23,34 @@ public abstract class AbstractTemporalProperty {
 
 	private final PropertyState propertyState;
 
-	private final String displayName;
-	private final String safeName;
+	private final Event event;
+	protected final List<TruthValue> notifyOn;
 	protected final int windowLength;
+	
 
 	protected EPCompiled compiledStatement;
 	
-	protected AbstractTemporalProperty(String name) {
-		this(name, 0);
+	protected AbstractTemporalProperty(Event event) {
+		this(event, 0, Arrays.asList(new TruthValue[] { TruthValue.SATISFIED }));
 	}
 
-	protected AbstractTemporalProperty(String name, int windowLength) {
-		this.displayName = name;
-		this.safeName = Arrays.stream(name.split("\\W+")).reduce((s1, s2) -> Strings.toFirstUpper(s1) + Strings.toFirstUpper(s2)).get();
+	protected AbstractTemporalProperty(Event event, int windowLength) {
+		this(event, windowLength, Arrays.asList(new TruthValue[] { TruthValue.SATISFIED }));
+	}
+	
+	protected AbstractTemporalProperty(Event event, int windowLength, List<TruthValue> notifyOn) {
+		this.event = event;
+		this.notifyOn = new ArrayList<>(notifyOn);
 		this.windowLength = windowLength;
-		this.propertyState = new PropertyState(name, TruthValue.UNKNOWN);
+		this.propertyState = new PropertyState(event.getName(), TruthValue.UNKNOWN);
 	}
 
 	public String getName() {
-		return displayName;
+		return event.getName();
 	}
 	
 	public String getSafeName() {
-		return safeName;
+		return event.getName();
 	}
 
 	protected abstract String getStatementString();
@@ -67,16 +72,6 @@ public abstract class AbstractTemporalProperty {
 			Arrays.stream(deployment.getStatements()).forEach(statement -> statement.addListener((events, o, x, rt) -> {
 				if (events != null) {
 					triggered(Arrays.stream(events).map(e -> (MapEventBean) e).collect(Collectors.toList()));
-//					if (propertyState.getValue() == TruthValue.SATISFIED
-//							|| propertyState.getValue() == TruthValue.VIOLATED) {
-//						try {
-//							rt.getDeploymentService().undeploy(deployment.getDeploymentId());
-//						} catch (EPRuntimeDestroyedException e) {
-//							e.printStackTrace();
-//						} catch (EPUndeployException e) {
-//							e.printStackTrace();
-//						}
-//					}
 				}
 			}));
 		} catch (EPDeployException e) {
@@ -84,7 +79,7 @@ public abstract class AbstractTemporalProperty {
 		}
 	}
 
-	protected void triggered(List<MapEventBean> triggeringEvents) {
+	protected TruthValue triggered(List<MapEventBean> triggeringEvents) {
 		final Map<String, List<Map<?, ?>>> result = new HashMap<>();
 		triggeringEvents.forEach(eventBean -> {
 			eventBean.getProperties().entrySet().forEach(e -> {
@@ -100,6 +95,7 @@ public abstract class AbstractTemporalProperty {
 		});
 		final TruthValue status = getStatus(result);
 		propertyState.setValue(status);
+		return status;
 	}
 
 	public PropertyState getPropertyState() {

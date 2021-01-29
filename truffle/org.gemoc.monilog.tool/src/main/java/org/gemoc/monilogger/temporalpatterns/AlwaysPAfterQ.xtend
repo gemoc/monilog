@@ -3,6 +3,7 @@ package org.gemoc.monilogger.temporalpatterns
 import java.util.List
 import java.util.Map
 import org.gemoc.monilog.moniLog4DSL.After
+import org.gemoc.monilog.moniLog4DSL.ComplexEvent
 import org.gemoc.monilog.moniLog4DSL.Universality
 
 class AlwaysPAfterQ extends AbstractTemporalProperty {
@@ -10,10 +11,10 @@ class AlwaysPAfterQ extends AbstractTemporalProperty {
 	val String p
 	val String q
 	
-	new(String name, Universality prop, After after) {
-		super(name)
-		p = prop.event.eventId
-		q = after.lowerBound.eventId
+	new(ComplexEvent event, Universality prop, After after) {
+		super(event)
+		p = prop.event.event.name
+		q = after.lowerBound.event.name
 	}
 	
 	override protected String getStatementString() {

@@ -3,6 +3,7 @@ package org.gemoc.monilogger.temporalpatterns
 import java.util.List
 import java.util.Map
 import org.gemoc.monilog.moniLog4DSL.After
+import org.gemoc.monilog.moniLog4DSL.ComplexEvent
 import org.gemoc.monilog.moniLog4DSL.Precedence
 
 class SPrecedesPAfterQ extends AbstractTemporalProperty {
@@ -11,11 +12,11 @@ class SPrecedesPAfterQ extends AbstractTemporalProperty {
 	val String q
 	val String s
 	
-	new(String name, Precedence precedence, After after) {
-		super(name)
-		p = precedence.successor.eventId
-		q = after.lowerBound.eventId
-		s = precedence.predecessor.eventId
+	new(ComplexEvent event, Precedence precedence, After after) {
+		super(event)
+		p = precedence.successor.event.name
+		q = after.lowerBound.event.name
+		s = precedence.predecessor.event.name
 	}
 	
 	override protected String getStatementString() {
