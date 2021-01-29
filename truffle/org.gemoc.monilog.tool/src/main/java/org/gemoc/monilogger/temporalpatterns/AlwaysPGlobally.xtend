@@ -2,15 +2,16 @@ package org.gemoc.monilogger.temporalpatterns
 
 import java.util.List
 import java.util.Map
+import org.gemoc.monilog.moniLog4DSL.ComplexEvent
 import org.gemoc.monilog.moniLog4DSL.Universality
 
 class AlwaysPGlobally extends AbstractTemporalProperty {
 	
 	val String p
 	
-	new(String name, Universality always) {
-		super(name)
-		p = always.event.eventId
+	new(ComplexEvent event, Universality always) {
+		super(event)
+		p = always.event.event.name
 	}
 	
 	override protected String getStatementString() {

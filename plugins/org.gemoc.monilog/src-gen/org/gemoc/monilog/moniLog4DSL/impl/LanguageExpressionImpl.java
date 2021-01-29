@@ -8,7 +8,6 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.ecore.EClass;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.gemoc.monilog.moniLog4DSL.LanguageExpression;
 import org.gemoc.monilog.moniLog4DSL.MoniLog4DSLPackage;
@@ -21,13 +20,34 @@ import org.gemoc.monilog.moniLog4DSL.MoniLog4DSLPackage;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link org.gemoc.monilog.moniLog4DSL.impl.LanguageExpressionImpl#getLanguageId <em>Language Id</em>}</li>
  *   <li>{@link org.gemoc.monilog.moniLog4DSL.impl.LanguageExpressionImpl#getExpression <em>Expression</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class LanguageExpressionImpl extends MinimalEObjectImpl.Container implements LanguageExpression
+public class LanguageExpressionImpl extends ActionImpl implements LanguageExpression
 {
+  /**
+   * The default value of the '{@link #getLanguageId() <em>Language Id</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getLanguageId()
+   * @generated
+   * @ordered
+   */
+  protected static final String LANGUAGE_ID_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getLanguageId() <em>Language Id</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getLanguageId()
+   * @generated
+   * @ordered
+   */
+  protected String languageId = LANGUAGE_ID_EDEFAULT;
+
   /**
    * The default value of the '{@link #getExpression() <em>Expression</em>}' attribute.
    * <!-- begin-user-doc -->
@@ -75,6 +95,31 @@ public class LanguageExpressionImpl extends MinimalEObjectImpl.Container impleme
    * @generated
    */
   @Override
+  public String getLanguageId()
+  {
+    return languageId;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setLanguageId(String newLanguageId)
+  {
+    String oldLanguageId = languageId;
+    languageId = newLanguageId;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, MoniLog4DSLPackage.LANGUAGE_EXPRESSION__LANGUAGE_ID, oldLanguageId, languageId));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public String getExpression()
   {
     return expression;
@@ -104,6 +149,8 @@ public class LanguageExpressionImpl extends MinimalEObjectImpl.Container impleme
   {
     switch (featureID)
     {
+      case MoniLog4DSLPackage.LANGUAGE_EXPRESSION__LANGUAGE_ID:
+        return getLanguageId();
       case MoniLog4DSLPackage.LANGUAGE_EXPRESSION__EXPRESSION:
         return getExpression();
     }
@@ -120,6 +167,9 @@ public class LanguageExpressionImpl extends MinimalEObjectImpl.Container impleme
   {
     switch (featureID)
     {
+      case MoniLog4DSLPackage.LANGUAGE_EXPRESSION__LANGUAGE_ID:
+        setLanguageId((String)newValue);
+        return;
       case MoniLog4DSLPackage.LANGUAGE_EXPRESSION__EXPRESSION:
         setExpression((String)newValue);
         return;
@@ -137,6 +187,9 @@ public class LanguageExpressionImpl extends MinimalEObjectImpl.Container impleme
   {
     switch (featureID)
     {
+      case MoniLog4DSLPackage.LANGUAGE_EXPRESSION__LANGUAGE_ID:
+        setLanguageId(LANGUAGE_ID_EDEFAULT);
+        return;
       case MoniLog4DSLPackage.LANGUAGE_EXPRESSION__EXPRESSION:
         setExpression(EXPRESSION_EDEFAULT);
         return;
@@ -154,6 +207,8 @@ public class LanguageExpressionImpl extends MinimalEObjectImpl.Container impleme
   {
     switch (featureID)
     {
+      case MoniLog4DSLPackage.LANGUAGE_EXPRESSION__LANGUAGE_ID:
+        return LANGUAGE_ID_EDEFAULT == null ? languageId != null : !LANGUAGE_ID_EDEFAULT.equals(languageId);
       case MoniLog4DSLPackage.LANGUAGE_EXPRESSION__EXPRESSION:
         return EXPRESSION_EDEFAULT == null ? expression != null : !EXPRESSION_EDEFAULT.equals(expression);
     }
@@ -171,7 +226,9 @@ public class LanguageExpressionImpl extends MinimalEObjectImpl.Container impleme
     if (eIsProxy()) return super.toString();
 
     StringBuilder result = new StringBuilder(super.toString());
-    result.append(" (expression: ");
+    result.append(" (languageId: ");
+    result.append(languageId);
+    result.append(", expression: ");
     result.append(expression);
     result.append(')');
     return result.toString();

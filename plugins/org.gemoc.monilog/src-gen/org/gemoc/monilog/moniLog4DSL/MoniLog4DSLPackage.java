@@ -59,51 +59,14 @@ public interface MoniLog4DSLPackage extends EPackage
   MoniLog4DSLPackage eINSTANCE = org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl.init();
 
   /**
-   * The meta object id for the '{@link org.gemoc.monilog.moniLog4DSL.impl.ModelImpl <em>Model</em>}' class.
+   * The meta object id for the '{@link org.gemoc.monilog.moniLog4DSL.impl.DocumentImpl <em>Document</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see org.gemoc.monilog.moniLog4DSL.impl.ModelImpl
-   * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getModel()
+   * @see org.gemoc.monilog.moniLog4DSL.impl.DocumentImpl
+   * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getDocument()
    * @generated
    */
-  int MODEL = 0;
-
-  /**
-   * The feature id for the '<em><b>Default Language ID</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int MODEL__DEFAULT_LANGUAGE_ID = 0;
-
-  /**
-   * The feature id for the '<em><b>Moni Log Specs</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int MODEL__MONI_LOG_SPECS = 1;
-
-  /**
-   * The number of structural features of the '<em>Model</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int MODEL_FEATURE_COUNT = 2;
-
-  /**
-   * The meta object id for the '{@link org.gemoc.monilog.moniLog4DSL.impl.MoniLogSpecImpl <em>Moni Log Spec</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLogSpecImpl
-   * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getMoniLogSpec()
-   * @generated
-   */
-  int MONI_LOG_SPEC = 1;
+  int DOCUMENT = 0;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -112,16 +75,16 @@ public interface MoniLog4DSLPackage extends EPackage
    * @generated
    * @ordered
    */
-  int MONI_LOG_SPEC__NAME = 0;
+  int DOCUMENT__NAME = 0;
 
   /**
-   * The feature id for the '<em><b>Level</b></em>' attribute.
+   * The feature id for the '<em><b>Imports</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int MONI_LOG_SPEC__LEVEL = 1;
+  int DOCUMENT__IMPORTS = 1;
 
   /**
    * The feature id for the '<em><b>Events</b></em>' containment reference list.
@@ -130,7 +93,412 @@ public interface MoniLog4DSLPackage extends EPackage
    * @generated
    * @ordered
    */
-  int MONI_LOG_SPEC__EVENTS = 2;
+  int DOCUMENT__EVENTS = 2;
+
+  /**
+   * The feature id for the '<em><b>Appenders</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DOCUMENT__APPENDERS = 3;
+
+  /**
+   * The feature id for the '<em><b>Layouts</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DOCUMENT__LAYOUTS = 4;
+
+  /**
+   * The feature id for the '<em><b>Moniloggers</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DOCUMENT__MONILOGGERS = 5;
+
+  /**
+   * The number of structural features of the '<em>Document</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DOCUMENT_FEATURE_COUNT = 6;
+
+  /**
+   * The meta object id for the '{@link org.gemoc.monilog.moniLog4DSL.impl.ImportImpl <em>Import</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.gemoc.monilog.moniLog4DSL.impl.ImportImpl
+   * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getImport()
+   * @generated
+   */
+  int IMPORT = 1;
+
+  /**
+   * The feature id for the '<em><b>Imported Namespace</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int IMPORT__IMPORTED_NAMESPACE = 0;
+
+  /**
+   * The number of structural features of the '<em>Import</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int IMPORT_FEATURE_COUNT = 1;
+
+  /**
+   * The meta object id for the '{@link org.gemoc.monilog.moniLog4DSL.impl.AppenderImpl <em>Appender</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.gemoc.monilog.moniLog4DSL.impl.AppenderImpl
+   * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getAppender()
+   * @generated
+   */
+  int APPENDER = 2;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int APPENDER__NAME = 0;
+
+  /**
+   * The feature id for the '<em><b>Parameter Decl</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int APPENDER__PARAMETER_DECL = 1;
+
+  /**
+   * The number of structural features of the '<em>Appender</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int APPENDER_FEATURE_COUNT = 2;
+
+  /**
+   * The meta object id for the '{@link org.gemoc.monilog.moniLog4DSL.impl.LocalAppenderImpl <em>Local Appender</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.gemoc.monilog.moniLog4DSL.impl.LocalAppenderImpl
+   * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getLocalAppender()
+   * @generated
+   */
+  int LOCAL_APPENDER = 3;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LOCAL_APPENDER__NAME = APPENDER__NAME;
+
+  /**
+   * The feature id for the '<em><b>Parameter Decl</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LOCAL_APPENDER__PARAMETER_DECL = APPENDER__PARAMETER_DECL;
+
+  /**
+   * The feature id for the '<em><b>Annotations</b></em>' attribute list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LOCAL_APPENDER__ANNOTATIONS = APPENDER_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Calls</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LOCAL_APPENDER__CALLS = APPENDER_FEATURE_COUNT + 1;
+
+  /**
+   * The number of structural features of the '<em>Local Appender</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LOCAL_APPENDER_FEATURE_COUNT = APPENDER_FEATURE_COUNT + 2;
+
+  /**
+   * The meta object id for the '{@link org.gemoc.monilog.moniLog4DSL.impl.ExternalAppenderImpl <em>External Appender</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.gemoc.monilog.moniLog4DSL.impl.ExternalAppenderImpl
+   * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getExternalAppender()
+   * @generated
+   */
+  int EXTERNAL_APPENDER = 4;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EXTERNAL_APPENDER__NAME = APPENDER__NAME;
+
+  /**
+   * The feature id for the '<em><b>Parameter Decl</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EXTERNAL_APPENDER__PARAMETER_DECL = APPENDER__PARAMETER_DECL;
+
+  /**
+   * The number of structural features of the '<em>External Appender</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EXTERNAL_APPENDER_FEATURE_COUNT = APPENDER_FEATURE_COUNT + 0;
+
+  /**
+   * The meta object id for the '{@link org.gemoc.monilog.moniLog4DSL.impl.LayoutImpl <em>Layout</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.gemoc.monilog.moniLog4DSL.impl.LayoutImpl
+   * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getLayout()
+   * @generated
+   */
+  int LAYOUT = 5;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LAYOUT__NAME = 0;
+
+  /**
+   * The feature id for the '<em><b>Parameter Decl</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LAYOUT__PARAMETER_DECL = 1;
+
+  /**
+   * The number of structural features of the '<em>Layout</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LAYOUT_FEATURE_COUNT = 2;
+
+  /**
+   * The meta object id for the '{@link org.gemoc.monilog.moniLog4DSL.impl.LocalLayoutImpl <em>Local Layout</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.gemoc.monilog.moniLog4DSL.impl.LocalLayoutImpl
+   * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getLocalLayout()
+   * @generated
+   */
+  int LOCAL_LAYOUT = 6;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LOCAL_LAYOUT__NAME = LAYOUT__NAME;
+
+  /**
+   * The feature id for the '<em><b>Parameter Decl</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LOCAL_LAYOUT__PARAMETER_DECL = LAYOUT__PARAMETER_DECL;
+
+  /**
+   * The feature id for the '<em><b>Call</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LOCAL_LAYOUT__CALL = LAYOUT_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Local Layout</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LOCAL_LAYOUT_FEATURE_COUNT = LAYOUT_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link org.gemoc.monilog.moniLog4DSL.impl.ExternalLayoutImpl <em>External Layout</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.gemoc.monilog.moniLog4DSL.impl.ExternalLayoutImpl
+   * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getExternalLayout()
+   * @generated
+   */
+  int EXTERNAL_LAYOUT = 7;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EXTERNAL_LAYOUT__NAME = LAYOUT__NAME;
+
+  /**
+   * The feature id for the '<em><b>Parameter Decl</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EXTERNAL_LAYOUT__PARAMETER_DECL = LAYOUT__PARAMETER_DECL;
+
+  /**
+   * The number of structural features of the '<em>External Layout</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EXTERNAL_LAYOUT_FEATURE_COUNT = LAYOUT_FEATURE_COUNT + 0;
+
+  /**
+   * The meta object id for the '{@link org.gemoc.monilog.moniLog4DSL.impl.ParameterDeclImpl <em>Parameter Decl</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.gemoc.monilog.moniLog4DSL.impl.ParameterDeclImpl
+   * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getParameterDecl()
+   * @generated
+   */
+  int PARAMETER_DECL = 8;
+
+  /**
+   * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PARAMETER_DECL__PARAMETERS = 0;
+
+  /**
+   * The feature id for the '<em><b>Var Args</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PARAMETER_DECL__VAR_ARGS = 1;
+
+  /**
+   * The number of structural features of the '<em>Parameter Decl</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PARAMETER_DECL_FEATURE_COUNT = 2;
+
+  /**
+   * The meta object id for the '{@link org.gemoc.monilog.moniLog4DSL.impl.MoniLoggerImpl <em>Moni Logger</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLoggerImpl
+   * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getMoniLogger()
+   * @generated
+   */
+  int MONI_LOGGER = 9;
+
+  /**
+   * The feature id for the '<em><b>Annotations</b></em>' attribute list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MONI_LOGGER__ANNOTATIONS = 0;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MONI_LOGGER__NAME = 1;
+
+  /**
+   * The feature id for the '<em><b>Parameter Decl</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MONI_LOGGER__PARAMETER_DECL = 2;
+
+  /**
+   * The feature id for the '<em><b>Level</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MONI_LOGGER__LEVEL = 3;
+
+  /**
+   * The feature id for the '<em><b>Stream Event</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MONI_LOGGER__STREAM_EVENT = 4;
 
   /**
    * The feature id for the '<em><b>Conditions</b></em>' containment reference list.
@@ -139,7 +507,7 @@ public interface MoniLog4DSLPackage extends EPackage
    * @generated
    * @ordered
    */
-  int MONI_LOG_SPEC__CONDITIONS = 3;
+  int MONI_LOGGER__CONDITIONS = 5;
 
   /**
    * The feature id for the '<em><b>Actions</b></em>' containment reference list.
@@ -148,16 +516,44 @@ public interface MoniLog4DSLPackage extends EPackage
    * @generated
    * @ordered
    */
-  int MONI_LOG_SPEC__ACTIONS = 4;
+  int MONI_LOGGER__ACTIONS = 6;
 
   /**
-   * The number of structural features of the '<em>Moni Log Spec</em>' class.
+   * The number of structural features of the '<em>Moni Logger</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int MONI_LOG_SPEC_FEATURE_COUNT = 5;
+  int MONI_LOGGER_FEATURE_COUNT = 7;
+
+  /**
+   * The meta object id for the '{@link org.gemoc.monilog.moniLog4DSL.impl.ParameterImpl <em>Parameter</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.gemoc.monilog.moniLog4DSL.impl.ParameterImpl
+   * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getParameter()
+   * @generated
+   */
+  int PARAMETER = 10;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PARAMETER__NAME = 0;
+
+  /**
+   * The number of structural features of the '<em>Parameter</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PARAMETER_FEATURE_COUNT = 1;
 
   /**
    * The meta object id for the '{@link org.gemoc.monilog.moniLog4DSL.impl.EventImpl <em>Event</em>}' class.
@@ -167,34 +563,25 @@ public interface MoniLog4DSLPackage extends EPackage
    * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getEvent()
    * @generated
    */
-  int EVENT = 2;
+  int EVENT = 11;
 
   /**
-   * The feature id for the '<em><b>Rule ID</b></em>' attribute.
+   * The feature id for the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int EVENT__RULE_ID = 0;
+  int EVENT__NAME = 0;
 
   /**
-   * The feature id for the '<em><b>Frequency</b></em>' attribute.
+   * The feature id for the '<em><b>Parameter Decl</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int EVENT__FREQUENCY = 1;
-
-  /**
-   * The feature id for the '<em><b>Limit</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int EVENT__LIMIT = 2;
+  int EVENT__PARAMETER_DECL = 1;
 
   /**
    * The number of structural features of the '<em>Event</em>' class.
@@ -203,145 +590,26 @@ public interface MoniLog4DSLPackage extends EPackage
    * @generated
    * @ordered
    */
-  int EVENT_FEATURE_COUNT = 3;
+  int EVENT_FEATURE_COUNT = 2;
 
   /**
-   * The meta object id for the '{@link org.gemoc.monilog.moniLog4DSL.impl.BeforeEventImpl <em>Before Event</em>}' class.
+   * The meta object id for the '{@link org.gemoc.monilog.moniLog4DSL.impl.ASTEventKindImpl <em>AST Event Kind</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see org.gemoc.monilog.moniLog4DSL.impl.BeforeEventImpl
-   * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getBeforeEvent()
+   * @see org.gemoc.monilog.moniLog4DSL.impl.ASTEventKindImpl
+   * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getASTEventKind()
    * @generated
    */
-  int BEFORE_EVENT = 3;
+  int AST_EVENT_KIND = 12;
 
   /**
-   * The feature id for the '<em><b>Rule ID</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int BEFORE_EVENT__RULE_ID = EVENT__RULE_ID;
-
-  /**
-   * The feature id for the '<em><b>Frequency</b></em>' attribute.
+   * The number of structural features of the '<em>AST Event Kind</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int BEFORE_EVENT__FREQUENCY = EVENT__FREQUENCY;
-
-  /**
-   * The feature id for the '<em><b>Limit</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int BEFORE_EVENT__LIMIT = EVENT__LIMIT;
-
-  /**
-   * The number of structural features of the '<em>Before Event</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int BEFORE_EVENT_FEATURE_COUNT = EVENT_FEATURE_COUNT + 0;
-
-  /**
-   * The meta object id for the '{@link org.gemoc.monilog.moniLog4DSL.impl.AfterEventImpl <em>After Event</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.gemoc.monilog.moniLog4DSL.impl.AfterEventImpl
-   * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getAfterEvent()
-   * @generated
-   */
-  int AFTER_EVENT = 4;
-
-  /**
-   * The feature id for the '<em><b>Rule ID</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int AFTER_EVENT__RULE_ID = EVENT__RULE_ID;
-
-  /**
-   * The feature id for the '<em><b>Frequency</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int AFTER_EVENT__FREQUENCY = EVENT__FREQUENCY;
-
-  /**
-   * The feature id for the '<em><b>Limit</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int AFTER_EVENT__LIMIT = EVENT__LIMIT;
-
-  /**
-   * The number of structural features of the '<em>After Event</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int AFTER_EVENT_FEATURE_COUNT = EVENT_FEATURE_COUNT + 0;
-
-  /**
-   * The meta object id for the '{@link org.gemoc.monilog.moniLog4DSL.impl.BeforeAfterEventImpl <em>Before After Event</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.gemoc.monilog.moniLog4DSL.impl.BeforeAfterEventImpl
-   * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getBeforeAfterEvent()
-   * @generated
-   */
-  int BEFORE_AFTER_EVENT = 5;
-
-  /**
-   * The feature id for the '<em><b>Rule ID</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int BEFORE_AFTER_EVENT__RULE_ID = EVENT__RULE_ID;
-
-  /**
-   * The feature id for the '<em><b>Frequency</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int BEFORE_AFTER_EVENT__FREQUENCY = EVENT__FREQUENCY;
-
-  /**
-   * The feature id for the '<em><b>Limit</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int BEFORE_AFTER_EVENT__LIMIT = EVENT__LIMIT;
-
-  /**
-   * The number of structural features of the '<em>Before After Event</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int BEFORE_AFTER_EVENT_FEATURE_COUNT = EVENT_FEATURE_COUNT + 0;
+  int AST_EVENT_KIND_FEATURE_COUNT = 0;
 
   /**
    * The meta object id for the '{@link org.gemoc.monilog.moniLog4DSL.impl.ConditionImpl <em>Condition</em>}' class.
@@ -351,7 +619,16 @@ public interface MoniLog4DSLPackage extends EPackage
    * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getCondition()
    * @generated
    */
-  int CONDITION = 6;
+  int CONDITION = 13;
+
+  /**
+   * The feature id for the '<em><b>Expression</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CONDITION__EXPRESSION = 0;
 
   /**
    * The number of structural features of the '<em>Condition</em>' class.
@@ -360,7 +637,7 @@ public interface MoniLog4DSLPackage extends EPackage
    * @generated
    * @ordered
    */
-  int CONDITION_FEATURE_COUNT = 0;
+  int CONDITION_FEATURE_COUNT = 1;
 
   /**
    * The meta object id for the '{@link org.gemoc.monilog.moniLog4DSL.impl.TemporalPatternImpl <em>Temporal Pattern</em>}' class.
@@ -370,7 +647,7 @@ public interface MoniLog4DSLPackage extends EPackage
    * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getTemporalPattern()
    * @generated
    */
-  int TEMPORAL_PATTERN = 7;
+  int TEMPORAL_PATTERN = 14;
 
   /**
    * The feature id for the '<em><b>Pattern</b></em>' containment reference.
@@ -407,7 +684,7 @@ public interface MoniLog4DSLPackage extends EPackage
    * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getPattern()
    * @generated
    */
-  int PATTERN = 8;
+  int PATTERN = 15;
 
   /**
    * The number of structural features of the '<em>Pattern</em>' class.
@@ -426,7 +703,7 @@ public interface MoniLog4DSLPackage extends EPackage
    * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getBoundType()
    * @generated
    */
-  int BOUND_TYPE = 9;
+  int BOUND_TYPE = 16;
 
   /**
    * The feature id for the '<em><b>N</b></em>' attribute.
@@ -454,7 +731,7 @@ public interface MoniLog4DSLPackage extends EPackage
    * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getExactBound()
    * @generated
    */
-  int EXACT_BOUND = 10;
+  int EXACT_BOUND = 17;
 
   /**
    * The feature id for the '<em><b>N</b></em>' attribute.
@@ -482,7 +759,7 @@ public interface MoniLog4DSLPackage extends EPackage
    * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getLowerBound()
    * @generated
    */
-  int LOWER_BOUND = 11;
+  int LOWER_BOUND = 18;
 
   /**
    * The feature id for the '<em><b>N</b></em>' attribute.
@@ -510,7 +787,7 @@ public interface MoniLog4DSLPackage extends EPackage
    * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getUpperBound()
    * @generated
    */
-  int UPPER_BOUND = 12;
+  int UPPER_BOUND = 19;
 
   /**
    * The feature id for the '<em><b>N</b></em>' attribute.
@@ -538,7 +815,7 @@ public interface MoniLog4DSLPackage extends EPackage
    * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getScope()
    * @generated
    */
-  int SCOPE = 13;
+  int SCOPE = 20;
 
   /**
    * The number of structural features of the '<em>Scope</em>' class.
@@ -557,7 +834,7 @@ public interface MoniLog4DSLPackage extends EPackage
    * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getAction()
    * @generated
    */
-  int ACTION = 14;
+  int ACTION = 21;
 
   /**
    * The number of structural features of the '<em>Action</em>' class.
@@ -569,255 +846,199 @@ public interface MoniLog4DSLPackage extends EPackage
   int ACTION_FEATURE_COUNT = 0;
 
   /**
-   * The meta object id for the '{@link org.gemoc.monilog.moniLog4DSL.impl.AppendImpl <em>Append</em>}' class.
+   * The meta object id for the '{@link org.gemoc.monilog.moniLog4DSL.impl.AppenderCallImpl <em>Appender Call</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see org.gemoc.monilog.moniLog4DSL.impl.AppendImpl
-   * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getAppend()
+   * @see org.gemoc.monilog.moniLog4DSL.impl.AppenderCallImpl
+   * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getAppenderCall()
    * @generated
    */
-  int APPEND = 15;
+  int APPENDER_CALL = 22;
 
   /**
-   * The feature id for the '<em><b>Appender</b></em>' containment reference.
+   * The feature id for the '<em><b>Appender</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int APPEND__APPENDER = ACTION_FEATURE_COUNT + 0;
+  int APPENDER_CALL__APPENDER = ACTION_FEATURE_COUNT + 0;
 
   /**
-   * The number of structural features of the '<em>Append</em>' class.
+   * The feature id for the '<em><b>Args</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int APPEND_FEATURE_COUNT = ACTION_FEATURE_COUNT + 1;
+  int APPENDER_CALL__ARGS = ACTION_FEATURE_COUNT + 1;
 
   /**
-   * The meta object id for the '{@link org.gemoc.monilog.moniLog4DSL.impl.AppenderImpl <em>Appender</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.gemoc.monilog.moniLog4DSL.impl.AppenderImpl
-   * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getAppender()
-   * @generated
-   */
-  int APPENDER = 16;
-
-  /**
-   * The number of structural features of the '<em>Appender</em>' class.
+   * The number of structural features of the '<em>Appender Call</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int APPENDER_FEATURE_COUNT = 0;
+  int APPENDER_CALL_FEATURE_COUNT = ACTION_FEATURE_COUNT + 2;
 
   /**
-   * The meta object id for the '{@link org.gemoc.monilog.moniLog4DSL.impl.StreamAppenderImpl <em>Stream Appender</em>}' class.
+   * The meta object id for the '{@link org.gemoc.monilog.moniLog4DSL.impl.CallArgumentImpl <em>Call Argument</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see org.gemoc.monilog.moniLog4DSL.impl.StreamAppenderImpl
-   * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getStreamAppender()
+   * @see org.gemoc.monilog.moniLog4DSL.impl.CallArgumentImpl
+   * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getCallArgument()
    * @generated
    */
-  int STREAM_APPENDER = 17;
+  int CALL_ARGUMENT = 23;
 
   /**
-   * The feature id for the '<em><b>Event</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int STREAM_APPENDER__EVENT = APPENDER_FEATURE_COUNT + 0;
-
-  /**
-   * The feature id for the '<em><b>Values</b></em>' containment reference list.
+   * The number of structural features of the '<em>Call Argument</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int STREAM_APPENDER__VALUES = APPENDER_FEATURE_COUNT + 1;
+  int CALL_ARGUMENT_FEATURE_COUNT = 0;
 
   /**
-   * The number of structural features of the '<em>Stream Appender</em>' class.
+   * The meta object id for the '{@link org.gemoc.monilog.moniLog4DSL.impl.LayoutCallImpl <em>Layout Call</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.gemoc.monilog.moniLog4DSL.impl.LayoutCallImpl
+   * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getLayoutCall()
+   * @generated
+   */
+  int LAYOUT_CALL = 24;
+
+  /**
+   * The feature id for the '<em><b>Layout</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int STREAM_APPENDER_FEATURE_COUNT = APPENDER_FEATURE_COUNT + 2;
+  int LAYOUT_CALL__LAYOUT = CALL_ARGUMENT_FEATURE_COUNT + 0;
 
   /**
-   * The meta object id for the '{@link org.gemoc.monilog.moniLog4DSL.impl.FileAppenderImpl <em>File Appender</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.gemoc.monilog.moniLog4DSL.impl.FileAppenderImpl
-   * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getFileAppender()
-   * @generated
-   */
-  int FILE_APPENDER = 18;
-
-  /**
-   * The feature id for the '<em><b>Filename</b></em>' attribute.
+   * The feature id for the '<em><b>Args</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int FILE_APPENDER__FILENAME = APPENDER_FEATURE_COUNT + 0;
+  int LAYOUT_CALL__ARGS = CALL_ARGUMENT_FEATURE_COUNT + 1;
 
   /**
-   * The feature id for the '<em><b>Layout</b></em>' containment reference.
+   * The number of structural features of the '<em>Layout Call</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int FILE_APPENDER__LAYOUT = APPENDER_FEATURE_COUNT + 1;
+  int LAYOUT_CALL_FEATURE_COUNT = CALL_ARGUMENT_FEATURE_COUNT + 2;
 
   /**
-   * The number of structural features of the '<em>File Appender</em>' class.
+   * The meta object id for the '{@link org.gemoc.monilog.moniLog4DSL.impl.EmitEventImpl <em>Emit Event</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.gemoc.monilog.moniLog4DSL.impl.EmitEventImpl
+   * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getEmitEvent()
+   * @generated
+   */
+  int EMIT_EVENT = 25;
+
+  /**
+   * The feature id for the '<em><b>Event</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int FILE_APPENDER_FEATURE_COUNT = APPENDER_FEATURE_COUNT + 2;
+  int EMIT_EVENT__EVENT = ACTION_FEATURE_COUNT + 0;
 
   /**
-   * The meta object id for the '{@link org.gemoc.monilog.moniLog4DSL.impl.ConsoleAppenderImpl <em>Console Appender</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.gemoc.monilog.moniLog4DSL.impl.ConsoleAppenderImpl
-   * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getConsoleAppender()
-   * @generated
-   */
-  int CONSOLE_APPENDER = 19;
-
-  /**
-   * The feature id for the '<em><b>Layout</b></em>' containment reference.
+   * The feature id for the '<em><b>Args</b></em>' containment reference list.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int CONSOLE_APPENDER__LAYOUT = APPENDER_FEATURE_COUNT + 0;
+  int EMIT_EVENT__ARGS = ACTION_FEATURE_COUNT + 1;
 
   /**
-   * The number of structural features of the '<em>Console Appender</em>' class.
+   * The number of structural features of the '<em>Emit Event</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int CONSOLE_APPENDER_FEATURE_COUNT = APPENDER_FEATURE_COUNT + 1;
+  int EMIT_EVENT_FEATURE_COUNT = ACTION_FEATURE_COUNT + 2;
 
   /**
-   * The meta object id for the '{@link org.gemoc.monilog.moniLog4DSL.impl.LayoutImpl <em>Layout</em>}' class.
+   * The meta object id for the '{@link org.gemoc.monilog.moniLog4DSL.impl.SetVariableImpl <em>Set Variable</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see org.gemoc.monilog.moniLog4DSL.impl.LayoutImpl
-   * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getLayout()
+   * @see org.gemoc.monilog.moniLog4DSL.impl.SetVariableImpl
+   * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getSetVariable()
    * @generated
    */
-  int LAYOUT = 20;
+  int SET_VARIABLE = 26;
 
   /**
-   * The feature id for the '<em><b>Values</b></em>' containment reference list.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int LAYOUT__VALUES = 0;
-
-  /**
-   * The number of structural features of the '<em>Layout</em>' class.
+   * The feature id for the '<em><b>Variable</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int LAYOUT_FEATURE_COUNT = 1;
+  int SET_VARIABLE__VARIABLE = ACTION_FEATURE_COUNT + 0;
 
   /**
-   * The meta object id for the '{@link org.gemoc.monilog.moniLog4DSL.impl.StringLayoutImpl <em>String Layout</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.gemoc.monilog.moniLog4DSL.impl.StringLayoutImpl
-   * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getStringLayout()
-   * @generated
-   */
-  int STRING_LAYOUT = 21;
-
-  /**
-   * The feature id for the '<em><b>Values</b></em>' containment reference list.
+   * The feature id for the '<em><b>Value</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int STRING_LAYOUT__VALUES = LAYOUT__VALUES;
+  int SET_VARIABLE__VALUE = ACTION_FEATURE_COUNT + 1;
 
   /**
-   * The feature id for the '<em><b>Format String</b></em>' attribute.
+   * The number of structural features of the '<em>Set Variable</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int STRING_LAYOUT__FORMAT_STRING = LAYOUT_FEATURE_COUNT + 0;
+  int SET_VARIABLE_FEATURE_COUNT = ACTION_FEATURE_COUNT + 2;
 
   /**
-   * The number of structural features of the '<em>String Layout</em>' class.
+   * The meta object id for the '{@link org.gemoc.monilog.moniLog4DSL.impl.MoniloggerCallImpl <em>Monilogger Call</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.gemoc.monilog.moniLog4DSL.impl.MoniloggerCallImpl
+   * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getMoniloggerCall()
+   * @generated
+   */
+  int MONILOGGER_CALL = 27;
+
+  /**
+   * The feature id for the '<em><b>Monilogger</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int STRING_LAYOUT_FEATURE_COUNT = LAYOUT_FEATURE_COUNT + 1;
+  int MONILOGGER_CALL__MONILOGGER = ACTION_FEATURE_COUNT + 0;
 
   /**
-   * The meta object id for the '{@link org.gemoc.monilog.moniLog4DSL.impl.ExternalLayoutImpl <em>External Layout</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.gemoc.monilog.moniLog4DSL.impl.ExternalLayoutImpl
-   * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getExternalLayout()
-   * @generated
-   */
-  int EXTERNAL_LAYOUT = 22;
-
-  /**
-   * The feature id for the '<em><b>Values</b></em>' containment reference list.
+   * The number of structural features of the '<em>Monilogger Call</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int EXTERNAL_LAYOUT__VALUES = LAYOUT__VALUES;
-
-  /**
-   * The feature id for the '<em><b>Path</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int EXTERNAL_LAYOUT__PATH = LAYOUT_FEATURE_COUNT + 0;
-
-  /**
-   * The number of structural features of the '<em>External Layout</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int EXTERNAL_LAYOUT_FEATURE_COUNT = LAYOUT_FEATURE_COUNT + 1;
+  int MONILOGGER_CALL_FEATURE_COUNT = ACTION_FEATURE_COUNT + 1;
 
   /**
    * The meta object id for the '{@link org.gemoc.monilog.moniLog4DSL.impl.StreamEventImpl <em>Stream Event</em>}' class.
@@ -827,16 +1048,16 @@ public interface MoniLog4DSLPackage extends EPackage
    * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getStreamEvent()
    * @generated
    */
-  int STREAM_EVENT = 23;
+  int STREAM_EVENT = 28;
 
   /**
-   * The feature id for the '<em><b>Event Id</b></em>' attribute.
+   * The feature id for the '<em><b>Event</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int STREAM_EVENT__EVENT_ID = 0;
+  int STREAM_EVENT__EVENT = 0;
 
   /**
    * The feature id for the '<em><b>Values</b></em>' containment reference list.
@@ -864,7 +1085,7 @@ public interface MoniLog4DSLPackage extends EPackage
    * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getEmptyOrPropertyValue()
    * @generated
    */
-  int EMPTY_OR_PROPERTY_VALUE = 24;
+  int EMPTY_OR_PROPERTY_VALUE = 29;
 
   /**
    * The number of structural features of the '<em>Empty Or Property Value</em>' class.
@@ -876,6 +1097,90 @@ public interface MoniLog4DSLPackage extends EPackage
   int EMPTY_OR_PROPERTY_VALUE_FEATURE_COUNT = 0;
 
   /**
+   * The meta object id for the '{@link org.gemoc.monilog.moniLog4DSL.impl.ExpressionImpl <em>Expression</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.gemoc.monilog.moniLog4DSL.impl.ExpressionImpl
+   * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getExpression()
+   * @generated
+   */
+  int EXPRESSION = 30;
+
+  /**
+   * The number of structural features of the '<em>Expression</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EXPRESSION_FEATURE_COUNT = CALL_ARGUMENT_FEATURE_COUNT + 0;
+
+  /**
+   * The meta object id for the '{@link org.gemoc.monilog.moniLog4DSL.impl.ParameterReferenceImpl <em>Parameter Reference</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.gemoc.monilog.moniLog4DSL.impl.ParameterReferenceImpl
+   * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getParameterReference()
+   * @generated
+   */
+  int PARAMETER_REFERENCE = 31;
+
+  /**
+   * The feature id for the '<em><b>Parameter</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PARAMETER_REFERENCE__PARAMETER = EXPRESSION_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Parameter Reference</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PARAMETER_REFERENCE_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link org.gemoc.monilog.moniLog4DSL.impl.PropertyValueImpl <em>Property Value</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.gemoc.monilog.moniLog4DSL.impl.PropertyValueImpl
+   * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getPropertyValue()
+   * @generated
+   */
+  int PROPERTY_VALUE = 32;
+
+  /**
+   * The feature id for the '<em><b>Id</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PROPERTY_VALUE__ID = EMPTY_OR_PROPERTY_VALUE_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Value</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PROPERTY_VALUE__VALUE = EMPTY_OR_PROPERTY_VALUE_FEATURE_COUNT + 1;
+
+  /**
+   * The number of structural features of the '<em>Property Value</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PROPERTY_VALUE_FEATURE_COUNT = EMPTY_OR_PROPERTY_VALUE_FEATURE_COUNT + 2;
+
+  /**
    * The meta object id for the '{@link org.gemoc.monilog.moniLog4DSL.impl.LanguageExpressionImpl <em>Language Expression</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -883,7 +1188,16 @@ public interface MoniLog4DSLPackage extends EPackage
    * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getLanguageExpression()
    * @generated
    */
-  int LANGUAGE_EXPRESSION = 25;
+  int LANGUAGE_EXPRESSION = 33;
+
+  /**
+   * The feature id for the '<em><b>Language Id</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LANGUAGE_EXPRESSION__LANGUAGE_ID = ACTION_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Expression</b></em>' attribute.
@@ -892,7 +1206,7 @@ public interface MoniLog4DSLPackage extends EPackage
    * @generated
    * @ordered
    */
-  int LANGUAGE_EXPRESSION__EXPRESSION = 0;
+  int LANGUAGE_EXPRESSION__EXPRESSION = ACTION_FEATURE_COUNT + 1;
 
   /**
    * The number of structural features of the '<em>Language Expression</em>' class.
@@ -901,26 +1215,90 @@ public interface MoniLog4DSLPackage extends EPackage
    * @generated
    * @ordered
    */
-  int LANGUAGE_EXPRESSION_FEATURE_COUNT = 1;
+  int LANGUAGE_EXPRESSION_FEATURE_COUNT = ACTION_FEATURE_COUNT + 2;
 
   /**
-   * The meta object id for the '{@link org.gemoc.monilog.moniLog4DSL.impl.TemporalPropertyConditionImpl <em>Temporal Property Condition</em>}' class.
+   * The meta object id for the '{@link org.gemoc.monilog.moniLog4DSL.impl.ASTEventImpl <em>AST Event</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see org.gemoc.monilog.moniLog4DSL.impl.TemporalPropertyConditionImpl
-   * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getTemporalPropertyCondition()
+   * @see org.gemoc.monilog.moniLog4DSL.impl.ASTEventImpl
+   * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getASTEvent()
    * @generated
    */
-  int TEMPORAL_PROPERTY_CONDITION = 26;
+  int AST_EVENT = 34;
 
   /**
-   * The feature id for the '<em><b>Pattern</b></em>' containment reference.
+   * The feature id for the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int TEMPORAL_PROPERTY_CONDITION__PATTERN = CONDITION_FEATURE_COUNT + 0;
+  int AST_EVENT__NAME = EVENT__NAME;
+
+  /**
+   * The feature id for the '<em><b>Parameter Decl</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int AST_EVENT__PARAMETER_DECL = EVENT__PARAMETER_DECL;
+
+  /**
+   * The feature id for the '<em><b>Kind</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int AST_EVENT__KIND = EVENT_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Rule ID</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int AST_EVENT__RULE_ID = EVENT_FEATURE_COUNT + 1;
+
+  /**
+   * The number of structural features of the '<em>AST Event</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int AST_EVENT_FEATURE_COUNT = EVENT_FEATURE_COUNT + 2;
+
+  /**
+   * The meta object id for the '{@link org.gemoc.monilog.moniLog4DSL.impl.ComplexEventImpl <em>Complex Event</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.gemoc.monilog.moniLog4DSL.impl.ComplexEventImpl
+   * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getComplexEvent()
+   * @generated
+   */
+  int COMPLEX_EVENT = 35;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMPLEX_EVENT__NAME = EVENT__NAME;
+
+  /**
+   * The feature id for the '<em><b>Parameter Decl</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMPLEX_EVENT__PARAMETER_DECL = EVENT__PARAMETER_DECL;
 
   /**
    * The feature id for the '<em><b>Kind</b></em>' attribute.
@@ -929,72 +1307,100 @@ public interface MoniLog4DSLPackage extends EPackage
    * @generated
    * @ordered
    */
-  int TEMPORAL_PROPERTY_CONDITION__KIND = CONDITION_FEATURE_COUNT + 1;
+  int COMPLEX_EVENT__KIND = EVENT_FEATURE_COUNT + 0;
 
   /**
-   * The number of structural features of the '<em>Temporal Property Condition</em>' class.
+   * The feature id for the '<em><b>Pattern</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int TEMPORAL_PROPERTY_CONDITION_FEATURE_COUNT = CONDITION_FEATURE_COUNT + 2;
+  int COMPLEX_EVENT__PATTERN = EVENT_FEATURE_COUNT + 1;
 
   /**
-   * The meta object id for the '{@link org.gemoc.monilog.moniLog4DSL.impl.LanguageExpressionConditionImpl <em>Language Expression Condition</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.gemoc.monilog.moniLog4DSL.impl.LanguageExpressionConditionImpl
-   * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getLanguageExpressionCondition()
-   * @generated
-   */
-  int LANGUAGE_EXPRESSION_CONDITION = 27;
-
-  /**
-   * The feature id for the '<em><b>Expression</b></em>' containment reference.
+   * The number of structural features of the '<em>Complex Event</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int LANGUAGE_EXPRESSION_CONDITION__EXPRESSION = CONDITION_FEATURE_COUNT + 0;
+  int COMPLEX_EVENT_FEATURE_COUNT = EVENT_FEATURE_COUNT + 2;
 
   /**
-   * The number of structural features of the '<em>Language Expression Condition</em>' class.
+   * The meta object id for the '{@link org.gemoc.monilog.moniLog4DSL.impl.UserEventImpl <em>User Event</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.gemoc.monilog.moniLog4DSL.impl.UserEventImpl
+   * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getUserEvent()
+   * @generated
+   */
+  int USER_EVENT = 36;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int LANGUAGE_EXPRESSION_CONDITION_FEATURE_COUNT = CONDITION_FEATURE_COUNT + 1;
+  int USER_EVENT__NAME = EVENT__NAME;
 
   /**
-   * The meta object id for the '{@link org.gemoc.monilog.moniLog4DSL.impl.UniversalityImpl <em>Universality</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.gemoc.monilog.moniLog4DSL.impl.UniversalityImpl
-   * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getUniversality()
-   * @generated
-   */
-  int UNIVERSALITY = 28;
-
-  /**
-   * The feature id for the '<em><b>Event</b></em>' containment reference.
+   * The feature id for the '<em><b>Parameter Decl</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int UNIVERSALITY__EVENT = PATTERN_FEATURE_COUNT + 0;
+  int USER_EVENT__PARAMETER_DECL = EVENT__PARAMETER_DECL;
 
   /**
-   * The number of structural features of the '<em>Universality</em>' class.
+   * The number of structural features of the '<em>User Event</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int UNIVERSALITY_FEATURE_COUNT = PATTERN_FEATURE_COUNT + 1;
+  int USER_EVENT_FEATURE_COUNT = EVENT_FEATURE_COUNT + 0;
+
+  /**
+   * The meta object id for the '{@link org.gemoc.monilog.moniLog4DSL.impl.BeforeASTEventImpl <em>Before AST Event</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.gemoc.monilog.moniLog4DSL.impl.BeforeASTEventImpl
+   * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getBeforeASTEvent()
+   * @generated
+   */
+  int BEFORE_AST_EVENT = 37;
+
+  /**
+   * The number of structural features of the '<em>Before AST Event</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int BEFORE_AST_EVENT_FEATURE_COUNT = AST_EVENT_KIND_FEATURE_COUNT + 0;
+
+  /**
+   * The meta object id for the '{@link org.gemoc.monilog.moniLog4DSL.impl.AfterASTEventImpl <em>After AST Event</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.gemoc.monilog.moniLog4DSL.impl.AfterASTEventImpl
+   * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getAfterASTEvent()
+   * @generated
+   */
+  int AFTER_AST_EVENT = 38;
+
+  /**
+   * The number of structural features of the '<em>After AST Event</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int AFTER_AST_EVENT_FEATURE_COUNT = AST_EVENT_KIND_FEATURE_COUNT + 0;
 
   /**
    * The meta object id for the '{@link org.gemoc.monilog.moniLog4DSL.impl.ExistenceImpl <em>Existence</em>}' class.
@@ -1004,7 +1410,7 @@ public interface MoniLog4DSLPackage extends EPackage
    * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getExistence()
    * @generated
    */
-  int EXISTENCE = 29;
+  int EXISTENCE = 39;
 
   /**
    * The feature id for the '<em><b>Bound</b></em>' containment reference.
@@ -1034,6 +1440,34 @@ public interface MoniLog4DSLPackage extends EPackage
   int EXISTENCE_FEATURE_COUNT = PATTERN_FEATURE_COUNT + 2;
 
   /**
+   * The meta object id for the '{@link org.gemoc.monilog.moniLog4DSL.impl.UniversalityImpl <em>Universality</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.gemoc.monilog.moniLog4DSL.impl.UniversalityImpl
+   * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getUniversality()
+   * @generated
+   */
+  int UNIVERSALITY = 40;
+
+  /**
+   * The feature id for the '<em><b>Event</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int UNIVERSALITY__EVENT = PATTERN_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Universality</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int UNIVERSALITY_FEATURE_COUNT = PATTERN_FEATURE_COUNT + 1;
+
+  /**
    * The meta object id for the '{@link org.gemoc.monilog.moniLog4DSL.impl.AbsenceImpl <em>Absence</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1041,7 +1475,7 @@ public interface MoniLog4DSLPackage extends EPackage
    * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getAbsence()
    * @generated
    */
-  int ABSENCE = 30;
+  int ABSENCE = 41;
 
   /**
    * The feature id for the '<em><b>Event</b></em>' containment reference.
@@ -1069,7 +1503,7 @@ public interface MoniLog4DSLPackage extends EPackage
    * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getPrecedence()
    * @generated
    */
-  int PRECEDENCE = 31;
+  int PRECEDENCE = 42;
 
   /**
    * The feature id for the '<em><b>Predecessor</b></em>' containment reference.
@@ -1106,7 +1540,7 @@ public interface MoniLog4DSLPackage extends EPackage
    * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getResponse()
    * @generated
    */
-  int RESPONSE = 32;
+  int RESPONSE = 43;
 
   /**
    * The feature id for the '<em><b>Event</b></em>' containment reference.
@@ -1143,7 +1577,7 @@ public interface MoniLog4DSLPackage extends EPackage
    * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getGlobally()
    * @generated
    */
-  int GLOBALLY = 33;
+  int GLOBALLY = 44;
 
   /**
    * The number of structural features of the '<em>Globally</em>' class.
@@ -1162,7 +1596,7 @@ public interface MoniLog4DSLPackage extends EPackage
    * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getAfter()
    * @generated
    */
-  int AFTER = 34;
+  int AFTER = 45;
 
   /**
    * The feature id for the '<em><b>Lower Bound</b></em>' containment reference.
@@ -1190,7 +1624,7 @@ public interface MoniLog4DSLPackage extends EPackage
    * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getBefore()
    * @generated
    */
-  int BEFORE = 35;
+  int BEFORE = 46;
 
   /**
    * The feature id for the '<em><b>Upper Bound</b></em>' containment reference.
@@ -1218,7 +1652,7 @@ public interface MoniLog4DSLPackage extends EPackage
    * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getBetween()
    * @generated
    */
-  int BETWEEN = 36;
+  int BETWEEN = 47;
 
   /**
    * The feature id for the '<em><b>Lower Bound</b></em>' containment reference.
@@ -1255,7 +1689,7 @@ public interface MoniLog4DSLPackage extends EPackage
    * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getAfterUntil()
    * @generated
    */
-  int AFTER_UNTIL = 37;
+  int AFTER_UNTIL = 48;
 
   /**
    * The feature id for the '<em><b>Lower Bound</b></em>' containment reference.
@@ -1285,23 +1719,69 @@ public interface MoniLog4DSLPackage extends EPackage
   int AFTER_UNTIL_FEATURE_COUNT = SCOPE_FEATURE_COUNT + 2;
 
   /**
-   * The meta object id for the '{@link org.gemoc.monilog.moniLog4DSL.impl.NotifyImpl <em>Notify</em>}' class.
+   * The meta object id for the '{@link org.gemoc.monilog.moniLog4DSL.impl.StartMoniLoggerImpl <em>Start Moni Logger</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see org.gemoc.monilog.moniLog4DSL.impl.NotifyImpl
-   * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getNotify()
+   * @see org.gemoc.monilog.moniLog4DSL.impl.StartMoniLoggerImpl
+   * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getStartMoniLogger()
    * @generated
    */
-  int NOTIFY = 38;
+  int START_MONI_LOGGER = 49;
 
   /**
-   * The number of structural features of the '<em>Notify</em>' class.
+   * The feature id for the '<em><b>Monilogger</b></em>' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int NOTIFY_FEATURE_COUNT = ACTION_FEATURE_COUNT + 0;
+  int START_MONI_LOGGER__MONILOGGER = MONILOGGER_CALL__MONILOGGER;
+
+  /**
+   * The feature id for the '<em><b>Args</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int START_MONI_LOGGER__ARGS = MONILOGGER_CALL_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Start Moni Logger</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int START_MONI_LOGGER_FEATURE_COUNT = MONILOGGER_CALL_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link org.gemoc.monilog.moniLog4DSL.impl.StopMoniLoggerImpl <em>Stop Moni Logger</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.gemoc.monilog.moniLog4DSL.impl.StopMoniLoggerImpl
+   * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getStopMoniLogger()
+   * @generated
+   */
+  int STOP_MONI_LOGGER = 50;
+
+  /**
+   * The feature id for the '<em><b>Monilogger</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int STOP_MONI_LOGGER__MONILOGGER = MONILOGGER_CALL__MONILOGGER;
+
+  /**
+   * The number of structural features of the '<em>Stop Moni Logger</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int STOP_MONI_LOGGER_FEATURE_COUNT = MONILOGGER_CALL_FEATURE_COUNT + 0;
 
   /**
    * The meta object id for the '{@link org.gemoc.monilog.moniLog4DSL.impl.EmptyImpl <em>Empty</em>}' class.
@@ -1311,7 +1791,7 @@ public interface MoniLog4DSLPackage extends EPackage
    * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getEmpty()
    * @generated
    */
-  int EMPTY = 39;
+  int EMPTY = 51;
 
   /**
    * The number of structural features of the '<em>Empty</em>' class.
@@ -1323,106 +1803,24 @@ public interface MoniLog4DSLPackage extends EPackage
   int EMPTY_FEATURE_COUNT = EMPTY_OR_PROPERTY_VALUE_FEATURE_COUNT + 0;
 
   /**
-   * The meta object id for the '{@link org.gemoc.monilog.moniLog4DSL.impl.PropertyValueImpl <em>Property Value</em>}' class.
+   * The meta object id for the '{@link org.gemoc.monilog.moniLog4DSL.MoniLoggerAnnotation <em>Moni Logger Annotation</em>}' enum.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see org.gemoc.monilog.moniLog4DSL.impl.PropertyValueImpl
-   * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getPropertyValue()
+   * @see org.gemoc.monilog.moniLog4DSL.MoniLoggerAnnotation
+   * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getMoniLoggerAnnotation()
    * @generated
    */
-  int PROPERTY_VALUE = 40;
+  int MONI_LOGGER_ANNOTATION = 52;
 
   /**
-   * The feature id for the '<em><b>Id</b></em>' attribute.
+   * The meta object id for the '{@link org.gemoc.monilog.moniLog4DSL.AppenderAnnotation <em>Appender Annotation</em>}' enum.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PROPERTY_VALUE__ID = EMPTY_OR_PROPERTY_VALUE_FEATURE_COUNT + 0;
-
-  /**
-   * The feature id for the '<em><b>Value</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PROPERTY_VALUE__VALUE = EMPTY_OR_PROPERTY_VALUE_FEATURE_COUNT + 1;
-
-  /**
-   * The number of structural features of the '<em>Property Value</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PROPERTY_VALUE_FEATURE_COUNT = EMPTY_OR_PROPERTY_VALUE_FEATURE_COUNT + 2;
-
-  /**
-   * The meta object id for the '{@link org.gemoc.monilog.moniLog4DSL.impl.ExplicitLanguageExpressionImpl <em>Explicit Language Expression</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.gemoc.monilog.moniLog4DSL.impl.ExplicitLanguageExpressionImpl
-   * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getExplicitLanguageExpression()
+   * @see org.gemoc.monilog.moniLog4DSL.AppenderAnnotation
+   * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getAppenderAnnotation()
    * @generated
    */
-  int EXPLICIT_LANGUAGE_EXPRESSION = 41;
-
-  /**
-   * The feature id for the '<em><b>Expression</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int EXPLICIT_LANGUAGE_EXPRESSION__EXPRESSION = LANGUAGE_EXPRESSION__EXPRESSION;
-
-  /**
-   * The feature id for the '<em><b>Language Id</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int EXPLICIT_LANGUAGE_EXPRESSION__LANGUAGE_ID = LANGUAGE_EXPRESSION_FEATURE_COUNT + 0;
-
-  /**
-   * The number of structural features of the '<em>Explicit Language Expression</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int EXPLICIT_LANGUAGE_EXPRESSION_FEATURE_COUNT = LANGUAGE_EXPRESSION_FEATURE_COUNT + 1;
-
-  /**
-   * The meta object id for the '{@link org.gemoc.monilog.moniLog4DSL.impl.DefaultLanguageExpressionImpl <em>Default Language Expression</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.gemoc.monilog.moniLog4DSL.impl.DefaultLanguageExpressionImpl
-   * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getDefaultLanguageExpression()
-   * @generated
-   */
-  int DEFAULT_LANGUAGE_EXPRESSION = 42;
-
-  /**
-   * The feature id for the '<em><b>Expression</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int DEFAULT_LANGUAGE_EXPRESSION__EXPRESSION = LANGUAGE_EXPRESSION__EXPRESSION;
-
-  /**
-   * The number of structural features of the '<em>Default Language Expression</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int DEFAULT_LANGUAGE_EXPRESSION_FEATURE_COUNT = LANGUAGE_EXPRESSION_FEATURE_COUNT + 0;
+  int APPENDER_ANNOTATION = 53;
 
   /**
    * The meta object id for the '{@link org.gemoc.monilog.moniLog4DSL.LogLevel <em>Log Level</em>}' enum.
@@ -1432,115 +1830,392 @@ public interface MoniLog4DSLPackage extends EPackage
    * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getLogLevel()
    * @generated
    */
-  int LOG_LEVEL = 43;
+  int LOG_LEVEL = 54;
 
   /**
-   * The meta object id for the '{@link org.gemoc.monilog.moniLog4DSL.TemporalPropertyConditionKind <em>Temporal Property Condition Kind</em>}' enum.
+   * The meta object id for the '{@link org.gemoc.monilog.moniLog4DSL.TemporalPatternKind <em>Temporal Pattern Kind</em>}' enum.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see org.gemoc.monilog.moniLog4DSL.TemporalPropertyConditionKind
-   * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getTemporalPropertyConditionKind()
+   * @see org.gemoc.monilog.moniLog4DSL.TemporalPatternKind
+   * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getTemporalPatternKind()
    * @generated
    */
-  int TEMPORAL_PROPERTY_CONDITION_KIND = 44;
+  int TEMPORAL_PATTERN_KIND = 55;
 
 
   /**
-   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog4DSL.Model <em>Model</em>}'.
+   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog4DSL.Document <em>Document</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Model</em>'.
-   * @see org.gemoc.monilog.moniLog4DSL.Model
+   * @return the meta object for class '<em>Document</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.Document
    * @generated
    */
-  EClass getModel();
+  EClass getDocument();
 
   /**
-   * Returns the meta object for the attribute '{@link org.gemoc.monilog.moniLog4DSL.Model#getDefaultLanguageID <em>Default Language ID</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Default Language ID</em>'.
-   * @see org.gemoc.monilog.moniLog4DSL.Model#getDefaultLanguageID()
-   * @see #getModel()
-   * @generated
-   */
-  EAttribute getModel_DefaultLanguageID();
-
-  /**
-   * Returns the meta object for the containment reference list '{@link org.gemoc.monilog.moniLog4DSL.Model#getMoniLogSpecs <em>Moni Log Specs</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Moni Log Specs</em>'.
-   * @see org.gemoc.monilog.moniLog4DSL.Model#getMoniLogSpecs()
-   * @see #getModel()
-   * @generated
-   */
-  EReference getModel_MoniLogSpecs();
-
-  /**
-   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog4DSL.MoniLogSpec <em>Moni Log Spec</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Moni Log Spec</em>'.
-   * @see org.gemoc.monilog.moniLog4DSL.MoniLogSpec
-   * @generated
-   */
-  EClass getMoniLogSpec();
-
-  /**
-   * Returns the meta object for the attribute '{@link org.gemoc.monilog.moniLog4DSL.MoniLogSpec#getName <em>Name</em>}'.
+   * Returns the meta object for the attribute '{@link org.gemoc.monilog.moniLog4DSL.Document#getName <em>Name</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Name</em>'.
-   * @see org.gemoc.monilog.moniLog4DSL.MoniLogSpec#getName()
-   * @see #getMoniLogSpec()
+   * @see org.gemoc.monilog.moniLog4DSL.Document#getName()
+   * @see #getDocument()
    * @generated
    */
-  EAttribute getMoniLogSpec_Name();
+  EAttribute getDocument_Name();
 
   /**
-   * Returns the meta object for the attribute '{@link org.gemoc.monilog.moniLog4DSL.MoniLogSpec#getLevel <em>Level</em>}'.
+   * Returns the meta object for the containment reference list '{@link org.gemoc.monilog.moniLog4DSL.Document#getImports <em>Imports</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Level</em>'.
-   * @see org.gemoc.monilog.moniLog4DSL.MoniLogSpec#getLevel()
-   * @see #getMoniLogSpec()
+   * @return the meta object for the containment reference list '<em>Imports</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.Document#getImports()
+   * @see #getDocument()
    * @generated
    */
-  EAttribute getMoniLogSpec_Level();
+  EReference getDocument_Imports();
 
   /**
-   * Returns the meta object for the containment reference list '{@link org.gemoc.monilog.moniLog4DSL.MoniLogSpec#getEvents <em>Events</em>}'.
+   * Returns the meta object for the containment reference list '{@link org.gemoc.monilog.moniLog4DSL.Document#getEvents <em>Events</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the containment reference list '<em>Events</em>'.
-   * @see org.gemoc.monilog.moniLog4DSL.MoniLogSpec#getEvents()
-   * @see #getMoniLogSpec()
+   * @see org.gemoc.monilog.moniLog4DSL.Document#getEvents()
+   * @see #getDocument()
    * @generated
    */
-  EReference getMoniLogSpec_Events();
+  EReference getDocument_Events();
 
   /**
-   * Returns the meta object for the containment reference list '{@link org.gemoc.monilog.moniLog4DSL.MoniLogSpec#getConditions <em>Conditions</em>}'.
+   * Returns the meta object for the containment reference list '{@link org.gemoc.monilog.moniLog4DSL.Document#getAppenders <em>Appenders</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Appenders</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.Document#getAppenders()
+   * @see #getDocument()
+   * @generated
+   */
+  EReference getDocument_Appenders();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link org.gemoc.monilog.moniLog4DSL.Document#getLayouts <em>Layouts</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Layouts</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.Document#getLayouts()
+   * @see #getDocument()
+   * @generated
+   */
+  EReference getDocument_Layouts();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link org.gemoc.monilog.moniLog4DSL.Document#getMoniloggers <em>Moniloggers</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Moniloggers</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.Document#getMoniloggers()
+   * @see #getDocument()
+   * @generated
+   */
+  EReference getDocument_Moniloggers();
+
+  /**
+   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog4DSL.Import <em>Import</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Import</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.Import
+   * @generated
+   */
+  EClass getImport();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.gemoc.monilog.moniLog4DSL.Import#getImportedNamespace <em>Imported Namespace</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Imported Namespace</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.Import#getImportedNamespace()
+   * @see #getImport()
+   * @generated
+   */
+  EAttribute getImport_ImportedNamespace();
+
+  /**
+   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog4DSL.Appender <em>Appender</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Appender</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.Appender
+   * @generated
+   */
+  EClass getAppender();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.gemoc.monilog.moniLog4DSL.Appender#getName <em>Name</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Name</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.Appender#getName()
+   * @see #getAppender()
+   * @generated
+   */
+  EAttribute getAppender_Name();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.gemoc.monilog.moniLog4DSL.Appender#getParameterDecl <em>Parameter Decl</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Parameter Decl</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.Appender#getParameterDecl()
+   * @see #getAppender()
+   * @generated
+   */
+  EReference getAppender_ParameterDecl();
+
+  /**
+   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog4DSL.LocalAppender <em>Local Appender</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Local Appender</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.LocalAppender
+   * @generated
+   */
+  EClass getLocalAppender();
+
+  /**
+   * Returns the meta object for the attribute list '{@link org.gemoc.monilog.moniLog4DSL.LocalAppender#getAnnotations <em>Annotations</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute list '<em>Annotations</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.LocalAppender#getAnnotations()
+   * @see #getLocalAppender()
+   * @generated
+   */
+  EAttribute getLocalAppender_Annotations();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link org.gemoc.monilog.moniLog4DSL.LocalAppender#getCalls <em>Calls</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Calls</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.LocalAppender#getCalls()
+   * @see #getLocalAppender()
+   * @generated
+   */
+  EReference getLocalAppender_Calls();
+
+  /**
+   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog4DSL.ExternalAppender <em>External Appender</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>External Appender</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.ExternalAppender
+   * @generated
+   */
+  EClass getExternalAppender();
+
+  /**
+   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog4DSL.Layout <em>Layout</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Layout</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.Layout
+   * @generated
+   */
+  EClass getLayout();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.gemoc.monilog.moniLog4DSL.Layout#getName <em>Name</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Name</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.Layout#getName()
+   * @see #getLayout()
+   * @generated
+   */
+  EAttribute getLayout_Name();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.gemoc.monilog.moniLog4DSL.Layout#getParameterDecl <em>Parameter Decl</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Parameter Decl</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.Layout#getParameterDecl()
+   * @see #getLayout()
+   * @generated
+   */
+  EReference getLayout_ParameterDecl();
+
+  /**
+   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog4DSL.LocalLayout <em>Local Layout</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Local Layout</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.LocalLayout
+   * @generated
+   */
+  EClass getLocalLayout();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.gemoc.monilog.moniLog4DSL.LocalLayout#getCall <em>Call</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Call</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.LocalLayout#getCall()
+   * @see #getLocalLayout()
+   * @generated
+   */
+  EReference getLocalLayout_Call();
+
+  /**
+   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog4DSL.ExternalLayout <em>External Layout</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>External Layout</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.ExternalLayout
+   * @generated
+   */
+  EClass getExternalLayout();
+
+  /**
+   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog4DSL.ParameterDecl <em>Parameter Decl</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Parameter Decl</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.ParameterDecl
+   * @generated
+   */
+  EClass getParameterDecl();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link org.gemoc.monilog.moniLog4DSL.ParameterDecl#getParameters <em>Parameters</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Parameters</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.ParameterDecl#getParameters()
+   * @see #getParameterDecl()
+   * @generated
+   */
+  EReference getParameterDecl_Parameters();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.gemoc.monilog.moniLog4DSL.ParameterDecl#getVarArgs <em>Var Args</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Var Args</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.ParameterDecl#getVarArgs()
+   * @see #getParameterDecl()
+   * @generated
+   */
+  EReference getParameterDecl_VarArgs();
+
+  /**
+   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog4DSL.MoniLogger <em>Moni Logger</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Moni Logger</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.MoniLogger
+   * @generated
+   */
+  EClass getMoniLogger();
+
+  /**
+   * Returns the meta object for the attribute list '{@link org.gemoc.monilog.moniLog4DSL.MoniLogger#getAnnotations <em>Annotations</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute list '<em>Annotations</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.MoniLogger#getAnnotations()
+   * @see #getMoniLogger()
+   * @generated
+   */
+  EAttribute getMoniLogger_Annotations();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.gemoc.monilog.moniLog4DSL.MoniLogger#getName <em>Name</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Name</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.MoniLogger#getName()
+   * @see #getMoniLogger()
+   * @generated
+   */
+  EAttribute getMoniLogger_Name();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.gemoc.monilog.moniLog4DSL.MoniLogger#getParameterDecl <em>Parameter Decl</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Parameter Decl</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.MoniLogger#getParameterDecl()
+   * @see #getMoniLogger()
+   * @generated
+   */
+  EReference getMoniLogger_ParameterDecl();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.gemoc.monilog.moniLog4DSL.MoniLogger#getLevel <em>Level</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Level</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.MoniLogger#getLevel()
+   * @see #getMoniLogger()
+   * @generated
+   */
+  EAttribute getMoniLogger_Level();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.gemoc.monilog.moniLog4DSL.MoniLogger#getStreamEvent <em>Stream Event</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Stream Event</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.MoniLogger#getStreamEvent()
+   * @see #getMoniLogger()
+   * @generated
+   */
+  EReference getMoniLogger_StreamEvent();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link org.gemoc.monilog.moniLog4DSL.MoniLogger#getConditions <em>Conditions</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the containment reference list '<em>Conditions</em>'.
-   * @see org.gemoc.monilog.moniLog4DSL.MoniLogSpec#getConditions()
-   * @see #getMoniLogSpec()
+   * @see org.gemoc.monilog.moniLog4DSL.MoniLogger#getConditions()
+   * @see #getMoniLogger()
    * @generated
    */
-  EReference getMoniLogSpec_Conditions();
+  EReference getMoniLogger_Conditions();
 
   /**
-   * Returns the meta object for the containment reference list '{@link org.gemoc.monilog.moniLog4DSL.MoniLogSpec#getActions <em>Actions</em>}'.
+   * Returns the meta object for the containment reference list '{@link org.gemoc.monilog.moniLog4DSL.MoniLogger#getActions <em>Actions</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the containment reference list '<em>Actions</em>'.
-   * @see org.gemoc.monilog.moniLog4DSL.MoniLogSpec#getActions()
-   * @see #getMoniLogSpec()
+   * @see org.gemoc.monilog.moniLog4DSL.MoniLogger#getActions()
+   * @see #getMoniLogger()
    * @generated
    */
-  EReference getMoniLogSpec_Actions();
+  EReference getMoniLogger_Actions();
+
+  /**
+   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog4DSL.Parameter <em>Parameter</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Parameter</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.Parameter
+   * @generated
+   */
+  EClass getParameter();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.gemoc.monilog.moniLog4DSL.Parameter#getName <em>Name</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Name</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.Parameter#getName()
+   * @see #getParameter()
+   * @generated
+   */
+  EAttribute getParameter_Name();
 
   /**
    * Returns the meta object for class '{@link org.gemoc.monilog.moniLog4DSL.Event <em>Event</em>}'.
@@ -1553,67 +2228,36 @@ public interface MoniLog4DSLPackage extends EPackage
   EClass getEvent();
 
   /**
-   * Returns the meta object for the attribute '{@link org.gemoc.monilog.moniLog4DSL.Event#getRuleID <em>Rule ID</em>}'.
+   * Returns the meta object for the attribute '{@link org.gemoc.monilog.moniLog4DSL.Event#getName <em>Name</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Rule ID</em>'.
-   * @see org.gemoc.monilog.moniLog4DSL.Event#getRuleID()
+   * @return the meta object for the attribute '<em>Name</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.Event#getName()
    * @see #getEvent()
    * @generated
    */
-  EAttribute getEvent_RuleID();
+  EAttribute getEvent_Name();
 
   /**
-   * Returns the meta object for the attribute '{@link org.gemoc.monilog.moniLog4DSL.Event#getFrequency <em>Frequency</em>}'.
+   * Returns the meta object for the containment reference '{@link org.gemoc.monilog.moniLog4DSL.Event#getParameterDecl <em>Parameter Decl</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Frequency</em>'.
-   * @see org.gemoc.monilog.moniLog4DSL.Event#getFrequency()
+   * @return the meta object for the containment reference '<em>Parameter Decl</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.Event#getParameterDecl()
    * @see #getEvent()
    * @generated
    */
-  EAttribute getEvent_Frequency();
+  EReference getEvent_ParameterDecl();
 
   /**
-   * Returns the meta object for the attribute '{@link org.gemoc.monilog.moniLog4DSL.Event#getLimit <em>Limit</em>}'.
+   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog4DSL.ASTEventKind <em>AST Event Kind</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Limit</em>'.
-   * @see org.gemoc.monilog.moniLog4DSL.Event#getLimit()
-   * @see #getEvent()
+   * @return the meta object for class '<em>AST Event Kind</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.ASTEventKind
    * @generated
    */
-  EAttribute getEvent_Limit();
-
-  /**
-   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog4DSL.BeforeEvent <em>Before Event</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Before Event</em>'.
-   * @see org.gemoc.monilog.moniLog4DSL.BeforeEvent
-   * @generated
-   */
-  EClass getBeforeEvent();
-
-  /**
-   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog4DSL.AfterEvent <em>After Event</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>After Event</em>'.
-   * @see org.gemoc.monilog.moniLog4DSL.AfterEvent
-   * @generated
-   */
-  EClass getAfterEvent();
-
-  /**
-   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog4DSL.BeforeAfterEvent <em>Before After Event</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Before After Event</em>'.
-   * @see org.gemoc.monilog.moniLog4DSL.BeforeAfterEvent
-   * @generated
-   */
-  EClass getBeforeAfterEvent();
+  EClass getASTEventKind();
 
   /**
    * Returns the meta object for class '{@link org.gemoc.monilog.moniLog4DSL.Condition <em>Condition</em>}'.
@@ -1624,6 +2268,17 @@ public interface MoniLog4DSLPackage extends EPackage
    * @generated
    */
   EClass getCondition();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.gemoc.monilog.moniLog4DSL.Condition#getExpression <em>Expression</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Expression</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.Condition#getExpression()
+   * @see #getCondition()
+   * @generated
+   */
+  EReference getCondition_Expression();
 
   /**
    * Returns the meta object for class '{@link org.gemoc.monilog.moniLog4DSL.TemporalPattern <em>Temporal Pattern</em>}'.
@@ -1739,183 +2394,163 @@ public interface MoniLog4DSLPackage extends EPackage
   EClass getAction();
 
   /**
-   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog4DSL.Append <em>Append</em>}'.
+   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog4DSL.AppenderCall <em>Appender Call</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Append</em>'.
-   * @see org.gemoc.monilog.moniLog4DSL.Append
+   * @return the meta object for class '<em>Appender Call</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.AppenderCall
    * @generated
    */
-  EClass getAppend();
+  EClass getAppenderCall();
 
   /**
-   * Returns the meta object for the containment reference '{@link org.gemoc.monilog.moniLog4DSL.Append#getAppender <em>Appender</em>}'.
+   * Returns the meta object for the reference '{@link org.gemoc.monilog.moniLog4DSL.AppenderCall#getAppender <em>Appender</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Appender</em>'.
-   * @see org.gemoc.monilog.moniLog4DSL.Append#getAppender()
-   * @see #getAppend()
+   * @return the meta object for the reference '<em>Appender</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.AppenderCall#getAppender()
+   * @see #getAppenderCall()
    * @generated
    */
-  EReference getAppend_Appender();
+  EReference getAppenderCall_Appender();
 
   /**
-   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog4DSL.Appender <em>Appender</em>}'.
+   * Returns the meta object for the containment reference list '{@link org.gemoc.monilog.moniLog4DSL.AppenderCall#getArgs <em>Args</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Appender</em>'.
-   * @see org.gemoc.monilog.moniLog4DSL.Appender
+   * @return the meta object for the containment reference list '<em>Args</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.AppenderCall#getArgs()
+   * @see #getAppenderCall()
    * @generated
    */
-  EClass getAppender();
+  EReference getAppenderCall_Args();
 
   /**
-   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog4DSL.StreamAppender <em>Stream Appender</em>}'.
+   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog4DSL.CallArgument <em>Call Argument</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Stream Appender</em>'.
-   * @see org.gemoc.monilog.moniLog4DSL.StreamAppender
+   * @return the meta object for class '<em>Call Argument</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.CallArgument
    * @generated
    */
-  EClass getStreamAppender();
+  EClass getCallArgument();
 
   /**
-   * Returns the meta object for the attribute '{@link org.gemoc.monilog.moniLog4DSL.StreamAppender#getEvent <em>Event</em>}'.
+   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog4DSL.LayoutCall <em>Layout Call</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Event</em>'.
-   * @see org.gemoc.monilog.moniLog4DSL.StreamAppender#getEvent()
-   * @see #getStreamAppender()
+   * @return the meta object for class '<em>Layout Call</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.LayoutCall
    * @generated
    */
-  EAttribute getStreamAppender_Event();
+  EClass getLayoutCall();
 
   /**
-   * Returns the meta object for the containment reference list '{@link org.gemoc.monilog.moniLog4DSL.StreamAppender#getValues <em>Values</em>}'.
+   * Returns the meta object for the reference '{@link org.gemoc.monilog.moniLog4DSL.LayoutCall#getLayout <em>Layout</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Values</em>'.
-   * @see org.gemoc.monilog.moniLog4DSL.StreamAppender#getValues()
-   * @see #getStreamAppender()
+   * @return the meta object for the reference '<em>Layout</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.LayoutCall#getLayout()
+   * @see #getLayoutCall()
    * @generated
    */
-  EReference getStreamAppender_Values();
+  EReference getLayoutCall_Layout();
 
   /**
-   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog4DSL.FileAppender <em>File Appender</em>}'.
+   * Returns the meta object for the containment reference list '{@link org.gemoc.monilog.moniLog4DSL.LayoutCall#getArgs <em>Args</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>File Appender</em>'.
-   * @see org.gemoc.monilog.moniLog4DSL.FileAppender
+   * @return the meta object for the containment reference list '<em>Args</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.LayoutCall#getArgs()
+   * @see #getLayoutCall()
    * @generated
    */
-  EClass getFileAppender();
+  EReference getLayoutCall_Args();
 
   /**
-   * Returns the meta object for the attribute '{@link org.gemoc.monilog.moniLog4DSL.FileAppender#getFilename <em>Filename</em>}'.
+   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog4DSL.EmitEvent <em>Emit Event</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Filename</em>'.
-   * @see org.gemoc.monilog.moniLog4DSL.FileAppender#getFilename()
-   * @see #getFileAppender()
+   * @return the meta object for class '<em>Emit Event</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.EmitEvent
    * @generated
    */
-  EAttribute getFileAppender_Filename();
+  EClass getEmitEvent();
 
   /**
-   * Returns the meta object for the containment reference '{@link org.gemoc.monilog.moniLog4DSL.FileAppender#getLayout <em>Layout</em>}'.
+   * Returns the meta object for the reference '{@link org.gemoc.monilog.moniLog4DSL.EmitEvent#getEvent <em>Event</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Layout</em>'.
-   * @see org.gemoc.monilog.moniLog4DSL.FileAppender#getLayout()
-   * @see #getFileAppender()
+   * @return the meta object for the reference '<em>Event</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.EmitEvent#getEvent()
+   * @see #getEmitEvent()
    * @generated
    */
-  EReference getFileAppender_Layout();
+  EReference getEmitEvent_Event();
 
   /**
-   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog4DSL.ConsoleAppender <em>Console Appender</em>}'.
+   * Returns the meta object for the containment reference list '{@link org.gemoc.monilog.moniLog4DSL.EmitEvent#getArgs <em>Args</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Console Appender</em>'.
-   * @see org.gemoc.monilog.moniLog4DSL.ConsoleAppender
+   * @return the meta object for the containment reference list '<em>Args</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.EmitEvent#getArgs()
+   * @see #getEmitEvent()
    * @generated
    */
-  EClass getConsoleAppender();
+  EReference getEmitEvent_Args();
 
   /**
-   * Returns the meta object for the containment reference '{@link org.gemoc.monilog.moniLog4DSL.ConsoleAppender#getLayout <em>Layout</em>}'.
+   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog4DSL.SetVariable <em>Set Variable</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Layout</em>'.
-   * @see org.gemoc.monilog.moniLog4DSL.ConsoleAppender#getLayout()
-   * @see #getConsoleAppender()
+   * @return the meta object for class '<em>Set Variable</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.SetVariable
    * @generated
    */
-  EReference getConsoleAppender_Layout();
+  EClass getSetVariable();
 
   /**
-   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog4DSL.Layout <em>Layout</em>}'.
+   * Returns the meta object for the attribute '{@link org.gemoc.monilog.moniLog4DSL.SetVariable#getVariable <em>Variable</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Layout</em>'.
-   * @see org.gemoc.monilog.moniLog4DSL.Layout
+   * @return the meta object for the attribute '<em>Variable</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.SetVariable#getVariable()
+   * @see #getSetVariable()
    * @generated
    */
-  EClass getLayout();
+  EAttribute getSetVariable_Variable();
 
   /**
-   * Returns the meta object for the containment reference list '{@link org.gemoc.monilog.moniLog4DSL.Layout#getValues <em>Values</em>}'.
+   * Returns the meta object for the containment reference '{@link org.gemoc.monilog.moniLog4DSL.SetVariable#getValue <em>Value</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference list '<em>Values</em>'.
-   * @see org.gemoc.monilog.moniLog4DSL.Layout#getValues()
-   * @see #getLayout()
+   * @return the meta object for the containment reference '<em>Value</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.SetVariable#getValue()
+   * @see #getSetVariable()
    * @generated
    */
-  EReference getLayout_Values();
+  EReference getSetVariable_Value();
 
   /**
-   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog4DSL.StringLayout <em>String Layout</em>}'.
+   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog4DSL.MoniloggerCall <em>Monilogger Call</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>String Layout</em>'.
-   * @see org.gemoc.monilog.moniLog4DSL.StringLayout
+   * @return the meta object for class '<em>Monilogger Call</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.MoniloggerCall
    * @generated
    */
-  EClass getStringLayout();
+  EClass getMoniloggerCall();
 
   /**
-   * Returns the meta object for the attribute '{@link org.gemoc.monilog.moniLog4DSL.StringLayout#getFormatString <em>Format String</em>}'.
+   * Returns the meta object for the reference '{@link org.gemoc.monilog.moniLog4DSL.MoniloggerCall#getMonilogger <em>Monilogger</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Format String</em>'.
-   * @see org.gemoc.monilog.moniLog4DSL.StringLayout#getFormatString()
-   * @see #getStringLayout()
+   * @return the meta object for the reference '<em>Monilogger</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.MoniloggerCall#getMonilogger()
+   * @see #getMoniloggerCall()
    * @generated
    */
-  EAttribute getStringLayout_FormatString();
-
-  /**
-   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog4DSL.ExternalLayout <em>External Layout</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>External Layout</em>'.
-   * @see org.gemoc.monilog.moniLog4DSL.ExternalLayout
-   * @generated
-   */
-  EClass getExternalLayout();
-
-  /**
-   * Returns the meta object for the attribute '{@link org.gemoc.monilog.moniLog4DSL.ExternalLayout#getPath <em>Path</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Path</em>'.
-   * @see org.gemoc.monilog.moniLog4DSL.ExternalLayout#getPath()
-   * @see #getExternalLayout()
-   * @generated
-   */
-  EAttribute getExternalLayout_Path();
+  EReference getMoniloggerCall_Monilogger();
 
   /**
    * Returns the meta object for class '{@link org.gemoc.monilog.moniLog4DSL.StreamEvent <em>Stream Event</em>}'.
@@ -1928,15 +2563,15 @@ public interface MoniLog4DSLPackage extends EPackage
   EClass getStreamEvent();
 
   /**
-   * Returns the meta object for the attribute '{@link org.gemoc.monilog.moniLog4DSL.StreamEvent#getEventId <em>Event Id</em>}'.
+   * Returns the meta object for the reference '{@link org.gemoc.monilog.moniLog4DSL.StreamEvent#getEvent <em>Event</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Event Id</em>'.
-   * @see org.gemoc.monilog.moniLog4DSL.StreamEvent#getEventId()
+   * @return the meta object for the reference '<em>Event</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.StreamEvent#getEvent()
    * @see #getStreamEvent()
    * @generated
    */
-  EAttribute getStreamEvent_EventId();
+  EReference getStreamEvent_Event();
 
   /**
    * Returns the meta object for the containment reference list '{@link org.gemoc.monilog.moniLog4DSL.StreamEvent#getValues <em>Values</em>}'.
@@ -1960,6 +2595,69 @@ public interface MoniLog4DSLPackage extends EPackage
   EClass getEmptyOrPropertyValue();
 
   /**
+   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog4DSL.Expression <em>Expression</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Expression</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.Expression
+   * @generated
+   */
+  EClass getExpression();
+
+  /**
+   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog4DSL.ParameterReference <em>Parameter Reference</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Parameter Reference</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.ParameterReference
+   * @generated
+   */
+  EClass getParameterReference();
+
+  /**
+   * Returns the meta object for the reference '{@link org.gemoc.monilog.moniLog4DSL.ParameterReference#getParameter <em>Parameter</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>Parameter</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.ParameterReference#getParameter()
+   * @see #getParameterReference()
+   * @generated
+   */
+  EReference getParameterReference_Parameter();
+
+  /**
+   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog4DSL.PropertyValue <em>Property Value</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Property Value</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.PropertyValue
+   * @generated
+   */
+  EClass getPropertyValue();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.gemoc.monilog.moniLog4DSL.PropertyValue#getId <em>Id</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Id</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.PropertyValue#getId()
+   * @see #getPropertyValue()
+   * @generated
+   */
+  EAttribute getPropertyValue_Id();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.gemoc.monilog.moniLog4DSL.PropertyValue#getValue <em>Value</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Value</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.PropertyValue#getValue()
+   * @see #getPropertyValue()
+   * @generated
+   */
+  EReference getPropertyValue_Value();
+
+  /**
    * Returns the meta object for class '{@link org.gemoc.monilog.moniLog4DSL.LanguageExpression <em>Language Expression</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1968,6 +2666,17 @@ public interface MoniLog4DSLPackage extends EPackage
    * @generated
    */
   EClass getLanguageExpression();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.gemoc.monilog.moniLog4DSL.LanguageExpression#getLanguageId <em>Language Id</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Language Id</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.LanguageExpression#getLanguageId()
+   * @see #getLanguageExpression()
+   * @generated
+   */
+  EAttribute getLanguageExpression_LanguageId();
 
   /**
    * Returns the meta object for the attribute '{@link org.gemoc.monilog.moniLog4DSL.LanguageExpression#getExpression <em>Expression</em>}'.
@@ -1981,78 +2690,98 @@ public interface MoniLog4DSLPackage extends EPackage
   EAttribute getLanguageExpression_Expression();
 
   /**
-   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog4DSL.TemporalPropertyCondition <em>Temporal Property Condition</em>}'.
+   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog4DSL.ASTEvent <em>AST Event</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Temporal Property Condition</em>'.
-   * @see org.gemoc.monilog.moniLog4DSL.TemporalPropertyCondition
+   * @return the meta object for class '<em>AST Event</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.ASTEvent
    * @generated
    */
-  EClass getTemporalPropertyCondition();
+  EClass getASTEvent();
 
   /**
-   * Returns the meta object for the containment reference '{@link org.gemoc.monilog.moniLog4DSL.TemporalPropertyCondition#getPattern <em>Pattern</em>}'.
+   * Returns the meta object for the containment reference '{@link org.gemoc.monilog.moniLog4DSL.ASTEvent#getKind <em>Kind</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Pattern</em>'.
-   * @see org.gemoc.monilog.moniLog4DSL.TemporalPropertyCondition#getPattern()
-   * @see #getTemporalPropertyCondition()
+   * @return the meta object for the containment reference '<em>Kind</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.ASTEvent#getKind()
+   * @see #getASTEvent()
    * @generated
    */
-  EReference getTemporalPropertyCondition_Pattern();
+  EReference getASTEvent_Kind();
 
   /**
-   * Returns the meta object for the attribute '{@link org.gemoc.monilog.moniLog4DSL.TemporalPropertyCondition#getKind <em>Kind</em>}'.
+   * Returns the meta object for the attribute '{@link org.gemoc.monilog.moniLog4DSL.ASTEvent#getRuleID <em>Rule ID</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Rule ID</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.ASTEvent#getRuleID()
+   * @see #getASTEvent()
+   * @generated
+   */
+  EAttribute getASTEvent_RuleID();
+
+  /**
+   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog4DSL.ComplexEvent <em>Complex Event</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Complex Event</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.ComplexEvent
+   * @generated
+   */
+  EClass getComplexEvent();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.gemoc.monilog.moniLog4DSL.ComplexEvent#getKind <em>Kind</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the meta object for the attribute '<em>Kind</em>'.
-   * @see org.gemoc.monilog.moniLog4DSL.TemporalPropertyCondition#getKind()
-   * @see #getTemporalPropertyCondition()
+   * @see org.gemoc.monilog.moniLog4DSL.ComplexEvent#getKind()
+   * @see #getComplexEvent()
    * @generated
    */
-  EAttribute getTemporalPropertyCondition_Kind();
+  EAttribute getComplexEvent_Kind();
 
   /**
-   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog4DSL.LanguageExpressionCondition <em>Language Expression Condition</em>}'.
+   * Returns the meta object for the containment reference '{@link org.gemoc.monilog.moniLog4DSL.ComplexEvent#getPattern <em>Pattern</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Language Expression Condition</em>'.
-   * @see org.gemoc.monilog.moniLog4DSL.LanguageExpressionCondition
+   * @return the meta object for the containment reference '<em>Pattern</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.ComplexEvent#getPattern()
+   * @see #getComplexEvent()
    * @generated
    */
-  EClass getLanguageExpressionCondition();
+  EReference getComplexEvent_Pattern();
 
   /**
-   * Returns the meta object for the containment reference '{@link org.gemoc.monilog.moniLog4DSL.LanguageExpressionCondition#getExpression <em>Expression</em>}'.
+   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog4DSL.UserEvent <em>User Event</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Expression</em>'.
-   * @see org.gemoc.monilog.moniLog4DSL.LanguageExpressionCondition#getExpression()
-   * @see #getLanguageExpressionCondition()
+   * @return the meta object for class '<em>User Event</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.UserEvent
    * @generated
    */
-  EReference getLanguageExpressionCondition_Expression();
+  EClass getUserEvent();
 
   /**
-   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog4DSL.Universality <em>Universality</em>}'.
+   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog4DSL.BeforeASTEvent <em>Before AST Event</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Universality</em>'.
-   * @see org.gemoc.monilog.moniLog4DSL.Universality
+   * @return the meta object for class '<em>Before AST Event</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.BeforeASTEvent
    * @generated
    */
-  EClass getUniversality();
+  EClass getBeforeASTEvent();
 
   /**
-   * Returns the meta object for the containment reference '{@link org.gemoc.monilog.moniLog4DSL.Universality#getEvent <em>Event</em>}'.
+   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog4DSL.AfterASTEvent <em>After AST Event</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Event</em>'.
-   * @see org.gemoc.monilog.moniLog4DSL.Universality#getEvent()
-   * @see #getUniversality()
+   * @return the meta object for class '<em>After AST Event</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.AfterASTEvent
    * @generated
    */
-  EReference getUniversality_Event();
+  EClass getAfterASTEvent();
 
   /**
    * Returns the meta object for class '{@link org.gemoc.monilog.moniLog4DSL.Existence <em>Existence</em>}'.
@@ -2085,6 +2814,27 @@ public interface MoniLog4DSLPackage extends EPackage
    * @generated
    */
   EReference getExistence_Event();
+
+  /**
+   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog4DSL.Universality <em>Universality</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Universality</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.Universality
+   * @generated
+   */
+  EClass getUniversality();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.gemoc.monilog.moniLog4DSL.Universality#getEvent <em>Event</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Event</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.Universality#getEvent()
+   * @see #getUniversality()
+   * @generated
+   */
+  EReference getUniversality_Event();
 
   /**
    * Returns the meta object for class '{@link org.gemoc.monilog.moniLog4DSL.Absence <em>Absence</em>}'.
@@ -2288,14 +3038,35 @@ public interface MoniLog4DSLPackage extends EPackage
   EReference getAfterUntil_UpperBound();
 
   /**
-   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog4DSL.Notify <em>Notify</em>}'.
+   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog4DSL.StartMoniLogger <em>Start Moni Logger</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Notify</em>'.
-   * @see org.gemoc.monilog.moniLog4DSL.Notify
+   * @return the meta object for class '<em>Start Moni Logger</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.StartMoniLogger
    * @generated
    */
-  EClass getNotify();
+  EClass getStartMoniLogger();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link org.gemoc.monilog.moniLog4DSL.StartMoniLogger#getArgs <em>Args</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Args</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.StartMoniLogger#getArgs()
+   * @see #getStartMoniLogger()
+   * @generated
+   */
+  EReference getStartMoniLogger_Args();
+
+  /**
+   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog4DSL.StopMoniLogger <em>Stop Moni Logger</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Stop Moni Logger</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.StopMoniLogger
+   * @generated
+   */
+  EClass getStopMoniLogger();
 
   /**
    * Returns the meta object for class '{@link org.gemoc.monilog.moniLog4DSL.Empty <em>Empty</em>}'.
@@ -2308,67 +3079,24 @@ public interface MoniLog4DSLPackage extends EPackage
   EClass getEmpty();
 
   /**
-   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog4DSL.PropertyValue <em>Property Value</em>}'.
+   * Returns the meta object for enum '{@link org.gemoc.monilog.moniLog4DSL.MoniLoggerAnnotation <em>Moni Logger Annotation</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Property Value</em>'.
-   * @see org.gemoc.monilog.moniLog4DSL.PropertyValue
+   * @return the meta object for enum '<em>Moni Logger Annotation</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.MoniLoggerAnnotation
    * @generated
    */
-  EClass getPropertyValue();
+  EEnum getMoniLoggerAnnotation();
 
   /**
-   * Returns the meta object for the attribute '{@link org.gemoc.monilog.moniLog4DSL.PropertyValue#getId <em>Id</em>}'.
+   * Returns the meta object for enum '{@link org.gemoc.monilog.moniLog4DSL.AppenderAnnotation <em>Appender Annotation</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Id</em>'.
-   * @see org.gemoc.monilog.moniLog4DSL.PropertyValue#getId()
-   * @see #getPropertyValue()
+   * @return the meta object for enum '<em>Appender Annotation</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.AppenderAnnotation
    * @generated
    */
-  EAttribute getPropertyValue_Id();
-
-  /**
-   * Returns the meta object for the containment reference '{@link org.gemoc.monilog.moniLog4DSL.PropertyValue#getValue <em>Value</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Value</em>'.
-   * @see org.gemoc.monilog.moniLog4DSL.PropertyValue#getValue()
-   * @see #getPropertyValue()
-   * @generated
-   */
-  EReference getPropertyValue_Value();
-
-  /**
-   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog4DSL.ExplicitLanguageExpression <em>Explicit Language Expression</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Explicit Language Expression</em>'.
-   * @see org.gemoc.monilog.moniLog4DSL.ExplicitLanguageExpression
-   * @generated
-   */
-  EClass getExplicitLanguageExpression();
-
-  /**
-   * Returns the meta object for the attribute '{@link org.gemoc.monilog.moniLog4DSL.ExplicitLanguageExpression#getLanguageId <em>Language Id</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Language Id</em>'.
-   * @see org.gemoc.monilog.moniLog4DSL.ExplicitLanguageExpression#getLanguageId()
-   * @see #getExplicitLanguageExpression()
-   * @generated
-   */
-  EAttribute getExplicitLanguageExpression_LanguageId();
-
-  /**
-   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog4DSL.DefaultLanguageExpression <em>Default Language Expression</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Default Language Expression</em>'.
-   * @see org.gemoc.monilog.moniLog4DSL.DefaultLanguageExpression
-   * @generated
-   */
-  EClass getDefaultLanguageExpression();
+  EEnum getAppenderAnnotation();
 
   /**
    * Returns the meta object for enum '{@link org.gemoc.monilog.moniLog4DSL.LogLevel <em>Log Level</em>}'.
@@ -2381,14 +3109,14 @@ public interface MoniLog4DSLPackage extends EPackage
   EEnum getLogLevel();
 
   /**
-   * Returns the meta object for enum '{@link org.gemoc.monilog.moniLog4DSL.TemporalPropertyConditionKind <em>Temporal Property Condition Kind</em>}'.
+   * Returns the meta object for enum '{@link org.gemoc.monilog.moniLog4DSL.TemporalPatternKind <em>Temporal Pattern Kind</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for enum '<em>Temporal Property Condition Kind</em>'.
-   * @see org.gemoc.monilog.moniLog4DSL.TemporalPropertyConditionKind
+   * @return the meta object for enum '<em>Temporal Pattern Kind</em>'.
+   * @see org.gemoc.monilog.moniLog4DSL.TemporalPatternKind
    * @generated
    */
-  EEnum getTemporalPropertyConditionKind();
+  EEnum getTemporalPatternKind();
 
   /**
    * Returns the factory that creates the instances of the model.
@@ -2414,40 +3142,14 @@ public interface MoniLog4DSLPackage extends EPackage
   interface Literals
   {
     /**
-     * The meta object literal for the '{@link org.gemoc.monilog.moniLog4DSL.impl.ModelImpl <em>Model</em>}' class.
+     * The meta object literal for the '{@link org.gemoc.monilog.moniLog4DSL.impl.DocumentImpl <em>Document</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see org.gemoc.monilog.moniLog4DSL.impl.ModelImpl
-     * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getModel()
+     * @see org.gemoc.monilog.moniLog4DSL.impl.DocumentImpl
+     * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getDocument()
      * @generated
      */
-    EClass MODEL = eINSTANCE.getModel();
-
-    /**
-     * The meta object literal for the '<em><b>Default Language ID</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute MODEL__DEFAULT_LANGUAGE_ID = eINSTANCE.getModel_DefaultLanguageID();
-
-    /**
-     * The meta object literal for the '<em><b>Moni Log Specs</b></em>' containment reference list feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference MODEL__MONI_LOG_SPECS = eINSTANCE.getModel_MoniLogSpecs();
-
-    /**
-     * The meta object literal for the '{@link org.gemoc.monilog.moniLog4DSL.impl.MoniLogSpecImpl <em>Moni Log Spec</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLogSpecImpl
-     * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getMoniLogSpec()
-     * @generated
-     */
-    EClass MONI_LOG_SPEC = eINSTANCE.getMoniLogSpec();
+    EClass DOCUMENT = eINSTANCE.getDocument();
 
     /**
      * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
@@ -2455,15 +3157,15 @@ public interface MoniLog4DSLPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute MONI_LOG_SPEC__NAME = eINSTANCE.getMoniLogSpec_Name();
+    EAttribute DOCUMENT__NAME = eINSTANCE.getDocument_Name();
 
     /**
-     * The meta object literal for the '<em><b>Level</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Imports</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute MONI_LOG_SPEC__LEVEL = eINSTANCE.getMoniLogSpec_Level();
+    EReference DOCUMENT__IMPORTS = eINSTANCE.getDocument_Imports();
 
     /**
      * The meta object literal for the '<em><b>Events</b></em>' containment reference list feature.
@@ -2471,7 +3173,241 @@ public interface MoniLog4DSLPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference MONI_LOG_SPEC__EVENTS = eINSTANCE.getMoniLogSpec_Events();
+    EReference DOCUMENT__EVENTS = eINSTANCE.getDocument_Events();
+
+    /**
+     * The meta object literal for the '<em><b>Appenders</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference DOCUMENT__APPENDERS = eINSTANCE.getDocument_Appenders();
+
+    /**
+     * The meta object literal for the '<em><b>Layouts</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference DOCUMENT__LAYOUTS = eINSTANCE.getDocument_Layouts();
+
+    /**
+     * The meta object literal for the '<em><b>Moniloggers</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference DOCUMENT__MONILOGGERS = eINSTANCE.getDocument_Moniloggers();
+
+    /**
+     * The meta object literal for the '{@link org.gemoc.monilog.moniLog4DSL.impl.ImportImpl <em>Import</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.gemoc.monilog.moniLog4DSL.impl.ImportImpl
+     * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getImport()
+     * @generated
+     */
+    EClass IMPORT = eINSTANCE.getImport();
+
+    /**
+     * The meta object literal for the '<em><b>Imported Namespace</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute IMPORT__IMPORTED_NAMESPACE = eINSTANCE.getImport_ImportedNamespace();
+
+    /**
+     * The meta object literal for the '{@link org.gemoc.monilog.moniLog4DSL.impl.AppenderImpl <em>Appender</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.gemoc.monilog.moniLog4DSL.impl.AppenderImpl
+     * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getAppender()
+     * @generated
+     */
+    EClass APPENDER = eINSTANCE.getAppender();
+
+    /**
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute APPENDER__NAME = eINSTANCE.getAppender_Name();
+
+    /**
+     * The meta object literal for the '<em><b>Parameter Decl</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference APPENDER__PARAMETER_DECL = eINSTANCE.getAppender_ParameterDecl();
+
+    /**
+     * The meta object literal for the '{@link org.gemoc.monilog.moniLog4DSL.impl.LocalAppenderImpl <em>Local Appender</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.gemoc.monilog.moniLog4DSL.impl.LocalAppenderImpl
+     * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getLocalAppender()
+     * @generated
+     */
+    EClass LOCAL_APPENDER = eINSTANCE.getLocalAppender();
+
+    /**
+     * The meta object literal for the '<em><b>Annotations</b></em>' attribute list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute LOCAL_APPENDER__ANNOTATIONS = eINSTANCE.getLocalAppender_Annotations();
+
+    /**
+     * The meta object literal for the '<em><b>Calls</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference LOCAL_APPENDER__CALLS = eINSTANCE.getLocalAppender_Calls();
+
+    /**
+     * The meta object literal for the '{@link org.gemoc.monilog.moniLog4DSL.impl.ExternalAppenderImpl <em>External Appender</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.gemoc.monilog.moniLog4DSL.impl.ExternalAppenderImpl
+     * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getExternalAppender()
+     * @generated
+     */
+    EClass EXTERNAL_APPENDER = eINSTANCE.getExternalAppender();
+
+    /**
+     * The meta object literal for the '{@link org.gemoc.monilog.moniLog4DSL.impl.LayoutImpl <em>Layout</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.gemoc.monilog.moniLog4DSL.impl.LayoutImpl
+     * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getLayout()
+     * @generated
+     */
+    EClass LAYOUT = eINSTANCE.getLayout();
+
+    /**
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute LAYOUT__NAME = eINSTANCE.getLayout_Name();
+
+    /**
+     * The meta object literal for the '<em><b>Parameter Decl</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference LAYOUT__PARAMETER_DECL = eINSTANCE.getLayout_ParameterDecl();
+
+    /**
+     * The meta object literal for the '{@link org.gemoc.monilog.moniLog4DSL.impl.LocalLayoutImpl <em>Local Layout</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.gemoc.monilog.moniLog4DSL.impl.LocalLayoutImpl
+     * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getLocalLayout()
+     * @generated
+     */
+    EClass LOCAL_LAYOUT = eINSTANCE.getLocalLayout();
+
+    /**
+     * The meta object literal for the '<em><b>Call</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference LOCAL_LAYOUT__CALL = eINSTANCE.getLocalLayout_Call();
+
+    /**
+     * The meta object literal for the '{@link org.gemoc.monilog.moniLog4DSL.impl.ExternalLayoutImpl <em>External Layout</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.gemoc.monilog.moniLog4DSL.impl.ExternalLayoutImpl
+     * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getExternalLayout()
+     * @generated
+     */
+    EClass EXTERNAL_LAYOUT = eINSTANCE.getExternalLayout();
+
+    /**
+     * The meta object literal for the '{@link org.gemoc.monilog.moniLog4DSL.impl.ParameterDeclImpl <em>Parameter Decl</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.gemoc.monilog.moniLog4DSL.impl.ParameterDeclImpl
+     * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getParameterDecl()
+     * @generated
+     */
+    EClass PARAMETER_DECL = eINSTANCE.getParameterDecl();
+
+    /**
+     * The meta object literal for the '<em><b>Parameters</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference PARAMETER_DECL__PARAMETERS = eINSTANCE.getParameterDecl_Parameters();
+
+    /**
+     * The meta object literal for the '<em><b>Var Args</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference PARAMETER_DECL__VAR_ARGS = eINSTANCE.getParameterDecl_VarArgs();
+
+    /**
+     * The meta object literal for the '{@link org.gemoc.monilog.moniLog4DSL.impl.MoniLoggerImpl <em>Moni Logger</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLoggerImpl
+     * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getMoniLogger()
+     * @generated
+     */
+    EClass MONI_LOGGER = eINSTANCE.getMoniLogger();
+
+    /**
+     * The meta object literal for the '<em><b>Annotations</b></em>' attribute list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute MONI_LOGGER__ANNOTATIONS = eINSTANCE.getMoniLogger_Annotations();
+
+    /**
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute MONI_LOGGER__NAME = eINSTANCE.getMoniLogger_Name();
+
+    /**
+     * The meta object literal for the '<em><b>Parameter Decl</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference MONI_LOGGER__PARAMETER_DECL = eINSTANCE.getMoniLogger_ParameterDecl();
+
+    /**
+     * The meta object literal for the '<em><b>Level</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute MONI_LOGGER__LEVEL = eINSTANCE.getMoniLogger_Level();
+
+    /**
+     * The meta object literal for the '<em><b>Stream Event</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference MONI_LOGGER__STREAM_EVENT = eINSTANCE.getMoniLogger_StreamEvent();
 
     /**
      * The meta object literal for the '<em><b>Conditions</b></em>' containment reference list feature.
@@ -2479,7 +3415,7 @@ public interface MoniLog4DSLPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference MONI_LOG_SPEC__CONDITIONS = eINSTANCE.getMoniLogSpec_Conditions();
+    EReference MONI_LOGGER__CONDITIONS = eINSTANCE.getMoniLogger_Conditions();
 
     /**
      * The meta object literal for the '<em><b>Actions</b></em>' containment reference list feature.
@@ -2487,7 +3423,25 @@ public interface MoniLog4DSLPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference MONI_LOG_SPEC__ACTIONS = eINSTANCE.getMoniLogSpec_Actions();
+    EReference MONI_LOGGER__ACTIONS = eINSTANCE.getMoniLogger_Actions();
+
+    /**
+     * The meta object literal for the '{@link org.gemoc.monilog.moniLog4DSL.impl.ParameterImpl <em>Parameter</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.gemoc.monilog.moniLog4DSL.impl.ParameterImpl
+     * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getParameter()
+     * @generated
+     */
+    EClass PARAMETER = eINSTANCE.getParameter();
+
+    /**
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute PARAMETER__NAME = eINSTANCE.getParameter_Name();
 
     /**
      * The meta object literal for the '{@link org.gemoc.monilog.moniLog4DSL.impl.EventImpl <em>Event</em>}' class.
@@ -2500,58 +3454,30 @@ public interface MoniLog4DSLPackage extends EPackage
     EClass EVENT = eINSTANCE.getEvent();
 
     /**
-     * The meta object literal for the '<em><b>Rule ID</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute EVENT__RULE_ID = eINSTANCE.getEvent_RuleID();
+    EAttribute EVENT__NAME = eINSTANCE.getEvent_Name();
 
     /**
-     * The meta object literal for the '<em><b>Frequency</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Parameter Decl</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute EVENT__FREQUENCY = eINSTANCE.getEvent_Frequency();
+    EReference EVENT__PARAMETER_DECL = eINSTANCE.getEvent_ParameterDecl();
 
     /**
-     * The meta object literal for the '<em><b>Limit</b></em>' attribute feature.
+     * The meta object literal for the '{@link org.gemoc.monilog.moniLog4DSL.impl.ASTEventKindImpl <em>AST Event Kind</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * @see org.gemoc.monilog.moniLog4DSL.impl.ASTEventKindImpl
+     * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getASTEventKind()
      * @generated
      */
-    EAttribute EVENT__LIMIT = eINSTANCE.getEvent_Limit();
-
-    /**
-     * The meta object literal for the '{@link org.gemoc.monilog.moniLog4DSL.impl.BeforeEventImpl <em>Before Event</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.gemoc.monilog.moniLog4DSL.impl.BeforeEventImpl
-     * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getBeforeEvent()
-     * @generated
-     */
-    EClass BEFORE_EVENT = eINSTANCE.getBeforeEvent();
-
-    /**
-     * The meta object literal for the '{@link org.gemoc.monilog.moniLog4DSL.impl.AfterEventImpl <em>After Event</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.gemoc.monilog.moniLog4DSL.impl.AfterEventImpl
-     * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getAfterEvent()
-     * @generated
-     */
-    EClass AFTER_EVENT = eINSTANCE.getAfterEvent();
-
-    /**
-     * The meta object literal for the '{@link org.gemoc.monilog.moniLog4DSL.impl.BeforeAfterEventImpl <em>Before After Event</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.gemoc.monilog.moniLog4DSL.impl.BeforeAfterEventImpl
-     * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getBeforeAfterEvent()
-     * @generated
-     */
-    EClass BEFORE_AFTER_EVENT = eINSTANCE.getBeforeAfterEvent();
+    EClass AST_EVENT_KIND = eINSTANCE.getASTEventKind();
 
     /**
      * The meta object literal for the '{@link org.gemoc.monilog.moniLog4DSL.impl.ConditionImpl <em>Condition</em>}' class.
@@ -2562,6 +3488,14 @@ public interface MoniLog4DSLPackage extends EPackage
      * @generated
      */
     EClass CONDITION = eINSTANCE.getCondition();
+
+    /**
+     * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference CONDITION__EXPRESSION = eINSTANCE.getCondition_Expression();
 
     /**
      * The meta object literal for the '{@link org.gemoc.monilog.moniLog4DSL.impl.TemporalPatternImpl <em>Temporal Pattern</em>}' class.
@@ -2668,156 +3602,136 @@ public interface MoniLog4DSLPackage extends EPackage
     EClass ACTION = eINSTANCE.getAction();
 
     /**
-     * The meta object literal for the '{@link org.gemoc.monilog.moniLog4DSL.impl.AppendImpl <em>Append</em>}' class.
+     * The meta object literal for the '{@link org.gemoc.monilog.moniLog4DSL.impl.AppenderCallImpl <em>Appender Call</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see org.gemoc.monilog.moniLog4DSL.impl.AppendImpl
-     * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getAppend()
+     * @see org.gemoc.monilog.moniLog4DSL.impl.AppenderCallImpl
+     * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getAppenderCall()
      * @generated
      */
-    EClass APPEND = eINSTANCE.getAppend();
+    EClass APPENDER_CALL = eINSTANCE.getAppenderCall();
 
     /**
-     * The meta object literal for the '<em><b>Appender</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>Appender</b></em>' reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference APPEND__APPENDER = eINSTANCE.getAppend_Appender();
+    EReference APPENDER_CALL__APPENDER = eINSTANCE.getAppenderCall_Appender();
 
     /**
-     * The meta object literal for the '{@link org.gemoc.monilog.moniLog4DSL.impl.AppenderImpl <em>Appender</em>}' class.
+     * The meta object literal for the '<em><b>Args</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see org.gemoc.monilog.moniLog4DSL.impl.AppenderImpl
-     * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getAppender()
      * @generated
      */
-    EClass APPENDER = eINSTANCE.getAppender();
+    EReference APPENDER_CALL__ARGS = eINSTANCE.getAppenderCall_Args();
 
     /**
-     * The meta object literal for the '{@link org.gemoc.monilog.moniLog4DSL.impl.StreamAppenderImpl <em>Stream Appender</em>}' class.
+     * The meta object literal for the '{@link org.gemoc.monilog.moniLog4DSL.impl.CallArgumentImpl <em>Call Argument</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see org.gemoc.monilog.moniLog4DSL.impl.StreamAppenderImpl
-     * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getStreamAppender()
+     * @see org.gemoc.monilog.moniLog4DSL.impl.CallArgumentImpl
+     * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getCallArgument()
      * @generated
      */
-    EClass STREAM_APPENDER = eINSTANCE.getStreamAppender();
+    EClass CALL_ARGUMENT = eINSTANCE.getCallArgument();
 
     /**
-     * The meta object literal for the '<em><b>Event</b></em>' attribute feature.
+     * The meta object literal for the '{@link org.gemoc.monilog.moniLog4DSL.impl.LayoutCallImpl <em>Layout Call</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * @see org.gemoc.monilog.moniLog4DSL.impl.LayoutCallImpl
+     * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getLayoutCall()
      * @generated
      */
-    EAttribute STREAM_APPENDER__EVENT = eINSTANCE.getStreamAppender_Event();
+    EClass LAYOUT_CALL = eINSTANCE.getLayoutCall();
 
     /**
-     * The meta object literal for the '<em><b>Values</b></em>' containment reference list feature.
+     * The meta object literal for the '<em><b>Layout</b></em>' reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference STREAM_APPENDER__VALUES = eINSTANCE.getStreamAppender_Values();
+    EReference LAYOUT_CALL__LAYOUT = eINSTANCE.getLayoutCall_Layout();
 
     /**
-     * The meta object literal for the '{@link org.gemoc.monilog.moniLog4DSL.impl.FileAppenderImpl <em>File Appender</em>}' class.
+     * The meta object literal for the '<em><b>Args</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see org.gemoc.monilog.moniLog4DSL.impl.FileAppenderImpl
-     * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getFileAppender()
      * @generated
      */
-    EClass FILE_APPENDER = eINSTANCE.getFileAppender();
+    EReference LAYOUT_CALL__ARGS = eINSTANCE.getLayoutCall_Args();
 
     /**
-     * The meta object literal for the '<em><b>Filename</b></em>' attribute feature.
+     * The meta object literal for the '{@link org.gemoc.monilog.moniLog4DSL.impl.EmitEventImpl <em>Emit Event</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * @see org.gemoc.monilog.moniLog4DSL.impl.EmitEventImpl
+     * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getEmitEvent()
      * @generated
      */
-    EAttribute FILE_APPENDER__FILENAME = eINSTANCE.getFileAppender_Filename();
+    EClass EMIT_EVENT = eINSTANCE.getEmitEvent();
 
     /**
-     * The meta object literal for the '<em><b>Layout</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>Event</b></em>' reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference FILE_APPENDER__LAYOUT = eINSTANCE.getFileAppender_Layout();
+    EReference EMIT_EVENT__EVENT = eINSTANCE.getEmitEvent_Event();
 
     /**
-     * The meta object literal for the '{@link org.gemoc.monilog.moniLog4DSL.impl.ConsoleAppenderImpl <em>Console Appender</em>}' class.
+     * The meta object literal for the '<em><b>Args</b></em>' containment reference list feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see org.gemoc.monilog.moniLog4DSL.impl.ConsoleAppenderImpl
-     * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getConsoleAppender()
      * @generated
      */
-    EClass CONSOLE_APPENDER = eINSTANCE.getConsoleAppender();
+    EReference EMIT_EVENT__ARGS = eINSTANCE.getEmitEvent_Args();
 
     /**
-     * The meta object literal for the '<em><b>Layout</b></em>' containment reference feature.
+     * The meta object literal for the '{@link org.gemoc.monilog.moniLog4DSL.impl.SetVariableImpl <em>Set Variable</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * @see org.gemoc.monilog.moniLog4DSL.impl.SetVariableImpl
+     * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getSetVariable()
      * @generated
      */
-    EReference CONSOLE_APPENDER__LAYOUT = eINSTANCE.getConsoleAppender_Layout();
+    EClass SET_VARIABLE = eINSTANCE.getSetVariable();
 
     /**
-     * The meta object literal for the '{@link org.gemoc.monilog.moniLog4DSL.impl.LayoutImpl <em>Layout</em>}' class.
+     * The meta object literal for the '<em><b>Variable</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see org.gemoc.monilog.moniLog4DSL.impl.LayoutImpl
-     * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getLayout()
      * @generated
      */
-    EClass LAYOUT = eINSTANCE.getLayout();
+    EAttribute SET_VARIABLE__VARIABLE = eINSTANCE.getSetVariable_Variable();
 
     /**
-     * The meta object literal for the '<em><b>Values</b></em>' containment reference list feature.
+     * The meta object literal for the '<em><b>Value</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference LAYOUT__VALUES = eINSTANCE.getLayout_Values();
+    EReference SET_VARIABLE__VALUE = eINSTANCE.getSetVariable_Value();
 
     /**
-     * The meta object literal for the '{@link org.gemoc.monilog.moniLog4DSL.impl.StringLayoutImpl <em>String Layout</em>}' class.
+     * The meta object literal for the '{@link org.gemoc.monilog.moniLog4DSL.impl.MoniloggerCallImpl <em>Monilogger Call</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see org.gemoc.monilog.moniLog4DSL.impl.StringLayoutImpl
-     * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getStringLayout()
+     * @see org.gemoc.monilog.moniLog4DSL.impl.MoniloggerCallImpl
+     * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getMoniloggerCall()
      * @generated
      */
-    EClass STRING_LAYOUT = eINSTANCE.getStringLayout();
+    EClass MONILOGGER_CALL = eINSTANCE.getMoniloggerCall();
 
     /**
-     * The meta object literal for the '<em><b>Format String</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Monilogger</b></em>' reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute STRING_LAYOUT__FORMAT_STRING = eINSTANCE.getStringLayout_FormatString();
-
-    /**
-     * The meta object literal for the '{@link org.gemoc.monilog.moniLog4DSL.impl.ExternalLayoutImpl <em>External Layout</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.gemoc.monilog.moniLog4DSL.impl.ExternalLayoutImpl
-     * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getExternalLayout()
-     * @generated
-     */
-    EClass EXTERNAL_LAYOUT = eINSTANCE.getExternalLayout();
-
-    /**
-     * The meta object literal for the '<em><b>Path</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute EXTERNAL_LAYOUT__PATH = eINSTANCE.getExternalLayout_Path();
+    EReference MONILOGGER_CALL__MONILOGGER = eINSTANCE.getMoniloggerCall_Monilogger();
 
     /**
      * The meta object literal for the '{@link org.gemoc.monilog.moniLog4DSL.impl.StreamEventImpl <em>Stream Event</em>}' class.
@@ -2830,12 +3744,12 @@ public interface MoniLog4DSLPackage extends EPackage
     EClass STREAM_EVENT = eINSTANCE.getStreamEvent();
 
     /**
-     * The meta object literal for the '<em><b>Event Id</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Event</b></em>' reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute STREAM_EVENT__EVENT_ID = eINSTANCE.getStreamEvent_EventId();
+    EReference STREAM_EVENT__EVENT = eINSTANCE.getStreamEvent_Event();
 
     /**
      * The meta object literal for the '<em><b>Values</b></em>' containment reference list feature.
@@ -2856,6 +3770,60 @@ public interface MoniLog4DSLPackage extends EPackage
     EClass EMPTY_OR_PROPERTY_VALUE = eINSTANCE.getEmptyOrPropertyValue();
 
     /**
+     * The meta object literal for the '{@link org.gemoc.monilog.moniLog4DSL.impl.ExpressionImpl <em>Expression</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.gemoc.monilog.moniLog4DSL.impl.ExpressionImpl
+     * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getExpression()
+     * @generated
+     */
+    EClass EXPRESSION = eINSTANCE.getExpression();
+
+    /**
+     * The meta object literal for the '{@link org.gemoc.monilog.moniLog4DSL.impl.ParameterReferenceImpl <em>Parameter Reference</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.gemoc.monilog.moniLog4DSL.impl.ParameterReferenceImpl
+     * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getParameterReference()
+     * @generated
+     */
+    EClass PARAMETER_REFERENCE = eINSTANCE.getParameterReference();
+
+    /**
+     * The meta object literal for the '<em><b>Parameter</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference PARAMETER_REFERENCE__PARAMETER = eINSTANCE.getParameterReference_Parameter();
+
+    /**
+     * The meta object literal for the '{@link org.gemoc.monilog.moniLog4DSL.impl.PropertyValueImpl <em>Property Value</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.gemoc.monilog.moniLog4DSL.impl.PropertyValueImpl
+     * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getPropertyValue()
+     * @generated
+     */
+    EClass PROPERTY_VALUE = eINSTANCE.getPropertyValue();
+
+    /**
+     * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute PROPERTY_VALUE__ID = eINSTANCE.getPropertyValue_Id();
+
+    /**
+     * The meta object literal for the '<em><b>Value</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference PROPERTY_VALUE__VALUE = eINSTANCE.getPropertyValue_Value();
+
+    /**
      * The meta object literal for the '{@link org.gemoc.monilog.moniLog4DSL.impl.LanguageExpressionImpl <em>Language Expression</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2866,6 +3834,14 @@ public interface MoniLog4DSLPackage extends EPackage
     EClass LANGUAGE_EXPRESSION = eINSTANCE.getLanguageExpression();
 
     /**
+     * The meta object literal for the '<em><b>Language Id</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute LANGUAGE_EXPRESSION__LANGUAGE_ID = eINSTANCE.getLanguageExpression_LanguageId();
+
+    /**
      * The meta object literal for the '<em><b>Expression</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -2874,22 +3850,40 @@ public interface MoniLog4DSLPackage extends EPackage
     EAttribute LANGUAGE_EXPRESSION__EXPRESSION = eINSTANCE.getLanguageExpression_Expression();
 
     /**
-     * The meta object literal for the '{@link org.gemoc.monilog.moniLog4DSL.impl.TemporalPropertyConditionImpl <em>Temporal Property Condition</em>}' class.
+     * The meta object literal for the '{@link org.gemoc.monilog.moniLog4DSL.impl.ASTEventImpl <em>AST Event</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see org.gemoc.monilog.moniLog4DSL.impl.TemporalPropertyConditionImpl
-     * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getTemporalPropertyCondition()
+     * @see org.gemoc.monilog.moniLog4DSL.impl.ASTEventImpl
+     * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getASTEvent()
      * @generated
      */
-    EClass TEMPORAL_PROPERTY_CONDITION = eINSTANCE.getTemporalPropertyCondition();
+    EClass AST_EVENT = eINSTANCE.getASTEvent();
 
     /**
-     * The meta object literal for the '<em><b>Pattern</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>Kind</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference TEMPORAL_PROPERTY_CONDITION__PATTERN = eINSTANCE.getTemporalPropertyCondition_Pattern();
+    EReference AST_EVENT__KIND = eINSTANCE.getASTEvent_Kind();
+
+    /**
+     * The meta object literal for the '<em><b>Rule ID</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute AST_EVENT__RULE_ID = eINSTANCE.getASTEvent_RuleID();
+
+    /**
+     * The meta object literal for the '{@link org.gemoc.monilog.moniLog4DSL.impl.ComplexEventImpl <em>Complex Event</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.gemoc.monilog.moniLog4DSL.impl.ComplexEventImpl
+     * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getComplexEvent()
+     * @generated
+     */
+    EClass COMPLEX_EVENT = eINSTANCE.getComplexEvent();
 
     /**
      * The meta object literal for the '<em><b>Kind</b></em>' attribute feature.
@@ -2897,43 +3891,45 @@ public interface MoniLog4DSLPackage extends EPackage
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute TEMPORAL_PROPERTY_CONDITION__KIND = eINSTANCE.getTemporalPropertyCondition_Kind();
+    EAttribute COMPLEX_EVENT__KIND = eINSTANCE.getComplexEvent_Kind();
 
     /**
-     * The meta object literal for the '{@link org.gemoc.monilog.moniLog4DSL.impl.LanguageExpressionConditionImpl <em>Language Expression Condition</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.gemoc.monilog.moniLog4DSL.impl.LanguageExpressionConditionImpl
-     * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getLanguageExpressionCondition()
-     * @generated
-     */
-    EClass LANGUAGE_EXPRESSION_CONDITION = eINSTANCE.getLanguageExpressionCondition();
-
-    /**
-     * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
+     * The meta object literal for the '<em><b>Pattern</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EReference LANGUAGE_EXPRESSION_CONDITION__EXPRESSION = eINSTANCE.getLanguageExpressionCondition_Expression();
+    EReference COMPLEX_EVENT__PATTERN = eINSTANCE.getComplexEvent_Pattern();
 
     /**
-     * The meta object literal for the '{@link org.gemoc.monilog.moniLog4DSL.impl.UniversalityImpl <em>Universality</em>}' class.
+     * The meta object literal for the '{@link org.gemoc.monilog.moniLog4DSL.impl.UserEventImpl <em>User Event</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see org.gemoc.monilog.moniLog4DSL.impl.UniversalityImpl
-     * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getUniversality()
+     * @see org.gemoc.monilog.moniLog4DSL.impl.UserEventImpl
+     * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getUserEvent()
      * @generated
      */
-    EClass UNIVERSALITY = eINSTANCE.getUniversality();
+    EClass USER_EVENT = eINSTANCE.getUserEvent();
 
     /**
-     * The meta object literal for the '<em><b>Event</b></em>' containment reference feature.
+     * The meta object literal for the '{@link org.gemoc.monilog.moniLog4DSL.impl.BeforeASTEventImpl <em>Before AST Event</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * @see org.gemoc.monilog.moniLog4DSL.impl.BeforeASTEventImpl
+     * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getBeforeASTEvent()
      * @generated
      */
-    EReference UNIVERSALITY__EVENT = eINSTANCE.getUniversality_Event();
+    EClass BEFORE_AST_EVENT = eINSTANCE.getBeforeASTEvent();
+
+    /**
+     * The meta object literal for the '{@link org.gemoc.monilog.moniLog4DSL.impl.AfterASTEventImpl <em>After AST Event</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.gemoc.monilog.moniLog4DSL.impl.AfterASTEventImpl
+     * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getAfterASTEvent()
+     * @generated
+     */
+    EClass AFTER_AST_EVENT = eINSTANCE.getAfterASTEvent();
 
     /**
      * The meta object literal for the '{@link org.gemoc.monilog.moniLog4DSL.impl.ExistenceImpl <em>Existence</em>}' class.
@@ -2960,6 +3956,24 @@ public interface MoniLog4DSLPackage extends EPackage
      * @generated
      */
     EReference EXISTENCE__EVENT = eINSTANCE.getExistence_Event();
+
+    /**
+     * The meta object literal for the '{@link org.gemoc.monilog.moniLog4DSL.impl.UniversalityImpl <em>Universality</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.gemoc.monilog.moniLog4DSL.impl.UniversalityImpl
+     * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getUniversality()
+     * @generated
+     */
+    EClass UNIVERSALITY = eINSTANCE.getUniversality();
+
+    /**
+     * The meta object literal for the '<em><b>Event</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference UNIVERSALITY__EVENT = eINSTANCE.getUniversality_Event();
 
     /**
      * The meta object literal for the '{@link org.gemoc.monilog.moniLog4DSL.impl.AbsenceImpl <em>Absence</em>}' class.
@@ -3130,14 +4144,32 @@ public interface MoniLog4DSLPackage extends EPackage
     EReference AFTER_UNTIL__UPPER_BOUND = eINSTANCE.getAfterUntil_UpperBound();
 
     /**
-     * The meta object literal for the '{@link org.gemoc.monilog.moniLog4DSL.impl.NotifyImpl <em>Notify</em>}' class.
+     * The meta object literal for the '{@link org.gemoc.monilog.moniLog4DSL.impl.StartMoniLoggerImpl <em>Start Moni Logger</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see org.gemoc.monilog.moniLog4DSL.impl.NotifyImpl
-     * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getNotify()
+     * @see org.gemoc.monilog.moniLog4DSL.impl.StartMoniLoggerImpl
+     * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getStartMoniLogger()
      * @generated
      */
-    EClass NOTIFY = eINSTANCE.getNotify();
+    EClass START_MONI_LOGGER = eINSTANCE.getStartMoniLogger();
+
+    /**
+     * The meta object literal for the '<em><b>Args</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference START_MONI_LOGGER__ARGS = eINSTANCE.getStartMoniLogger_Args();
+
+    /**
+     * The meta object literal for the '{@link org.gemoc.monilog.moniLog4DSL.impl.StopMoniLoggerImpl <em>Stop Moni Logger</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.gemoc.monilog.moniLog4DSL.impl.StopMoniLoggerImpl
+     * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getStopMoniLogger()
+     * @generated
+     */
+    EClass STOP_MONI_LOGGER = eINSTANCE.getStopMoniLogger();
 
     /**
      * The meta object literal for the '{@link org.gemoc.monilog.moniLog4DSL.impl.EmptyImpl <em>Empty</em>}' class.
@@ -3150,58 +4182,24 @@ public interface MoniLog4DSLPackage extends EPackage
     EClass EMPTY = eINSTANCE.getEmpty();
 
     /**
-     * The meta object literal for the '{@link org.gemoc.monilog.moniLog4DSL.impl.PropertyValueImpl <em>Property Value</em>}' class.
+     * The meta object literal for the '{@link org.gemoc.monilog.moniLog4DSL.MoniLoggerAnnotation <em>Moni Logger Annotation</em>}' enum.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see org.gemoc.monilog.moniLog4DSL.impl.PropertyValueImpl
-     * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getPropertyValue()
+     * @see org.gemoc.monilog.moniLog4DSL.MoniLoggerAnnotation
+     * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getMoniLoggerAnnotation()
      * @generated
      */
-    EClass PROPERTY_VALUE = eINSTANCE.getPropertyValue();
+    EEnum MONI_LOGGER_ANNOTATION = eINSTANCE.getMoniLoggerAnnotation();
 
     /**
-     * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
+     * The meta object literal for the '{@link org.gemoc.monilog.moniLog4DSL.AppenderAnnotation <em>Appender Annotation</em>}' enum.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
+     * @see org.gemoc.monilog.moniLog4DSL.AppenderAnnotation
+     * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getAppenderAnnotation()
      * @generated
      */
-    EAttribute PROPERTY_VALUE__ID = eINSTANCE.getPropertyValue_Id();
-
-    /**
-     * The meta object literal for the '<em><b>Value</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference PROPERTY_VALUE__VALUE = eINSTANCE.getPropertyValue_Value();
-
-    /**
-     * The meta object literal for the '{@link org.gemoc.monilog.moniLog4DSL.impl.ExplicitLanguageExpressionImpl <em>Explicit Language Expression</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.gemoc.monilog.moniLog4DSL.impl.ExplicitLanguageExpressionImpl
-     * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getExplicitLanguageExpression()
-     * @generated
-     */
-    EClass EXPLICIT_LANGUAGE_EXPRESSION = eINSTANCE.getExplicitLanguageExpression();
-
-    /**
-     * The meta object literal for the '<em><b>Language Id</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute EXPLICIT_LANGUAGE_EXPRESSION__LANGUAGE_ID = eINSTANCE.getExplicitLanguageExpression_LanguageId();
-
-    /**
-     * The meta object literal for the '{@link org.gemoc.monilog.moniLog4DSL.impl.DefaultLanguageExpressionImpl <em>Default Language Expression</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.gemoc.monilog.moniLog4DSL.impl.DefaultLanguageExpressionImpl
-     * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getDefaultLanguageExpression()
-     * @generated
-     */
-    EClass DEFAULT_LANGUAGE_EXPRESSION = eINSTANCE.getDefaultLanguageExpression();
+    EEnum APPENDER_ANNOTATION = eINSTANCE.getAppenderAnnotation();
 
     /**
      * The meta object literal for the '{@link org.gemoc.monilog.moniLog4DSL.LogLevel <em>Log Level</em>}' enum.
@@ -3214,14 +4212,14 @@ public interface MoniLog4DSLPackage extends EPackage
     EEnum LOG_LEVEL = eINSTANCE.getLogLevel();
 
     /**
-     * The meta object literal for the '{@link org.gemoc.monilog.moniLog4DSL.TemporalPropertyConditionKind <em>Temporal Property Condition Kind</em>}' enum.
+     * The meta object literal for the '{@link org.gemoc.monilog.moniLog4DSL.TemporalPatternKind <em>Temporal Pattern Kind</em>}' enum.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see org.gemoc.monilog.moniLog4DSL.TemporalPropertyConditionKind
-     * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getTemporalPropertyConditionKind()
+     * @see org.gemoc.monilog.moniLog4DSL.TemporalPatternKind
+     * @see org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLPackageImpl#getTemporalPatternKind()
      * @generated
      */
-    EEnum TEMPORAL_PROPERTY_CONDITION_KIND = eINSTANCE.getTemporalPropertyConditionKind();
+    EEnum TEMPORAL_PATTERN_KIND = eINSTANCE.getTemporalPatternKind();
 
   }
 

@@ -24,22 +24,103 @@ public interface MoniLog4DSLFactory extends EFactory
   MoniLog4DSLFactory eINSTANCE = org.gemoc.monilog.moniLog4DSL.impl.MoniLog4DSLFactoryImpl.init();
 
   /**
-   * Returns a new object of class '<em>Model</em>'.
+   * Returns a new object of class '<em>Document</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Model</em>'.
+   * @return a new object of class '<em>Document</em>'.
    * @generated
    */
-  Model createModel();
+  Document createDocument();
 
   /**
-   * Returns a new object of class '<em>Moni Log Spec</em>'.
+   * Returns a new object of class '<em>Import</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Moni Log Spec</em>'.
+   * @return a new object of class '<em>Import</em>'.
    * @generated
    */
-  MoniLogSpec createMoniLogSpec();
+  Import createImport();
+
+  /**
+   * Returns a new object of class '<em>Appender</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Appender</em>'.
+   * @generated
+   */
+  Appender createAppender();
+
+  /**
+   * Returns a new object of class '<em>Local Appender</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Local Appender</em>'.
+   * @generated
+   */
+  LocalAppender createLocalAppender();
+
+  /**
+   * Returns a new object of class '<em>External Appender</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>External Appender</em>'.
+   * @generated
+   */
+  ExternalAppender createExternalAppender();
+
+  /**
+   * Returns a new object of class '<em>Layout</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Layout</em>'.
+   * @generated
+   */
+  Layout createLayout();
+
+  /**
+   * Returns a new object of class '<em>Local Layout</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Local Layout</em>'.
+   * @generated
+   */
+  LocalLayout createLocalLayout();
+
+  /**
+   * Returns a new object of class '<em>External Layout</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>External Layout</em>'.
+   * @generated
+   */
+  ExternalLayout createExternalLayout();
+
+  /**
+   * Returns a new object of class '<em>Parameter Decl</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Parameter Decl</em>'.
+   * @generated
+   */
+  ParameterDecl createParameterDecl();
+
+  /**
+   * Returns a new object of class '<em>Moni Logger</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Moni Logger</em>'.
+   * @generated
+   */
+  MoniLogger createMoniLogger();
+
+  /**
+   * Returns a new object of class '<em>Parameter</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Parameter</em>'.
+   * @generated
+   */
+  Parameter createParameter();
 
   /**
    * Returns a new object of class '<em>Event</em>'.
@@ -51,31 +132,13 @@ public interface MoniLog4DSLFactory extends EFactory
   Event createEvent();
 
   /**
-   * Returns a new object of class '<em>Before Event</em>'.
+   * Returns a new object of class '<em>AST Event Kind</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Before Event</em>'.
+   * @return a new object of class '<em>AST Event Kind</em>'.
    * @generated
    */
-  BeforeEvent createBeforeEvent();
-
-  /**
-   * Returns a new object of class '<em>After Event</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>After Event</em>'.
-   * @generated
-   */
-  AfterEvent createAfterEvent();
-
-  /**
-   * Returns a new object of class '<em>Before After Event</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Before After Event</em>'.
-   * @generated
-   */
-  BeforeAfterEvent createBeforeAfterEvent();
+  ASTEventKind createASTEventKind();
 
   /**
    * Returns a new object of class '<em>Condition</em>'.
@@ -159,76 +222,58 @@ public interface MoniLog4DSLFactory extends EFactory
   Action createAction();
 
   /**
-   * Returns a new object of class '<em>Append</em>'.
+   * Returns a new object of class '<em>Appender Call</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Append</em>'.
+   * @return a new object of class '<em>Appender Call</em>'.
    * @generated
    */
-  Append createAppend();
+  AppenderCall createAppenderCall();
 
   /**
-   * Returns a new object of class '<em>Appender</em>'.
+   * Returns a new object of class '<em>Call Argument</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Appender</em>'.
+   * @return a new object of class '<em>Call Argument</em>'.
    * @generated
    */
-  Appender createAppender();
+  CallArgument createCallArgument();
 
   /**
-   * Returns a new object of class '<em>Stream Appender</em>'.
+   * Returns a new object of class '<em>Layout Call</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Stream Appender</em>'.
+   * @return a new object of class '<em>Layout Call</em>'.
    * @generated
    */
-  StreamAppender createStreamAppender();
+  LayoutCall createLayoutCall();
 
   /**
-   * Returns a new object of class '<em>File Appender</em>'.
+   * Returns a new object of class '<em>Emit Event</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>File Appender</em>'.
+   * @return a new object of class '<em>Emit Event</em>'.
    * @generated
    */
-  FileAppender createFileAppender();
+  EmitEvent createEmitEvent();
 
   /**
-   * Returns a new object of class '<em>Console Appender</em>'.
+   * Returns a new object of class '<em>Set Variable</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Console Appender</em>'.
+   * @return a new object of class '<em>Set Variable</em>'.
    * @generated
    */
-  ConsoleAppender createConsoleAppender();
+  SetVariable createSetVariable();
 
   /**
-   * Returns a new object of class '<em>Layout</em>'.
+   * Returns a new object of class '<em>Monilogger Call</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Layout</em>'.
+   * @return a new object of class '<em>Monilogger Call</em>'.
    * @generated
    */
-  Layout createLayout();
-
-  /**
-   * Returns a new object of class '<em>String Layout</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>String Layout</em>'.
-   * @generated
-   */
-  StringLayout createStringLayout();
-
-  /**
-   * Returns a new object of class '<em>External Layout</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>External Layout</em>'.
-   * @generated
-   */
-  ExternalLayout createExternalLayout();
+  MoniloggerCall createMoniloggerCall();
 
   /**
    * Returns a new object of class '<em>Stream Event</em>'.
@@ -249,6 +294,33 @@ public interface MoniLog4DSLFactory extends EFactory
   EmptyOrPropertyValue createEmptyOrPropertyValue();
 
   /**
+   * Returns a new object of class '<em>Expression</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Expression</em>'.
+   * @generated
+   */
+  Expression createExpression();
+
+  /**
+   * Returns a new object of class '<em>Parameter Reference</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Parameter Reference</em>'.
+   * @generated
+   */
+  ParameterReference createParameterReference();
+
+  /**
+   * Returns a new object of class '<em>Property Value</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Property Value</em>'.
+   * @generated
+   */
+  PropertyValue createPropertyValue();
+
+  /**
    * Returns a new object of class '<em>Language Expression</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -258,31 +330,49 @@ public interface MoniLog4DSLFactory extends EFactory
   LanguageExpression createLanguageExpression();
 
   /**
-   * Returns a new object of class '<em>Temporal Property Condition</em>'.
+   * Returns a new object of class '<em>AST Event</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Temporal Property Condition</em>'.
+   * @return a new object of class '<em>AST Event</em>'.
    * @generated
    */
-  TemporalPropertyCondition createTemporalPropertyCondition();
+  ASTEvent createASTEvent();
 
   /**
-   * Returns a new object of class '<em>Language Expression Condition</em>'.
+   * Returns a new object of class '<em>Complex Event</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Language Expression Condition</em>'.
+   * @return a new object of class '<em>Complex Event</em>'.
    * @generated
    */
-  LanguageExpressionCondition createLanguageExpressionCondition();
+  ComplexEvent createComplexEvent();
 
   /**
-   * Returns a new object of class '<em>Universality</em>'.
+   * Returns a new object of class '<em>User Event</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Universality</em>'.
+   * @return a new object of class '<em>User Event</em>'.
    * @generated
    */
-  Universality createUniversality();
+  UserEvent createUserEvent();
+
+  /**
+   * Returns a new object of class '<em>Before AST Event</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Before AST Event</em>'.
+   * @generated
+   */
+  BeforeASTEvent createBeforeASTEvent();
+
+  /**
+   * Returns a new object of class '<em>After AST Event</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>After AST Event</em>'.
+   * @generated
+   */
+  AfterASTEvent createAfterASTEvent();
 
   /**
    * Returns a new object of class '<em>Existence</em>'.
@@ -292,6 +382,15 @@ public interface MoniLog4DSLFactory extends EFactory
    * @generated
    */
   Existence createExistence();
+
+  /**
+   * Returns a new object of class '<em>Universality</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Universality</em>'.
+   * @generated
+   */
+  Universality createUniversality();
 
   /**
    * Returns a new object of class '<em>Absence</em>'.
@@ -366,13 +465,22 @@ public interface MoniLog4DSLFactory extends EFactory
   AfterUntil createAfterUntil();
 
   /**
-   * Returns a new object of class '<em>Notify</em>'.
+   * Returns a new object of class '<em>Start Moni Logger</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Notify</em>'.
+   * @return a new object of class '<em>Start Moni Logger</em>'.
    * @generated
    */
-  Notify createNotify();
+  StartMoniLogger createStartMoniLogger();
+
+  /**
+   * Returns a new object of class '<em>Stop Moni Logger</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Stop Moni Logger</em>'.
+   * @generated
+   */
+  StopMoniLogger createStopMoniLogger();
 
   /**
    * Returns a new object of class '<em>Empty</em>'.
@@ -382,33 +490,6 @@ public interface MoniLog4DSLFactory extends EFactory
    * @generated
    */
   Empty createEmpty();
-
-  /**
-   * Returns a new object of class '<em>Property Value</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Property Value</em>'.
-   * @generated
-   */
-  PropertyValue createPropertyValue();
-
-  /**
-   * Returns a new object of class '<em>Explicit Language Expression</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Explicit Language Expression</em>'.
-   * @generated
-   */
-  ExplicitLanguageExpression createExplicitLanguageExpression();
-
-  /**
-   * Returns a new object of class '<em>Default Language Expression</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Default Language Expression</em>'.
-   * @generated
-   */
-  DefaultLanguageExpression createDefaultLanguageExpression();
 
   /**
    * Returns the package supported by this factory.

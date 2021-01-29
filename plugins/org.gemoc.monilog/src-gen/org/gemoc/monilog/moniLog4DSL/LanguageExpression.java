@@ -3,7 +3,6 @@
  */
 package org.gemoc.monilog.moniLog4DSL;
 
-import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -14,6 +13,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
+ *   <li>{@link org.gemoc.monilog.moniLog4DSL.LanguageExpression#getLanguageId <em>Language Id</em>}</li>
  *   <li>{@link org.gemoc.monilog.moniLog4DSL.LanguageExpression#getExpression <em>Expression</em>}</li>
  * </ul>
  *
@@ -21,8 +21,30 @@ import org.eclipse.emf.ecore.EObject;
  * @model
  * @generated
  */
-public interface LanguageExpression extends EObject
+public interface LanguageExpression extends Action, Expression
 {
+  /**
+   * Returns the value of the '<em><b>Language Id</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Language Id</em>' attribute.
+   * @see #setLanguageId(String)
+   * @see org.gemoc.monilog.moniLog4DSL.MoniLog4DSLPackage#getLanguageExpression_LanguageId()
+   * @model
+   * @generated
+   */
+  String getLanguageId();
+
+  /**
+   * Sets the value of the '{@link org.gemoc.monilog.moniLog4DSL.LanguageExpression#getLanguageId <em>Language Id</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Language Id</em>' attribute.
+   * @see #getLanguageId()
+   * @generated
+   */
+  void setLanguageId(String value);
+
   /**
    * Returns the value of the '<em><b>Expression</b></em>' attribute.
    * <!-- begin-user-doc -->

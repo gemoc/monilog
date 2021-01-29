@@ -3,6 +3,7 @@ package org.gemoc.monilogger.temporalpatterns
 import java.util.List
 import java.util.Map
 import org.gemoc.monilog.moniLog4DSL.Between
+import org.gemoc.monilog.moniLog4DSL.ComplexEvent
 import org.gemoc.monilog.moniLog4DSL.Precedence
 
 class SPrecedesPBetweenQAndR extends AbstractTemporalProperty {
@@ -12,12 +13,12 @@ class SPrecedesPBetweenQAndR extends AbstractTemporalProperty {
 	val String r
 	val String s
 	
-	new(String name, Precedence precedence, Between between) {
-		super(name)
-		p = precedence.successor.eventId
-		q = between.lowerBound.eventId
-		r = between.upperBound.eventId
-		s = precedence.predecessor.eventId
+	new(ComplexEvent event, Precedence precedence, Between between) {
+		super(event)
+		p = precedence.successor.event.name
+		q = between.lowerBound.event.name
+		r = between.upperBound.event.name
+		s = precedence.predecessor.event.name
 	}
 	
 	override protected String getStatementString() {

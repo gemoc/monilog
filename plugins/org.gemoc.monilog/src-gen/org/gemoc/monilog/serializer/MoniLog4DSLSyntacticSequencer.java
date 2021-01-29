@@ -20,11 +20,13 @@ import org.gemoc.monilog.services.MoniLog4DSLGrammarAccess;
 public class MoniLog4DSLSyntacticSequencer extends AbstractSyntacticSequencer {
 
 	protected MoniLog4DSLGrammarAccess grammarAccess;
+	protected AbstractElementAlias match_Pattern_ExistsKeyword_0_1_q;
 	protected AbstractElementAlias match_Scope_GloballyKeyword_0_1_q;
 	
 	@Inject
 	protected void init(IGrammarAccess access) {
 		grammarAccess = (MoniLog4DSLGrammarAccess) access;
+		match_Pattern_ExistsKeyword_0_1_q = new TokenAlias(false, true, grammarAccess.getPatternAccess().getExistsKeyword_0_1());
 		match_Scope_GloballyKeyword_0_1_q = new TokenAlias(false, true, grammarAccess.getScopeAccess().getGloballyKeyword_0_1());
 	}
 	
@@ -40,12 +42,26 @@ public class MoniLog4DSLSyntacticSequencer extends AbstractSyntacticSequencer {
 		List<INode> transitionNodes = collectNodes(fromNode, toNode);
 		for (AbstractElementAlias syntax : transition.getAmbiguousSyntaxes()) {
 			List<INode> syntaxNodes = getNodesFor(transitionNodes, syntax);
-			if (match_Scope_GloballyKeyword_0_1_q.equals(syntax))
+			if (match_Pattern_ExistsKeyword_0_1_q.equals(syntax))
+				emit_Pattern_ExistsKeyword_0_1_q(semanticObject, getLastNavigableState(), syntaxNodes);
+			else if (match_Scope_GloballyKeyword_0_1_q.equals(syntax))
 				emit_Scope_GloballyKeyword_0_1_q(semanticObject, getLastNavigableState(), syntaxNodes);
 			else acceptNodes(getLastNavigableState(), syntaxNodes);
 		}
 	}
 
+	/**
+	 * Ambiguous syntax:
+	 *     'exists'?
+	 *
+	 * This ambiguous syntax occurs at:
+	 *     (rule start) (ambiguity) bound=BoundType
+	 *     (rule start) (ambiguity) event=StreamEvent
+	 */
+	protected void emit_Pattern_ExistsKeyword_0_1_q(EObject semanticObject, ISynNavigable transition, List<INode> nodes) {
+		acceptNodes(transition, nodes);
+	}
+	
 	/**
 	 * Ambiguous syntax:
 	 *     'globally'?

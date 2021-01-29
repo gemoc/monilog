@@ -3,8 +3,6 @@
  */
 package org.gemoc.monilog.moniLog4DSL;
 
-import org.eclipse.emf.common.util.EList;
-
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -16,7 +14,8 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.gemoc.monilog.moniLog4DSL.Layout#getValues <em>Values</em>}</li>
+ *   <li>{@link org.gemoc.monilog.moniLog4DSL.Layout#getName <em>Name</em>}</li>
+ *   <li>{@link org.gemoc.monilog.moniLog4DSL.Layout#getParameterDecl <em>Parameter Decl</em>}</li>
  * </ul>
  *
  * @see org.gemoc.monilog.moniLog4DSL.MoniLog4DSLPackage#getLayout()
@@ -26,15 +25,47 @@ import org.eclipse.emf.ecore.EObject;
 public interface Layout extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Values</b></em>' containment reference list.
-   * The list contents are of type {@link org.gemoc.monilog.moniLog4DSL.LanguageExpression}.
+   * Returns the value of the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Values</em>' containment reference list.
-   * @see org.gemoc.monilog.moniLog4DSL.MoniLog4DSLPackage#getLayout_Values()
+   * @return the value of the '<em>Name</em>' attribute.
+   * @see #setName(String)
+   * @see org.gemoc.monilog.moniLog4DSL.MoniLog4DSLPackage#getLayout_Name()
+   * @model
+   * @generated
+   */
+  String getName();
+
+  /**
+   * Sets the value of the '{@link org.gemoc.monilog.moniLog4DSL.Layout#getName <em>Name</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Name</em>' attribute.
+   * @see #getName()
+   * @generated
+   */
+  void setName(String value);
+
+  /**
+   * Returns the value of the '<em><b>Parameter Decl</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>Parameter Decl</em>' containment reference.
+   * @see #setParameterDecl(ParameterDecl)
+   * @see org.gemoc.monilog.moniLog4DSL.MoniLog4DSLPackage#getLayout_ParameterDecl()
    * @model containment="true"
    * @generated
    */
-  EList<LanguageExpression> getValues();
+  ParameterDecl getParameterDecl();
+
+  /**
+   * Sets the value of the '{@link org.gemoc.monilog.moniLog4DSL.Layout#getParameterDecl <em>Parameter Decl</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>Parameter Decl</em>' containment reference.
+   * @see #getParameterDecl()
+   * @generated
+   */
+  void setParameterDecl(ParameterDecl value);
 
 } // Layout

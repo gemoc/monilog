@@ -3,6 +3,7 @@ package org.gemoc.monilogger.temporalpatterns
 import java.util.List
 import java.util.Map
 import org.gemoc.monilog.moniLog4DSL.Before
+import org.gemoc.monilog.moniLog4DSL.ComplexEvent
 import org.gemoc.monilog.moniLog4DSL.Existence
 import org.gemoc.monilog.moniLog4DSL.MoniLog4DSLPackage
 
@@ -11,10 +12,10 @@ class ExistsPBeforeQ extends AbstractExistenceProperty {
 	val String p
 	val String q
 	
-	new(String name, Existence exists, Before before) {
-		super(name, exists)
-		p = exists.event.eventId
-		q = before.upperBound.eventId
+	new(ComplexEvent event, Existence exists, Before before) {
+		super(event, exists)
+		p = exists.event.event.name
+		q = before.upperBound.event.name
 	}
 	
 	override protected String getStatementString() {

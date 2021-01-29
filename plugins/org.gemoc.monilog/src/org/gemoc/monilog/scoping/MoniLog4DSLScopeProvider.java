@@ -3,7 +3,6 @@
  */
 package org.gemoc.monilog.scoping;
 
-
 /**
  * This class contains custom scoping description.
  * 

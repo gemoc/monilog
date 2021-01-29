@@ -3,6 +3,7 @@ package org.gemoc.monilogger.temporalpatterns
 import java.util.List
 import java.util.Map
 import org.gemoc.monilog.moniLog4DSL.Before
+import org.gemoc.monilog.moniLog4DSL.ComplexEvent
 import org.gemoc.monilog.moniLog4DSL.Response
 
 class SRespondsToPBeforeQ extends AbstractTemporalProperty {
@@ -11,11 +12,11 @@ class SRespondsToPBeforeQ extends AbstractTemporalProperty {
 	val String q
 	val String s
 	
-	new(String name, Response response, Before before) {
-		super(name)
-		p = response.trigger.eventId
-		q = before.upperBound.eventId
-		s = response.event.eventId
+	new(ComplexEvent event, Response response, Before before) {
+		super(event)
+		p = response.trigger.event.name
+		q = before.upperBound.event.name
+		s = response.event.event.name
 	}
 	
 	override protected String getStatementString() {

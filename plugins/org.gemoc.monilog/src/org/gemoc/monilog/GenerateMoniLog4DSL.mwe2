@@ -27,6 +27,9 @@ Workflow {
 		language = StandardLanguage {
 			name = "org.gemoc.monilog.MoniLog4DSL"
 			fileExtensions = "mnlg"
+			
+			scopeProvider = scoping.ImportNamespacesScopingFragment2 auto-inject { }
+			fragment = exporting.QualifiedNamesFragment2 auto-inject { }
 
 			serializer = {
 				generateStub = false

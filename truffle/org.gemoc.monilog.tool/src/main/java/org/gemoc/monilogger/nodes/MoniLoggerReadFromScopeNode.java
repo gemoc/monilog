@@ -51,6 +51,7 @@ public abstract class MoniLoggerReadFromScopeNode extends MoniLoggerExecutableNo
 			@Cached("getBindings()") Value bindings) {
 		try {
 			final Object receiver = getVariables(frame);
+//			TODO handle receiver == null
 			final Object result = variables.readMember(receiver, variableName);
 			bindings.putMember(variableName, result);
 			return result;
@@ -66,9 +67,9 @@ public abstract class MoniLoggerReadFromScopeNode extends MoniLoggerExecutableNo
 	
 	protected Object getVariables(VirtualFrame frame) {
 		Object result = null;
-		final Iterator<Scope> localScopes = scopeGetter.apply(frame).iterator();
-		while (localScopes.hasNext()) {
-			final Scope scope = localScopes.next();
+		final Iterator<Scope> scopes = scopeGetter.apply(frame).iterator();
+		while (scopes.hasNext()) {
+			final Scope scope = scopes.next();
 			final Object args = scope.getArguments();
 			if (args != null) {
 				setVariables(args);

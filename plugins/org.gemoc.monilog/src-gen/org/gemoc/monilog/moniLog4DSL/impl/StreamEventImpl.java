@@ -20,6 +20,7 @@ import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 import org.gemoc.monilog.moniLog4DSL.EmptyOrPropertyValue;
+import org.gemoc.monilog.moniLog4DSL.Event;
 import org.gemoc.monilog.moniLog4DSL.MoniLog4DSLPackage;
 import org.gemoc.monilog.moniLog4DSL.StreamEvent;
 
@@ -31,7 +32,7 @@ import org.gemoc.monilog.moniLog4DSL.StreamEvent;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.gemoc.monilog.moniLog4DSL.impl.StreamEventImpl#getEventId <em>Event Id</em>}</li>
+ *   <li>{@link org.gemoc.monilog.moniLog4DSL.impl.StreamEventImpl#getEvent <em>Event</em>}</li>
  *   <li>{@link org.gemoc.monilog.moniLog4DSL.impl.StreamEventImpl#getValues <em>Values</em>}</li>
  * </ul>
  *
@@ -40,24 +41,14 @@ import org.gemoc.monilog.moniLog4DSL.StreamEvent;
 public class StreamEventImpl extends MinimalEObjectImpl.Container implements StreamEvent
 {
   /**
-   * The default value of the '{@link #getEventId() <em>Event Id</em>}' attribute.
+   * The cached value of the '{@link #getEvent() <em>Event</em>}' reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getEventId()
+   * @see #getEvent()
    * @generated
    * @ordered
    */
-  protected static final String EVENT_ID_EDEFAULT = null;
-
-  /**
-   * The cached value of the '{@link #getEventId() <em>Event Id</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #getEventId()
-   * @generated
-   * @ordered
-   */
-  protected String eventId = EVENT_ID_EDEFAULT;
+  protected Event event;
 
   /**
    * The cached value of the '{@link #getValues() <em>Values</em>}' containment reference list.
@@ -96,9 +87,29 @@ public class StreamEventImpl extends MinimalEObjectImpl.Container implements Str
    * @generated
    */
   @Override
-  public String getEventId()
+  public Event getEvent()
   {
-    return eventId;
+    if (event != null && event.eIsProxy())
+    {
+      InternalEObject oldEvent = (InternalEObject)event;
+      event = (Event)eResolveProxy(oldEvent);
+      if (event != oldEvent)
+      {
+        if (eNotificationRequired())
+          eNotify(new ENotificationImpl(this, Notification.RESOLVE, MoniLog4DSLPackage.STREAM_EVENT__EVENT, oldEvent, event));
+      }
+    }
+    return event;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public Event basicGetEvent()
+  {
+    return event;
   }
 
   /**
@@ -107,12 +118,12 @@ public class StreamEventImpl extends MinimalEObjectImpl.Container implements Str
    * @generated
    */
   @Override
-  public void setEventId(String newEventId)
+  public void setEvent(Event newEvent)
   {
-    String oldEventId = eventId;
-    eventId = newEventId;
+    Event oldEvent = event;
+    event = newEvent;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, MoniLog4DSLPackage.STREAM_EVENT__EVENT_ID, oldEventId, eventId));
+      eNotify(new ENotificationImpl(this, Notification.SET, MoniLog4DSLPackage.STREAM_EVENT__EVENT, oldEvent, event));
   }
 
   /**
@@ -156,8 +167,9 @@ public class StreamEventImpl extends MinimalEObjectImpl.Container implements Str
   {
     switch (featureID)
     {
-      case MoniLog4DSLPackage.STREAM_EVENT__EVENT_ID:
-        return getEventId();
+      case MoniLog4DSLPackage.STREAM_EVENT__EVENT:
+        if (resolve) return getEvent();
+        return basicGetEvent();
       case MoniLog4DSLPackage.STREAM_EVENT__VALUES:
         return getValues();
     }
@@ -175,8 +187,8 @@ public class StreamEventImpl extends MinimalEObjectImpl.Container implements Str
   {
     switch (featureID)
     {
-      case MoniLog4DSLPackage.STREAM_EVENT__EVENT_ID:
-        setEventId((String)newValue);
+      case MoniLog4DSLPackage.STREAM_EVENT__EVENT:
+        setEvent((Event)newValue);
         return;
       case MoniLog4DSLPackage.STREAM_EVENT__VALUES:
         getValues().clear();
@@ -196,8 +208,8 @@ public class StreamEventImpl extends MinimalEObjectImpl.Container implements Str
   {
     switch (featureID)
     {
-      case MoniLog4DSLPackage.STREAM_EVENT__EVENT_ID:
-        setEventId(EVENT_ID_EDEFAULT);
+      case MoniLog4DSLPackage.STREAM_EVENT__EVENT:
+        setEvent((Event)null);
         return;
       case MoniLog4DSLPackage.STREAM_EVENT__VALUES:
         getValues().clear();
@@ -216,29 +228,12 @@ public class StreamEventImpl extends MinimalEObjectImpl.Container implements Str
   {
     switch (featureID)
     {
-      case MoniLog4DSLPackage.STREAM_EVENT__EVENT_ID:
-        return EVENT_ID_EDEFAULT == null ? eventId != null : !EVENT_ID_EDEFAULT.equals(eventId);
+      case MoniLog4DSLPackage.STREAM_EVENT__EVENT:
+        return event != null;
       case MoniLog4DSLPackage.STREAM_EVENT__VALUES:
         return values != null && !values.isEmpty();
     }
     return super.eIsSet(featureID);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public String toString()
-  {
-    if (eIsProxy()) return super.toString();
-
-    StringBuilder result = new StringBuilder(super.toString());
-    result.append(" (eventId: ");
-    result.append(eventId);
-    result.append(')');
-    return result.toString();
   }
 
 } //StreamEventImpl

@@ -6,5 +6,7 @@ bin/
 .settings/
 # Xtext
 xtend-gen/
+plugins/org.gemoc.monilog/.antlr-generator-3.2.0-patch.jar
 # Maven
 target/
+plugins/truffle-api-wrapper/mvn/*
