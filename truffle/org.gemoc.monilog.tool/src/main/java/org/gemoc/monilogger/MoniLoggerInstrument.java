@@ -31,7 +31,7 @@ import org.gemoc.monilog.moniLog4DSL.Action;
 import org.gemoc.monilog.moniLog4DSL.AfterASTEvent;
 import org.gemoc.monilog.moniLog4DSL.Appender;
 import org.gemoc.monilog.moniLog4DSL.AppenderCall;
-import org.gemoc.monilog.moniLog4DSL.AppenderCallArgument;
+import org.gemoc.monilog.moniLog4DSL.CallArgument;
 import org.gemoc.monilog.moniLog4DSL.BeforeASTEvent;
 import org.gemoc.monilog.moniLog4DSL.ComplexEvent;
 import org.gemoc.monilog.moniLog4DSL.Condition;
@@ -548,8 +548,8 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 		return binding;
 	}
 
-	private List<AppenderCallArgument> computeAppenderCallActualArgs(AppenderCall childCall, AppenderCall parentCall,
-			Map<AppenderCall, List<AppenderCallArgument>> appenderCallToActualArgs) {
+	private List<CallArgument> computeAppenderCallActualArgs(AppenderCall childCall, AppenderCall parentCall,
+			Map<AppenderCall, List<CallArgument>> appenderCallToActualArgs) {
 		return childCall.getArgs().stream().map(a -> {
 			if (a instanceof ParameterReference) {
 				final Parameter param = ((ParameterReference) a).getParameter();
@@ -566,7 +566,7 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 	}
 
 	private MoniLoggerExecutableNode getAppenderExecutableNode(Env env, AppenderCall appenderCall, Level level,
-			Node node, Set<String> languages, Map<AppenderCall, List<AppenderCallArgument>> appenderCallToActualArgs) {
+			Node node, Set<String> languages, Map<AppenderCall, List<CallArgument>> appenderCallToActualArgs) {
 		if (appenderCall.getArgs().stream().allMatch(a -> a instanceof LanguageExpression || a instanceof LayoutCall)) {
 			appenderCallToActualArgs.putIfAbsent(appenderCall, new ArrayList<>(appenderCall.getArgs()));
 		}
@@ -590,7 +590,7 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 				final Class<?> appenderClass = contextClassLoader.loadClass(className);
 				final Constructor<?> constructor = appenderClass.getConstructor();
 				final Value appenderValue = Value.asValue(constructor.newInstance());
-				final List<AppenderCallArgument> actualArgs = appenderCallToActualArgs.get(appenderCall);
+				final List<CallArgument> actualArgs = appenderCallToActualArgs.get(appenderCall);
 				final MoniLoggerExecutableNode[] valueNodes = actualArgs.stream()
 						.map(arg -> getAppenderCallArgumentNode(arg, node, level, languages))
 						.collect(Collectors.toList()).toArray(EMPTY_ARRAY);
@@ -671,7 +671,7 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 		}
 	}
 
-	private MoniLoggerExecutableNode getAppenderCallArgumentNode(AppenderCallArgument argument, Node node, Level level,
+	private MoniLoggerExecutableNode getAppenderCallArgumentNode(CallArgument argument, Node node, Level level,
 			Set<String> languages) {
 		switch (argument.eClass().getClassifierID()) {
 		case MoniLog4DSLPackage.LAYOUT_CALL:
