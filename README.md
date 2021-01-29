@@ -1,7 +1,7 @@
 # Monilog
 Monitoring and logging tool for executable domain-specific models run on GraalVM.
 
-Requires GraalVM 20.1.0.
+Requires GraalVM 21.0.0.
 
 ## Setup
 
