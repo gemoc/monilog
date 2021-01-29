@@ -14,40 +14,46 @@ import org.eclipse.xtext.serializer.ISerializationContext;
 import org.eclipse.xtext.serializer.acceptor.SequenceFeeder;
 import org.eclipse.xtext.serializer.sequencer.AbstractDelegatingSemanticSequencer;
 import org.eclipse.xtext.serializer.sequencer.ITransientValueService.ValueTransient;
+import org.gemoc.monilog.moniLog4DSL.ASTEvent;
 import org.gemoc.monilog.moniLog4DSL.Absence;
 import org.gemoc.monilog.moniLog4DSL.After;
-import org.gemoc.monilog.moniLog4DSL.AfterEvent;
+import org.gemoc.monilog.moniLog4DSL.AfterASTEvent;
 import org.gemoc.monilog.moniLog4DSL.AfterUntil;
-import org.gemoc.monilog.moniLog4DSL.Append;
+import org.gemoc.monilog.moniLog4DSL.AppenderCall;
 import org.gemoc.monilog.moniLog4DSL.Before;
-import org.gemoc.monilog.moniLog4DSL.BeforeAfterEvent;
-import org.gemoc.monilog.moniLog4DSL.BeforeEvent;
+import org.gemoc.monilog.moniLog4DSL.BeforeASTEvent;
 import org.gemoc.monilog.moniLog4DSL.Between;
-import org.gemoc.monilog.moniLog4DSL.ConsoleAppender;
-import org.gemoc.monilog.moniLog4DSL.DefaultLanguageExpression;
+import org.gemoc.monilog.moniLog4DSL.ComplexEvent;
+import org.gemoc.monilog.moniLog4DSL.Condition;
+import org.gemoc.monilog.moniLog4DSL.Document;
+import org.gemoc.monilog.moniLog4DSL.EmitEvent;
 import org.gemoc.monilog.moniLog4DSL.Empty;
 import org.gemoc.monilog.moniLog4DSL.ExactBound;
 import org.gemoc.monilog.moniLog4DSL.Existence;
-import org.gemoc.monilog.moniLog4DSL.ExplicitLanguageExpression;
+import org.gemoc.monilog.moniLog4DSL.ExternalAppender;
 import org.gemoc.monilog.moniLog4DSL.ExternalLayout;
-import org.gemoc.monilog.moniLog4DSL.FileAppender;
 import org.gemoc.monilog.moniLog4DSL.Globally;
-import org.gemoc.monilog.moniLog4DSL.LanguageExpressionCondition;
+import org.gemoc.monilog.moniLog4DSL.Import;
+import org.gemoc.monilog.moniLog4DSL.LanguageExpression;
+import org.gemoc.monilog.moniLog4DSL.LayoutCall;
+import org.gemoc.monilog.moniLog4DSL.LocalAppender;
+import org.gemoc.monilog.moniLog4DSL.LocalLayout;
 import org.gemoc.monilog.moniLog4DSL.LowerBound;
-import org.gemoc.monilog.moniLog4DSL.Model;
 import org.gemoc.monilog.moniLog4DSL.MoniLog4DSLPackage;
-import org.gemoc.monilog.moniLog4DSL.MoniLogSpec;
-import org.gemoc.monilog.moniLog4DSL.Notify;
+import org.gemoc.monilog.moniLog4DSL.MoniLogger;
+import org.gemoc.monilog.moniLog4DSL.ParameterDecl;
+import org.gemoc.monilog.moniLog4DSL.ParameterReference;
 import org.gemoc.monilog.moniLog4DSL.Precedence;
 import org.gemoc.monilog.moniLog4DSL.PropertyValue;
 import org.gemoc.monilog.moniLog4DSL.Response;
-import org.gemoc.monilog.moniLog4DSL.StreamAppender;
+import org.gemoc.monilog.moniLog4DSL.SetVariable;
+import org.gemoc.monilog.moniLog4DSL.StartMoniLogger;
+import org.gemoc.monilog.moniLog4DSL.StopMoniLogger;
 import org.gemoc.monilog.moniLog4DSL.StreamEvent;
-import org.gemoc.monilog.moniLog4DSL.StringLayout;
 import org.gemoc.monilog.moniLog4DSL.TemporalPattern;
-import org.gemoc.monilog.moniLog4DSL.TemporalPropertyCondition;
 import org.gemoc.monilog.moniLog4DSL.Universality;
 import org.gemoc.monilog.moniLog4DSL.UpperBound;
+import org.gemoc.monilog.moniLog4DSL.UserEvent;
 import org.gemoc.monilog.services.MoniLog4DSLGrammarAccess;
 
 @SuppressWarnings("all")
@@ -64,38 +70,44 @@ public class MoniLog4DSLSemanticSequencer extends AbstractDelegatingSemanticSequ
 		Set<Parameter> parameters = context.getEnabledBooleanParameters();
 		if (epackage == MoniLog4DSLPackage.eINSTANCE)
 			switch (semanticObject.eClass().getClassifierID()) {
+			case MoniLog4DSLPackage.AST_EVENT:
+				sequence_Event(context, (ASTEvent) semanticObject); 
+				return; 
 			case MoniLog4DSLPackage.ABSENCE:
 				sequence_Pattern(context, (Absence) semanticObject); 
 				return; 
 			case MoniLog4DSLPackage.AFTER:
 				sequence_Scope(context, (After) semanticObject); 
 				return; 
-			case MoniLog4DSLPackage.AFTER_EVENT:
-				sequence_AfterEvent(context, (AfterEvent) semanticObject); 
+			case MoniLog4DSLPackage.AFTER_AST_EVENT:
+				sequence_ASTEventKind(context, (AfterASTEvent) semanticObject); 
 				return; 
 			case MoniLog4DSLPackage.AFTER_UNTIL:
 				sequence_Scope(context, (AfterUntil) semanticObject); 
 				return; 
-			case MoniLog4DSLPackage.APPEND:
-				sequence_Append(context, (Append) semanticObject); 
+			case MoniLog4DSLPackage.APPENDER_CALL:
+				sequence_AppenderCall(context, (AppenderCall) semanticObject); 
 				return; 
 			case MoniLog4DSLPackage.BEFORE:
 				sequence_Scope(context, (Before) semanticObject); 
 				return; 
-			case MoniLog4DSLPackage.BEFORE_AFTER_EVENT:
-				sequence_BeforeAfterEvent(context, (BeforeAfterEvent) semanticObject); 
-				return; 
-			case MoniLog4DSLPackage.BEFORE_EVENT:
-				sequence_BeforeEvent(context, (BeforeEvent) semanticObject); 
+			case MoniLog4DSLPackage.BEFORE_AST_EVENT:
+				sequence_ASTEventKind(context, (BeforeASTEvent) semanticObject); 
 				return; 
 			case MoniLog4DSLPackage.BETWEEN:
 				sequence_Scope(context, (Between) semanticObject); 
 				return; 
-			case MoniLog4DSLPackage.CONSOLE_APPENDER:
-				sequence_ConsoleAppender(context, (ConsoleAppender) semanticObject); 
+			case MoniLog4DSLPackage.COMPLEX_EVENT:
+				sequence_Event(context, (ComplexEvent) semanticObject); 
 				return; 
-			case MoniLog4DSLPackage.DEFAULT_LANGUAGE_EXPRESSION:
-				sequence_LanguageExpression(context, (DefaultLanguageExpression) semanticObject); 
+			case MoniLog4DSLPackage.CONDITION:
+				sequence_Condition(context, (Condition) semanticObject); 
+				return; 
+			case MoniLog4DSLPackage.DOCUMENT:
+				sequence_Document(context, (Document) semanticObject); 
+				return; 
+			case MoniLog4DSLPackage.EMIT_EVENT:
+				sequence_EmitEvent(context, (EmitEvent) semanticObject); 
 				return; 
 			case MoniLog4DSLPackage.EMPTY:
 				sequence_EmptyOrPropertyValue(context, (Empty) semanticObject); 
@@ -106,62 +118,84 @@ public class MoniLog4DSLSemanticSequencer extends AbstractDelegatingSemanticSequ
 			case MoniLog4DSLPackage.EXISTENCE:
 				sequence_Pattern(context, (Existence) semanticObject); 
 				return; 
-			case MoniLog4DSLPackage.EXPLICIT_LANGUAGE_EXPRESSION:
-				sequence_LanguageExpression(context, (ExplicitLanguageExpression) semanticObject); 
+			case MoniLog4DSLPackage.EXTERNAL_APPENDER:
+				sequence_ExternalAppender(context, (ExternalAppender) semanticObject); 
 				return; 
 			case MoniLog4DSLPackage.EXTERNAL_LAYOUT:
 				sequence_ExternalLayout(context, (ExternalLayout) semanticObject); 
 				return; 
-			case MoniLog4DSLPackage.FILE_APPENDER:
-				sequence_FileAppender(context, (FileAppender) semanticObject); 
-				return; 
 			case MoniLog4DSLPackage.GLOBALLY:
 				sequence_Scope(context, (Globally) semanticObject); 
 				return; 
-			case MoniLog4DSLPackage.LANGUAGE_EXPRESSION_CONDITION:
-				sequence_Condition(context, (LanguageExpressionCondition) semanticObject); 
+			case MoniLog4DSLPackage.IMPORT:
+				sequence_Import(context, (Import) semanticObject); 
+				return; 
+			case MoniLog4DSLPackage.LANGUAGE_EXPRESSION:
+				sequence_LanguageExpression(context, (LanguageExpression) semanticObject); 
+				return; 
+			case MoniLog4DSLPackage.LAYOUT_CALL:
+				sequence_LayoutCall(context, (LayoutCall) semanticObject); 
+				return; 
+			case MoniLog4DSLPackage.LOCAL_APPENDER:
+				sequence_LocalAppender(context, (LocalAppender) semanticObject); 
+				return; 
+			case MoniLog4DSLPackage.LOCAL_LAYOUT:
+				sequence_LocalLayout(context, (LocalLayout) semanticObject); 
 				return; 
 			case MoniLog4DSLPackage.LOWER_BOUND:
 				sequence_LowerBound(context, (LowerBound) semanticObject); 
 				return; 
-			case MoniLog4DSLPackage.MODEL:
-				sequence_Model(context, (Model) semanticObject); 
+			case MoniLog4DSLPackage.MONI_LOGGER:
+				sequence_MoniLogger(context, (MoniLogger) semanticObject); 
 				return; 
-			case MoniLog4DSLPackage.MONI_LOG_SPEC:
-				sequence_MoniLogSpec(context, (MoniLogSpec) semanticObject); 
+			case MoniLog4DSLPackage.PARAMETER:
+				sequence_Parameter(context, (org.gemoc.monilog.moniLog4DSL.Parameter) semanticObject); 
 				return; 
-			case MoniLog4DSLPackage.NOTIFY:
-				sequence_Action(context, (Notify) semanticObject); 
+			case MoniLog4DSLPackage.PARAMETER_DECL:
+				if (rule == grammarAccess.getParameterDeclNoVarArgsRule()) {
+					sequence_ParameterDeclNoVarArgs(context, (ParameterDecl) semanticObject); 
+					return; 
+				}
+				else if (rule == grammarAccess.getParameterDeclVarArgsRule()) {
+					sequence_ParameterDeclVarArgs(context, (ParameterDecl) semanticObject); 
+					return; 
+				}
+				else break;
+			case MoniLog4DSLPackage.PARAMETER_REFERENCE:
+				sequence_ParameterReference(context, (ParameterReference) semanticObject); 
 				return; 
 			case MoniLog4DSLPackage.PRECEDENCE:
 				sequence_Pattern(context, (Precedence) semanticObject); 
 				return; 
 			case MoniLog4DSLPackage.PROPERTY_VALUE:
-				sequence_EmptyOrPropertyValue(context, (PropertyValue) semanticObject); 
+				sequence_PropertyValue(context, (PropertyValue) semanticObject); 
 				return; 
 			case MoniLog4DSLPackage.RESPONSE:
 				sequence_Pattern(context, (Response) semanticObject); 
 				return; 
-			case MoniLog4DSLPackage.STREAM_APPENDER:
-				sequence_StreamAppender(context, (StreamAppender) semanticObject); 
+			case MoniLog4DSLPackage.SET_VARIABLE:
+				sequence_SetVariable(context, (SetVariable) semanticObject); 
+				return; 
+			case MoniLog4DSLPackage.START_MONI_LOGGER:
+				sequence_MoniloggerCall(context, (StartMoniLogger) semanticObject); 
+				return; 
+			case MoniLog4DSLPackage.STOP_MONI_LOGGER:
+				sequence_MoniloggerCall(context, (StopMoniLogger) semanticObject); 
 				return; 
 			case MoniLog4DSLPackage.STREAM_EVENT:
 				sequence_StreamEvent(context, (StreamEvent) semanticObject); 
 				return; 
-			case MoniLog4DSLPackage.STRING_LAYOUT:
-				sequence_StringLayout(context, (StringLayout) semanticObject); 
-				return; 
 			case MoniLog4DSLPackage.TEMPORAL_PATTERN:
 				sequence_TemporalPattern(context, (TemporalPattern) semanticObject); 
-				return; 
-			case MoniLog4DSLPackage.TEMPORAL_PROPERTY_CONDITION:
-				sequence_Condition(context, (TemporalPropertyCondition) semanticObject); 
 				return; 
 			case MoniLog4DSLPackage.UNIVERSALITY:
 				sequence_Pattern(context, (Universality) semanticObject); 
 				return; 
 			case MoniLog4DSLPackage.UPPER_BOUND:
 				sequence_UpperBound(context, (UpperBound) semanticObject); 
+				return; 
+			case MoniLog4DSLPackage.USER_EVENT:
+				sequence_Event(context, (UserEvent) semanticObject); 
 				return; 
 			}
 		if (errorAcceptor != null)
@@ -170,120 +204,81 @@ public class MoniLog4DSLSemanticSequencer extends AbstractDelegatingSemanticSequ
 	
 	/**
 	 * Contexts:
-	 *     Action returns Notify
+	 *     ASTEventKind returns AfterASTEvent
 	 *
 	 * Constraint:
-	 *     {Notify}
+	 *     {AfterASTEvent}
 	 */
-	protected void sequence_Action(ISerializationContext context, Notify semanticObject) {
+	protected void sequence_ASTEventKind(ISerializationContext context, AfterASTEvent semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
 	 * Contexts:
-	 *     Event returns AfterEvent
-	 *     AfterEvent returns AfterEvent
+	 *     ASTEventKind returns BeforeASTEvent
 	 *
 	 * Constraint:
-	 *     ((ruleID=ID | ruleID=STRING) limit=INT? (frequency=INT? limit=INT?)*)
+	 *     {BeforeASTEvent}
 	 */
-	protected void sequence_AfterEvent(ISerializationContext context, AfterEvent semanticObject) {
+	protected void sequence_ASTEventKind(ISerializationContext context, BeforeASTEvent semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
 	 * Contexts:
-	 *     Action returns Append
-	 *     Append returns Append
+	 *     Action returns AppenderCall
+	 *     AppenderCall returns AppenderCall
 	 *
 	 * Constraint:
-	 *     appender=Appender
+	 *     (appender=[Appender|QualifiedName] (args+=AppenderCallArgument args+=AppenderCallArgument*)?)
 	 */
-	protected void sequence_Append(ISerializationContext context, Append semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, MoniLog4DSLPackage.Literals.APPEND__APPENDER) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MoniLog4DSLPackage.Literals.APPEND__APPENDER));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getAppendAccess().getAppenderAppenderParserRuleCall_1_0(), semanticObject.getAppender());
-		feeder.finish();
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Event returns BeforeAfterEvent
-	 *     BeforeAfterEvent returns BeforeAfterEvent
-	 *
-	 * Constraint:
-	 *     ((ruleID=ID | ruleID=STRING) frequency=INT? (limit=INT? frequency=INT?)*)
-	 */
-	protected void sequence_BeforeAfterEvent(ISerializationContext context, BeforeAfterEvent semanticObject) {
+	protected void sequence_AppenderCall(ISerializationContext context, AppenderCall semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
 	 * Contexts:
-	 *     Event returns BeforeEvent
-	 *     BeforeEvent returns BeforeEvent
-	 *
-	 * Constraint:
-	 *     ((ruleID=ID | ruleID=STRING) frequency=INT? (limit=INT? frequency=INT?)*)
-	 */
-	protected void sequence_BeforeEvent(ISerializationContext context, BeforeEvent semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Condition returns LanguageExpressionCondition
+	 *     Condition returns Condition
 	 *
 	 * Constraint:
 	 *     expression=LanguageExpression
 	 */
-	protected void sequence_Condition(ISerializationContext context, LanguageExpressionCondition semanticObject) {
+	protected void sequence_Condition(ISerializationContext context, Condition semanticObject) {
 		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, MoniLog4DSLPackage.Literals.LANGUAGE_EXPRESSION_CONDITION__EXPRESSION) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MoniLog4DSLPackage.Literals.LANGUAGE_EXPRESSION_CONDITION__EXPRESSION));
+			if (transientValues.isValueTransient(semanticObject, MoniLog4DSLPackage.Literals.CONDITION__EXPRESSION) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MoniLog4DSLPackage.Literals.CONDITION__EXPRESSION));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getConditionAccess().getExpressionLanguageExpressionParserRuleCall_1_1_0(), semanticObject.getExpression());
+		feeder.accept(grammarAccess.getConditionAccess().getExpressionLanguageExpressionParserRuleCall_0(), semanticObject.getExpression());
 		feeder.finish();
 	}
 	
 	
 	/**
 	 * Contexts:
-	 *     Condition returns TemporalPropertyCondition
+	 *     Document returns Document
 	 *
 	 * Constraint:
-	 *     (pattern=TemporalPattern kind=TemporalPropertyConditionKind?)
+	 *     (name=QualifiedName imports+=Import* (events+=Event | appenders+=Appender | layouts+=Layout | moniloggers+=MoniLogger)*)
 	 */
-	protected void sequence_Condition(ISerializationContext context, TemporalPropertyCondition semanticObject) {
+	protected void sequence_Document(ISerializationContext context, Document semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
 	 * Contexts:
-	 *     Appender returns ConsoleAppender
-	 *     ConsoleAppender returns ConsoleAppender
+	 *     Action returns EmitEvent
+	 *     EmitEvent returns EmitEvent
 	 *
 	 * Constraint:
-	 *     layout=Layout
+	 *     (event=[UserEvent|ID] (args+=Expression args+=Expression*)?)
 	 */
-	protected void sequence_ConsoleAppender(ISerializationContext context, ConsoleAppender semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, MoniLog4DSLPackage.Literals.CONSOLE_APPENDER__LAYOUT) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MoniLog4DSLPackage.Literals.CONSOLE_APPENDER__LAYOUT));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getConsoleAppenderAccess().getLayoutLayoutParserRuleCall_2_0(), semanticObject.getLayout());
-		feeder.finish();
+	protected void sequence_EmitEvent(ISerializationContext context, EmitEvent semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
@@ -301,12 +296,36 @@ public class MoniLog4DSLSemanticSequencer extends AbstractDelegatingSemanticSequ
 	
 	/**
 	 * Contexts:
-	 *     EmptyOrPropertyValue returns PropertyValue
+	 *     Event returns ASTEvent
 	 *
 	 * Constraint:
-	 *     (id=ID value=LanguageExpression?)
+	 *     (name=ID parameterDecl=ParameterDeclNoVarArgs? kind=ASTEventKind ruleID=ID)
 	 */
-	protected void sequence_EmptyOrPropertyValue(ISerializationContext context, PropertyValue semanticObject) {
+	protected void sequence_Event(ISerializationContext context, ASTEvent semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Event returns ComplexEvent
+	 *
+	 * Constraint:
+	 *     (name=ID kind=TemporalPatternKind? parameterDecl=ParameterDeclNoVarArgs? pattern=TemporalPattern)
+	 */
+	protected void sequence_Event(ISerializationContext context, ComplexEvent semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Event returns UserEvent
+	 *
+	 * Constraint:
+	 *     (name=ID parameterDecl=ParameterDeclNoVarArgs?)
+	 */
+	protected void sequence_Event(ISerializationContext context, UserEvent semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -332,11 +351,24 @@ public class MoniLog4DSLSemanticSequencer extends AbstractDelegatingSemanticSequ
 	
 	/**
 	 * Contexts:
+	 *     Appender returns ExternalAppender
+	 *     ExternalAppender returns ExternalAppender
+	 *
+	 * Constraint:
+	 *     (name=ID parameterDecl=ParameterDeclVarArgs?)
+	 */
+	protected void sequence_ExternalAppender(ISerializationContext context, ExternalAppender semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     Layout returns ExternalLayout
 	 *     ExternalLayout returns ExternalLayout
 	 *
 	 * Constraint:
-	 *     (path=FQN values+=LanguageExpression*)
+	 *     (name=ID parameterDecl=ParameterDeclVarArgs?)
 	 */
 	protected void sequence_ExternalLayout(ISerializationContext context, ExternalLayout semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -345,52 +377,82 @@ public class MoniLog4DSLSemanticSequencer extends AbstractDelegatingSemanticSequ
 	
 	/**
 	 * Contexts:
-	 *     Appender returns FileAppender
-	 *     FileAppender returns FileAppender
+	 *     Import returns Import
 	 *
 	 * Constraint:
-	 *     (filename=STRING layout=Layout)
+	 *     importedNamespace=QualifiedNameWithWildcard
 	 */
-	protected void sequence_FileAppender(ISerializationContext context, FileAppender semanticObject) {
+	protected void sequence_Import(ISerializationContext context, Import semanticObject) {
 		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, MoniLog4DSLPackage.Literals.FILE_APPENDER__FILENAME) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MoniLog4DSLPackage.Literals.FILE_APPENDER__FILENAME));
-			if (transientValues.isValueTransient(semanticObject, MoniLog4DSLPackage.Literals.FILE_APPENDER__LAYOUT) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MoniLog4DSLPackage.Literals.FILE_APPENDER__LAYOUT));
+			if (transientValues.isValueTransient(semanticObject, MoniLog4DSLPackage.Literals.IMPORT__IMPORTED_NAMESPACE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MoniLog4DSLPackage.Literals.IMPORT__IMPORTED_NAMESPACE));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getFileAppenderAccess().getFilenameSTRINGTerminalRuleCall_2_0(), semanticObject.getFilename());
-		feeder.accept(grammarAccess.getFileAppenderAccess().getLayoutLayoutParserRuleCall_4_0(), semanticObject.getLayout());
+		feeder.accept(grammarAccess.getImportAccess().getImportedNamespaceQualifiedNameWithWildcardParserRuleCall_1_0(), semanticObject.getImportedNamespace());
 		feeder.finish();
 	}
 	
 	
 	/**
 	 * Contexts:
-	 *     LanguageExpression returns DefaultLanguageExpression
+	 *     Action returns LanguageExpression
+	 *     AppenderCallArgument returns LanguageExpression
+	 *     LayoutCallArgument returns LanguageExpression
+	 *     Expression returns LanguageExpression
+	 *     LanguageExpression returns LanguageExpression
 	 *
 	 * Constraint:
-	 *     expression=STRING
+	 *     (languageId=ID expression=STRING)
 	 */
-	protected void sequence_LanguageExpression(ISerializationContext context, DefaultLanguageExpression semanticObject) {
+	protected void sequence_LanguageExpression(ISerializationContext context, LanguageExpression semanticObject) {
 		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MoniLog4DSLPackage.Literals.LANGUAGE_EXPRESSION__LANGUAGE_ID) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MoniLog4DSLPackage.Literals.LANGUAGE_EXPRESSION__LANGUAGE_ID));
 			if (transientValues.isValueTransient(semanticObject, MoniLog4DSLPackage.Literals.LANGUAGE_EXPRESSION__EXPRESSION) == ValueTransient.YES)
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MoniLog4DSLPackage.Literals.LANGUAGE_EXPRESSION__EXPRESSION));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getLanguageExpressionAccess().getExpressionSTRINGTerminalRuleCall_1_1_0(), semanticObject.getExpression());
+		feeder.accept(grammarAccess.getLanguageExpressionAccess().getLanguageIdIDTerminalRuleCall_0_0(), semanticObject.getLanguageId());
+		feeder.accept(grammarAccess.getLanguageExpressionAccess().getExpressionSTRINGTerminalRuleCall_2_0(), semanticObject.getExpression());
 		feeder.finish();
 	}
 	
 	
 	/**
 	 * Contexts:
-	 *     LanguageExpression returns ExplicitLanguageExpression
+	 *     AppenderCallArgument returns LayoutCall
+	 *     LayoutCall returns LayoutCall
 	 *
 	 * Constraint:
-	 *     ((languageId=ID | languageId=STRING) expression=STRING)
+	 *     (layout=[Layout|QualifiedName] (args+=LayoutCallArgument args+=LayoutCallArgument*)?)
 	 */
-	protected void sequence_LanguageExpression(ISerializationContext context, ExplicitLanguageExpression semanticObject) {
+	protected void sequence_LayoutCall(ISerializationContext context, LayoutCall semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Appender returns LocalAppender
+	 *     LocalAppender returns LocalAppender
+	 *
+	 * Constraint:
+	 *     (annotations+=AppenderAnnotation* name=ID parameterDecl=ParameterDeclVarArgs? calls+=AppenderCall calls+=AppenderCall*)
+	 */
+	protected void sequence_LocalAppender(ISerializationContext context, LocalAppender semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Layout returns LocalLayout
+	 *     LocalLayout returns LocalLayout
+	 *
+	 * Constraint:
+	 *     (name=ID parameterDecl=ParameterDeclVarArgs? call=LayoutCall)
+	 */
+	protected void sequence_LocalLayout(ISerializationContext context, LocalLayout semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -416,32 +478,117 @@ public class MoniLog4DSLSemanticSequencer extends AbstractDelegatingSemanticSequ
 	
 	/**
 	 * Contexts:
-	 *     Model returns Model
+	 *     MoniLogger returns MoniLogger
 	 *
 	 * Constraint:
-	 *     ((defaultLanguageID=ID | defaultLanguageID=STRING)? moniLogSpecs+=MoniLogSpec+)
+	 *     (
+	 *         annotations+=MoniLoggerAnnotation* 
+	 *         name=ID 
+	 *         parameterDecl=ParameterDeclVarArgs? 
+	 *         level=LogLevel? 
+	 *         streamEvent=StreamEvent 
+	 *         (conditions+=Condition conditions+=Condition*)? 
+	 *         actions+=Action 
+	 *         actions+=Action*
+	 *     )
 	 */
-	protected void sequence_Model(ISerializationContext context, Model semanticObject) {
+	protected void sequence_MoniLogger(ISerializationContext context, MoniLogger semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
 	/**
 	 * Contexts:
-	 *     MoniLogSpec returns MoniLogSpec
+	 *     Action returns StartMoniLogger
+	 *     MoniloggerCall returns StartMoniLogger
 	 *
 	 * Constraint:
-	 *     (
-	 *         name=STRING? 
-	 *         level=LogLevel? 
-	 *         (events+=Event events+=Event*)? 
-	 *         (conditions+=Condition conditions+=Condition*)? 
-	 *         actions+=Action 
-	 *         actions+=Action*
-	 *     )
+	 *     (monilogger=[MoniLogger|ID] (args+=Expression args+=Expression*)?)
 	 */
-	protected void sequence_MoniLogSpec(ISerializationContext context, MoniLogSpec semanticObject) {
+	protected void sequence_MoniloggerCall(ISerializationContext context, StartMoniLogger semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Action returns StopMoniLogger
+	 *     MoniloggerCall returns StopMoniLogger
+	 *
+	 * Constraint:
+	 *     monilogger=[MoniLogger|ID]
+	 */
+	protected void sequence_MoniloggerCall(ISerializationContext context, StopMoniLogger semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MoniLog4DSLPackage.Literals.MONILOGGER_CALL__MONILOGGER) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MoniLog4DSLPackage.Literals.MONILOGGER_CALL__MONILOGGER));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getMoniloggerCallAccess().getMoniloggerMoniLoggerIDTerminalRuleCall_1_1_0_1(), semanticObject.eGet(MoniLog4DSLPackage.Literals.MONILOGGER_CALL__MONILOGGER, false));
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     ParameterDeclNoVarArgs returns ParameterDecl
+	 *
+	 * Constraint:
+	 *     (parameters+=Parameter parameters+=Parameter*)?
+	 */
+	protected void sequence_ParameterDeclNoVarArgs(ISerializationContext context, ParameterDecl semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     ParameterDeclVarArgs returns ParameterDecl
+	 *
+	 * Constraint:
+	 *     (parameters+=Parameter parameters+=Parameter* varArgs=Parameter?)?
+	 */
+	protected void sequence_ParameterDeclVarArgs(ISerializationContext context, ParameterDecl semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     AppenderCallArgument returns ParameterReference
+	 *     LayoutCallArgument returns ParameterReference
+	 *     Expression returns ParameterReference
+	 *     ParameterReference returns ParameterReference
+	 *
+	 * Constraint:
+	 *     parameter=[Parameter|ID]
+	 */
+	protected void sequence_ParameterReference(ISerializationContext context, ParameterReference semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MoniLog4DSLPackage.Literals.PARAMETER_REFERENCE__PARAMETER) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MoniLog4DSLPackage.Literals.PARAMETER_REFERENCE__PARAMETER));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getParameterReferenceAccess().getParameterParameterIDTerminalRuleCall_0_1(), semanticObject.eGet(MoniLog4DSLPackage.Literals.PARAMETER_REFERENCE__PARAMETER, false));
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Parameter returns Parameter
+	 *
+	 * Constraint:
+	 *     name=ID
+	 */
+	protected void sequence_Parameter(ISerializationContext context, org.gemoc.monilog.moniLog4DSL.Parameter semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MoniLog4DSLPackage.Literals.PARAMETER__NAME) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MoniLog4DSLPackage.Literals.PARAMETER__NAME));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getParameterAccess().getNameIDTerminalRuleCall_0(), semanticObject.getName());
+		feeder.finish();
 	}
 	
 	
@@ -468,19 +615,10 @@ public class MoniLog4DSLSemanticSequencer extends AbstractDelegatingSemanticSequ
 	 *     Pattern returns Existence
 	 *
 	 * Constraint:
-	 *     (bound=BoundType event=StreamEvent)
+	 *     (bound=BoundType? event=StreamEvent)
 	 */
 	protected void sequence_Pattern(ISerializationContext context, Existence semanticObject) {
-		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, MoniLog4DSLPackage.Literals.EXISTENCE__BOUND) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MoniLog4DSLPackage.Literals.EXISTENCE__BOUND));
-			if (transientValues.isValueTransient(semanticObject, MoniLog4DSLPackage.Literals.EXISTENCE__EVENT) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MoniLog4DSLPackage.Literals.EXISTENCE__EVENT));
-		}
-		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getPatternAccess().getBoundBoundTypeParserRuleCall_1_2_0(), semanticObject.getBound());
-		feeder.accept(grammarAccess.getPatternAccess().getEventStreamEventParserRuleCall_1_3_0(), semanticObject.getEvent());
-		feeder.finish();
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
@@ -539,8 +677,21 @@ public class MoniLog4DSLSemanticSequencer extends AbstractDelegatingSemanticSequ
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MoniLog4DSLPackage.Literals.UNIVERSALITY__EVENT));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getPatternAccess().getEventStreamEventParserRuleCall_0_2_0(), semanticObject.getEvent());
+		feeder.accept(grammarAccess.getPatternAccess().getEventStreamEventParserRuleCall_1_2_0(), semanticObject.getEvent());
 		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     EmptyOrPropertyValue returns PropertyValue
+	 *     PropertyValue returns PropertyValue
+	 *
+	 * Constraint:
+	 *     ((id=ID value=Expression?) | value=LanguageExpression)
+	 */
+	protected void sequence_PropertyValue(ISerializationContext context, PropertyValue semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
@@ -636,14 +787,23 @@ public class MoniLog4DSLSemanticSequencer extends AbstractDelegatingSemanticSequ
 	
 	/**
 	 * Contexts:
-	 *     Appender returns StreamAppender
-	 *     StreamAppender returns StreamAppender
+	 *     Action returns SetVariable
+	 *     SetVariable returns SetVariable
 	 *
 	 * Constraint:
-	 *     ((event=ID | event=STRING) (values+=LanguageExpression values+=LanguageExpression*)?)
+	 *     (variable=STRING value=LanguageExpression)
 	 */
-	protected void sequence_StreamAppender(ISerializationContext context, StreamAppender semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
+	protected void sequence_SetVariable(ISerializationContext context, SetVariable semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MoniLog4DSLPackage.Literals.SET_VARIABLE__VARIABLE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MoniLog4DSLPackage.Literals.SET_VARIABLE__VARIABLE));
+			if (transientValues.isValueTransient(semanticObject, MoniLog4DSLPackage.Literals.SET_VARIABLE__VALUE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MoniLog4DSLPackage.Literals.SET_VARIABLE__VALUE));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getSetVariableAccess().getVariableSTRINGTerminalRuleCall_2_0(), semanticObject.getVariable());
+		feeder.accept(grammarAccess.getSetVariableAccess().getValueLanguageExpressionParserRuleCall_4_0(), semanticObject.getValue());
+		feeder.finish();
 	}
 	
 	
@@ -652,22 +812,9 @@ public class MoniLog4DSLSemanticSequencer extends AbstractDelegatingSemanticSequ
 	 *     StreamEvent returns StreamEvent
 	 *
 	 * Constraint:
-	 *     ((eventId=ID | eventId=STRING) (values+=EmptyOrPropertyValue values+=EmptyOrPropertyValue*)?)
+	 *     (event=[Event|ID] (values+=EmptyOrPropertyValue values+=EmptyOrPropertyValue*)?)
 	 */
 	protected void sequence_StreamEvent(ISerializationContext context, StreamEvent semanticObject) {
-		genericSequencer.createSequence(context, semanticObject);
-	}
-	
-	
-	/**
-	 * Contexts:
-	 *     Layout returns StringLayout
-	 *     StringLayout returns StringLayout
-	 *
-	 * Constraint:
-	 *     (formatString=STRING values+=LanguageExpression*)
-	 */
-	protected void sequence_StringLayout(ISerializationContext context, StringLayout semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	

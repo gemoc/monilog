@@ -26,8 +26,5 @@ public class MoniLoggerBlockNode extends MoniLoggerExecutableNode implements Blo
 	public Object executeGeneric(VirtualFrame frame, MoniLoggerExecutableNode node, int index, int argument) {
 		return node.execute(frame);
 	}
-
-	
-	
 	
 }

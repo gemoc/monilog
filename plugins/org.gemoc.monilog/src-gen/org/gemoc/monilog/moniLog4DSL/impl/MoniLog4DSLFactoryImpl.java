@@ -66,12 +66,19 @@ public class MoniLog4DSLFactoryImpl extends EFactoryImpl implements MoniLog4DSLF
   {
     switch (eClass.getClassifierID())
     {
-      case MoniLog4DSLPackage.MODEL: return createModel();
-      case MoniLog4DSLPackage.MONI_LOG_SPEC: return createMoniLogSpec();
+      case MoniLog4DSLPackage.DOCUMENT: return createDocument();
+      case MoniLog4DSLPackage.IMPORT: return createImport();
+      case MoniLog4DSLPackage.APPENDER: return createAppender();
+      case MoniLog4DSLPackage.LOCAL_APPENDER: return createLocalAppender();
+      case MoniLog4DSLPackage.EXTERNAL_APPENDER: return createExternalAppender();
+      case MoniLog4DSLPackage.LAYOUT: return createLayout();
+      case MoniLog4DSLPackage.LOCAL_LAYOUT: return createLocalLayout();
+      case MoniLog4DSLPackage.EXTERNAL_LAYOUT: return createExternalLayout();
+      case MoniLog4DSLPackage.PARAMETER_DECL: return createParameterDecl();
+      case MoniLog4DSLPackage.MONI_LOGGER: return createMoniLogger();
+      case MoniLog4DSLPackage.PARAMETER: return createParameter();
       case MoniLog4DSLPackage.EVENT: return createEvent();
-      case MoniLog4DSLPackage.BEFORE_EVENT: return createBeforeEvent();
-      case MoniLog4DSLPackage.AFTER_EVENT: return createAfterEvent();
-      case MoniLog4DSLPackage.BEFORE_AFTER_EVENT: return createBeforeAfterEvent();
+      case MoniLog4DSLPackage.AST_EVENT_KIND: return createASTEventKind();
       case MoniLog4DSLPackage.CONDITION: return createCondition();
       case MoniLog4DSLPackage.TEMPORAL_PATTERN: return createTemporalPattern();
       case MoniLog4DSLPackage.PATTERN: return createPattern();
@@ -81,21 +88,25 @@ public class MoniLog4DSLFactoryImpl extends EFactoryImpl implements MoniLog4DSLF
       case MoniLog4DSLPackage.UPPER_BOUND: return createUpperBound();
       case MoniLog4DSLPackage.SCOPE: return createScope();
       case MoniLog4DSLPackage.ACTION: return createAction();
-      case MoniLog4DSLPackage.APPEND: return createAppend();
-      case MoniLog4DSLPackage.APPENDER: return createAppender();
-      case MoniLog4DSLPackage.STREAM_APPENDER: return createStreamAppender();
-      case MoniLog4DSLPackage.FILE_APPENDER: return createFileAppender();
-      case MoniLog4DSLPackage.CONSOLE_APPENDER: return createConsoleAppender();
-      case MoniLog4DSLPackage.LAYOUT: return createLayout();
-      case MoniLog4DSLPackage.STRING_LAYOUT: return createStringLayout();
-      case MoniLog4DSLPackage.EXTERNAL_LAYOUT: return createExternalLayout();
+      case MoniLog4DSLPackage.APPENDER_CALL: return createAppenderCall();
+      case MoniLog4DSLPackage.CALL_ARGUMENT: return createCallArgument();
+      case MoniLog4DSLPackage.LAYOUT_CALL: return createLayoutCall();
+      case MoniLog4DSLPackage.EMIT_EVENT: return createEmitEvent();
+      case MoniLog4DSLPackage.SET_VARIABLE: return createSetVariable();
+      case MoniLog4DSLPackage.MONILOGGER_CALL: return createMoniloggerCall();
       case MoniLog4DSLPackage.STREAM_EVENT: return createStreamEvent();
       case MoniLog4DSLPackage.EMPTY_OR_PROPERTY_VALUE: return createEmptyOrPropertyValue();
+      case MoniLog4DSLPackage.EXPRESSION: return createExpression();
+      case MoniLog4DSLPackage.PARAMETER_REFERENCE: return createParameterReference();
+      case MoniLog4DSLPackage.PROPERTY_VALUE: return createPropertyValue();
       case MoniLog4DSLPackage.LANGUAGE_EXPRESSION: return createLanguageExpression();
-      case MoniLog4DSLPackage.TEMPORAL_PROPERTY_CONDITION: return createTemporalPropertyCondition();
-      case MoniLog4DSLPackage.LANGUAGE_EXPRESSION_CONDITION: return createLanguageExpressionCondition();
-      case MoniLog4DSLPackage.UNIVERSALITY: return createUniversality();
+      case MoniLog4DSLPackage.AST_EVENT: return createASTEvent();
+      case MoniLog4DSLPackage.COMPLEX_EVENT: return createComplexEvent();
+      case MoniLog4DSLPackage.USER_EVENT: return createUserEvent();
+      case MoniLog4DSLPackage.BEFORE_AST_EVENT: return createBeforeASTEvent();
+      case MoniLog4DSLPackage.AFTER_AST_EVENT: return createAfterASTEvent();
       case MoniLog4DSLPackage.EXISTENCE: return createExistence();
+      case MoniLog4DSLPackage.UNIVERSALITY: return createUniversality();
       case MoniLog4DSLPackage.ABSENCE: return createAbsence();
       case MoniLog4DSLPackage.PRECEDENCE: return createPrecedence();
       case MoniLog4DSLPackage.RESPONSE: return createResponse();
@@ -104,11 +115,9 @@ public class MoniLog4DSLFactoryImpl extends EFactoryImpl implements MoniLog4DSLF
       case MoniLog4DSLPackage.BEFORE: return createBefore();
       case MoniLog4DSLPackage.BETWEEN: return createBetween();
       case MoniLog4DSLPackage.AFTER_UNTIL: return createAfterUntil();
-      case MoniLog4DSLPackage.NOTIFY: return createNotify();
+      case MoniLog4DSLPackage.START_MONI_LOGGER: return createStartMoniLogger();
+      case MoniLog4DSLPackage.STOP_MONI_LOGGER: return createStopMoniLogger();
       case MoniLog4DSLPackage.EMPTY: return createEmpty();
-      case MoniLog4DSLPackage.PROPERTY_VALUE: return createPropertyValue();
-      case MoniLog4DSLPackage.EXPLICIT_LANGUAGE_EXPRESSION: return createExplicitLanguageExpression();
-      case MoniLog4DSLPackage.DEFAULT_LANGUAGE_EXPRESSION: return createDefaultLanguageExpression();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -124,10 +133,14 @@ public class MoniLog4DSLFactoryImpl extends EFactoryImpl implements MoniLog4DSLF
   {
     switch (eDataType.getClassifierID())
     {
+      case MoniLog4DSLPackage.MONI_LOGGER_ANNOTATION:
+        return createMoniLoggerAnnotationFromString(eDataType, initialValue);
+      case MoniLog4DSLPackage.APPENDER_ANNOTATION:
+        return createAppenderAnnotationFromString(eDataType, initialValue);
       case MoniLog4DSLPackage.LOG_LEVEL:
         return createLogLevelFromString(eDataType, initialValue);
-      case MoniLog4DSLPackage.TEMPORAL_PROPERTY_CONDITION_KIND:
-        return createTemporalPropertyConditionKindFromString(eDataType, initialValue);
+      case MoniLog4DSLPackage.TEMPORAL_PATTERN_KIND:
+        return createTemporalPatternKindFromString(eDataType, initialValue);
       default:
         throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
     }
@@ -143,10 +156,14 @@ public class MoniLog4DSLFactoryImpl extends EFactoryImpl implements MoniLog4DSLF
   {
     switch (eDataType.getClassifierID())
     {
+      case MoniLog4DSLPackage.MONI_LOGGER_ANNOTATION:
+        return convertMoniLoggerAnnotationToString(eDataType, instanceValue);
+      case MoniLog4DSLPackage.APPENDER_ANNOTATION:
+        return convertAppenderAnnotationToString(eDataType, instanceValue);
       case MoniLog4DSLPackage.LOG_LEVEL:
         return convertLogLevelToString(eDataType, instanceValue);
-      case MoniLog4DSLPackage.TEMPORAL_PROPERTY_CONDITION_KIND:
-        return convertTemporalPropertyConditionKindToString(eDataType, instanceValue);
+      case MoniLog4DSLPackage.TEMPORAL_PATTERN_KIND:
+        return convertTemporalPatternKindToString(eDataType, instanceValue);
       default:
         throw new IllegalArgumentException("The datatype '" + eDataType.getName() + "' is not a valid classifier");
     }
@@ -158,10 +175,10 @@ public class MoniLog4DSLFactoryImpl extends EFactoryImpl implements MoniLog4DSLF
    * @generated
    */
   @Override
-  public Model createModel()
+  public Document createDocument()
   {
-    ModelImpl model = new ModelImpl();
-    return model;
+    DocumentImpl document = new DocumentImpl();
+    return document;
   }
 
   /**
@@ -170,10 +187,118 @@ public class MoniLog4DSLFactoryImpl extends EFactoryImpl implements MoniLog4DSLF
    * @generated
    */
   @Override
-  public MoniLogSpec createMoniLogSpec()
+  public Import createImport()
   {
-    MoniLogSpecImpl moniLogSpec = new MoniLogSpecImpl();
-    return moniLogSpec;
+    ImportImpl import_ = new ImportImpl();
+    return import_;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Appender createAppender()
+  {
+    AppenderImpl appender = new AppenderImpl();
+    return appender;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public LocalAppender createLocalAppender()
+  {
+    LocalAppenderImpl localAppender = new LocalAppenderImpl();
+    return localAppender;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public ExternalAppender createExternalAppender()
+  {
+    ExternalAppenderImpl externalAppender = new ExternalAppenderImpl();
+    return externalAppender;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Layout createLayout()
+  {
+    LayoutImpl layout = new LayoutImpl();
+    return layout;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public LocalLayout createLocalLayout()
+  {
+    LocalLayoutImpl localLayout = new LocalLayoutImpl();
+    return localLayout;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public ExternalLayout createExternalLayout()
+  {
+    ExternalLayoutImpl externalLayout = new ExternalLayoutImpl();
+    return externalLayout;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public ParameterDecl createParameterDecl()
+  {
+    ParameterDeclImpl parameterDecl = new ParameterDeclImpl();
+    return parameterDecl;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public MoniLogger createMoniLogger()
+  {
+    MoniLoggerImpl moniLogger = new MoniLoggerImpl();
+    return moniLogger;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Parameter createParameter()
+  {
+    ParameterImpl parameter = new ParameterImpl();
+    return parameter;
   }
 
   /**
@@ -194,34 +319,10 @@ public class MoniLog4DSLFactoryImpl extends EFactoryImpl implements MoniLog4DSLF
    * @generated
    */
   @Override
-  public BeforeEvent createBeforeEvent()
+  public ASTEventKind createASTEventKind()
   {
-    BeforeEventImpl beforeEvent = new BeforeEventImpl();
-    return beforeEvent;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public AfterEvent createAfterEvent()
-  {
-    AfterEventImpl afterEvent = new AfterEventImpl();
-    return afterEvent;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public BeforeAfterEvent createBeforeAfterEvent()
-  {
-    BeforeAfterEventImpl beforeAfterEvent = new BeforeAfterEventImpl();
-    return beforeAfterEvent;
+    ASTEventKindImpl astEventKind = new ASTEventKindImpl();
+    return astEventKind;
   }
 
   /**
@@ -338,10 +439,10 @@ public class MoniLog4DSLFactoryImpl extends EFactoryImpl implements MoniLog4DSLF
    * @generated
    */
   @Override
-  public Append createAppend()
+  public AppenderCall createAppenderCall()
   {
-    AppendImpl append = new AppendImpl();
-    return append;
+    AppenderCallImpl appenderCall = new AppenderCallImpl();
+    return appenderCall;
   }
 
   /**
@@ -350,10 +451,10 @@ public class MoniLog4DSLFactoryImpl extends EFactoryImpl implements MoniLog4DSLF
    * @generated
    */
   @Override
-  public Appender createAppender()
+  public CallArgument createCallArgument()
   {
-    AppenderImpl appender = new AppenderImpl();
-    return appender;
+    CallArgumentImpl callArgument = new CallArgumentImpl();
+    return callArgument;
   }
 
   /**
@@ -362,10 +463,10 @@ public class MoniLog4DSLFactoryImpl extends EFactoryImpl implements MoniLog4DSLF
    * @generated
    */
   @Override
-  public StreamAppender createStreamAppender()
+  public LayoutCall createLayoutCall()
   {
-    StreamAppenderImpl streamAppender = new StreamAppenderImpl();
-    return streamAppender;
+    LayoutCallImpl layoutCall = new LayoutCallImpl();
+    return layoutCall;
   }
 
   /**
@@ -374,10 +475,10 @@ public class MoniLog4DSLFactoryImpl extends EFactoryImpl implements MoniLog4DSLF
    * @generated
    */
   @Override
-  public FileAppender createFileAppender()
+  public EmitEvent createEmitEvent()
   {
-    FileAppenderImpl fileAppender = new FileAppenderImpl();
-    return fileAppender;
+    EmitEventImpl emitEvent = new EmitEventImpl();
+    return emitEvent;
   }
 
   /**
@@ -386,10 +487,10 @@ public class MoniLog4DSLFactoryImpl extends EFactoryImpl implements MoniLog4DSLF
    * @generated
    */
   @Override
-  public ConsoleAppender createConsoleAppender()
+  public SetVariable createSetVariable()
   {
-    ConsoleAppenderImpl consoleAppender = new ConsoleAppenderImpl();
-    return consoleAppender;
+    SetVariableImpl setVariable = new SetVariableImpl();
+    return setVariable;
   }
 
   /**
@@ -398,34 +499,10 @@ public class MoniLog4DSLFactoryImpl extends EFactoryImpl implements MoniLog4DSLF
    * @generated
    */
   @Override
-  public Layout createLayout()
+  public MoniloggerCall createMoniloggerCall()
   {
-    LayoutImpl layout = new LayoutImpl();
-    return layout;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public StringLayout createStringLayout()
-  {
-    StringLayoutImpl stringLayout = new StringLayoutImpl();
-    return stringLayout;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public ExternalLayout createExternalLayout()
-  {
-    ExternalLayoutImpl externalLayout = new ExternalLayoutImpl();
-    return externalLayout;
+    MoniloggerCallImpl moniloggerCall = new MoniloggerCallImpl();
+    return moniloggerCall;
   }
 
   /**
@@ -458,6 +535,42 @@ public class MoniLog4DSLFactoryImpl extends EFactoryImpl implements MoniLog4DSLF
    * @generated
    */
   @Override
+  public Expression createExpression()
+  {
+    ExpressionImpl expression = new ExpressionImpl();
+    return expression;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public ParameterReference createParameterReference()
+  {
+    ParameterReferenceImpl parameterReference = new ParameterReferenceImpl();
+    return parameterReference;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public PropertyValue createPropertyValue()
+  {
+    PropertyValueImpl propertyValue = new PropertyValueImpl();
+    return propertyValue;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public LanguageExpression createLanguageExpression()
   {
     LanguageExpressionImpl languageExpression = new LanguageExpressionImpl();
@@ -470,10 +583,10 @@ public class MoniLog4DSLFactoryImpl extends EFactoryImpl implements MoniLog4DSLF
    * @generated
    */
   @Override
-  public TemporalPropertyCondition createTemporalPropertyCondition()
+  public ASTEvent createASTEvent()
   {
-    TemporalPropertyConditionImpl temporalPropertyCondition = new TemporalPropertyConditionImpl();
-    return temporalPropertyCondition;
+    ASTEventImpl astEvent = new ASTEventImpl();
+    return astEvent;
   }
 
   /**
@@ -482,10 +595,10 @@ public class MoniLog4DSLFactoryImpl extends EFactoryImpl implements MoniLog4DSLF
    * @generated
    */
   @Override
-  public LanguageExpressionCondition createLanguageExpressionCondition()
+  public ComplexEvent createComplexEvent()
   {
-    LanguageExpressionConditionImpl languageExpressionCondition = new LanguageExpressionConditionImpl();
-    return languageExpressionCondition;
+    ComplexEventImpl complexEvent = new ComplexEventImpl();
+    return complexEvent;
   }
 
   /**
@@ -494,10 +607,34 @@ public class MoniLog4DSLFactoryImpl extends EFactoryImpl implements MoniLog4DSLF
    * @generated
    */
   @Override
-  public Universality createUniversality()
+  public UserEvent createUserEvent()
   {
-    UniversalityImpl universality = new UniversalityImpl();
-    return universality;
+    UserEventImpl userEvent = new UserEventImpl();
+    return userEvent;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public BeforeASTEvent createBeforeASTEvent()
+  {
+    BeforeASTEventImpl beforeASTEvent = new BeforeASTEventImpl();
+    return beforeASTEvent;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public AfterASTEvent createAfterASTEvent()
+  {
+    AfterASTEventImpl afterASTEvent = new AfterASTEventImpl();
+    return afterASTEvent;
   }
 
   /**
@@ -510,6 +647,18 @@ public class MoniLog4DSLFactoryImpl extends EFactoryImpl implements MoniLog4DSLF
   {
     ExistenceImpl existence = new ExistenceImpl();
     return existence;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Universality createUniversality()
+  {
+    UniversalityImpl universality = new UniversalityImpl();
+    return universality;
   }
 
   /**
@@ -614,10 +763,22 @@ public class MoniLog4DSLFactoryImpl extends EFactoryImpl implements MoniLog4DSLF
    * @generated
    */
   @Override
-  public Notify createNotify()
+  public StartMoniLogger createStartMoniLogger()
   {
-    NotifyImpl notify = new NotifyImpl();
-    return notify;
+    StartMoniLoggerImpl startMoniLogger = new StartMoniLoggerImpl();
+    return startMoniLogger;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public StopMoniLogger createStopMoniLogger()
+  {
+    StopMoniLoggerImpl stopMoniLogger = new StopMoniLoggerImpl();
+    return stopMoniLogger;
   }
 
   /**
@@ -637,11 +798,11 @@ public class MoniLog4DSLFactoryImpl extends EFactoryImpl implements MoniLog4DSLF
    * <!-- end-user-doc -->
    * @generated
    */
-  @Override
-  public PropertyValue createPropertyValue()
+  public MoniLoggerAnnotation createMoniLoggerAnnotationFromString(EDataType eDataType, String initialValue)
   {
-    PropertyValueImpl propertyValue = new PropertyValueImpl();
-    return propertyValue;
+    MoniLoggerAnnotation result = MoniLoggerAnnotation.get(initialValue);
+    if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+    return result;
   }
 
   /**
@@ -649,11 +810,9 @@ public class MoniLog4DSLFactoryImpl extends EFactoryImpl implements MoniLog4DSLF
    * <!-- end-user-doc -->
    * @generated
    */
-  @Override
-  public ExplicitLanguageExpression createExplicitLanguageExpression()
+  public String convertMoniLoggerAnnotationToString(EDataType eDataType, Object instanceValue)
   {
-    ExplicitLanguageExpressionImpl explicitLanguageExpression = new ExplicitLanguageExpressionImpl();
-    return explicitLanguageExpression;
+    return instanceValue == null ? null : instanceValue.toString();
   }
 
   /**
@@ -661,11 +820,21 @@ public class MoniLog4DSLFactoryImpl extends EFactoryImpl implements MoniLog4DSLF
    * <!-- end-user-doc -->
    * @generated
    */
-  @Override
-  public DefaultLanguageExpression createDefaultLanguageExpression()
+  public AppenderAnnotation createAppenderAnnotationFromString(EDataType eDataType, String initialValue)
   {
-    DefaultLanguageExpressionImpl defaultLanguageExpression = new DefaultLanguageExpressionImpl();
-    return defaultLanguageExpression;
+    AppenderAnnotation result = AppenderAnnotation.get(initialValue);
+    if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
+    return result;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public String convertAppenderAnnotationToString(EDataType eDataType, Object instanceValue)
+  {
+    return instanceValue == null ? null : instanceValue.toString();
   }
 
   /**
@@ -695,9 +864,9 @@ public class MoniLog4DSLFactoryImpl extends EFactoryImpl implements MoniLog4DSLF
    * <!-- end-user-doc -->
    * @generated
    */
-  public TemporalPropertyConditionKind createTemporalPropertyConditionKindFromString(EDataType eDataType, String initialValue)
+  public TemporalPatternKind createTemporalPatternKindFromString(EDataType eDataType, String initialValue)
   {
-    TemporalPropertyConditionKind result = TemporalPropertyConditionKind.get(initialValue);
+    TemporalPatternKind result = TemporalPatternKind.get(initialValue);
     if (result == null) throw new IllegalArgumentException("The value '" + initialValue + "' is not a valid enumerator of '" + eDataType.getName() + "'");
     return result;
   }
@@ -707,7 +876,7 @@ public class MoniLog4DSLFactoryImpl extends EFactoryImpl implements MoniLog4DSLF
    * <!-- end-user-doc -->
    * @generated
    */
-  public String convertTemporalPropertyConditionKindToString(EDataType eDataType, Object instanceValue)
+  public String convertTemporalPatternKindToString(EDataType eDataType, Object instanceValue)
   {
     return instanceValue == null ? null : instanceValue.toString();
   }

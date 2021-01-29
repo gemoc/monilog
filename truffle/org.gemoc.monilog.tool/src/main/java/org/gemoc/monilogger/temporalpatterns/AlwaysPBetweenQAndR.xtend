@@ -3,6 +3,7 @@ package org.gemoc.monilogger.temporalpatterns
 import java.util.List
 import java.util.Map
 import org.gemoc.monilog.moniLog4DSL.Between
+import org.gemoc.monilog.moniLog4DSL.ComplexEvent
 import org.gemoc.monilog.moniLog4DSL.Universality
 
 class AlwaysPBetweenQAndR extends AbstractTemporalProperty {
@@ -11,11 +12,11 @@ class AlwaysPBetweenQAndR extends AbstractTemporalProperty {
 	val String q
 	val String r
 	
-	new(String name, Universality always, Between between) {
-		super(name)
-		p = always.event.eventId
-		q = between.lowerBound.eventId
-		r = between.upperBound.eventId
+	new(ComplexEvent event, Universality always, Between between) {
+		super(event)
+		p = always.event.event.name
+		q = between.lowerBound.event.name
+		r = between.upperBound.event.name
 	}
 	
 	override protected String getStatementString() {

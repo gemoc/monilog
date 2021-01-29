@@ -11,7 +11,7 @@ import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
-import org.gemoc.monilog.moniLog4DSL.LanguageExpression;
+import org.gemoc.monilog.moniLog4DSL.Expression;
 import org.gemoc.monilog.moniLog4DSL.MoniLog4DSLPackage;
 import org.gemoc.monilog.moniLog4DSL.PropertyValue;
 
@@ -59,7 +59,7 @@ public class PropertyValueImpl extends EmptyOrPropertyValueImpl implements Prope
    * @generated
    * @ordered
    */
-  protected LanguageExpression value;
+  protected Expression value;
 
   /**
    * <!-- begin-user-doc -->
@@ -113,7 +113,7 @@ public class PropertyValueImpl extends EmptyOrPropertyValueImpl implements Prope
    * @generated
    */
   @Override
-  public LanguageExpression getValue()
+  public Expression getValue()
   {
     return value;
   }
@@ -123,9 +123,9 @@ public class PropertyValueImpl extends EmptyOrPropertyValueImpl implements Prope
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetValue(LanguageExpression newValue, NotificationChain msgs)
+  public NotificationChain basicSetValue(Expression newValue, NotificationChain msgs)
   {
-    LanguageExpression oldValue = value;
+    Expression oldValue = value;
     value = newValue;
     if (eNotificationRequired())
     {
@@ -141,7 +141,7 @@ public class PropertyValueImpl extends EmptyOrPropertyValueImpl implements Prope
    * @generated
    */
   @Override
-  public void setValue(LanguageExpression newValue)
+  public void setValue(Expression newValue)
   {
     if (newValue != value)
     {
@@ -205,7 +205,7 @@ public class PropertyValueImpl extends EmptyOrPropertyValueImpl implements Prope
         setId((String)newValue);
         return;
       case MoniLog4DSLPackage.PROPERTY_VALUE__VALUE:
-        setValue((LanguageExpression)newValue);
+        setValue((Expression)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -225,7 +225,7 @@ public class PropertyValueImpl extends EmptyOrPropertyValueImpl implements Prope
         setId(ID_EDEFAULT);
         return;
       case MoniLog4DSLPackage.PROPERTY_VALUE__VALUE:
-        setValue((LanguageExpression)null);
+        setValue((Expression)null);
         return;
     }
     super.eUnset(featureID);

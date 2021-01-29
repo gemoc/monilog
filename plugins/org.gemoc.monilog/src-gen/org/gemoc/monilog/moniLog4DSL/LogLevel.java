@@ -21,6 +21,16 @@ import org.eclipse.emf.common.util.Enumerator;
 public enum LogLevel implements Enumerator
 {
   /**
+   * The '<em><b>Info</b></em>' literal object.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #INFO_VALUE
+   * @generated
+   * @ordered
+   */
+  INFO(0, "info", "INFO"),
+
+  /**
    * The '<em><b>Config</b></em>' literal object.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -28,7 +38,7 @@ public enum LogLevel implements Enumerator
    * @generated
    * @ordered
    */
-  CONFIG(0, "config", "CONFIG"),
+  CONFIG(1, "config", "CONFIG"),
 
   /**
    * The '<em><b>Fine</b></em>' literal object.
@@ -38,7 +48,7 @@ public enum LogLevel implements Enumerator
    * @generated
    * @ordered
    */
-  FINE(1, "fine", "FINE"),
+  FINE(2, "fine", "FINE"),
 
   /**
    * The '<em><b>Finer</b></em>' literal object.
@@ -48,7 +58,7 @@ public enum LogLevel implements Enumerator
    * @generated
    * @ordered
    */
-  FINER(2, "finer", "FINER"),
+  FINER(3, "finer", "FINER"),
 
   /**
    * The '<em><b>Finest</b></em>' literal object.
@@ -58,17 +68,7 @@ public enum LogLevel implements Enumerator
    * @generated
    * @ordered
    */
-  FINEST(3, "finest", "FINEST"),
-
-  /**
-   * The '<em><b>Info</b></em>' literal object.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #INFO_VALUE
-   * @generated
-   * @ordered
-   */
-  INFO(4, "info", "INFO"),
+  FINEST(4, "finest", "FINEST"),
 
   /**
    * The '<em><b>Severe</b></em>' literal object.
@@ -91,6 +91,17 @@ public enum LogLevel implements Enumerator
   WARNING(6, "warning", "WARNING");
 
   /**
+   * The '<em><b>Info</b></em>' literal value.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #INFO
+   * @model name="info" literal="INFO"
+   * @generated
+   * @ordered
+   */
+  public static final int INFO_VALUE = 0;
+
+  /**
    * The '<em><b>Config</b></em>' literal value.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -99,7 +110,7 @@ public enum LogLevel implements Enumerator
    * @generated
    * @ordered
    */
-  public static final int CONFIG_VALUE = 0;
+  public static final int CONFIG_VALUE = 1;
 
   /**
    * The '<em><b>Fine</b></em>' literal value.
@@ -110,7 +121,7 @@ public enum LogLevel implements Enumerator
    * @generated
    * @ordered
    */
-  public static final int FINE_VALUE = 1;
+  public static final int FINE_VALUE = 2;
 
   /**
    * The '<em><b>Finer</b></em>' literal value.
@@ -121,7 +132,7 @@ public enum LogLevel implements Enumerator
    * @generated
    * @ordered
    */
-  public static final int FINER_VALUE = 2;
+  public static final int FINER_VALUE = 3;
 
   /**
    * The '<em><b>Finest</b></em>' literal value.
@@ -132,18 +143,7 @@ public enum LogLevel implements Enumerator
    * @generated
    * @ordered
    */
-  public static final int FINEST_VALUE = 3;
-
-  /**
-   * The '<em><b>Info</b></em>' literal value.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see #INFO
-   * @model name="info" literal="INFO"
-   * @generated
-   * @ordered
-   */
-  public static final int INFO_VALUE = 4;
+  public static final int FINEST_VALUE = 4;
 
   /**
    * The '<em><b>Severe</b></em>' literal value.
@@ -176,11 +176,11 @@ public enum LogLevel implements Enumerator
   private static final LogLevel[] VALUES_ARRAY =
     new LogLevel[]
     {
+      INFO,
       CONFIG,
       FINE,
       FINER,
       FINEST,
-      INFO,
       SEVERE,
       WARNING,
     };
@@ -247,11 +247,11 @@ public enum LogLevel implements Enumerator
   {
     switch (value)
     {
+      case INFO_VALUE: return INFO;
       case CONFIG_VALUE: return CONFIG;
       case FINE_VALUE: return FINE;
       case FINER_VALUE: return FINER;
       case FINEST_VALUE: return FINEST;
-      case INFO_VALUE: return INFO;
       case SEVERE_VALUE: return SEVERE;
       case WARNING_VALUE: return WARNING;
     }

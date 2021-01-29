@@ -14,9 +14,8 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
- *   <li>{@link org.gemoc.monilog.moniLog4DSL.Event#getRuleID <em>Rule ID</em>}</li>
- *   <li>{@link org.gemoc.monilog.moniLog4DSL.Event#getFrequency <em>Frequency</em>}</li>
- *   <li>{@link org.gemoc.monilog.moniLog4DSL.Event#getLimit <em>Limit</em>}</li>
+ *   <li>{@link org.gemoc.monilog.moniLog4DSL.Event#getName <em>Name</em>}</li>
+ *   <li>{@link org.gemoc.monilog.moniLog4DSL.Event#getParameterDecl <em>Parameter Decl</em>}</li>
  * </ul>
  *
  * @see org.gemoc.monilog.moniLog4DSL.MoniLog4DSLPackage#getEvent()
@@ -26,69 +25,47 @@ import org.eclipse.emf.ecore.EObject;
 public interface Event extends EObject
 {
   /**
-   * Returns the value of the '<em><b>Rule ID</b></em>' attribute.
+   * Returns the value of the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Rule ID</em>' attribute.
-   * @see #setRuleID(String)
-   * @see org.gemoc.monilog.moniLog4DSL.MoniLog4DSLPackage#getEvent_RuleID()
+   * @return the value of the '<em>Name</em>' attribute.
+   * @see #setName(String)
+   * @see org.gemoc.monilog.moniLog4DSL.MoniLog4DSLPackage#getEvent_Name()
    * @model
    * @generated
    */
-  String getRuleID();
+  String getName();
 
   /**
-   * Sets the value of the '{@link org.gemoc.monilog.moniLog4DSL.Event#getRuleID <em>Rule ID</em>}' attribute.
+   * Sets the value of the '{@link org.gemoc.monilog.moniLog4DSL.Event#getName <em>Name</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Rule ID</em>' attribute.
-   * @see #getRuleID()
+   * @param value the new value of the '<em>Name</em>' attribute.
+   * @see #getName()
    * @generated
    */
-  void setRuleID(String value);
+  void setName(String value);
 
   /**
-   * Returns the value of the '<em><b>Frequency</b></em>' attribute.
+   * Returns the value of the '<em><b>Parameter Decl</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the value of the '<em>Frequency</em>' attribute.
-   * @see #setFrequency(int)
-   * @see org.gemoc.monilog.moniLog4DSL.MoniLog4DSLPackage#getEvent_Frequency()
-   * @model
+   * @return the value of the '<em>Parameter Decl</em>' containment reference.
+   * @see #setParameterDecl(ParameterDecl)
+   * @see org.gemoc.monilog.moniLog4DSL.MoniLog4DSLPackage#getEvent_ParameterDecl()
+   * @model containment="true"
    * @generated
    */
-  int getFrequency();
+  ParameterDecl getParameterDecl();
 
   /**
-   * Sets the value of the '{@link org.gemoc.monilog.moniLog4DSL.Event#getFrequency <em>Frequency</em>}' attribute.
+   * Sets the value of the '{@link org.gemoc.monilog.moniLog4DSL.Event#getParameterDecl <em>Parameter Decl</em>}' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Frequency</em>' attribute.
-   * @see #getFrequency()
+   * @param value the new value of the '<em>Parameter Decl</em>' containment reference.
+   * @see #getParameterDecl()
    * @generated
    */
-  void setFrequency(int value);
-
-  /**
-   * Returns the value of the '<em><b>Limit</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>Limit</em>' attribute.
-   * @see #setLimit(int)
-   * @see org.gemoc.monilog.moniLog4DSL.MoniLog4DSLPackage#getEvent_Limit()
-   * @model
-   * @generated
-   */
-  int getLimit();
-
-  /**
-   * Sets the value of the '{@link org.gemoc.monilog.moniLog4DSL.Event#getLimit <em>Limit</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>Limit</em>' attribute.
-   * @see #getLimit()
-   * @generated
-   */
-  void setLimit(int value);
+  void setParameterDecl(ParameterDecl value);
 
 } // Event

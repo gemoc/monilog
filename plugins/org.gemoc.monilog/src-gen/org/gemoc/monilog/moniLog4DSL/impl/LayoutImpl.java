@@ -3,23 +3,18 @@
  */
 package org.gemoc.monilog.moniLog4DSL.impl;
 
-import java.util.Collection;
-
+import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
-
-import org.eclipse.emf.common.util.EList;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.InternalEObject;
 
+import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
-import org.eclipse.emf.ecore.util.InternalEList;
-
-import org.gemoc.monilog.moniLog4DSL.LanguageExpression;
 import org.gemoc.monilog.moniLog4DSL.Layout;
 import org.gemoc.monilog.moniLog4DSL.MoniLog4DSLPackage;
+import org.gemoc.monilog.moniLog4DSL.ParameterDecl;
 
 /**
  * <!-- begin-user-doc -->
@@ -29,7 +24,8 @@ import org.gemoc.monilog.moniLog4DSL.MoniLog4DSLPackage;
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.gemoc.monilog.moniLog4DSL.impl.LayoutImpl#getValues <em>Values</em>}</li>
+ *   <li>{@link org.gemoc.monilog.moniLog4DSL.impl.LayoutImpl#getName <em>Name</em>}</li>
+ *   <li>{@link org.gemoc.monilog.moniLog4DSL.impl.LayoutImpl#getParameterDecl <em>Parameter Decl</em>}</li>
  * </ul>
  *
  * @generated
@@ -37,14 +33,34 @@ import org.gemoc.monilog.moniLog4DSL.MoniLog4DSLPackage;
 public class LayoutImpl extends MinimalEObjectImpl.Container implements Layout
 {
   /**
-   * The cached value of the '{@link #getValues() <em>Values</em>}' containment reference list.
+   * The default value of the '{@link #getName() <em>Name</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getValues()
+   * @see #getName()
    * @generated
    * @ordered
    */
-  protected EList<LanguageExpression> values;
+  protected static final String NAME_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getName()
+   * @generated
+   * @ordered
+   */
+  protected String name = NAME_EDEFAULT;
+
+  /**
+   * The cached value of the '{@link #getParameterDecl() <em>Parameter Decl</em>}' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getParameterDecl()
+   * @generated
+   * @ordered
+   */
+  protected ParameterDecl parameterDecl;
 
   /**
    * <!-- begin-user-doc -->
@@ -73,13 +89,73 @@ public class LayoutImpl extends MinimalEObjectImpl.Container implements Layout
    * @generated
    */
   @Override
-  public EList<LanguageExpression> getValues()
+  public String getName()
   {
-    if (values == null)
+    return name;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setName(String newName)
+  {
+    String oldName = name;
+    name = newName;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, MoniLog4DSLPackage.LAYOUT__NAME, oldName, name));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public ParameterDecl getParameterDecl()
+  {
+    return parameterDecl;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  public NotificationChain basicSetParameterDecl(ParameterDecl newParameterDecl, NotificationChain msgs)
+  {
+    ParameterDecl oldParameterDecl = parameterDecl;
+    parameterDecl = newParameterDecl;
+    if (eNotificationRequired())
     {
-      values = new EObjectContainmentEList<LanguageExpression>(LanguageExpression.class, this, MoniLog4DSLPackage.LAYOUT__VALUES);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, MoniLog4DSLPackage.LAYOUT__PARAMETER_DECL, oldParameterDecl, newParameterDecl);
+      if (msgs == null) msgs = notification; else msgs.add(notification);
     }
-    return values;
+    return msgs;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setParameterDecl(ParameterDecl newParameterDecl)
+  {
+    if (newParameterDecl != parameterDecl)
+    {
+      NotificationChain msgs = null;
+      if (parameterDecl != null)
+        msgs = ((InternalEObject)parameterDecl).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - MoniLog4DSLPackage.LAYOUT__PARAMETER_DECL, null, msgs);
+      if (newParameterDecl != null)
+        msgs = ((InternalEObject)newParameterDecl).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - MoniLog4DSLPackage.LAYOUT__PARAMETER_DECL, null, msgs);
+      msgs = basicSetParameterDecl(newParameterDecl, msgs);
+      if (msgs != null) msgs.dispatch();
+    }
+    else if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, MoniLog4DSLPackage.LAYOUT__PARAMETER_DECL, newParameterDecl, newParameterDecl));
   }
 
   /**
@@ -92,8 +168,8 @@ public class LayoutImpl extends MinimalEObjectImpl.Container implements Layout
   {
     switch (featureID)
     {
-      case MoniLog4DSLPackage.LAYOUT__VALUES:
-        return ((InternalEList<?>)getValues()).basicRemove(otherEnd, msgs);
+      case MoniLog4DSLPackage.LAYOUT__PARAMETER_DECL:
+        return basicSetParameterDecl(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
   }
@@ -108,8 +184,10 @@ public class LayoutImpl extends MinimalEObjectImpl.Container implements Layout
   {
     switch (featureID)
     {
-      case MoniLog4DSLPackage.LAYOUT__VALUES:
-        return getValues();
+      case MoniLog4DSLPackage.LAYOUT__NAME:
+        return getName();
+      case MoniLog4DSLPackage.LAYOUT__PARAMETER_DECL:
+        return getParameterDecl();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -119,15 +197,16 @@ public class LayoutImpl extends MinimalEObjectImpl.Container implements Layout
    * <!-- end-user-doc -->
    * @generated
    */
-  @SuppressWarnings("unchecked")
   @Override
   public void eSet(int featureID, Object newValue)
   {
     switch (featureID)
     {
-      case MoniLog4DSLPackage.LAYOUT__VALUES:
-        getValues().clear();
-        getValues().addAll((Collection<? extends LanguageExpression>)newValue);
+      case MoniLog4DSLPackage.LAYOUT__NAME:
+        setName((String)newValue);
+        return;
+      case MoniLog4DSLPackage.LAYOUT__PARAMETER_DECL:
+        setParameterDecl((ParameterDecl)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -143,8 +222,11 @@ public class LayoutImpl extends MinimalEObjectImpl.Container implements Layout
   {
     switch (featureID)
     {
-      case MoniLog4DSLPackage.LAYOUT__VALUES:
-        getValues().clear();
+      case MoniLog4DSLPackage.LAYOUT__NAME:
+        setName(NAME_EDEFAULT);
+        return;
+      case MoniLog4DSLPackage.LAYOUT__PARAMETER_DECL:
+        setParameterDecl((ParameterDecl)null);
         return;
     }
     super.eUnset(featureID);
@@ -160,10 +242,29 @@ public class LayoutImpl extends MinimalEObjectImpl.Container implements Layout
   {
     switch (featureID)
     {
-      case MoniLog4DSLPackage.LAYOUT__VALUES:
-        return values != null && !values.isEmpty();
+      case MoniLog4DSLPackage.LAYOUT__NAME:
+        return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
+      case MoniLog4DSLPackage.LAYOUT__PARAMETER_DECL:
+        return parameterDecl != null;
     }
     return super.eIsSet(featureID);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public String toString()
+  {
+    if (eIsProxy()) return super.toString();
+
+    StringBuilder result = new StringBuilder(super.toString());
+    result.append(" (name: ");
+    result.append(name);
+    result.append(')');
+    return result.toString();
   }
 
 } //LayoutImpl

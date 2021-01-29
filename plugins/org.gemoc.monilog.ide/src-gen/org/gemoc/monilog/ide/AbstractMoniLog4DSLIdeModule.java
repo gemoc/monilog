@@ -42,11 +42,6 @@ public abstract class AbstractMoniLog4DSLIdeModule extends DefaultIdeModule {
 		return AntlrProposalConflictHelper.class;
 	}
 	
-	// contributed by org.eclipse.xtext.xtext.generator.exporting.QualifiedNamesFragment2
-	public Class<? extends IPrefixMatcher> bindIPrefixMatcher() {
-		return FQNPrefixMatcher.class;
-	}
-	
 	// contributed by org.eclipse.xtext.xtext.generator.ui.refactoring.RefactorElementNameFragment2
 	public Class<? extends IRenameService2> bindIRenameService2() {
 		return RenameService2.class;
@@ -55,6 +50,11 @@ public abstract class AbstractMoniLog4DSLIdeModule extends DefaultIdeModule {
 	// contributed by org.eclipse.xtext.xtext.generator.ui.refactoring.RefactorElementNameFragment2
 	public Class<? extends IRenameStrategy2> bindIRenameStrategy2() {
 		return IRenameStrategy2.DefaultImpl.class;
+	}
+	
+	// contributed by org.eclipse.xtext.xtext.generator.exporting.QualifiedNamesFragment2
+	public Class<? extends IPrefixMatcher> bindIPrefixMatcher() {
+		return FQNPrefixMatcher.class;
 	}
 	
 }

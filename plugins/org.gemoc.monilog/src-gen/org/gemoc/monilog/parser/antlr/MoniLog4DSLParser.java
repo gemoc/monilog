@@ -27,7 +27,7 @@ public class MoniLog4DSLParser extends AbstractAntlrParser {
 
 	@Override 
 	protected String getDefaultRuleName() {
-		return "Model";
+		return "Document";
 	}
 
 	public MoniLog4DSLGrammarAccess getGrammarAccess() {

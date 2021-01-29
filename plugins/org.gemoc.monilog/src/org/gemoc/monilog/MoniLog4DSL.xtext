@@ -2,43 +2,83 @@ grammar org.gemoc.monilog.MoniLog4DSL with org.eclipse.xtext.common.Terminals
 
 generate moniLog4DSL "http://www.eclipse.org/gemoc/monilog/MoniLog4DSL"
 
-Model:
-	('default-language' defaultLanguageID=(ID | STRING))?
-	moniLogSpecs+=MoniLogSpec+;
-	
-MoniLogSpec:
-	'monilog' name=STRING? ('[' level=LogLevel ']')? '{'
-		('events' '{' (events+=Event) (',' events+=Event)* '}')?
-		('conditions' '{' (conditions+=Condition) (',' conditions+=Condition)* '}')?
-		'actions' '{' (actions+=Action) (',' actions+=Action)* '}'
+Document:
+	'package' name=QualifiedName
+	imports+=Import*
+	(events+=Event* & appenders+=Appender* & layouts+=Layout* & moniloggers+=MoniLogger*);
+
+Import:
+	'import' importedNamespace=QualifiedNameWithWildcard;
+
+@Exported
+Appender:
+	LocalAppender | ExternalAppender;
+
+LocalAppender:
+	annotations+=AppenderAnnotation*
+	'appender' name=ID ('(' parameterDecl=ParameterDeclVarArgs ')')? '{'
+		calls+=AppenderCall (';' calls+=AppenderCall)*
 	'}';
 
-enum LogLevel:
-	config='CONFIG' | fine='FINE' | finer='FINER' | finest='FINEST' |
-	info='INFO' | severe='SEVERE' | warning='WARNING';
+ExternalAppender:
+	'appender' name=ID ('(' parameterDecl=ParameterDeclVarArgs ')')?;
 
+Layout:
+	LocalLayout | ExternalLayout;
+
+@Exported
+LocalLayout:
+	'layout' name=ID ('(' parameterDecl=ParameterDeclVarArgs ')')? '{'
+		call=LayoutCall
+	'}';
+
+@Exported
+ExternalLayout:
+	'layout' name=ID ('(' parameterDecl=ParameterDeclVarArgs ')')?;
+
+ParameterDeclVarArgs returns ParameterDecl:
+	{ParameterDecl}
+	(parameters+=Parameter (',' parameters+=Parameter)* (',' varArgs=Parameter '...')?)?;
+
+ParameterDeclNoVarArgs returns ParameterDecl:
+	{ParameterDecl}
+	(parameters+=Parameter (',' parameters+=Parameter)*)?;
+
+@Exported
+MoniLogger:
+	annotations+=MoniLoggerAnnotation*
+	'monilogger' name=ID ('(' parameterDecl=ParameterDeclVarArgs ')')? ('[' level=LogLevel ']')? '{'
+		'event' streamEvent=StreamEvent
+		('conditions' '{' (conditions+=Condition) (';' conditions+=Condition)* '}')?
+		'actions' '{' (actions+=Action) (';' actions+=Action)* '}'
+	'}';
+
+Parameter:
+	name=ID;
+
+@Exported
 Event:
-	BeforeEvent | AfterEvent | BeforeAfterEvent;
+	({ASTEvent}
+	'call' name=ID ('(' parameterDecl=ParameterDeclNoVarArgs ')')? '{'
+		kind=ASTEventKind ruleID=ID
+	'}') |
+	({ComplexEvent} 'complex' name=ID ('[' kind=TemporalPatternKind ']')? ('(' parameterDecl=ParameterDeclNoVarArgs ')')? '{'
+		pattern=TemporalPattern
+	'}') |
+	({UserEvent} 'custom' name=ID ('(' parameterDecl=ParameterDeclNoVarArgs ')')?);
 
-BeforeEvent:
-	'before' ruleID=(ID | STRING) (('frequency^' frequency=INT)? & ('limit' limit=INT)?);
-
-AfterEvent:
-	'after' ruleID=(ID | STRING) (('frequency' frequency=INT)? & ('limit' limit=INT)?);
-
-BeforeAfterEvent:
-	ruleID=(ID | STRING) (('frequency' frequency=INT)? & ('limit' limit=INT)?);
+ASTEventKind:
+	{BeforeASTEvent} 'before'| {AfterASTEvent} 'after';
 
 Condition:
-	{TemporalPropertyCondition} 'stream' '(' pattern=TemporalPattern (',' kind=TemporalPropertyConditionKind)? ')' |
-	{LanguageExpressionCondition} expression=LanguageExpression;
+	expression=LanguageExpression;
 
 TemporalPattern:
 	pattern=Pattern scope=Scope;
 
 Pattern:
+	{Existence} 'exists'? bound=BoundType? event=StreamEvent |
 	{Universality} 'always' event=StreamEvent |
-	{Existence} 'exists' bound=BoundType event=StreamEvent |
 	{Absence} 'never' event=StreamEvent |
 	{Precedence} predecessor=StreamEvent 'precedes' successor=StreamEvent |
 	{Response} event=StreamEvent 'respondsTo' trigger=StreamEvent;
@@ -61,45 +101,61 @@ Scope:
 	{Between} 'between' lowerBound=StreamEvent 'and' upperBound=StreamEvent |
 	{AfterUntil} 'after' lowerBound=StreamEvent 'until' upperBound=StreamEvent;
 
-enum TemporalPropertyConditionKind:
-	s='S'|v='V'|nS='nS'|nV='nV';
-
 Action:
-	{Notify} 'notify' | Append;
+	LanguageExpression | AppenderCall | EmitEvent | SetVariable | MoniloggerCall;
 
-Append:
-	'append' appender=Appender;
+AppenderCall:
+	appender=[Appender|QualifiedName] '.' 'call' ( '(' args+=AppenderCallArgument (',' args+=AppenderCallArgument)* ')' )?;
 
-Appender:
-	StreamAppender | FileAppender | ConsoleAppender;
+AppenderCallArgument returns CallArgument:
+	Expression | LayoutCall;
 
-StreamAppender:
-	'stream' '(' event=(ID | STRING) ('[' values+=LanguageExpression (',' values+=LanguageExpression)* ']' )? ')';
+LayoutCall:
+	layout=[Layout|QualifiedName] '.' 'call' ( '(' args+=LayoutCallArgument (',' args+=LayoutCallArgument)* ')' )?;
 
-FileAppender:
-	'file' '(' filename=STRING ',' layout=Layout ')';
+LayoutCallArgument returns CallArgument:
+	Expression;
 
-ConsoleAppender:
-	'console' '(' layout=Layout ')';
+EmitEvent:
+	event=[UserEvent|ID] '.' 'emit' ('(' args+=Expression (',' args+=Expression)* ')' )?;
 
-Layout:
-	StringLayout | ExternalLayout;
+SetVariable:
+	'set' '(' variable=STRING ',' value=LanguageExpression ')';
 
-StringLayout:
-	formatString=STRING (',' values+=LanguageExpression)*;
-
-ExternalLayout:
-	path=FQN (',' values+=LanguageExpression)*;
+MoniloggerCall:
+	{StartMoniLogger} monilogger=[MoniLogger|ID] '.' 'start' ( '(' args+=Expression (',' args+=Expression)* ')' )? |
+	{StopMoniLogger} monilogger=[MoniLogger|ID] '.' 'stop';
 
 StreamEvent:
-	eventId=(ID | STRING) ('[' values+=EmptyOrPropertyValue (',' values+=EmptyOrPropertyValue)* ']' )?;
+	event=[Event|ID] ('(' values+=EmptyOrPropertyValue (',' values+=EmptyOrPropertyValue)* ')' )?;
 
 EmptyOrPropertyValue:
-	({Empty} | {PropertyValue} id=(ID) ('=' value=LanguageExpression)?);
+	{Empty} | PropertyValue;
+
+Expression:
+	ParameterReference | LanguageExpression;
+
+ParameterReference:
+	parameter=[Parameter|ID];
+
+PropertyValue:
+	id=ID ('=' value=Expression)? | value=LanguageExpression;
 
 LanguageExpression:
-	{ExplicitLanguageExpression} languageId=(ID | STRING) '(' expression=STRING ')' |
-	{DefaultLanguageExpression} expression=STRING;
+	languageId=ID '(' expression=STRING ')';
 
-FQN:
-	ID ('.' ID)*;
+enum MoniLoggerAnnotation:
+	inactive='@Inactive';
+
+enum AppenderAnnotation:
+	async='@Async';
+
+enum LogLevel:
+	info='INFO' | config='CONFIG' | fine='FINE' | finer='FINER' |
+	finest='FINEST' | severe='SEVERE' | warning='WARNING';
+
+enum TemporalPatternKind:
+	s='S'|v='V'|nS='nS'|nV='nV';
+
+QualifiedName: ID ('.' ID)*;
+QualifiedNameWithWildcard: QualifiedName '.*'?;

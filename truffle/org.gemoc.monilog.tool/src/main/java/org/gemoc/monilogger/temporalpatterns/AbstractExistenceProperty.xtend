@@ -1,14 +1,24 @@
 package org.gemoc.monilogger.temporalpatterns
 
+import java.util.List
+import org.gemoc.monilog.moniLog4DSL.ComplexEvent
 import org.gemoc.monilog.moniLog4DSL.Existence
 import org.gemoc.monilog.moniLog4DSL.MoniLog4DSLPackage
 
-abstract class AbstractExistenceProperty extends AbstractTemporalProperty {
+abstract class AbstractExistenceProperty extends AbstractComplexEventProperty {
 	
 	protected val Existence exists
 	
-	new(String name, Existence exists) {
-		super(name)
+	new(ComplexEvent event, Existence exists) {
+		this(event, 0, #[ TruthValue::SATISFIED ], exists)
+	}
+	
+	new(ComplexEvent event, int windowLength, Existence exists) {
+		this(event, windowLength, #[ TruthValue::SATISFIED ], exists)
+	}
+	
+	new(ComplexEvent event, int windowLength, List<TruthValue> notifyOn, Existence exists) {
+		super(event, windowLength, notifyOn)
 		this.exists = exists
 	}
 	

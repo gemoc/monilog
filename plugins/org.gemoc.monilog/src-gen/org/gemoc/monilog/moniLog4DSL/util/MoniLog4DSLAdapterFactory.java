@@ -76,14 +76,59 @@ public class MoniLog4DSLAdapterFactory extends AdapterFactoryImpl
     new MoniLog4DSLSwitch<Adapter>()
     {
       @Override
-      public Adapter caseModel(Model object)
+      public Adapter caseDocument(Document object)
       {
-        return createModelAdapter();
+        return createDocumentAdapter();
       }
       @Override
-      public Adapter caseMoniLogSpec(MoniLogSpec object)
+      public Adapter caseImport(Import object)
       {
-        return createMoniLogSpecAdapter();
+        return createImportAdapter();
+      }
+      @Override
+      public Adapter caseAppender(Appender object)
+      {
+        return createAppenderAdapter();
+      }
+      @Override
+      public Adapter caseLocalAppender(LocalAppender object)
+      {
+        return createLocalAppenderAdapter();
+      }
+      @Override
+      public Adapter caseExternalAppender(ExternalAppender object)
+      {
+        return createExternalAppenderAdapter();
+      }
+      @Override
+      public Adapter caseLayout(Layout object)
+      {
+        return createLayoutAdapter();
+      }
+      @Override
+      public Adapter caseLocalLayout(LocalLayout object)
+      {
+        return createLocalLayoutAdapter();
+      }
+      @Override
+      public Adapter caseExternalLayout(ExternalLayout object)
+      {
+        return createExternalLayoutAdapter();
+      }
+      @Override
+      public Adapter caseParameterDecl(ParameterDecl object)
+      {
+        return createParameterDeclAdapter();
+      }
+      @Override
+      public Adapter caseMoniLogger(MoniLogger object)
+      {
+        return createMoniLoggerAdapter();
+      }
+      @Override
+      public Adapter caseParameter(Parameter object)
+      {
+        return createParameterAdapter();
       }
       @Override
       public Adapter caseEvent(Event object)
@@ -91,19 +136,9 @@ public class MoniLog4DSLAdapterFactory extends AdapterFactoryImpl
         return createEventAdapter();
       }
       @Override
-      public Adapter caseBeforeEvent(BeforeEvent object)
+      public Adapter caseASTEventKind(ASTEventKind object)
       {
-        return createBeforeEventAdapter();
-      }
-      @Override
-      public Adapter caseAfterEvent(AfterEvent object)
-      {
-        return createAfterEventAdapter();
-      }
-      @Override
-      public Adapter caseBeforeAfterEvent(BeforeAfterEvent object)
-      {
-        return createBeforeAfterEventAdapter();
+        return createASTEventKindAdapter();
       }
       @Override
       public Adapter caseCondition(Condition object)
@@ -151,44 +186,34 @@ public class MoniLog4DSLAdapterFactory extends AdapterFactoryImpl
         return createActionAdapter();
       }
       @Override
-      public Adapter caseAppend(Append object)
+      public Adapter caseAppenderCall(AppenderCall object)
       {
-        return createAppendAdapter();
+        return createAppenderCallAdapter();
       }
       @Override
-      public Adapter caseAppender(Appender object)
+      public Adapter caseCallArgument(CallArgument object)
       {
-        return createAppenderAdapter();
+        return createCallArgumentAdapter();
       }
       @Override
-      public Adapter caseStreamAppender(StreamAppender object)
+      public Adapter caseLayoutCall(LayoutCall object)
       {
-        return createStreamAppenderAdapter();
+        return createLayoutCallAdapter();
       }
       @Override
-      public Adapter caseFileAppender(FileAppender object)
+      public Adapter caseEmitEvent(EmitEvent object)
       {
-        return createFileAppenderAdapter();
+        return createEmitEventAdapter();
       }
       @Override
-      public Adapter caseConsoleAppender(ConsoleAppender object)
+      public Adapter caseSetVariable(SetVariable object)
       {
-        return createConsoleAppenderAdapter();
+        return createSetVariableAdapter();
       }
       @Override
-      public Adapter caseLayout(Layout object)
+      public Adapter caseMoniloggerCall(MoniloggerCall object)
       {
-        return createLayoutAdapter();
-      }
-      @Override
-      public Adapter caseStringLayout(StringLayout object)
-      {
-        return createStringLayoutAdapter();
-      }
-      @Override
-      public Adapter caseExternalLayout(ExternalLayout object)
-      {
-        return createExternalLayoutAdapter();
+        return createMoniloggerCallAdapter();
       }
       @Override
       public Adapter caseStreamEvent(StreamEvent object)
@@ -201,29 +226,59 @@ public class MoniLog4DSLAdapterFactory extends AdapterFactoryImpl
         return createEmptyOrPropertyValueAdapter();
       }
       @Override
+      public Adapter caseExpression(Expression object)
+      {
+        return createExpressionAdapter();
+      }
+      @Override
+      public Adapter caseParameterReference(ParameterReference object)
+      {
+        return createParameterReferenceAdapter();
+      }
+      @Override
+      public Adapter casePropertyValue(PropertyValue object)
+      {
+        return createPropertyValueAdapter();
+      }
+      @Override
       public Adapter caseLanguageExpression(LanguageExpression object)
       {
         return createLanguageExpressionAdapter();
       }
       @Override
-      public Adapter caseTemporalPropertyCondition(TemporalPropertyCondition object)
+      public Adapter caseASTEvent(ASTEvent object)
       {
-        return createTemporalPropertyConditionAdapter();
+        return createASTEventAdapter();
       }
       @Override
-      public Adapter caseLanguageExpressionCondition(LanguageExpressionCondition object)
+      public Adapter caseComplexEvent(ComplexEvent object)
       {
-        return createLanguageExpressionConditionAdapter();
+        return createComplexEventAdapter();
       }
       @Override
-      public Adapter caseUniversality(Universality object)
+      public Adapter caseUserEvent(UserEvent object)
       {
-        return createUniversalityAdapter();
+        return createUserEventAdapter();
+      }
+      @Override
+      public Adapter caseBeforeASTEvent(BeforeASTEvent object)
+      {
+        return createBeforeASTEventAdapter();
+      }
+      @Override
+      public Adapter caseAfterASTEvent(AfterASTEvent object)
+      {
+        return createAfterASTEventAdapter();
       }
       @Override
       public Adapter caseExistence(Existence object)
       {
         return createExistenceAdapter();
+      }
+      @Override
+      public Adapter caseUniversality(Universality object)
+      {
+        return createUniversalityAdapter();
       }
       @Override
       public Adapter caseAbsence(Absence object)
@@ -266,29 +321,19 @@ public class MoniLog4DSLAdapterFactory extends AdapterFactoryImpl
         return createAfterUntilAdapter();
       }
       @Override
-      public Adapter caseNotify(Notify object)
+      public Adapter caseStartMoniLogger(StartMoniLogger object)
       {
-        return createNotifyAdapter();
+        return createStartMoniLoggerAdapter();
+      }
+      @Override
+      public Adapter caseStopMoniLogger(StopMoniLogger object)
+      {
+        return createStopMoniLoggerAdapter();
       }
       @Override
       public Adapter caseEmpty(Empty object)
       {
         return createEmptyAdapter();
-      }
-      @Override
-      public Adapter casePropertyValue(PropertyValue object)
-      {
-        return createPropertyValueAdapter();
-      }
-      @Override
-      public Adapter caseExplicitLanguageExpression(ExplicitLanguageExpression object)
-      {
-        return createExplicitLanguageExpressionAdapter();
-      }
-      @Override
-      public Adapter caseDefaultLanguageExpression(DefaultLanguageExpression object)
-      {
-        return createDefaultLanguageExpressionAdapter();
       }
       @Override
       public Adapter defaultCase(EObject object)
@@ -313,31 +358,166 @@ public class MoniLog4DSLAdapterFactory extends AdapterFactoryImpl
 
 
   /**
-   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog4DSL.Model <em>Model</em>}'.
+   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog4DSL.Document <em>Document</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see org.gemoc.monilog.moniLog4DSL.Model
+   * @see org.gemoc.monilog.moniLog4DSL.Document
    * @generated
    */
-  public Adapter createModelAdapter()
+  public Adapter createDocumentAdapter()
   {
     return null;
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog4DSL.MoniLogSpec <em>Moni Log Spec</em>}'.
+   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog4DSL.Import <em>Import</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see org.gemoc.monilog.moniLog4DSL.MoniLogSpec
+   * @see org.gemoc.monilog.moniLog4DSL.Import
    * @generated
    */
-  public Adapter createMoniLogSpecAdapter()
+  public Adapter createImportAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog4DSL.Appender <em>Appender</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.gemoc.monilog.moniLog4DSL.Appender
+   * @generated
+   */
+  public Adapter createAppenderAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog4DSL.LocalAppender <em>Local Appender</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.gemoc.monilog.moniLog4DSL.LocalAppender
+   * @generated
+   */
+  public Adapter createLocalAppenderAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog4DSL.ExternalAppender <em>External Appender</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.gemoc.monilog.moniLog4DSL.ExternalAppender
+   * @generated
+   */
+  public Adapter createExternalAppenderAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog4DSL.Layout <em>Layout</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.gemoc.monilog.moniLog4DSL.Layout
+   * @generated
+   */
+  public Adapter createLayoutAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog4DSL.LocalLayout <em>Local Layout</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.gemoc.monilog.moniLog4DSL.LocalLayout
+   * @generated
+   */
+  public Adapter createLocalLayoutAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog4DSL.ExternalLayout <em>External Layout</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.gemoc.monilog.moniLog4DSL.ExternalLayout
+   * @generated
+   */
+  public Adapter createExternalLayoutAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog4DSL.ParameterDecl <em>Parameter Decl</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.gemoc.monilog.moniLog4DSL.ParameterDecl
+   * @generated
+   */
+  public Adapter createParameterDeclAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog4DSL.MoniLogger <em>Moni Logger</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.gemoc.monilog.moniLog4DSL.MoniLogger
+   * @generated
+   */
+  public Adapter createMoniLoggerAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog4DSL.Parameter <em>Parameter</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.gemoc.monilog.moniLog4DSL.Parameter
+   * @generated
+   */
+  public Adapter createParameterAdapter()
   {
     return null;
   }
@@ -358,46 +538,16 @@ public class MoniLog4DSLAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog4DSL.BeforeEvent <em>Before Event</em>}'.
+   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog4DSL.ASTEventKind <em>AST Event Kind</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see org.gemoc.monilog.moniLog4DSL.BeforeEvent
+   * @see org.gemoc.monilog.moniLog4DSL.ASTEventKind
    * @generated
    */
-  public Adapter createBeforeEventAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog4DSL.AfterEvent <em>After Event</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.gemoc.monilog.moniLog4DSL.AfterEvent
-   * @generated
-   */
-  public Adapter createAfterEventAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog4DSL.BeforeAfterEvent <em>Before After Event</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.gemoc.monilog.moniLog4DSL.BeforeAfterEvent
-   * @generated
-   */
-  public Adapter createBeforeAfterEventAdapter()
+  public Adapter createASTEventKindAdapter()
   {
     return null;
   }
@@ -538,121 +688,91 @@ public class MoniLog4DSLAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog4DSL.Append <em>Append</em>}'.
+   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog4DSL.AppenderCall <em>Appender Call</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see org.gemoc.monilog.moniLog4DSL.Append
+   * @see org.gemoc.monilog.moniLog4DSL.AppenderCall
    * @generated
    */
-  public Adapter createAppendAdapter()
+  public Adapter createAppenderCallAdapter()
   {
     return null;
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog4DSL.Appender <em>Appender</em>}'.
+   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog4DSL.CallArgument <em>Call Argument</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see org.gemoc.monilog.moniLog4DSL.Appender
+   * @see org.gemoc.monilog.moniLog4DSL.CallArgument
    * @generated
    */
-  public Adapter createAppenderAdapter()
+  public Adapter createCallArgumentAdapter()
   {
     return null;
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog4DSL.StreamAppender <em>Stream Appender</em>}'.
+   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog4DSL.LayoutCall <em>Layout Call</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see org.gemoc.monilog.moniLog4DSL.StreamAppender
+   * @see org.gemoc.monilog.moniLog4DSL.LayoutCall
    * @generated
    */
-  public Adapter createStreamAppenderAdapter()
+  public Adapter createLayoutCallAdapter()
   {
     return null;
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog4DSL.FileAppender <em>File Appender</em>}'.
+   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog4DSL.EmitEvent <em>Emit Event</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see org.gemoc.monilog.moniLog4DSL.FileAppender
+   * @see org.gemoc.monilog.moniLog4DSL.EmitEvent
    * @generated
    */
-  public Adapter createFileAppenderAdapter()
+  public Adapter createEmitEventAdapter()
   {
     return null;
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog4DSL.ConsoleAppender <em>Console Appender</em>}'.
+   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog4DSL.SetVariable <em>Set Variable</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see org.gemoc.monilog.moniLog4DSL.ConsoleAppender
+   * @see org.gemoc.monilog.moniLog4DSL.SetVariable
    * @generated
    */
-  public Adapter createConsoleAppenderAdapter()
+  public Adapter createSetVariableAdapter()
   {
     return null;
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog4DSL.Layout <em>Layout</em>}'.
+   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog4DSL.MoniloggerCall <em>Monilogger Call</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see org.gemoc.monilog.moniLog4DSL.Layout
+   * @see org.gemoc.monilog.moniLog4DSL.MoniloggerCall
    * @generated
    */
-  public Adapter createLayoutAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog4DSL.StringLayout <em>String Layout</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.gemoc.monilog.moniLog4DSL.StringLayout
-   * @generated
-   */
-  public Adapter createStringLayoutAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog4DSL.ExternalLayout <em>External Layout</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.gemoc.monilog.moniLog4DSL.ExternalLayout
-   * @generated
-   */
-  public Adapter createExternalLayoutAdapter()
+  public Adapter createMoniloggerCallAdapter()
   {
     return null;
   }
@@ -688,6 +808,51 @@ public class MoniLog4DSLAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
+   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog4DSL.Expression <em>Expression</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.gemoc.monilog.moniLog4DSL.Expression
+   * @generated
+   */
+  public Adapter createExpressionAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog4DSL.ParameterReference <em>Parameter Reference</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.gemoc.monilog.moniLog4DSL.ParameterReference
+   * @generated
+   */
+  public Adapter createParameterReferenceAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog4DSL.PropertyValue <em>Property Value</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.gemoc.monilog.moniLog4DSL.PropertyValue
+   * @generated
+   */
+  public Adapter createPropertyValueAdapter()
+  {
+    return null;
+  }
+
+  /**
    * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog4DSL.LanguageExpression <em>Language Expression</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -703,46 +868,76 @@ public class MoniLog4DSLAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog4DSL.TemporalPropertyCondition <em>Temporal Property Condition</em>}'.
+   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog4DSL.ASTEvent <em>AST Event</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see org.gemoc.monilog.moniLog4DSL.TemporalPropertyCondition
+   * @see org.gemoc.monilog.moniLog4DSL.ASTEvent
    * @generated
    */
-  public Adapter createTemporalPropertyConditionAdapter()
+  public Adapter createASTEventAdapter()
   {
     return null;
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog4DSL.LanguageExpressionCondition <em>Language Expression Condition</em>}'.
+   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog4DSL.ComplexEvent <em>Complex Event</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see org.gemoc.monilog.moniLog4DSL.LanguageExpressionCondition
+   * @see org.gemoc.monilog.moniLog4DSL.ComplexEvent
    * @generated
    */
-  public Adapter createLanguageExpressionConditionAdapter()
+  public Adapter createComplexEventAdapter()
   {
     return null;
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog4DSL.Universality <em>Universality</em>}'.
+   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog4DSL.UserEvent <em>User Event</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see org.gemoc.monilog.moniLog4DSL.Universality
+   * @see org.gemoc.monilog.moniLog4DSL.UserEvent
    * @generated
    */
-  public Adapter createUniversalityAdapter()
+  public Adapter createUserEventAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog4DSL.BeforeASTEvent <em>Before AST Event</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.gemoc.monilog.moniLog4DSL.BeforeASTEvent
+   * @generated
+   */
+  public Adapter createBeforeASTEventAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog4DSL.AfterASTEvent <em>After AST Event</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.gemoc.monilog.moniLog4DSL.AfterASTEvent
+   * @generated
+   */
+  public Adapter createAfterASTEventAdapter()
   {
     return null;
   }
@@ -758,6 +953,21 @@ public class MoniLog4DSLAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createExistenceAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog4DSL.Universality <em>Universality</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.gemoc.monilog.moniLog4DSL.Universality
+   * @generated
+   */
+  public Adapter createUniversalityAdapter()
   {
     return null;
   }
@@ -883,16 +1093,31 @@ public class MoniLog4DSLAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog4DSL.Notify <em>Notify</em>}'.
+   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog4DSL.StartMoniLogger <em>Start Moni Logger</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see org.gemoc.monilog.moniLog4DSL.Notify
+   * @see org.gemoc.monilog.moniLog4DSL.StartMoniLogger
    * @generated
    */
-  public Adapter createNotifyAdapter()
+  public Adapter createStartMoniLoggerAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog4DSL.StopMoniLogger <em>Stop Moni Logger</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.gemoc.monilog.moniLog4DSL.StopMoniLogger
+   * @generated
+   */
+  public Adapter createStopMoniLoggerAdapter()
   {
     return null;
   }
@@ -908,51 +1133,6 @@ public class MoniLog4DSLAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createEmptyAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog4DSL.PropertyValue <em>Property Value</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.gemoc.monilog.moniLog4DSL.PropertyValue
-   * @generated
-   */
-  public Adapter createPropertyValueAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog4DSL.ExplicitLanguageExpression <em>Explicit Language Expression</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.gemoc.monilog.moniLog4DSL.ExplicitLanguageExpression
-   * @generated
-   */
-  public Adapter createExplicitLanguageExpressionAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog4DSL.DefaultLanguageExpression <em>Default Language Expression</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.gemoc.monilog.moniLog4DSL.DefaultLanguageExpression
-   * @generated
-   */
-  public Adapter createDefaultLanguageExpressionAdapter()
   {
     return null;
   }

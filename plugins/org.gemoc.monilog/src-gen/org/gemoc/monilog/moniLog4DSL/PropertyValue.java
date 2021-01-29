@@ -50,12 +50,12 @@ public interface PropertyValue extends EmptyOrPropertyValue
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the value of the '<em>Value</em>' containment reference.
-   * @see #setValue(LanguageExpression)
+   * @see #setValue(Expression)
    * @see org.gemoc.monilog.moniLog4DSL.MoniLog4DSLPackage#getPropertyValue_Value()
    * @model containment="true"
    * @generated
    */
-  LanguageExpression getValue();
+  Expression getValue();
 
   /**
    * Sets the value of the '{@link org.gemoc.monilog.moniLog4DSL.PropertyValue#getValue <em>Value</em>}' containment reference.
@@ -65,6 +65,6 @@ public interface PropertyValue extends EmptyOrPropertyValue
    * @see #getValue()
    * @generated
    */
-  void setValue(LanguageExpression value);
+  void setValue(Expression value);
 
 } // PropertyValue
