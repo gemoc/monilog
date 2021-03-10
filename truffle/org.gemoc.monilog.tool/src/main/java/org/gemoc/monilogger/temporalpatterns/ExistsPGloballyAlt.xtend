@@ -2,10 +2,10 @@ package org.gemoc.monilogger.temporalpatterns
 
 import java.util.List
 import java.util.Map
-import org.gemoc.monilog.moniLog4DSL.ComplexEvent
-import org.gemoc.monilog.moniLog4DSL.Existence
-import org.gemoc.monilog.moniLog4DSL.MoniLog4DSLPackage
-import org.gemoc.monilog.moniLog4DSL.PropertyValue
+import org.gemoc.monilog.moniLog.ComplexEvent
+import org.gemoc.monilog.moniLog.Existence
+import org.gemoc.monilog.moniLog.MoniLogPackage
+import org.gemoc.monilog.moniLog.PropertyValue
 
 class ExistsPGloballyAlt extends AbstractExistenceProperty {
 	
@@ -37,13 +37,13 @@ class ExistsPGloballyAlt extends AbstractExistenceProperty {
 					«pattern»
 					define
 						«IF distinctValueExpressions.empty»
-						«IF exists.bound.eClass.classifierID != MoniLog4DSLPackage.LOWER_BOUND && exists.bound.n > 1»
+						«IF exists.bound.eClass.classifierID != MoniLogPackage.LOWER_BOUND && exists.bound.n > 1»
 						P as P.«p»? is not null,
 						«ENDIF»
 						P1 as P1.«p»? is not null,
 						nP as nP.«p»? is null,
 						«ELSE»
-						«IF exists.bound.eClass.classifierID != MoniLog4DSLPackage.LOWER_BOUND && exists.bound.n > 1»
+						«IF exists.bound.eClass.classifierID != MoniLogPackage.LOWER_BOUND && exists.bound.n > 1»
 						P as P.«p»? is not null and «FOR v : distinctValueExpressions SEPARATOR " and "»P.«v»? = context.distinct«safeName.toFirstUpper».«v»«ENDFOR»,
 						«ENDIF»
 						P1 as P1.«p»? is not null and «FOR v : distinctValueExpressions SEPARATOR " and "»P1.«v»? = context.distinct«safeName.toFirstUpper».«v»«ENDFOR»,
@@ -57,11 +57,11 @@ class ExistsPGloballyAlt extends AbstractExistenceProperty {
 	
 	private def String rec(int i) {
 		'''«IF i == 0»
-			nP*? (P«IF exists.bound.eClass.classifierID == MoniLog4DSLPackage.LOWER_BOUND»1«ENDIF» | EoE)
+			nP*? (P«IF exists.bound.eClass.classifierID == MoniLogPackage.LOWER_BOUND»1«ENDIF» | EoE)
 			«ELSEIF i == 1»
-			nP*? (P1«IF exists.bound.eClass.classifierID != MoniLog4DSLPackage.LOWER_BOUND» «rec(i - 1)»«ENDIF» | EoE)
+			nP*? (P1«IF exists.bound.eClass.classifierID != MoniLogPackage.LOWER_BOUND» «rec(i - 1)»«ENDIF» | EoE)
 			«ELSE»
-			nP*? (P«IF exists.bound.eClass.classifierID == MoniLog4DSLPackage.UPPER_BOUND»1«ENDIF» «rec(i - 1)» | EoE)
+			nP*? (P«IF exists.bound.eClass.classifierID == MoniLogPackage.UPPER_BOUND»1«ENDIF» «rec(i - 1)» | EoE)
 			«ENDIF»'''
 	}
 	
@@ -76,12 +76,12 @@ class ExistsPGloballyAlt extends AbstractExistenceProperty {
 	override protected getStatus(Map<String, List<Map<?, ?>>> events) {
 		val lP = events.get("P")
 		val reachedP = !(lP === null || lP.empty)
-		if (exists.bound.eClass.classifierID == MoniLog4DSLPackage.LOWER_BOUND) {
+		if (exists.bound.eClass.classifierID == MoniLogPackage.LOWER_BOUND) {
 			return if (reachedP) TruthValue.SATISFIED else TruthValue.VIOLATED
 		} else {
 			val execEnd = events.get("EoE")
 			val reachedEoE = !(execEnd === null || execEnd.empty)
-			if (exists.bound.eClass.classifierID == MoniLog4DSLPackage.UPPER_BOUND) {
+			if (exists.bound.eClass.classifierID == MoniLogPackage.UPPER_BOUND) {
 				return if (reachedEoE) TruthValue.SATISFIED else TruthValue.VIOLATED
 			} else {
 				return if (reachedP && reachedEoE) TruthValue.SATISFIED else TruthValue.VIOLATED

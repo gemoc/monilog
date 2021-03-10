@@ -3,9 +3,17 @@
  */
 package org.gemoc.monilog;
 
+import org.eclipse.xtext.naming.IQualifiedNameProvider;
 
 /**
- * Use this class to register components to be used at runtime / without the Equinox extension registry.
+ * Use this class to register components to be used at runtime / without the
+ * Equinox extension registry.
  */
 public class MoniLog4DSLRuntimeModule extends AbstractMoniLog4DSLRuntimeModule {
+
+	@Override
+	public Class<? extends IQualifiedNameProvider> bindIQualifiedNameProvider() {
+		return MoniLog4DSLQualifiedNameProvider.class;
+	}
+
 }

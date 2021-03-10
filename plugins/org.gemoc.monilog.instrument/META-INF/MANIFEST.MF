@@ -7,8 +7,15 @@ Bundle-Activator: org.gemoc.monilog.instrument.Activator
 Require-Bundle: org.eclipse.core.runtime,
  org.gemoc.instrument,
  org.gemoc.monilog,
- org.eclipse.xtext.testing;bundle-version="2.24.0",
- truffle-api-wrapper;bundle-version="0.3.3"
+ org.eclipse.xtext.testing;bundle-version="2.22.0",
+ jgrapht-core,
+ com.google.guava,
+ org.eclipse.xtext.xbase.lib,
+ org.eclipse.xtend.lib,
+ org.eclipse.xtend.lib.macro,
+ truffle-api-wrapper;bundle-version="1.0.0",
+ esper-wrapper;bundle-version="1.0.0",
+ jython-wrapper;bundle-version="1.0.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Automatic-Module-Name: org.gemoc.monilog.instrument
 Bundle-ActivationPolicy: lazy

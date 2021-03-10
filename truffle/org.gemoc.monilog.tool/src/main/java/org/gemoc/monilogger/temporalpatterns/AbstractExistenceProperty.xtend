@@ -1,9 +1,9 @@
 package org.gemoc.monilogger.temporalpatterns
 
 import java.util.List
-import org.gemoc.monilog.moniLog4DSL.ComplexEvent
-import org.gemoc.monilog.moniLog4DSL.Existence
-import org.gemoc.monilog.moniLog4DSL.MoniLog4DSLPackage
+import org.gemoc.monilog.moniLog.ComplexEvent
+import org.gemoc.monilog.moniLog.Existence
+import org.gemoc.monilog.moniLog.MoniLogPackage
 
 abstract class AbstractExistenceProperty extends AbstractComplexEventProperty {
 	
@@ -24,13 +24,13 @@ abstract class AbstractExistenceProperty extends AbstractComplexEventProperty {
 	
 	protected def getRange() {
 		switch (exists.bound.eClass.classifierID) {
-			case MoniLog4DSLPackage.EXACT_BOUND: {
+			case MoniLogPackage.EXACT_BOUND: {
 				'''{«exists.bound.n»}'''
 			}
-			case MoniLog4DSLPackage.LOWER_BOUND: {
+			case MoniLogPackage.LOWER_BOUND: {
 				'''{«exists.bound.n», }'''
 			}
-			case MoniLog4DSLPackage.UPPER_BOUND: {
+			case MoniLogPackage.UPPER_BOUND: {
 				'''{ , «exists.bound.n»}'''
 			}
 		}
@@ -38,13 +38,13 @@ abstract class AbstractExistenceProperty extends AbstractComplexEventProperty {
 	
 	protected def getComplementaryRange() {
 		switch (exists.bound.eClass.classifierID) {
-			case MoniLog4DSLPackage.EXACT_BOUND: {
+			case MoniLogPackage.EXACT_BOUND: {
 				'''{ , «exists.bound.n - 1»}'''
 			}
-			case MoniLog4DSLPackage.LOWER_BOUND: {
+			case MoniLogPackage.LOWER_BOUND: {
 				'''{ , «exists.bound.n - 1»}'''
 			}
-			case MoniLog4DSLPackage.UPPER_BOUND: {
+			case MoniLogPackage.UPPER_BOUND: {
 				'''{«exists.bound.n + 1», }'''
 			}
 			default: {

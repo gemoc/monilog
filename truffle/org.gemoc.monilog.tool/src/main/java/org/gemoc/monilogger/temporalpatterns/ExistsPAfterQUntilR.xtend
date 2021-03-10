@@ -2,10 +2,10 @@ package org.gemoc.monilogger.temporalpatterns
 
 import java.util.List
 import java.util.Map
-import org.gemoc.monilog.moniLog4DSL.AfterUntil
-import org.gemoc.monilog.moniLog4DSL.ComplexEvent
-import org.gemoc.monilog.moniLog4DSL.Existence
-import org.gemoc.monilog.moniLog4DSL.MoniLog4DSLPackage
+import org.gemoc.monilog.moniLog.AfterUntil
+import org.gemoc.monilog.moniLog.ComplexEvent
+import org.gemoc.monilog.moniLog.Existence
+import org.gemoc.monilog.moniLog.MoniLogPackage
 
 class ExistsPAfterQUntilR extends AbstractExistenceProperty {
 	
@@ -28,7 +28,7 @@ class ExistsPAfterQUntilR extends AbstractExistenceProperty {
 					measures P1 as P, Q as Q, EoE as EoE
 					«pattern»
 					define
-						«IF exists.bound.eClass.classifierID != MoniLog4DSLPackage.LOWER_BOUND && exists.bound.n > 1»P as P.«p»? is not null,«ENDIF»
+						«IF exists.bound.eClass.classifierID != MoniLogPackage.LOWER_BOUND && exists.bound.n > 1»P as P.«p»? is not null,«ENDIF»
 						P1 as P1.«p»? is not null,
 						nP as nP.«p»? is null,
 						Q as Q.«q»? is not null,
@@ -41,11 +41,11 @@ class ExistsPAfterQUntilR extends AbstractExistenceProperty {
 	
 	private def String rec(int i) {
 		'''«IF i == 0»
-			nP*? (P«IF exists.bound.eClass.classifierID == MoniLog4DSLPackage.LOWER_BOUND»1«ENDIF» | R | EoE)
+			nP*? (P«IF exists.bound.eClass.classifierID == MoniLogPackage.LOWER_BOUND»1«ENDIF» | R | EoE)
 			«ELSEIF i == 1»
-			nP*? (P1«IF exists.bound.eClass.classifierID != MoniLog4DSLPackage.LOWER_BOUND» «rec(i - 1)»«ENDIF» | R | EoE)
+			nP*? (P1«IF exists.bound.eClass.classifierID != MoniLogPackage.LOWER_BOUND» «rec(i - 1)»«ENDIF» | R | EoE)
 			«ELSE»
-			nP*? (P«IF exists.bound.eClass.classifierID == MoniLog4DSLPackage.UPPER_BOUND»1«ENDIF» «rec(i - 1)» | R | EoE)
+			nP*? (P«IF exists.bound.eClass.classifierID == MoniLogPackage.UPPER_BOUND»1«ENDIF» «rec(i - 1)» | R | EoE)
 			«ENDIF»'''
 	}
 	
@@ -72,7 +72,7 @@ class ExistsPAfterQUntilR extends AbstractExistenceProperty {
 					return TruthValue.UNKNOWN
 				}
 			} else {
-				if (exists.bound.eClass.classifierID == MoniLog4DSLPackage.UPPER_BOUND) {
+				if (exists.bound.eClass.classifierID == MoniLogPackage.UPPER_BOUND) {
 					val lR = events.get("R")
 					val reachedR = !(lR === null || lR.empty)
 					if (reachedEoE || reachedR) {

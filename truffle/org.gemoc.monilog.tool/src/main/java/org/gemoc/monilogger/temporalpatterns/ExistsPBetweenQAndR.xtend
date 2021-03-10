@@ -2,10 +2,10 @@ package org.gemoc.monilogger.temporalpatterns
 
 import java.util.List
 import java.util.Map
-import org.gemoc.monilog.moniLog4DSL.Between
-import org.gemoc.monilog.moniLog4DSL.Existence
-import org.gemoc.monilog.moniLog4DSL.MoniLog4DSLPackage
-import org.gemoc.monilog.moniLog4DSL.ComplexEvent
+import org.gemoc.monilog.moniLog.Between
+import org.gemoc.monilog.moniLog.ComplexEvent
+import org.gemoc.monilog.moniLog.Existence
+import org.gemoc.monilog.moniLog.MoniLogPackage
 
 class ExistsPBetweenQAndR extends AbstractExistenceProperty {
 	
@@ -66,13 +66,13 @@ class ExistsPBetweenQAndR extends AbstractExistenceProperty {
 				val lP = events.get("P")
 				val nP = if (lP === null) 0 else lP.size
 				return switch (exists.bound.eClass.classifierID) {
-					case MoniLog4DSLPackage.EXACT_BOUND: {
+					case MoniLogPackage.EXACT_BOUND: {
 						if (nP == exists.bound.n) TruthValue.UNKNOWN else TruthValue.VIOLATED
 					}
-					case MoniLog4DSLPackage.LOWER_BOUND: {
+					case MoniLogPackage.LOWER_BOUND: {
 						if (nP >= exists.bound.n) TruthValue.UNKNOWN else TruthValue.VIOLATED
 					}
-					case MoniLog4DSLPackage.UPPER_BOUND: {
+					case MoniLogPackage.UPPER_BOUND: {
 						if (nP <= exists.bound.n) TruthValue.UNKNOWN else TruthValue.VIOLATED
 					}
 				}

@@ -21,11 +21,15 @@
 		<additionalTestArguments></additionalTestArguments>
 	</properties>
 	<modules>
+<!-- 		<module>plugins/truffle-api-wrapper</module> -->
+<!-- 		<module>plugins/esper-wrapper</module> -->
+<!-- 		<module>plugins/jython-wrapper</module> -->
 		<module>plugins/org.gemoc.monilog</module>
 		<module>plugins/org.gemoc.monilog.ide</module>
 		<module>plugins/org.gemoc.monilog.ui</module>
+<!-- 		<module>plugins/org.gemoc.instrument</module> -->
+<!-- 		<module>plugins/org.gemoc.monilog.instrument</module> -->
 		<module>releng/org.gemoc.monilog.target</module>
-		<module>truffle/org.gemoc.monilog.tool</module>
 	</modules>
 	<dependencyManagement>
 		<dependencies>
