@@ -3,8 +3,8 @@
 <plugin>
 	<extension point="org.eclipse.emf.ecore.generated_package">
 		<package
-			uri = "http://www.eclipse.org/gemoc/monilog/MoniLog4DSL"
-			class = "org.gemoc.monilog.moniLog4DSL.MoniLog4DSLPackage"
-			genModel = "model/generated/MoniLog4DSL.genmodel" />
+			uri = "http://www.gemoc.org/monilog/MoniLog"
+			class = "org.gemoc.monilog.moniLog.MoniLogPackage"
+			genModel = "model/generated/MoniLog.genmodel" />
 	</extension>
 </plugin>

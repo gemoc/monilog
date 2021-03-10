@@ -1,9 +1,8 @@
 Manifest-Version: 1.0
 Automatic-Module-Name: org.gemoc.monilog
 Bundle-ManifestVersion: 2
-Bundle-Name: org.gemoc.monilog
-Bundle-Vendor: INRIA
-Bundle-Localization: plugin
+Bundle-Name: MoniLog
+Bundle-Vendor: CEA
 Bundle-Version: 1.0.0.qualifier
 Bundle-SymbolicName: org.gemoc.monilog; singleton:=true
 Bundle-ActivationPolicy: lazy
@@ -11,26 +10,22 @@ Require-Bundle: org.eclipse.xtext,
  org.eclipse.xtext.xbase,
  org.eclipse.equinox.common;bundle-version="3.5.0",
  org.eclipse.emf.ecore,
- org.eclipse.xtext.xbase.lib;bundle-version="2.21.0",
+ org.eclipse.xtext.xbase.lib;bundle-version="2.14.0",
  org.eclipse.xtext.util,
  org.eclipse.emf.common,
- org.antlr.runtime;bundle-version="[3.2.0,3.2.1)",
- org.eclipse.core.runtime;bundle-version="3.17.0",
- org.eclipse.xtext.common.types,
- truffle-api-wrapper
+ org.antlr.runtime;bundle-version="[3.2.0,3.2.1)"
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Export-Package: org.gemoc.monilog,
  org.gemoc.monilog.api,
  org.gemoc.monilog.generator,
- org.gemoc.monilog.moniLog4DSL,
- org.gemoc.monilog.moniLog4DSL.impl,
- org.gemoc.monilog.moniLog4DSL.util,
+ org.gemoc.monilog.moniLog,
+ org.gemoc.monilog.moniLog.impl,
+ org.gemoc.monilog.moniLog.util,
  org.gemoc.monilog.parser.antlr,
  org.gemoc.monilog.parser.antlr.internal,
  org.gemoc.monilog.resource,
  org.gemoc.monilog.scoping,
  org.gemoc.monilog.serializer,
  org.gemoc.monilog.services,
- org.gemoc.monilog.stl,
  org.gemoc.monilog.validation
 Import-Package: org.apache.log4j

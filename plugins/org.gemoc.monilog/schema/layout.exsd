@@ -3,7 +3,7 @@
 <schema targetNamespace="org.gemoc.monilog" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appInfo>
-         <meta.schema plugin="org.gemoc.monilog" id="layout" name="Monilog Layout"/>
+         <meta.schema plugin="org.gemoc.monilog" id="layout" name="MoniLog Layout"/>
       </appInfo>
       <documentation>
          [Enter description of this extension point.]
@@ -17,6 +17,9 @@
          </appInfo>
       </annotation>
       <complexType>
+         <choice>
+            <element ref="layout"/>
+         </choice>
          <attribute name="point" type="string" use="required">
             <annotation>
                <documentation>
@@ -46,13 +49,6 @@
 
    <element name="layout">
       <complexType>
-         <attribute name="name" type="string" use="required">
-            <annotation>
-               <documentation>
-                  
-               </documentation>
-            </annotation>
-         </attribute>
          <attribute name="class" type="string" use="required">
             <annotation>
                <documentation>

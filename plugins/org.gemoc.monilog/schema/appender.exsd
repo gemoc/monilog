@@ -3,7 +3,7 @@
 <schema targetNamespace="org.gemoc.monilog" xmlns="http://www.w3.org/2001/XMLSchema">
 <annotation>
       <appInfo>
-         <meta.schema plugin="org.gemoc.monilog" id="appender" name="Monilog Appender"/>
+         <meta.schema plugin="org.gemoc.monilog" id="appender" name="MoniLog Appender"/>
       </appInfo>
       <documentation>
          [Enter description of this extension point.]
@@ -17,6 +17,9 @@
          </appInfo>
       </annotation>
       <complexType>
+         <choice>
+            <element ref="appender"/>
+         </choice>
          <attribute name="point" type="string" use="required">
             <annotation>
                <documentation>
@@ -46,20 +49,13 @@
 
    <element name="appender">
       <complexType>
-         <attribute name="name" type="string" use="required">
-            <annotation>
-               <documentation>
-                  
-               </documentation>
-            </annotation>
-         </attribute>
          <attribute name="class" type="string" use="required">
             <annotation>
                <documentation>
                   
                </documentation>
                <appInfo>
-                  <meta.attribute kind="java" basedOn=":org.gemoc.monilog.api.IMoniLogAppender"/>
+                  <meta.attribute kind="java"/>
                </appInfo>
             </annotation>
          </attribute>

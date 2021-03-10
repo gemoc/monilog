@@ -6,7 +6,10 @@ import org.gemoc.monilog.api.IMoniLogAppender;
 
 public class ConsoleAppender implements IMoniLogAppender {
 
-	// TODO Inject this generically
+	/* TODO
+	 * Find a non-ad-hoc way of directing the output of this appender to the correct console.
+	 * Maybe a NabLabConsole-specific appender?
+	 */
 	public Consumer<String> messageConsumer;
 	
 	@Override
