@@ -17,7 +17,6 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiFunction;
-import java.util.function.Consumer;
 import java.util.logging.Level;
 import java.util.stream.Collectors;
 
@@ -253,6 +252,8 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 		final List<MoniLogger> moniloggers = new ArrayList<>();
 		final List<Event> allEvents = new ArrayList<>();
 		final ResourceSet rs = new XtextResourceSet();
+		final ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
+		System.out.println(contextClassLoader);
 		specifications.forEach(specification -> {
 			if (!specification.isBlank()) {
 				try {
@@ -572,6 +573,9 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 		}
 		final Appender appender = appenderCall.getAppender();
 		switch (appender.eClass().getClassifierID()) {
+		case MoniLogPackage.APPENDER: {
+			throw new IllegalStateException("Can't find definition for " + appender.getName() + ".");
+		}
 		case MoniLogPackage.LOCAL_APPENDER: {
 			final LocalAppender localAppender = (LocalAppender) appender;
 			localAppender.getCalls().forEach(childCall -> appenderCallToActualArgs.computeIfAbsent(childCall,
@@ -590,10 +594,6 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 				final Class<?> appenderClass = contextClassLoader.loadClass(className);
 				final Constructor<?> constructor = appenderClass.getConstructor();
 				final Value appenderValue = Value.asValue(constructor.newInstance());
-				if (appenderValue.hasMember("messageConsumer")) {
-					final Consumer<String> consumer = s -> logger.info(s);
-					appenderValue.putMember("messageConsumer", consumer);
-				}
 				final List<CallArgument> actualArgs = appenderCallToActualArgs.get(appenderCall);
 				final MoniLoggerExecutableNode[] valueNodes = actualArgs.stream()
 						.map(arg -> getAppenderCallArgumentNode(arg, node, level, languages))

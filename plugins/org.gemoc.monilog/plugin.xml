@@ -12,13 +12,15 @@
  <extension
        point="org.gemoc.monilog.appender">
     <appender
-          class="org.gemoc.monilog.stl.ConsoleAppender">
+          class="org.gemoc.monilog.stl.ConsoleAppender"
+          specificationFile="/moniloglib.mnlg">
     </appender>
  </extension>
  <extension
        point="org.gemoc.monilog.layout">
     <layout
-          class="org.gemoc.monilog.stl.StringLayout">
+          class="org.gemoc.monilog.stl.StringLayout"
+          specificationFile="/moniloglib.mnlg">
     </layout>
  </extension>
 </plugin>
