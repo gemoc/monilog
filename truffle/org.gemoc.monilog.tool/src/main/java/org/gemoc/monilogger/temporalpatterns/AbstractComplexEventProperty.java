@@ -7,9 +7,9 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.gemoc.monilog.moniLog4DSL.ComplexEvent;
-import org.gemoc.monilog.moniLog4DSL.PropertyValue;
-import org.gemoc.monilog.moniLog4DSL.StreamEvent;
+import org.gemoc.monilog.moniLog.ComplexEvent;
+import org.gemoc.monilog.moniLog.PropertyValue;
+import org.gemoc.monilog.moniLog.StreamEvent;
 
 import com.espertech.esper.common.internal.event.map.MapEventBean;
 import com.google.common.collect.Streams;

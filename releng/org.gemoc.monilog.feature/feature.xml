@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <feature
       id="org.gemoc.monilog.feature"
-      label="Monilog Syntax"
+      label="Monilog"
       version="1.0.0.qualifier">
 
    <description url="http://www.example.com/description">
-      [Enter Feature Description here.]
+      GraalVM integration for NabLab.
    </description>
 
    <copyright url="http://www.example.com/copyright">
@@ -15,6 +15,53 @@
    <license url="http://www.example.com/license">
       [Enter License Description here.]
    </license>
+
+   <requires>
+      <import plugin="org.gemoc.monilog"/>
+      <import plugin="org.gemoc.monilog.ide"/>
+      <import plugin="org.eclipse.xtext.ui"/>
+      <import plugin="org.eclipse.xtext.ui.shared"/>
+      <import plugin="org.eclipse.xtext.ui.codetemplates.ui"/>
+      <import plugin="org.eclipse.ui.editors" version="3.5.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.ui.ide" version="3.5.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.ui"/>
+      <import plugin="org.eclipse.compare"/>
+      <import plugin="org.eclipse.xtext.builder"/>
+      <import plugin="org.apache.log4j"/>
+      <import plugin="org.eclipse.xtext.ide"/>
+      <import plugin="org.eclipse.xtext.xbase.ide"/>
+      <import plugin="org.eclipse.xtext"/>
+      <import plugin="org.eclipse.xtext.xbase"/>
+      <import plugin="org.eclipse.equinox.common" version="3.5.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.emf.ecore"/>
+      <import plugin="org.eclipse.xtext.xbase.lib" version="2.14.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.xtext.util"/>
+      <import plugin="org.eclipse.emf.common"/>
+      <import plugin="fr.cea.nabla"/>
+      <import plugin="fr.cea.nabla.edit"/>
+      <import plugin="fr.cea.nabla.ide"/>
+      <import plugin="fr.cea.nabla.ir"/>
+      <import plugin="fr.cea.nabla.ui" version="0.3.3" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.ui.console"/>
+      <import plugin="org.eclipse.ui.views"/>
+      <import plugin="org.eclipse.ui.views.log"/>
+      <import plugin="org.eclipse.pde.core"/>
+      <import plugin="org.eclipse.search"/>
+      <import plugin="org.eclipse.jdt.core"/>
+      <import plugin="org.eclipse.jdt.launching"/>
+      <import plugin="org.eclipse.core.runtime"/>
+      <import plugin="org.eclipse.gmf.runtime.diagram.ui"/>
+      <import plugin="org.eclipse.sirius"/>
+      <import plugin="org.eclipse.sirius.common"/>
+      <import plugin="org.eclipse.sirius.diagram"/>
+      <import plugin="org.eclipse.sirius.ui"/>
+      <import plugin="org.eclipse.sirius.diagram.ui"/>
+      <import plugin="org.eclipse.jface" version="3.17.0" match="greaterOrEqual"/>
+      <import plugin="org.eclipse.ui.navigator"/>
+      <import plugin="org.eclipse.zest.core"/>
+      <import plugin="org.eclipse.zest.layouts"/>
+      <import plugin="org.eclipse.core.expressions"/>
+   </requires>
 
    <plugin
          id="org.gemoc.monilog.ui"
@@ -32,6 +79,20 @@
 
    <plugin
          id="org.gemoc.monilog"
+         download-size="0"
+         install-size="0"
+         version="1.0.0.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="fr.cea.nabla.ui.graalvm"
+         download-size="0"
+         install-size="0"
+         version="0.3.3.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="truffle-api-wrapper"
          download-size="0"
          install-size="0"
          version="1.0.0.qualifier"

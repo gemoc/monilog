@@ -2,8 +2,8 @@ package org.gemoc.monilogger.temporalpatterns
 
 import java.util.List
 import java.util.Map
-import org.gemoc.monilog.moniLog4DSL.ComplexEvent
-import org.gemoc.monilog.moniLog4DSL.Response
+import org.gemoc.monilog.moniLog.ComplexEvent
+import org.gemoc.monilog.moniLog.Response
 
 class SRespondsToPGlobally extends AbstractTemporalProperty {
 	

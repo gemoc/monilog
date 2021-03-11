@@ -4,7 +4,7 @@
 	<parent>
 		<groupId>org.gemoc.monilog</groupId>
 		<artifactId>monilog</artifactId>
-		<version>1.0.0-SNAPSHOT</version>
+ 		<version>1.0.0-SNAPSHOT</version>
 		<relativePath>../../</relativePath>
 	</parent>
 	<artifactId>org.gemoc.monilog.ide</artifactId>

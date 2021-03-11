@@ -2,8 +2,8 @@ package org.gemoc.monilogger.temporalpatterns;
 
 import java.util.List
 import java.util.Map
-import org.gemoc.monilog.moniLog4DSL.PropertyValue
-import org.gemoc.monilog.moniLog4DSL.StreamEvent
+import org.gemoc.monilog.moniLog.PropertyValue
+import org.gemoc.monilog.moniLog.StreamEvent
 
 class UserEventProperty extends AbstractTemporalProperty {
 

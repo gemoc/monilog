@@ -2,9 +2,9 @@ package org.gemoc.monilogger.temporalpatterns
 
 import java.util.List
 import java.util.Map
-import org.gemoc.monilog.moniLog4DSL.AfterUntil
-import org.gemoc.monilog.moniLog4DSL.ComplexEvent
-import org.gemoc.monilog.moniLog4DSL.Precedence
+import org.gemoc.monilog.moniLog.AfterUntil
+import org.gemoc.monilog.moniLog.ComplexEvent
+import org.gemoc.monilog.moniLog.Precedence
 
 class SPrecedesPAfterQUntilR extends AbstractTemporalProperty {
 	

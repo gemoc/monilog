@@ -47,6 +47,7 @@ import org.graalvm.polyglot.Context;
 import org.graalvm.polyglot.Engine;
 import org.graalvm.polyglot.Source;
 import org.graalvm.polyglot.Value;
+import org.python.util.PythonInterpreter;
 
 import com.google.common.collect.Streams;
 import com.google.inject.Injector;
@@ -195,6 +196,11 @@ public class MoniLogInstrument implements IInstrument {
 	}
 
 	private Value executeLanguageExpression(LanguageExpression expression, String sourceName) {
+
+		try (PythonInterpreter pyInterp = new PythonInterpreter()) {
+			pyInterp.exec("print('Hello Python World!')");
+		}
+
 		final Source source = sourceCodeToSource.computeIfAbsent(expression, e -> {
 			final String languageId = e.getLanguageId();
 			final String sourceCode = e.getExpression();

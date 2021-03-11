@@ -2,9 +2,9 @@ package org.gemoc.monilogger.temporalpatterns
 
 import java.util.List
 import java.util.Map
-import org.gemoc.monilog.moniLog4DSL.Absence
-import org.gemoc.monilog.moniLog4DSL.After
-import org.gemoc.monilog.moniLog4DSL.ComplexEvent
+import org.gemoc.monilog.moniLog.Absence
+import org.gemoc.monilog.moniLog.After
+import org.gemoc.monilog.moniLog.ComplexEvent
 
 class NeverPAfterQ extends AbstractTemporalProperty {
 	

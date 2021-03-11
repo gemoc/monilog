@@ -1,24 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?eclipse version="3.0"?>
 <plugin>
-   <extension-point id="appender" name="Monilog Appender" schema="schema/appender.exsd"/>
-   <extension-point id="layout" name="Monilog Layout" schema="schema/layout.exsd"/>
+   <extension-point id="appender" name="MoniLog Appender" schema="schema/appender.exsd"/>
+   <extension-point id="layout" name="MoniLog Layout" schema="schema/layout.exsd"/>
 	<extension point="org.eclipse.emf.ecore.generated_package">
 		<package
-			uri = "http://www.eclipse.org/gemoc/monilog/MoniLog4DSL"
-			class = "org.gemoc.monilog.moniLog4DSL.MoniLog4DSLPackage"
-			genModel = "model/generated/MoniLog4DSL.genmodel" />
+			uri = "http://www.gemoc.org/monilog/MoniLog"
+			class = "org.gemoc.monilog.moniLog.MoniLogPackage"
+			genModel = "model/generated/MoniLog.genmodel" />
 	</extension>
  <extension
-       point="org.gemoc.monilog.layout">
-       <layout
-             class="org.gemoc.monilog.stl.StringLayout"
-             name="StringLayout"/>
+       point="org.gemoc.monilog.appender">
+    <appender
+          class="org.gemoc.monilog.stl.ConsoleAppender"
+          specificationFile="/moniloglib.mnlg">
+    </appender>
  </extension>
  <extension
-       point="org.gemoc.monilog.appender">
-       <appender
-             class="org.gemoc.monilog.stl.ConsoleAppender"
-             name="ConsoleAppender"/>
+       point="org.gemoc.monilog.layout">
+    <layout
+          class="org.gemoc.monilog.stl.StringLayout"
+          specificationFile="/moniloglib.mnlg">
+    </layout>
  </extension>
 </plugin>

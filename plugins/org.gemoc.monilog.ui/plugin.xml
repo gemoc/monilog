@@ -4,48 +4,48 @@
 	<extension
 		point="org.eclipse.ui.editors">
 		<editor
-			class="org.gemoc.monilog.ui.MoniLog4DSLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.XtextEditor"
+			class="org.gemoc.monilog.ui.MoniLogExecutableExtensionFactory:org.eclipse.xtext.ui.editor.XtextEditor"
 			contributorClass="org.eclipse.ui.editors.text.TextEditorActionContributor"
 			default="true"
 			extensions="mnlg"
-			id="org.gemoc.monilog.MoniLog4DSL"
-			name="MoniLog4DSL Editor">
+			id="org.gemoc.monilog.MoniLog"
+			name="MoniLog Editor">
 		</editor>
 	</extension>
 	<extension
 		point="org.eclipse.ui.handlers">
 		<handler
-			class="org.gemoc.monilog.ui.MoniLog4DSLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclarationHandler"
+			class="org.gemoc.monilog.ui.MoniLogExecutableExtensionFactory:org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclarationHandler"
 			commandId="org.eclipse.xtext.ui.editor.hyperlinking.OpenDeclaration">
 			<activeWhen>
 				<reference
-					definitionId="org.gemoc.monilog.MoniLog4DSL.Editor.opened">
+					definitionId="org.gemoc.monilog.MoniLog.Editor.opened">
 				</reference>
 			</activeWhen>
 		</handler>
 		<handler
-			class="org.gemoc.monilog.ui.MoniLog4DSLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.handler.ValidateActionHandler"
-			commandId="org.gemoc.monilog.MoniLog4DSL.validate">
+			class="org.gemoc.monilog.ui.MoniLogExecutableExtensionFactory:org.eclipse.xtext.ui.editor.handler.ValidateActionHandler"
+			commandId="org.gemoc.monilog.MoniLog.validate">
 			<activeWhen>
 				<reference
-					definitionId="org.gemoc.monilog.MoniLog4DSL.Editor.opened">
+					definitionId="org.gemoc.monilog.MoniLog.Editor.opened">
 				</reference>
 			</activeWhen>
 		</handler>
 		<!-- copy qualified name -->
 		<handler
-			class="org.gemoc.monilog.ui.MoniLog4DSLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedNameHandler"
+			class="org.gemoc.monilog.ui.MoniLogExecutableExtensionFactory:org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedNameHandler"
 			commandId="org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedName">
 			<activeWhen>
-				<reference definitionId="org.gemoc.monilog.MoniLog4DSL.Editor.opened" />
+				<reference definitionId="org.gemoc.monilog.MoniLog.Editor.opened" />
 			</activeWhen>
 		</handler>
 		<handler
-			class="org.gemoc.monilog.ui.MoniLog4DSLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.copyqualifiedname.OutlineCopyQualifiedNameHandler"
+			class="org.gemoc.monilog.ui.MoniLogExecutableExtensionFactory:org.eclipse.xtext.ui.editor.copyqualifiedname.OutlineCopyQualifiedNameHandler"
 			commandId="org.eclipse.xtext.ui.editor.copyqualifiedname.OutlineCopyQualifiedName">
 			<activeWhen>
 				<and>
-					<reference definitionId="org.gemoc.monilog.MoniLog4DSL.XtextEditor.opened" />
+					<reference definitionId="org.gemoc.monilog.MoniLog.XtextEditor.opened" />
 					<iterate>
 						<adapt type="org.eclipse.xtext.ui.editor.outline.IOutlineNode" />
 					</iterate>
@@ -54,22 +54,22 @@
 		</handler>
 	</extension>
 	<extension point="org.eclipse.core.expressions.definitions">
-		<definition id="org.gemoc.monilog.MoniLog4DSL.Editor.opened">
+		<definition id="org.gemoc.monilog.MoniLog.Editor.opened">
 			<and>
 				<reference definitionId="isActiveEditorAnInstanceOfXtextEditor"/>
 				<with variable="activeEditor">
 					<test property="org.eclipse.xtext.ui.editor.XtextEditor.languageName"
-						value="org.gemoc.monilog.MoniLog4DSL"
+						value="org.gemoc.monilog.MoniLog"
 						forcePluginActivation="true"/>
 				</with>
 			</and>
 		</definition>
-		<definition id="org.gemoc.monilog.MoniLog4DSL.XtextEditor.opened">
+		<definition id="org.gemoc.monilog.MoniLog.XtextEditor.opened">
 			<and>
 				<reference definitionId="isXtextEditorActive"/>
 				<with variable="activeEditor">
 					<test property="org.eclipse.xtext.ui.editor.XtextEditor.languageName"
-						value="org.gemoc.monilog.MoniLog4DSL"
+						value="org.gemoc.monilog.MoniLog"
 						forcePluginActivation="true"/>
 				</with>
 			</and>
@@ -78,33 +78,33 @@
 	<extension
 			point="org.eclipse.ui.preferencePages">
 		<page
-			class="org.gemoc.monilog.ui.MoniLog4DSLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
-			id="org.gemoc.monilog.MoniLog4DSL"
-			name="MoniLog4DSL">
-			<keywordReference id="org.gemoc.monilog.ui.keyword_MoniLog4DSL"/>
+			class="org.gemoc.monilog.ui.MoniLogExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
+			id="org.gemoc.monilog.MoniLog"
+			name="MoniLog">
+			<keywordReference id="org.gemoc.monilog.ui.keyword_MoniLog"/>
 		</page>
 		<page
-			category="org.gemoc.monilog.MoniLog4DSL"
-			class="org.gemoc.monilog.ui.MoniLog4DSLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.syntaxcoloring.SyntaxColoringPreferencePage"
-			id="org.gemoc.monilog.MoniLog4DSL.coloring"
+			category="org.gemoc.monilog.MoniLog"
+			class="org.gemoc.monilog.ui.MoniLogExecutableExtensionFactory:org.eclipse.xtext.ui.editor.syntaxcoloring.SyntaxColoringPreferencePage"
+			id="org.gemoc.monilog.MoniLog.coloring"
 			name="Syntax Coloring">
-			<keywordReference id="org.gemoc.monilog.ui.keyword_MoniLog4DSL"/>
+			<keywordReference id="org.gemoc.monilog.ui.keyword_MoniLog"/>
 		</page>
 		<page
-			category="org.gemoc.monilog.MoniLog4DSL"
-			class="org.gemoc.monilog.ui.MoniLog4DSLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.templates.XtextTemplatePreferencePage"
-			id="org.gemoc.monilog.MoniLog4DSL.templates"
+			category="org.gemoc.monilog.MoniLog"
+			class="org.gemoc.monilog.ui.MoniLogExecutableExtensionFactory:org.eclipse.xtext.ui.editor.templates.XtextTemplatePreferencePage"
+			id="org.gemoc.monilog.MoniLog.templates"
 			name="Templates">
-			<keywordReference id="org.gemoc.monilog.ui.keyword_MoniLog4DSL"/>
+			<keywordReference id="org.gemoc.monilog.ui.keyword_MoniLog"/>
 		</page>
 	</extension>
 	<extension
 			point="org.eclipse.ui.propertyPages">
 		<page
-			class="org.gemoc.monilog.ui.MoniLog4DSLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
-			id="org.gemoc.monilog.MoniLog4DSL"
-			name="MoniLog4DSL">
-			<keywordReference id="org.gemoc.monilog.ui.keyword_MoniLog4DSL"/>
+			class="org.gemoc.monilog.ui.MoniLogExecutableExtensionFactory:org.eclipse.xtext.ui.editor.preferences.LanguageRootPreferencePage"
+			id="org.gemoc.monilog.MoniLog"
+			name="MoniLog">
+			<keywordReference id="org.gemoc.monilog.ui.keyword_MoniLog"/>
 			<enabledWhen>
 				<adapt type="org.eclipse.core.resources.IProject"/>
 			</enabledWhen>
@@ -114,14 +114,14 @@
 	<extension
 		point="org.eclipse.ui.keywords">
 		<keyword
-			id="org.gemoc.monilog.ui.keyword_MoniLog4DSL"
-			label="MoniLog4DSL"/>
+			id="org.gemoc.monilog.ui.keyword_MoniLog"
+			label="MoniLog"/>
 	</extension>
 	<extension
 		point="org.eclipse.ui.commands">
 		<command
 			description="Trigger expensive validation"
-			id="org.gemoc.monilog.MoniLog4DSL.validate"
+			id="org.gemoc.monilog.MoniLog.validate"
 			name="Validate">
 		</command>
 		<!-- copy qualified name -->
@@ -142,12 +142,12 @@
 		<menuContribution
 			locationURI="popup:#TextEditorContext?after=group.edit">
 			<command
-				commandId="org.gemoc.monilog.MoniLog4DSL.validate"
+				commandId="org.gemoc.monilog.MoniLog.validate"
 				style="push"
 				tooltip="Trigger expensive validation">
 				<visibleWhen checkEnabled="false">
 					<reference
-						definitionId="org.gemoc.monilog.MoniLog4DSL.Editor.opened">
+						definitionId="org.gemoc.monilog.MoniLog.Editor.opened">
 					</reference>
 				</visibleWhen>
 			</command>
@@ -157,7 +157,7 @@
 			<command commandId="org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedName"
 				style="push" tooltip="Copy Qualified Name">
 				<visibleWhen checkEnabled="false">
-					<reference definitionId="org.gemoc.monilog.MoniLog4DSL.Editor.opened" />
+					<reference definitionId="org.gemoc.monilog.MoniLog.Editor.opened" />
 				</visibleWhen>
 			</command>
 		</menuContribution>
@@ -165,7 +165,7 @@
 			<command commandId="org.eclipse.xtext.ui.editor.copyqualifiedname.EditorCopyQualifiedName"
 				style="push" tooltip="Copy Qualified Name">
 				<visibleWhen checkEnabled="false">
-					<reference definitionId="org.gemoc.monilog.MoniLog4DSL.Editor.opened" />
+					<reference definitionId="org.gemoc.monilog.MoniLog.Editor.opened" />
 				</visibleWhen>
 			</command>
 		</menuContribution>
@@ -174,7 +174,7 @@
 				style="push" tooltip="Copy Qualified Name">
 				<visibleWhen checkEnabled="false">
 					<and>
-						<reference definitionId="org.gemoc.monilog.MoniLog4DSL.XtextEditor.opened" />
+						<reference definitionId="org.gemoc.monilog.MoniLog.XtextEditor.opened" />
 						<iterate>
 							<adapt type="org.eclipse.xtext.ui.editor.outline.IOutlineNode" />
 						</iterate>
@@ -187,7 +187,7 @@
 		<menuContribution locationURI="popup:#TextEditorContext?endof=group.find">
 			<command commandId="org.eclipse.xtext.ui.editor.FindReferences">
 				<visibleWhen checkEnabled="false">
-					<reference definitionId="org.gemoc.monilog.MoniLog4DSL.Editor.opened">
+					<reference definitionId="org.gemoc.monilog.MoniLog.Editor.opened">
 					</reference>
 				</visibleWhen>
 			</command>
@@ -195,11 +195,11 @@
 	</extension>
 	<extension point="org.eclipse.ui.handlers">
 		<handler
-			class="org.gemoc.monilog.ui.MoniLog4DSLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.findrefs.FindReferencesHandler"
+			class="org.gemoc.monilog.ui.MoniLogExecutableExtensionFactory:org.eclipse.xtext.ui.editor.findrefs.FindReferencesHandler"
 			commandId="org.eclipse.xtext.ui.editor.FindReferences">
 			<activeWhen>
 				<reference
-					definitionId="org.gemoc.monilog.MoniLog4DSL.Editor.opened">
+					definitionId="org.gemoc.monilog.MoniLog.Editor.opened">
 				</reference>
 			</activeWhen>
 		</handler>
@@ -208,8 +208,8 @@
 		<content-type
 			base-type="org.eclipse.core.runtime.text"
 			file-extensions="mnlg"
-			id="org.gemoc.monilog.MoniLog4DSL.contenttype"
-			name="MoniLog4DSL File"
+			id="org.gemoc.monilog.MoniLog.contenttype"
+			name="MoniLog File"
 			priority="normal">
 		</content-type>
 	</extension>
@@ -217,68 +217,68 @@
 	<extension
 		point="org.eclipse.emf.ecore.extension_parser">
 		<parser
-			class="org.gemoc.monilog.ui.MoniLog4DSLExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceFactory"
+			class="org.gemoc.monilog.ui.MoniLogExecutableExtensionFactory:org.eclipse.xtext.resource.IResourceFactory"
 			type="mnlg">
 		</parser>
 	</extension>
 	<extension point="org.eclipse.xtext.extension_resourceServiceProvider">
 		<resourceServiceProvider
-			class="org.gemoc.monilog.ui.MoniLog4DSLExecutableExtensionFactory:org.eclipse.xtext.ui.resource.IResourceUIServiceProvider"
+			class="org.gemoc.monilog.ui.MoniLogExecutableExtensionFactory:org.eclipse.xtext.ui.resource.IResourceUIServiceProvider"
 			uriExtension="mnlg">
 		</resourceServiceProvider>
 	</extension>
-	<!-- marker definitions for org.gemoc.monilog.MoniLog4DSL -->
+	<!-- marker definitions for org.gemoc.monilog.MoniLog -->
 	<extension
-			id="monilog4dsl.check.fast"
-			name="MoniLog4DSL Problem"
+			id="monilog.check.fast"
+			name="MoniLog Problem"
 			point="org.eclipse.core.resources.markers">
 		<super type="org.eclipse.xtext.ui.check.fast"/>
 		<persistent value="true"/>
 	</extension>
 	<extension
-			id="monilog4dsl.check.normal"
-			name="MoniLog4DSL Problem"
+			id="monilog.check.normal"
+			name="MoniLog Problem"
 			point="org.eclipse.core.resources.markers">
 		<super type="org.eclipse.xtext.ui.check.normal"/>
 		<persistent value="true"/>
 	</extension>
 	<extension
-			id="monilog4dsl.check.expensive"
-			name="MoniLog4DSL Problem"
+			id="monilog.check.expensive"
+			name="MoniLog Problem"
 			point="org.eclipse.core.resources.markers">
 		<super type="org.eclipse.xtext.ui.check.expensive"/>
 		<persistent value="true"/>
 	</extension>
 	<extension point="org.eclipse.ui.preferencePages">
 		<page
-			category="org.gemoc.monilog.MoniLog4DSL"
-			class="org.gemoc.monilog.ui.MoniLog4DSLExecutableExtensionFactory:org.eclipse.xtext.ui.validation.ValidatorPreferencePage"
-			id="org.gemoc.monilog.MoniLog4DSL.validator.preferencePage"
+			category="org.gemoc.monilog.MoniLog"
+			class="org.gemoc.monilog.ui.MoniLogExecutableExtensionFactory:org.eclipse.xtext.ui.validation.ValidatorPreferencePage"
+			id="org.gemoc.monilog.MoniLog.validator.preferencePage"
 			name="Errors/Warnings">
-			<keywordReference id="org.gemoc.monilog.ui.keyword_MoniLog4DSL"/>
+			<keywordReference id="org.gemoc.monilog.ui.keyword_MoniLog"/>
 		</page>
 	</extension>
 	<extension point="org.eclipse.xtext.builder.participant">
 		<participant
-			class="org.gemoc.monilog.ui.MoniLog4DSLExecutableExtensionFactory:org.eclipse.xtext.builder.IXtextBuilderParticipant"
+			class="org.gemoc.monilog.ui.MoniLogExecutableExtensionFactory:org.eclipse.xtext.builder.IXtextBuilderParticipant"
 			fileExtensions="mnlg"/>
 	</extension>
 	<extension point="org.eclipse.ui.preferencePages">
 		<page
-			category="org.gemoc.monilog.MoniLog4DSL"
-			class="org.gemoc.monilog.ui.MoniLog4DSLExecutableExtensionFactory:org.eclipse.xtext.builder.preferences.BuilderPreferencePage"
-			id="org.gemoc.monilog.MoniLog4DSL.compiler.preferencePage"
+			category="org.gemoc.monilog.MoniLog"
+			class="org.gemoc.monilog.ui.MoniLogExecutableExtensionFactory:org.eclipse.xtext.builder.preferences.BuilderPreferencePage"
+			id="org.gemoc.monilog.MoniLog.compiler.preferencePage"
 			name="Compiler">
-			<keywordReference id="org.gemoc.monilog.ui.keyword_MoniLog4DSL"/>
+			<keywordReference id="org.gemoc.monilog.ui.keyword_MoniLog"/>
 		</page>
 	</extension>
 	<extension point="org.eclipse.ui.propertyPages">
 		<page
-			category="org.gemoc.monilog.MoniLog4DSL"
-			class="org.gemoc.monilog.ui.MoniLog4DSLExecutableExtensionFactory:org.eclipse.xtext.builder.preferences.BuilderPreferencePage"
-			id="org.gemoc.monilog.MoniLog4DSL.compiler.propertyPage"
+			category="org.gemoc.monilog.MoniLog"
+			class="org.gemoc.monilog.ui.MoniLogExecutableExtensionFactory:org.eclipse.xtext.builder.preferences.BuilderPreferencePage"
+			id="org.gemoc.monilog.MoniLog.compiler.propertyPage"
 			name="Compiler">
-			<keywordReference id="org.gemoc.monilog.ui.keyword_MoniLog4DSL"/>
+			<keywordReference id="org.gemoc.monilog.ui.keyword_MoniLog"/>
 			<enabledWhen>
 				<adapt type="org.eclipse.core.resources.IProject"/>
 			</enabledWhen>
@@ -289,32 +289,32 @@
 		<menuContribution locationURI="popup:#TextEditorContext?after=xtext.ui.openDeclaration">
 			<command
 				commandId="org.eclipse.xtext.ui.OpenGeneratedFileCommand"
-				id="org.gemoc.monilog.MoniLog4DSL.OpenGeneratedCode"
+				id="org.gemoc.monilog.MoniLog.OpenGeneratedCode"
 				style="push">
 				<visibleWhen checkEnabled="false">
-					<reference definitionId="org.gemoc.monilog.MoniLog4DSL.Editor.opened" />
+					<reference definitionId="org.gemoc.monilog.MoniLog.Editor.opened" />
 				</visibleWhen>
 			</command>
 		</menuContribution>
 	</extension>
 	<extension point="org.eclipse.ui.handlers">
 		<handler
-			class="org.gemoc.monilog.ui.MoniLog4DSLExecutableExtensionFactory:org.eclipse.xtext.ui.generator.trace.OpenGeneratedFileHandler"
+			class="org.gemoc.monilog.ui.MoniLogExecutableExtensionFactory:org.eclipse.xtext.ui.generator.trace.OpenGeneratedFileHandler"
 			commandId="org.eclipse.xtext.ui.OpenGeneratedFileCommand">
 			<activeWhen>
-				<reference definitionId="org.gemoc.monilog.MoniLog4DSL.Editor.opened" />
+				<reference definitionId="org.gemoc.monilog.MoniLog.Editor.opened" />
 			</activeWhen>
 		</handler>
 	</extension>
 	<!-- Quick Outline -->
 	<extension
 		point="org.eclipse.ui.handlers">
-		<handler
-			class="org.gemoc.monilog.ui.MoniLog4DSLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.outline.quickoutline.ShowQuickOutlineActionHandler"
+		<handler 
+			class="org.gemoc.monilog.ui.MoniLogExecutableExtensionFactory:org.eclipse.xtext.ui.editor.outline.quickoutline.ShowQuickOutlineActionHandler"
 			commandId="org.eclipse.xtext.ui.editor.outline.QuickOutline">
 			<activeWhen>
 				<reference
-					definitionId="org.gemoc.monilog.MoniLog4DSL.Editor.opened">
+					definitionId="org.gemoc.monilog.MoniLog.Editor.opened">
 				</reference>
 			</activeWhen>
 		</handler>
@@ -334,33 +334,33 @@
 				style="push"
 				tooltip="Open Quick Outline">
 				<visibleWhen checkEnabled="false">
-					<reference definitionId="org.gemoc.monilog.MoniLog4DSL.Editor.opened"/>
+					<reference definitionId="org.gemoc.monilog.MoniLog.Editor.opened"/>
 				</visibleWhen>
 			</command>
 		</menuContribution>
 	</extension>
-	<!-- quickfix marker resolution generator for org.gemoc.monilog.MoniLog4DSL -->
+	<!-- quickfix marker resolution generator for org.gemoc.monilog.MoniLog -->
 	<extension
 			point="org.eclipse.ui.ide.markerResolution">
 		<markerResolutionGenerator
-			class="org.gemoc.monilog.ui.MoniLog4DSLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
-			markerType="org.gemoc.monilog.ui.monilog4dsl.check.fast">
+			class="org.gemoc.monilog.ui.MoniLogExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
+			markerType="org.gemoc.monilog.ui.monilog.check.fast">
 			<attribute
 				name="FIXABLE_KEY"
 				value="true">
 			</attribute>
 		</markerResolutionGenerator>
 		<markerResolutionGenerator
-			class="org.gemoc.monilog.ui.MoniLog4DSLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
-			markerType="org.gemoc.monilog.ui.monilog4dsl.check.normal">
+			class="org.gemoc.monilog.ui.MoniLogExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
+			markerType="org.gemoc.monilog.ui.monilog.check.normal">
 			<attribute
 				name="FIXABLE_KEY"
 				value="true">
 			</attribute>
 		</markerResolutionGenerator>
 		<markerResolutionGenerator
-			class="org.gemoc.monilog.ui.MoniLog4DSLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
-			markerType="org.gemoc.monilog.ui.monilog4dsl.check.expensive">
+			class="org.gemoc.monilog.ui.MoniLogExecutableExtensionFactory:org.eclipse.xtext.ui.editor.quickfix.MarkerResolutionGenerator"
+			markerType="org.gemoc.monilog.ui.monilog.check.expensive">
 			<attribute
 				name="FIXABLE_KEY"
 				value="true">
@@ -369,12 +369,12 @@
 	</extension>
 	<!-- Rename Refactoring -->
 	<extension point="org.eclipse.ui.handlers">
-		<handler
-			class="org.gemoc.monilog.ui.MoniLog4DSLExecutableExtensionFactory:org.eclipse.xtext.ui.refactoring.ui.DefaultRenameElementHandler"
+		<handler 
+			class="org.gemoc.monilog.ui.MoniLogExecutableExtensionFactory:org.eclipse.xtext.ui.refactoring.ui.DefaultRenameElementHandler"
 			commandId="org.eclipse.xtext.ui.refactoring.RenameElement">
 			<activeWhen>
 				<reference
-					definitionId="org.gemoc.monilog.MoniLog4DSL.Editor.opened">
+					definitionId="org.gemoc.monilog.MoniLog.Editor.opened">
 				</reference>
 			</activeWhen>
 		</handler>
@@ -386,7 +386,7 @@
 				style="push">
 				<visibleWhen checkEnabled="false">
 					<reference
-						definitionId="org.gemoc.monilog.MoniLog4DSL.Editor.opened">
+						definitionId="org.gemoc.monilog.MoniLog.Editor.opened">
 					</reference>
 				</visibleWhen>
 			</command>
@@ -394,34 +394,34 @@
 	</extension>
 	<extension point="org.eclipse.ui.preferencePages">
 		<page
-			category="org.gemoc.monilog.MoniLog4DSL"
-			class="org.gemoc.monilog.ui.MoniLog4DSLExecutableExtensionFactory:org.eclipse.xtext.ui.refactoring.ui.RefactoringPreferencePage"
-			id="org.gemoc.monilog.MoniLog4DSL.refactoring"
+			category="org.gemoc.monilog.MoniLog"
+			class="org.gemoc.monilog.ui.MoniLogExecutableExtensionFactory:org.eclipse.xtext.ui.refactoring.ui.RefactoringPreferencePage"
+			id="org.gemoc.monilog.MoniLog.refactoring"
 			name="Refactoring">
-			<keywordReference id="org.gemoc.monilog.ui.keyword_MoniLog4DSL"/>
+			<keywordReference id="org.gemoc.monilog.ui.keyword_MoniLog"/>
 		</page>
 	</extension>
 	<extension point="org.eclipse.compare.contentViewers">
-		<viewer id="org.gemoc.monilog.MoniLog4DSL.compare.contentViewers"
-			class="org.gemoc.monilog.ui.MoniLog4DSLExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
+		<viewer id="org.gemoc.monilog.MoniLog.compare.contentViewers"
+			class="org.gemoc.monilog.ui.MoniLogExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
 			extensions="mnlg">
 		</viewer>
 		<contentTypeBinding
-			contentTypeId="org.gemoc.monilog.MoniLog4DSL.contenttype"
-			contentViewerId="org.gemoc.monilog.MoniLog4DSL.compare.contentViewers" />
+			contentTypeId="org.gemoc.monilog.MoniLog.contenttype"
+			contentViewerId="org.gemoc.monilog.MoniLog.compare.contentViewers" />
 	</extension>
 	<extension point="org.eclipse.compare.contentMergeViewers">
-		<viewer id="org.gemoc.monilog.MoniLog4DSL.compare.contentMergeViewers"
-			class="org.gemoc.monilog.ui.MoniLog4DSLExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
-			extensions="mnlg" label="MoniLog4DSL Compare">
+		<viewer id="org.gemoc.monilog.MoniLog.compare.contentMergeViewers"
+			class="org.gemoc.monilog.ui.MoniLogExecutableExtensionFactory:org.eclipse.xtext.ui.compare.InjectableViewerCreator"
+			extensions="mnlg" label="MoniLog Compare">
 		</viewer>
 		<contentTypeBinding
-			contentTypeId="org.gemoc.monilog.MoniLog4DSL.contenttype"
-			contentMergeViewerId="org.gemoc.monilog.MoniLog4DSL.compare.contentMergeViewers" />
+			contentTypeId="org.gemoc.monilog.MoniLog.contenttype"
+			contentMergeViewerId="org.gemoc.monilog.MoniLog.compare.contentMergeViewers" />
 	</extension>
 	<extension point="org.eclipse.ui.editors.documentProviders">
-		<provider id="org.gemoc.monilog.MoniLog4DSL.editors.documentProviders"
-			class="org.gemoc.monilog.ui.MoniLog4DSLExecutableExtensionFactory:org.eclipse.xtext.ui.editor.model.XtextDocumentProvider"
+		<provider id="org.gemoc.monilog.MoniLog.editors.documentProviders"
+			class="org.gemoc.monilog.ui.MoniLogExecutableExtensionFactory:org.eclipse.xtext.ui.editor.model.XtextDocumentProvider"
 			extensions="mnlg">
 		</provider>
 	</extension>

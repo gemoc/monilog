@@ -3,9 +3,9 @@ package org.gemoc.monilogger;
 import java.util.Collections;
 import java.util.function.BiFunction;
 
-import org.gemoc.monilog.moniLog4DSL.ASTEvent;
-import org.gemoc.monilog.moniLog4DSL.ASTEventKind;
-import org.gemoc.monilog.moniLog4DSL.BeforeASTEvent;
+import org.gemoc.monilog.moniLog.ASTEvent;
+import org.gemoc.monilog.moniLog.ASTEventKind;
+import org.gemoc.monilog.moniLog.BeforeASTEvent;
 import org.gemoc.monilogger.nodes.MoniLoggerASTEventNode;
 import org.gemoc.monilogger.nodes.MoniLoggerExecutableNode;
 

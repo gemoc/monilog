@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import org.gemoc.monilog.moniLog4DSL.Event;
+import org.gemoc.monilog.moniLog.Event;
 
 import com.espertech.esper.common.client.EPCompiled;
 import com.espertech.esper.common.client.configuration.Configuration;

@@ -7,12 +7,12 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import org.gemoc.monilog.moniLog4DSL.ASTEvent;
-import org.gemoc.monilog.moniLog4DSL.ComplexEvent;
-import org.gemoc.monilog.moniLog4DSL.EmitEvent;
-import org.gemoc.monilog.moniLog4DSL.Event;
-import org.gemoc.monilog.moniLog4DSL.MoniLogger;
-import org.gemoc.monilog.moniLog4DSL.StreamEvent;
+import org.gemoc.monilog.moniLog.ASTEvent;
+import org.gemoc.monilog.moniLog.ComplexEvent;
+import org.gemoc.monilog.moniLog.EmitEvent;
+import org.gemoc.monilog.moniLog.Event;
+import org.gemoc.monilog.moniLog.MoniLogger;
+import org.gemoc.monilog.moniLog.StreamEvent;
 import org.jgrapht.GraphPath;
 import org.jgrapht.alg.cycle.CycleDetector;
 import org.jgrapht.alg.shortestpath.FloydWarshallShortestPaths;
@@ -27,9 +27,15 @@ public class EventSorter {
 			Collection<MoniLogger> moniloggers) {
 		final DirectedWeightedPseudograph<Event, DefaultWeightedEdge> graph = createGraph(events, moniloggers);
 		final Map<ASTEvent, List<Event>> eventTrees = new HashMap<>();
+		final FloydWarshallShortestPaths<Event, DefaultWeightedEdge> algo = new FloydWarshallShortestPaths<>(graph);
+		graph.edgeSet().forEach(e -> graph.setEdgeWeight(e, -1));
 		events.stream().filter(event -> event instanceof ASTEvent).map(event -> (ASTEvent) event).forEach(event -> {
 			if (graph.degreeOf(event) > 0) {
-				final Map<Event, Integer> eventToDepth = computeDepth(event, graph);
+				/*
+				 * For each AST event, compute the order of the resulting events by computing
+				 * maximum depth of each resulting event.
+				 */
+				final Map<Event, Integer> eventToDepth = computeDepth(event, graph, algo);
 				eventTrees.put(event, eventToDepth.keySet().stream()
 						.sorted((e1, e2) -> eventToDepth.get(e1) - eventToDepth.get(e2)).collect(Collectors.toList()));
 			}
@@ -69,13 +75,10 @@ public class EventSorter {
 	}
 
 	private static Map<Event, Integer> computeDepth(Event sourceNode,
-			DirectedWeightedPseudograph<Event, DefaultWeightedEdge> graph) {
-		final FloydWarshallShortestPaths<Event, DefaultWeightedEdge> algo = new FloydWarshallShortestPaths<>(graph);
-
+			DirectedWeightedPseudograph<Event, DefaultWeightedEdge> graph,
+			FloydWarshallShortestPaths<Event, DefaultWeightedEdge> algo) {
 		final Map<Event, Integer> result = new HashMap<>();
 		result.put(sourceNode, 0);
-
-		graph.edgeSet().forEach(e -> graph.setEdgeWeight(e, -1));
 		graph.vertexSet().stream().filter(event -> event != sourceNode).forEach(event -> {
 			final GraphPath<Event, DefaultWeightedEdge> path = algo.getPath(sourceNode, event);
 			if (path != null) {

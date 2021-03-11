@@ -7,13 +7,13 @@
 	<packaging>pom</packaging>
 
 	<properties>
-		<xtextVersion>2.22.0</xtextVersion>
-		<mwe2Version>2.11.3</mwe2Version>
+		<xtextVersion>2.21.0</xtextVersion>
+		<mwe2Version>2.11.2</mwe2Version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>11</maven.compiler.source>
 		<maven.compiler.target>11</maven.compiler.target>
 		<!-- Tycho settings -->
-		<tycho-version>1.7.0</tycho-version>
+		<tycho-version>1.6.0</tycho-version>
 		<!-- Define overridable properties for tycho-surefire-plugin -->
 		<platformSystemProperties></platformSystemProperties>
 		<moduleProperties></moduleProperties>
@@ -25,7 +25,6 @@
 		<module>plugins/org.gemoc.monilog.ide</module>
 		<module>plugins/org.gemoc.monilog.ui</module>
 		<module>releng/org.gemoc.monilog.target</module>
-		<module>truffle/org.gemoc.monilog.tool</module>
 	</modules>
 	<dependencyManagement>
 		<dependencies>

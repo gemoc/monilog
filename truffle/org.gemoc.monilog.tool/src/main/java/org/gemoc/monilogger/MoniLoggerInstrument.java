@@ -24,35 +24,35 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.xtext.resource.XtextResourceSet;
 import org.eclipse.xtext.testing.util.ParseHelper;
-import org.gemoc.monilog.MoniLog4DSLStandaloneSetup;
-import org.gemoc.monilog.moniLog4DSL.ASTEvent;
-import org.gemoc.monilog.moniLog4DSL.ASTEventKind;
-import org.gemoc.monilog.moniLog4DSL.Action;
-import org.gemoc.monilog.moniLog4DSL.AfterASTEvent;
-import org.gemoc.monilog.moniLog4DSL.Appender;
-import org.gemoc.monilog.moniLog4DSL.AppenderCall;
-import org.gemoc.monilog.moniLog4DSL.CallArgument;
-import org.gemoc.monilog.moniLog4DSL.BeforeASTEvent;
-import org.gemoc.monilog.moniLog4DSL.ComplexEvent;
-import org.gemoc.monilog.moniLog4DSL.Condition;
-import org.gemoc.monilog.moniLog4DSL.Document;
-import org.gemoc.monilog.moniLog4DSL.EmitEvent;
-import org.gemoc.monilog.moniLog4DSL.Event;
-import org.gemoc.monilog.moniLog4DSL.Expression;
-import org.gemoc.monilog.moniLog4DSL.ExternalAppender;
-import org.gemoc.monilog.moniLog4DSL.ExternalLayout;
-import org.gemoc.monilog.moniLog4DSL.LanguageExpression;
-import org.gemoc.monilog.moniLog4DSL.Layout;
-import org.gemoc.monilog.moniLog4DSL.LayoutCall;
-import org.gemoc.monilog.moniLog4DSL.LocalAppender;
-import org.gemoc.monilog.moniLog4DSL.LocalLayout;
-import org.gemoc.monilog.moniLog4DSL.MoniLog4DSLPackage;
-import org.gemoc.monilog.moniLog4DSL.MoniLogger;
-import org.gemoc.monilog.moniLog4DSL.Parameter;
-import org.gemoc.monilog.moniLog4DSL.ParameterReference;
-import org.gemoc.monilog.moniLog4DSL.SetVariable;
-import org.gemoc.monilog.moniLog4DSL.StreamEvent;
-import org.gemoc.monilog.moniLog4DSL.UserEvent;
+import org.gemoc.monilog.MoniLogStandaloneSetup;
+import org.gemoc.monilog.moniLog.ASTEvent;
+import org.gemoc.monilog.moniLog.ASTEventKind;
+import org.gemoc.monilog.moniLog.Action;
+import org.gemoc.monilog.moniLog.AfterASTEvent;
+import org.gemoc.monilog.moniLog.Appender;
+import org.gemoc.monilog.moniLog.AppenderCall;
+import org.gemoc.monilog.moniLog.BeforeASTEvent;
+import org.gemoc.monilog.moniLog.CallArgument;
+import org.gemoc.monilog.moniLog.ComplexEvent;
+import org.gemoc.monilog.moniLog.Condition;
+import org.gemoc.monilog.moniLog.Document;
+import org.gemoc.monilog.moniLog.EmitEvent;
+import org.gemoc.monilog.moniLog.Event;
+import org.gemoc.monilog.moniLog.Expression;
+import org.gemoc.monilog.moniLog.ExternalAppender;
+import org.gemoc.monilog.moniLog.ExternalLayout;
+import org.gemoc.monilog.moniLog.LanguageExpression;
+import org.gemoc.monilog.moniLog.Layout;
+import org.gemoc.monilog.moniLog.LayoutCall;
+import org.gemoc.monilog.moniLog.LocalAppender;
+import org.gemoc.monilog.moniLog.LocalLayout;
+import org.gemoc.monilog.moniLog.MoniLogPackage;
+import org.gemoc.monilog.moniLog.MoniLogger;
+import org.gemoc.monilog.moniLog.Parameter;
+import org.gemoc.monilog.moniLog.ParameterReference;
+import org.gemoc.monilog.moniLog.SetVariable;
+import org.gemoc.monilog.moniLog.StreamEvent;
+import org.gemoc.monilog.moniLog.UserEvent;
 import org.gemoc.monilogger.nodes.MoniLoggerBlockNode;
 import org.gemoc.monilogger.nodes.MoniLoggerCallSourceNode;
 import org.gemoc.monilogger.nodes.MoniLoggerCopyVariablesFromScopeNodeGen;
@@ -99,7 +99,6 @@ import com.oracle.truffle.api.instrumentation.SourceSectionFilter;
 import com.oracle.truffle.api.instrumentation.StandardTags.RootBodyTag;
 import com.oracle.truffle.api.instrumentation.TruffleInstrument;
 import com.oracle.truffle.api.instrumentation.TruffleInstrument.Registration;
-import com.oracle.truffle.api.interop.NodeLibrary;
 import com.oracle.truffle.api.nodes.LanguageInfo;
 import com.oracle.truffle.api.nodes.Node;
 
@@ -116,7 +115,7 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 
 	static final MoniLoggerExecutableNode[] EMPTY_ARRAY = new MoniLoggerExecutableNode[0];
 
-	private static MoniLog4DSLStandaloneSetup moniLogSetup = new MoniLog4DSLStandaloneSetup();
+	private static MoniLogStandaloneSetup moniLogSetup = new MoniLogStandaloneSetup();
 
 	private static Injector moniLogInjector = moniLogSetup.createInjectorAndDoEMFRegistration();
 
@@ -253,6 +252,8 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 		final List<MoniLogger> moniloggers = new ArrayList<>();
 		final List<Event> allEvents = new ArrayList<>();
 		final ResourceSet rs = new XtextResourceSet();
+		final ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
+		System.out.println(contextClassLoader);
 		specifications.forEach(specification -> {
 			if (!specification.isBlank()) {
 				try {
@@ -339,12 +340,12 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 		events.addAll(emittedEvents);
 		setChildEvents(event, emittedEvents);
 		switch (classifierID) {
-		case MoniLog4DSLPackage.AST_EVENT: {
+		case MoniLogPackage.AST_EVENT: {
 			final ASTEvent ev = (ASTEvent) event;
 			astEventToMoniLogger.computeIfAbsent(ev, o -> new ArrayList<>()).add(monilogger);
 			break;
 		}
-		case MoniLog4DSLPackage.COMPLEX_EVENT: {
+		case MoniLogPackage.COMPLEX_EVENT: {
 			final ComplexEvent ev = (ComplexEvent) event;
 			// Creating esper statement and subscriber for complex event directly referred
 			// to by moniloggers
@@ -355,7 +356,7 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 			setParentEvents(ev, parentEvents);
 			break;
 		}
-		case MoniLog4DSLPackage.USER_EVENT: {
+		case MoniLogPackage.USER_EVENT: {
 			// Creating esper statement and subscriber for user events directly referred to
 			// by moniloggers
 			eventToTemporalProperty.put(event, PropertyProvider.compileProperty(monilogger.getStreamEvent()));
@@ -386,7 +387,7 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 
 		events.stream().forEach(e -> {
 			switch (e.eClass().getClassifierID()) {
-			case MoniLog4DSLPackage.AST_EVENT: {
+			case MoniLogPackage.AST_EVENT: {
 				final ASTEvent ev = (ASTEvent) e;
 				final Map<String, Object> streamEvent = new HashMap<>();
 				// TODO: change to "name"?
@@ -399,7 +400,7 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 				streamEvents.put(e.getName(), streamEvent);
 				break;
 			}
-			case MoniLog4DSLPackage.COMPLEX_EVENT: {
+			case MoniLogPackage.COMPLEX_EVENT: {
 				final ComplexEvent ev = (ComplexEvent) e;
 				final Map<String, Object> streamEvent = new HashMap<>();
 				streamEvent.put(e.getName(), String.class);
@@ -408,7 +409,7 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 				eventToSubEvents.computeIfAbsent(ev, o -> new HashSet<>()).addAll(eventToParentEvents.get(ev));
 				break;
 			}
-			case MoniLog4DSLPackage.USER_EVENT: {
+			case MoniLogPackage.USER_EVENT: {
 				final UserEvent ev = (UserEvent) e;
 				final Map<String, Object> streamEvent = new HashMap<>();
 				streamEvent.put(e.getName(), String.class);
@@ -500,21 +501,21 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 
 					actionNodes.addAll(actions.stream().map(action -> {
 						switch (action.eClass().getClassifierID()) {
-						case MoniLog4DSLPackage.LANGUAGE_EXPRESSION: {
+						case MoniLogPackage.LANGUAGE_EXPRESSION: {
 							final LanguageExpression languageExpression = (LanguageExpression) action;
 							return getExpressionNode(languageExpression, node, languages);
 						}
-						case MoniLog4DSLPackage.APPENDER_CALL:
+						case MoniLogPackage.APPENDER_CALL:
 							return getAppenderExecutableNode(env, (AppenderCall) action, level, node, languages,
 									new HashMap<>());
-						case MoniLog4DSLPackage.EMIT_EVENT:
+						case MoniLogPackage.EMIT_EVENT:
 							return new MoniLoggerEmitEventNode(epRuntime, ((EmitEvent) action).getEvent().getName(),
 									EMPTY_ARRAY);
-						case MoniLog4DSLPackage.SET_VARIABLE:
+						case MoniLogPackage.SET_VARIABLE:
 							final SetVariable setVariable = (SetVariable) action;
 							return MoniLoggerSetVariableNodeGen.create(setVariable.getVariable(), node, onEnter,
 									getExpressionNode(setVariable.getValue(), node, languages));
-						case MoniLog4DSLPackage.MONILOGGER_CALL:
+						case MoniLogPackage.MONILOGGER_CALL:
 							throw new UnsupportedOperationException();
 						default:
 							throw new UnsupportedOperationException();
@@ -572,7 +573,10 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 		}
 		final Appender appender = appenderCall.getAppender();
 		switch (appender.eClass().getClassifierID()) {
-		case MoniLog4DSLPackage.LOCAL_APPENDER: {
+		case MoniLogPackage.APPENDER: {
+			throw new IllegalStateException("Can't find definition for " + appender.getName() + ".");
+		}
+		case MoniLogPackage.LOCAL_APPENDER: {
 			final LocalAppender localAppender = (LocalAppender) appender;
 			localAppender.getCalls().forEach(childCall -> appenderCallToActualArgs.computeIfAbsent(childCall,
 					a -> computeAppenderCallActualArgs(a, appenderCall, appenderCallToActualArgs)));
@@ -581,7 +585,7 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 					.collect(Collectors.toList()).toArray(EMPTY_ARRAY);
 			return new MoniLoggerBlockNode(calls);
 		}
-		case MoniLog4DSLPackage.EXTERNAL_APPENDER: {
+		case MoniLogPackage.EXTERNAL_APPENDER: {
 			final ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
 			final ExternalAppender externalAppender = (ExternalAppender) appender;
 			final String className = ((Document) externalAppender.eContainer()).getName() + "."
@@ -637,14 +641,14 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 		}
 		final Layout layout = layoutCall.getLayout();
 		switch (layout.eClass().getClassifierID()) {
-		case MoniLog4DSLPackage.LOCAL_LAYOUT: {
+		case MoniLogPackage.LOCAL_LAYOUT: {
 			final LocalLayout localLayout = (LocalLayout) layout;
 			final LayoutCall childCall = localLayout.getCall();
 			layoutCallToActualArgs.computeIfAbsent(childCall,
 					l -> computeLayoutCallActualArgs(l, layoutCall, layoutCallToActualArgs));
 			return getLayoutExecutableNode(env, childCall, node, level, languages, layoutCallToActualArgs);
 		}
-		case MoniLog4DSLPackage.EXTERNAL_LAYOUT: {
+		case MoniLogPackage.EXTERNAL_LAYOUT: {
 			final ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
 			final ExternalLayout externalLayout = (ExternalLayout) layout;
 			final String className = ((Document) externalLayout.eContainer()).getName() + "."
@@ -674,10 +678,10 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 	private MoniLoggerExecutableNode getAppenderCallArgumentNode(CallArgument argument, Node node, Level level,
 			Set<String> languages) {
 		switch (argument.eClass().getClassifierID()) {
-		case MoniLog4DSLPackage.LAYOUT_CALL:
+		case MoniLogPackage.LAYOUT_CALL:
 			return getLayoutExecutableNode(env, (LayoutCall) argument, node, level, languages,
 					/* TODO */ new HashMap<>());
-		case MoniLog4DSLPackage.LANGUAGE_EXPRESSION:
+		case MoniLogPackage.LANGUAGE_EXPRESSION:
 			return getExpressionNode((LanguageExpression) argument, node, languages);
 		default:
 			throw new UnsupportedOperationException();
@@ -686,7 +690,7 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 
 	private MoniLoggerExecutableNode getExpressionNode(Expression expression, Node node, Set<String> languages) {
 		switch (expression.eClass().getClassifierID()) {
-		case MoniLog4DSLPackage.LANGUAGE_EXPRESSION: {
+		case MoniLogPackage.LANGUAGE_EXPRESSION: {
 			final LanguageExpression languageExpression = (LanguageExpression) expression;
 			final String languageId = languageExpression.getLanguageId();
 			languages.add(languageId);
