@@ -2,9 +2,8 @@ package org.gemoc.monilog.api;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionPoint;
@@ -16,7 +15,7 @@ public class MoniLogLibraryLocator {
 
 	private static final String LAYOUT_EXTENSION = "org.gemoc.monilog.layout";
 
-	public static Map<IConfigurationElement, String> locate() {
+	public static List<String> locate() {
 
 		final IExtensionPoint appenderExtensionPoint = Platform.getExtensionRegistry()
 				.getExtensionPoint(APPENDER_EXTENSION);
@@ -27,11 +26,7 @@ public class MoniLogLibraryLocator {
 				Arrays.asList(appenderExtensionPoint.getConfigurationElements()));
 		configurationElements.addAll(Arrays.asList(layoutExtensionPoint.getConfigurationElements()));
 
-		final Map<IConfigurationElement, String> result = new HashMap<>();
-
-		configurationElements.stream().forEach(elt -> result.put(elt, elt.getAttribute("specificationFile")));
-
-		return result;
+		return configurationElements.stream().map(elt -> elt.getAttribute("specificationFile")).collect(Collectors.toList());
 	}
 
 }

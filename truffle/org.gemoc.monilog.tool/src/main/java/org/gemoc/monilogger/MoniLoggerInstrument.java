@@ -1,9 +1,13 @@
 package org.gemoc.monilogger;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -185,13 +189,20 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 
 			@Override
 			public void onContextCreated(TruffleContext context) {
+				final ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
+
 				final OptionValues contextOptions = env.getOptions(context);
+
 				final List<String> files = MoniLoggerContext.FILES.getValue(contextOptions);
 				final List<String> specs = files.stream().map(path -> {
 					try {
 						return new String(Files.readAllBytes(Paths.get(path)));
 					} catch (IOException e) {
-						e.printStackTrace();
+					}
+					final InputStream is = contextClassLoader.getResourceAsStream(path);
+					if (is != null) {
+						return readFromStream(is);
+					} else {
 						return "";
 					}
 				}).collect(Collectors.toList());
@@ -200,6 +211,11 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 					final List<EventBinding<MoniLoggerASTEventNodeFactory>> bindings = enable(specs);
 					contextToFactory.put(context, bindings);
 				}
+			}
+
+			private String readFromStream(InputStream is) {
+				return (new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8))).lines()
+						.collect(Collectors.joining("\n"));
 			}
 
 			@Override
@@ -252,8 +268,7 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 		final List<MoniLogger> moniloggers = new ArrayList<>();
 		final List<Event> allEvents = new ArrayList<>();
 		final ResourceSet rs = new XtextResourceSet();
-		final ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
-		System.out.println(contextClassLoader);
+
 		specifications.forEach(specification -> {
 			if (!specification.isBlank()) {
 				try {
@@ -572,6 +587,7 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 			appenderCallToActualArgs.putIfAbsent(appenderCall, new ArrayList<>(appenderCall.getArgs()));
 		}
 		final Appender appender = appenderCall.getAppender();
+
 		switch (appender.eClass().getClassifierID()) {
 		case MoniLogPackage.APPENDER: {
 			throw new IllegalStateException("Can't find definition for " + appender.getName() + ".");

@@ -41,7 +41,7 @@
       <import plugin="fr.cea.nabla.edit"/>
       <import plugin="fr.cea.nabla.ide"/>
       <import plugin="fr.cea.nabla.ir"/>
-      <import plugin="fr.cea.nabla.ui" version="0.3.3" match="greaterOrEqual"/>
+      <import plugin="fr.cea.nabla.ui" version="0.4.0" match="greaterOrEqual"/>
       <import plugin="org.eclipse.ui.console"/>
       <import plugin="org.eclipse.ui.views"/>
       <import plugin="org.eclipse.ui.views.log"/>
@@ -88,7 +88,7 @@
          id="fr.cea.nabla.ui.graalvm"
          download-size="0"
          install-size="0"
-         version="0.3.3.qualifier"
+         version="0.4.0.qualifier"
          unpack="false"/>
 
    <plugin
