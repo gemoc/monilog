@@ -50,12 +50,12 @@ public interface SetVariable extends Action
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the value of the '<em>Value</em>' containment reference.
-   * @see #setValue(LanguageExpression)
+   * @see #setValue(LanguageValue)
    * @see org.gemoc.monilog.moniLog.MoniLogPackage#getSetVariable_Value()
    * @model containment="true"
    * @generated
    */
-  LanguageExpression getValue();
+  LanguageValue getValue();
 
   /**
    * Sets the value of the '{@link org.gemoc.monilog.moniLog.SetVariable#getValue <em>Value</em>}' containment reference.
@@ -65,6 +65,6 @@ public interface SetVariable extends Action
    * @see #getValue()
    * @generated
    */
-  void setValue(LanguageExpression value);
+  void setValue(LanguageValue value);
 
 } // SetVariable

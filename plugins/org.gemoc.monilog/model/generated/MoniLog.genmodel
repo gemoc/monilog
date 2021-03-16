@@ -37,6 +37,11 @@
     </genClasses>
     <genClasses ecoreClass="MoniLog.ecore#//Import">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog.ecore#//Import/importedNamespace"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog.ecore#//Import/fileURI"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//Import/alias"/>
+    </genClasses>
+    <genClasses ecoreClass="MoniLog.ecore#//FileAlias">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog.ecore#//FileAlias/name"/>
     </genClasses>
     <genClasses ecoreClass="MoniLog.ecore#//Appender">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog.ecore#//Appender/name"/>
@@ -125,9 +130,17 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog.ecore#//PropertyValue/id"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//PropertyValue/value"/>
     </genClasses>
+    <genClasses ecoreClass="MoniLog.ecore#//LanguageValue">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog.ecore#//LanguageValue/languageId"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//LanguageValue/value"/>
+    </genClasses>
     <genClasses ecoreClass="MoniLog.ecore#//LanguageExpression">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog.ecore#//LanguageExpression/languageId"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog.ecore#//LanguageExpression/expression"/>
+    </genClasses>
+    <genClasses ecoreClass="MoniLog.ecore#//LanguageCall">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference MoniLog.ecore#//LanguageCall/file"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog.ecore#//LanguageCall/fqn"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//LanguageCall/args"/>
     </genClasses>
     <genClasses ecoreClass="MoniLog.ecore#//ASTEvent">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//ASTEvent/kind"/>

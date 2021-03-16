@@ -151,13 +151,59 @@ public interface MoniLogPackage extends EPackage
   int IMPORT__IMPORTED_NAMESPACE = 0;
 
   /**
+   * The feature id for the '<em><b>File URI</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int IMPORT__FILE_URI = 1;
+
+  /**
+   * The feature id for the '<em><b>Alias</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int IMPORT__ALIAS = 2;
+
+  /**
    * The number of structural features of the '<em>Import</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int IMPORT_FEATURE_COUNT = 1;
+  int IMPORT_FEATURE_COUNT = 3;
+
+  /**
+   * The meta object id for the '{@link org.gemoc.monilog.moniLog.impl.FileAliasImpl <em>File Alias</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.gemoc.monilog.moniLog.impl.FileAliasImpl
+   * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getFileAlias()
+   * @generated
+   */
+  int FILE_ALIAS = 2;
+
+  /**
+   * The feature id for the '<em><b>Name</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FILE_ALIAS__NAME = 0;
+
+  /**
+   * The number of structural features of the '<em>File Alias</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FILE_ALIAS_FEATURE_COUNT = 1;
 
   /**
    * The meta object id for the '{@link org.gemoc.monilog.moniLog.impl.AppenderImpl <em>Appender</em>}' class.
@@ -167,7 +213,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getAppender()
    * @generated
    */
-  int APPENDER = 2;
+  int APPENDER = 3;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -204,7 +250,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getLocalAppender()
    * @generated
    */
-  int LOCAL_APPENDER = 3;
+  int LOCAL_APPENDER = 4;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -259,7 +305,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getExternalAppender()
    * @generated
    */
-  int EXTERNAL_APPENDER = 4;
+  int EXTERNAL_APPENDER = 5;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -296,7 +342,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getLayout()
    * @generated
    */
-  int LAYOUT = 5;
+  int LAYOUT = 6;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -333,7 +379,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getLocalLayout()
    * @generated
    */
-  int LOCAL_LAYOUT = 6;
+  int LOCAL_LAYOUT = 7;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -379,7 +425,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getExternalLayout()
    * @generated
    */
-  int EXTERNAL_LAYOUT = 7;
+  int EXTERNAL_LAYOUT = 8;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -416,7 +462,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getParameterDecl()
    * @generated
    */
-  int PARAMETER_DECL = 8;
+  int PARAMETER_DECL = 9;
 
   /**
    * The feature id for the '<em><b>Parameters</b></em>' containment reference list.
@@ -453,7 +499,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getMoniLogger()
    * @generated
    */
-  int MONI_LOGGER = 9;
+  int MONI_LOGGER = 10;
 
   /**
    * The feature id for the '<em><b>Annotations</b></em>' attribute list.
@@ -535,7 +581,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getParameter()
    * @generated
    */
-  int PARAMETER = 10;
+  int PARAMETER = 11;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -563,7 +609,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getEvent()
    * @generated
    */
-  int EVENT = 11;
+  int EVENT = 12;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -600,7 +646,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getASTEventKind()
    * @generated
    */
-  int AST_EVENT_KIND = 12;
+  int AST_EVENT_KIND = 13;
 
   /**
    * The number of structural features of the '<em>AST Event Kind</em>' class.
@@ -619,7 +665,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getCondition()
    * @generated
    */
-  int CONDITION = 13;
+  int CONDITION = 14;
 
   /**
    * The feature id for the '<em><b>Expression</b></em>' containment reference.
@@ -647,7 +693,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getTemporalPattern()
    * @generated
    */
-  int TEMPORAL_PATTERN = 14;
+  int TEMPORAL_PATTERN = 15;
 
   /**
    * The feature id for the '<em><b>Pattern</b></em>' containment reference.
@@ -684,7 +730,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getPattern()
    * @generated
    */
-  int PATTERN = 15;
+  int PATTERN = 16;
 
   /**
    * The number of structural features of the '<em>Pattern</em>' class.
@@ -703,7 +749,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getBoundType()
    * @generated
    */
-  int BOUND_TYPE = 16;
+  int BOUND_TYPE = 17;
 
   /**
    * The feature id for the '<em><b>N</b></em>' attribute.
@@ -731,7 +777,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getExactBound()
    * @generated
    */
-  int EXACT_BOUND = 17;
+  int EXACT_BOUND = 18;
 
   /**
    * The feature id for the '<em><b>N</b></em>' attribute.
@@ -759,7 +805,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getLowerBound()
    * @generated
    */
-  int LOWER_BOUND = 18;
+  int LOWER_BOUND = 19;
 
   /**
    * The feature id for the '<em><b>N</b></em>' attribute.
@@ -787,7 +833,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getUpperBound()
    * @generated
    */
-  int UPPER_BOUND = 19;
+  int UPPER_BOUND = 20;
 
   /**
    * The feature id for the '<em><b>N</b></em>' attribute.
@@ -815,7 +861,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getScope()
    * @generated
    */
-  int SCOPE = 20;
+  int SCOPE = 21;
 
   /**
    * The number of structural features of the '<em>Scope</em>' class.
@@ -834,7 +880,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getAction()
    * @generated
    */
-  int ACTION = 21;
+  int ACTION = 22;
 
   /**
    * The number of structural features of the '<em>Action</em>' class.
@@ -853,7 +899,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getAppenderCall()
    * @generated
    */
-  int APPENDER_CALL = 22;
+  int APPENDER_CALL = 23;
 
   /**
    * The feature id for the '<em><b>Appender</b></em>' reference.
@@ -890,7 +936,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getCallArgument()
    * @generated
    */
-  int CALL_ARGUMENT = 23;
+  int CALL_ARGUMENT = 24;
 
   /**
    * The number of structural features of the '<em>Call Argument</em>' class.
@@ -909,7 +955,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getLayoutCall()
    * @generated
    */
-  int LAYOUT_CALL = 24;
+  int LAYOUT_CALL = 25;
 
   /**
    * The feature id for the '<em><b>Layout</b></em>' reference.
@@ -946,7 +992,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getEmitEvent()
    * @generated
    */
-  int EMIT_EVENT = 25;
+  int EMIT_EVENT = 26;
 
   /**
    * The feature id for the '<em><b>Event</b></em>' reference.
@@ -983,7 +1029,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getSetVariable()
    * @generated
    */
-  int SET_VARIABLE = 26;
+  int SET_VARIABLE = 27;
 
   /**
    * The feature id for the '<em><b>Variable</b></em>' attribute.
@@ -1020,7 +1066,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getMoniloggerCall()
    * @generated
    */
-  int MONILOGGER_CALL = 27;
+  int MONILOGGER_CALL = 28;
 
   /**
    * The feature id for the '<em><b>Monilogger</b></em>' reference.
@@ -1048,7 +1094,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getStreamEvent()
    * @generated
    */
-  int STREAM_EVENT = 28;
+  int STREAM_EVENT = 29;
 
   /**
    * The feature id for the '<em><b>Event</b></em>' reference.
@@ -1085,7 +1131,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getEmptyOrPropertyValue()
    * @generated
    */
-  int EMPTY_OR_PROPERTY_VALUE = 29;
+  int EMPTY_OR_PROPERTY_VALUE = 30;
 
   /**
    * The number of structural features of the '<em>Empty Or Property Value</em>' class.
@@ -1104,7 +1150,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getExpression()
    * @generated
    */
-  int EXPRESSION = 30;
+  int EXPRESSION = 31;
 
   /**
    * The number of structural features of the '<em>Expression</em>' class.
@@ -1123,7 +1169,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getParameterReference()
    * @generated
    */
-  int PARAMETER_REFERENCE = 31;
+  int PARAMETER_REFERENCE = 32;
 
   /**
    * The feature id for the '<em><b>Parameter</b></em>' reference.
@@ -1151,7 +1197,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getPropertyValue()
    * @generated
    */
-  int PROPERTY_VALUE = 32;
+  int PROPERTY_VALUE = 33;
 
   /**
    * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -1181,14 +1227,14 @@ public interface MoniLogPackage extends EPackage
   int PROPERTY_VALUE_FEATURE_COUNT = EMPTY_OR_PROPERTY_VALUE_FEATURE_COUNT + 2;
 
   /**
-   * The meta object id for the '{@link org.gemoc.monilog.moniLog.impl.LanguageExpressionImpl <em>Language Expression</em>}' class.
+   * The meta object id for the '{@link org.gemoc.monilog.moniLog.impl.LanguageValueImpl <em>Language Value</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see org.gemoc.monilog.moniLog.impl.LanguageExpressionImpl
-   * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getLanguageExpression()
+   * @see org.gemoc.monilog.moniLog.impl.LanguageValueImpl
+   * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getLanguageValue()
    * @generated
    */
-  int LANGUAGE_EXPRESSION = 33;
+  int LANGUAGE_VALUE = 34;
 
   /**
    * The feature id for the '<em><b>Language Id</b></em>' attribute.
@@ -1197,7 +1243,35 @@ public interface MoniLogPackage extends EPackage
    * @generated
    * @ordered
    */
-  int LANGUAGE_EXPRESSION__LANGUAGE_ID = ACTION_FEATURE_COUNT + 0;
+  int LANGUAGE_VALUE__LANGUAGE_ID = ACTION_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Value</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LANGUAGE_VALUE__VALUE = ACTION_FEATURE_COUNT + 1;
+
+  /**
+   * The number of structural features of the '<em>Language Value</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LANGUAGE_VALUE_FEATURE_COUNT = ACTION_FEATURE_COUNT + 2;
+
+  /**
+   * The meta object id for the '{@link org.gemoc.monilog.moniLog.impl.LanguageExpressionImpl <em>Language Expression</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.gemoc.monilog.moniLog.impl.LanguageExpressionImpl
+   * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getLanguageExpression()
+   * @generated
+   */
+  int LANGUAGE_EXPRESSION = 35;
 
   /**
    * The feature id for the '<em><b>Expression</b></em>' attribute.
@@ -1206,7 +1280,7 @@ public interface MoniLogPackage extends EPackage
    * @generated
    * @ordered
    */
-  int LANGUAGE_EXPRESSION__EXPRESSION = ACTION_FEATURE_COUNT + 1;
+  int LANGUAGE_EXPRESSION__EXPRESSION = 0;
 
   /**
    * The number of structural features of the '<em>Language Expression</em>' class.
@@ -1215,7 +1289,53 @@ public interface MoniLogPackage extends EPackage
    * @generated
    * @ordered
    */
-  int LANGUAGE_EXPRESSION_FEATURE_COUNT = ACTION_FEATURE_COUNT + 2;
+  int LANGUAGE_EXPRESSION_FEATURE_COUNT = 1;
+
+  /**
+   * The meta object id for the '{@link org.gemoc.monilog.moniLog.impl.LanguageCallImpl <em>Language Call</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.gemoc.monilog.moniLog.impl.LanguageCallImpl
+   * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getLanguageCall()
+   * @generated
+   */
+  int LANGUAGE_CALL = 36;
+
+  /**
+   * The feature id for the '<em><b>File</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LANGUAGE_CALL__FILE = 0;
+
+  /**
+   * The feature id for the '<em><b>Fqn</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LANGUAGE_CALL__FQN = 1;
+
+  /**
+   * The feature id for the '<em><b>Args</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LANGUAGE_CALL__ARGS = 2;
+
+  /**
+   * The number of structural features of the '<em>Language Call</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int LANGUAGE_CALL_FEATURE_COUNT = 3;
 
   /**
    * The meta object id for the '{@link org.gemoc.monilog.moniLog.impl.ASTEventImpl <em>AST Event</em>}' class.
@@ -1225,7 +1345,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getASTEvent()
    * @generated
    */
-  int AST_EVENT = 34;
+  int AST_EVENT = 37;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1280,7 +1400,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getComplexEvent()
    * @generated
    */
-  int COMPLEX_EVENT = 35;
+  int COMPLEX_EVENT = 38;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1335,7 +1455,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getUserEvent()
    * @generated
    */
-  int USER_EVENT = 36;
+  int USER_EVENT = 39;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1372,7 +1492,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getBeforeASTEvent()
    * @generated
    */
-  int BEFORE_AST_EVENT = 37;
+  int BEFORE_AST_EVENT = 40;
 
   /**
    * The number of structural features of the '<em>Before AST Event</em>' class.
@@ -1391,7 +1511,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getAfterASTEvent()
    * @generated
    */
-  int AFTER_AST_EVENT = 38;
+  int AFTER_AST_EVENT = 41;
 
   /**
    * The number of structural features of the '<em>After AST Event</em>' class.
@@ -1410,7 +1530,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getExistence()
    * @generated
    */
-  int EXISTENCE = 39;
+  int EXISTENCE = 42;
 
   /**
    * The feature id for the '<em><b>Bound</b></em>' containment reference.
@@ -1447,7 +1567,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getUniversality()
    * @generated
    */
-  int UNIVERSALITY = 40;
+  int UNIVERSALITY = 43;
 
   /**
    * The feature id for the '<em><b>Event</b></em>' containment reference.
@@ -1475,7 +1595,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getAbsence()
    * @generated
    */
-  int ABSENCE = 41;
+  int ABSENCE = 44;
 
   /**
    * The feature id for the '<em><b>Event</b></em>' containment reference.
@@ -1503,7 +1623,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getPrecedence()
    * @generated
    */
-  int PRECEDENCE = 42;
+  int PRECEDENCE = 45;
 
   /**
    * The feature id for the '<em><b>Predecessor</b></em>' containment reference.
@@ -1540,7 +1660,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getResponse()
    * @generated
    */
-  int RESPONSE = 43;
+  int RESPONSE = 46;
 
   /**
    * The feature id for the '<em><b>Event</b></em>' containment reference.
@@ -1577,7 +1697,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getGlobally()
    * @generated
    */
-  int GLOBALLY = 44;
+  int GLOBALLY = 47;
 
   /**
    * The number of structural features of the '<em>Globally</em>' class.
@@ -1596,7 +1716,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getAfter()
    * @generated
    */
-  int AFTER = 45;
+  int AFTER = 48;
 
   /**
    * The feature id for the '<em><b>Lower Bound</b></em>' containment reference.
@@ -1624,7 +1744,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getBefore()
    * @generated
    */
-  int BEFORE = 46;
+  int BEFORE = 49;
 
   /**
    * The feature id for the '<em><b>Upper Bound</b></em>' containment reference.
@@ -1652,7 +1772,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getBetween()
    * @generated
    */
-  int BETWEEN = 47;
+  int BETWEEN = 50;
 
   /**
    * The feature id for the '<em><b>Lower Bound</b></em>' containment reference.
@@ -1689,7 +1809,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getAfterUntil()
    * @generated
    */
-  int AFTER_UNTIL = 48;
+  int AFTER_UNTIL = 51;
 
   /**
    * The feature id for the '<em><b>Lower Bound</b></em>' containment reference.
@@ -1726,7 +1846,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getStartMoniLogger()
    * @generated
    */
-  int START_MONI_LOGGER = 49;
+  int START_MONI_LOGGER = 52;
 
   /**
    * The feature id for the '<em><b>Monilogger</b></em>' reference.
@@ -1763,7 +1883,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getStopMoniLogger()
    * @generated
    */
-  int STOP_MONI_LOGGER = 50;
+  int STOP_MONI_LOGGER = 53;
 
   /**
    * The feature id for the '<em><b>Monilogger</b></em>' reference.
@@ -1791,7 +1911,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getEmpty()
    * @generated
    */
-  int EMPTY = 51;
+  int EMPTY = 54;
 
   /**
    * The number of structural features of the '<em>Empty</em>' class.
@@ -1810,7 +1930,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getMoniLoggerAnnotation()
    * @generated
    */
-  int MONI_LOGGER_ANNOTATION = 52;
+  int MONI_LOGGER_ANNOTATION = 55;
 
   /**
    * The meta object id for the '{@link org.gemoc.monilog.moniLog.AppenderAnnotation <em>Appender Annotation</em>}' enum.
@@ -1820,7 +1940,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getAppenderAnnotation()
    * @generated
    */
-  int APPENDER_ANNOTATION = 53;
+  int APPENDER_ANNOTATION = 56;
 
   /**
    * The meta object id for the '{@link org.gemoc.monilog.moniLog.LogLevel <em>Log Level</em>}' enum.
@@ -1830,7 +1950,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getLogLevel()
    * @generated
    */
-  int LOG_LEVEL = 54;
+  int LOG_LEVEL = 57;
 
   /**
    * The meta object id for the '{@link org.gemoc.monilog.moniLog.TemporalPatternKind <em>Temporal Pattern Kind</em>}' enum.
@@ -1840,7 +1960,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getTemporalPatternKind()
    * @generated
    */
-  int TEMPORAL_PATTERN_KIND = 55;
+  int TEMPORAL_PATTERN_KIND = 58;
 
 
   /**
@@ -1939,6 +2059,49 @@ public interface MoniLogPackage extends EPackage
    * @generated
    */
   EAttribute getImport_ImportedNamespace();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.gemoc.monilog.moniLog.Import#getFileURI <em>File URI</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>File URI</em>'.
+   * @see org.gemoc.monilog.moniLog.Import#getFileURI()
+   * @see #getImport()
+   * @generated
+   */
+  EAttribute getImport_FileURI();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.gemoc.monilog.moniLog.Import#getAlias <em>Alias</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Alias</em>'.
+   * @see org.gemoc.monilog.moniLog.Import#getAlias()
+   * @see #getImport()
+   * @generated
+   */
+  EReference getImport_Alias();
+
+  /**
+   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog.FileAlias <em>File Alias</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>File Alias</em>'.
+   * @see org.gemoc.monilog.moniLog.FileAlias
+   * @generated
+   */
+  EClass getFileAlias();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.gemoc.monilog.moniLog.FileAlias#getName <em>Name</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Name</em>'.
+   * @see org.gemoc.monilog.moniLog.FileAlias#getName()
+   * @see #getFileAlias()
+   * @generated
+   */
+  EAttribute getFileAlias_Name();
 
   /**
    * Returns the meta object for class '{@link org.gemoc.monilog.moniLog.Appender <em>Appender</em>}'.
@@ -2658,6 +2821,38 @@ public interface MoniLogPackage extends EPackage
   EReference getPropertyValue_Value();
 
   /**
+   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog.LanguageValue <em>Language Value</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Language Value</em>'.
+   * @see org.gemoc.monilog.moniLog.LanguageValue
+   * @generated
+   */
+  EClass getLanguageValue();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.gemoc.monilog.moniLog.LanguageValue#getLanguageId <em>Language Id</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Language Id</em>'.
+   * @see org.gemoc.monilog.moniLog.LanguageValue#getLanguageId()
+   * @see #getLanguageValue()
+   * @generated
+   */
+  EAttribute getLanguageValue_LanguageId();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.gemoc.monilog.moniLog.LanguageValue#getValue <em>Value</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Value</em>'.
+   * @see org.gemoc.monilog.moniLog.LanguageValue#getValue()
+   * @see #getLanguageValue()
+   * @generated
+   */
+  EReference getLanguageValue_Value();
+
+  /**
    * Returns the meta object for class '{@link org.gemoc.monilog.moniLog.LanguageExpression <em>Language Expression</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2666,17 +2861,6 @@ public interface MoniLogPackage extends EPackage
    * @generated
    */
   EClass getLanguageExpression();
-
-  /**
-   * Returns the meta object for the attribute '{@link org.gemoc.monilog.moniLog.LanguageExpression#getLanguageId <em>Language Id</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Language Id</em>'.
-   * @see org.gemoc.monilog.moniLog.LanguageExpression#getLanguageId()
-   * @see #getLanguageExpression()
-   * @generated
-   */
-  EAttribute getLanguageExpression_LanguageId();
 
   /**
    * Returns the meta object for the attribute '{@link org.gemoc.monilog.moniLog.LanguageExpression#getExpression <em>Expression</em>}'.
@@ -2688,6 +2872,49 @@ public interface MoniLogPackage extends EPackage
    * @generated
    */
   EAttribute getLanguageExpression_Expression();
+
+  /**
+   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog.LanguageCall <em>Language Call</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Language Call</em>'.
+   * @see org.gemoc.monilog.moniLog.LanguageCall
+   * @generated
+   */
+  EClass getLanguageCall();
+
+  /**
+   * Returns the meta object for the reference '{@link org.gemoc.monilog.moniLog.LanguageCall#getFile <em>File</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the reference '<em>File</em>'.
+   * @see org.gemoc.monilog.moniLog.LanguageCall#getFile()
+   * @see #getLanguageCall()
+   * @generated
+   */
+  EReference getLanguageCall_File();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.gemoc.monilog.moniLog.LanguageCall#getFqn <em>Fqn</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Fqn</em>'.
+   * @see org.gemoc.monilog.moniLog.LanguageCall#getFqn()
+   * @see #getLanguageCall()
+   * @generated
+   */
+  EAttribute getLanguageCall_Fqn();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link org.gemoc.monilog.moniLog.LanguageCall#getArgs <em>Args</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Args</em>'.
+   * @see org.gemoc.monilog.moniLog.LanguageCall#getArgs()
+   * @see #getLanguageCall()
+   * @generated
+   */
+  EReference getLanguageCall_Args();
 
   /**
    * Returns the meta object for class '{@link org.gemoc.monilog.moniLog.ASTEvent <em>AST Event</em>}'.
@@ -3216,6 +3443,40 @@ public interface MoniLogPackage extends EPackage
      * @generated
      */
     EAttribute IMPORT__IMPORTED_NAMESPACE = eINSTANCE.getImport_ImportedNamespace();
+
+    /**
+     * The meta object literal for the '<em><b>File URI</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute IMPORT__FILE_URI = eINSTANCE.getImport_FileURI();
+
+    /**
+     * The meta object literal for the '<em><b>Alias</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference IMPORT__ALIAS = eINSTANCE.getImport_Alias();
+
+    /**
+     * The meta object literal for the '{@link org.gemoc.monilog.moniLog.impl.FileAliasImpl <em>File Alias</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.gemoc.monilog.moniLog.impl.FileAliasImpl
+     * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getFileAlias()
+     * @generated
+     */
+    EClass FILE_ALIAS = eINSTANCE.getFileAlias();
+
+    /**
+     * The meta object literal for the '<em><b>Name</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute FILE_ALIAS__NAME = eINSTANCE.getFileAlias_Name();
 
     /**
      * The meta object literal for the '{@link org.gemoc.monilog.moniLog.impl.AppenderImpl <em>Appender</em>}' class.
@@ -3824,6 +4085,32 @@ public interface MoniLogPackage extends EPackage
     EReference PROPERTY_VALUE__VALUE = eINSTANCE.getPropertyValue_Value();
 
     /**
+     * The meta object literal for the '{@link org.gemoc.monilog.moniLog.impl.LanguageValueImpl <em>Language Value</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.gemoc.monilog.moniLog.impl.LanguageValueImpl
+     * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getLanguageValue()
+     * @generated
+     */
+    EClass LANGUAGE_VALUE = eINSTANCE.getLanguageValue();
+
+    /**
+     * The meta object literal for the '<em><b>Language Id</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute LANGUAGE_VALUE__LANGUAGE_ID = eINSTANCE.getLanguageValue_LanguageId();
+
+    /**
+     * The meta object literal for the '<em><b>Value</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference LANGUAGE_VALUE__VALUE = eINSTANCE.getLanguageValue_Value();
+
+    /**
      * The meta object literal for the '{@link org.gemoc.monilog.moniLog.impl.LanguageExpressionImpl <em>Language Expression</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3834,20 +4121,46 @@ public interface MoniLogPackage extends EPackage
     EClass LANGUAGE_EXPRESSION = eINSTANCE.getLanguageExpression();
 
     /**
-     * The meta object literal for the '<em><b>Language Id</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute LANGUAGE_EXPRESSION__LANGUAGE_ID = eINSTANCE.getLanguageExpression_LanguageId();
-
-    /**
      * The meta object literal for the '<em><b>Expression</b></em>' attribute feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
     EAttribute LANGUAGE_EXPRESSION__EXPRESSION = eINSTANCE.getLanguageExpression_Expression();
+
+    /**
+     * The meta object literal for the '{@link org.gemoc.monilog.moniLog.impl.LanguageCallImpl <em>Language Call</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.gemoc.monilog.moniLog.impl.LanguageCallImpl
+     * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getLanguageCall()
+     * @generated
+     */
+    EClass LANGUAGE_CALL = eINSTANCE.getLanguageCall();
+
+    /**
+     * The meta object literal for the '<em><b>File</b></em>' reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference LANGUAGE_CALL__FILE = eINSTANCE.getLanguageCall_File();
+
+    /**
+     * The meta object literal for the '<em><b>Fqn</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute LANGUAGE_CALL__FQN = eINSTANCE.getLanguageCall_Fqn();
+
+    /**
+     * The meta object literal for the '<em><b>Args</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference LANGUAGE_CALL__ARGS = eINSTANCE.getLanguageCall_Args();
 
     /**
      * The meta object literal for the '{@link org.gemoc.monilog.moniLog.impl.ASTEventImpl <em>AST Event</em>}' class.

@@ -7,49 +7,49 @@ import org.eclipse.emf.common.notify.Notification;
 import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 
 import org.gemoc.monilog.moniLog.LanguageValue;
 import org.gemoc.monilog.moniLog.MoniLogPackage;
-import org.gemoc.monilog.moniLog.SetVariable;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Set Variable</b></em>'.
+ * An implementation of the model object '<em><b>Language Value</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.gemoc.monilog.moniLog.impl.SetVariableImpl#getVariable <em>Variable</em>}</li>
- *   <li>{@link org.gemoc.monilog.moniLog.impl.SetVariableImpl#getValue <em>Value</em>}</li>
+ *   <li>{@link org.gemoc.monilog.moniLog.impl.LanguageValueImpl#getLanguageId <em>Language Id</em>}</li>
+ *   <li>{@link org.gemoc.monilog.moniLog.impl.LanguageValueImpl#getValue <em>Value</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class SetVariableImpl extends ActionImpl implements SetVariable
+public class LanguageValueImpl extends ActionImpl implements LanguageValue
 {
   /**
-   * The default value of the '{@link #getVariable() <em>Variable</em>}' attribute.
+   * The default value of the '{@link #getLanguageId() <em>Language Id</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getVariable()
+   * @see #getLanguageId()
    * @generated
    * @ordered
    */
-  protected static final String VARIABLE_EDEFAULT = null;
+  protected static final String LANGUAGE_ID_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getVariable() <em>Variable</em>}' attribute.
+   * The cached value of the '{@link #getLanguageId() <em>Language Id</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getVariable()
+   * @see #getLanguageId()
    * @generated
    * @ordered
    */
-  protected String variable = VARIABLE_EDEFAULT;
+  protected String languageId = LANGUAGE_ID_EDEFAULT;
 
   /**
    * The cached value of the '{@link #getValue() <em>Value</em>}' containment reference.
@@ -59,14 +59,14 @@ public class SetVariableImpl extends ActionImpl implements SetVariable
    * @generated
    * @ordered
    */
-  protected LanguageValue value;
+  protected EObject value;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected SetVariableImpl()
+  protected LanguageValueImpl()
   {
     super();
   }
@@ -79,7 +79,7 @@ public class SetVariableImpl extends ActionImpl implements SetVariable
   @Override
   protected EClass eStaticClass()
   {
-    return MoniLogPackage.Literals.SET_VARIABLE;
+    return MoniLogPackage.Literals.LANGUAGE_VALUE;
   }
 
   /**
@@ -88,9 +88,9 @@ public class SetVariableImpl extends ActionImpl implements SetVariable
    * @generated
    */
   @Override
-  public String getVariable()
+  public String getLanguageId()
   {
-    return variable;
+    return languageId;
   }
 
   /**
@@ -99,12 +99,12 @@ public class SetVariableImpl extends ActionImpl implements SetVariable
    * @generated
    */
   @Override
-  public void setVariable(String newVariable)
+  public void setLanguageId(String newLanguageId)
   {
-    String oldVariable = variable;
-    variable = newVariable;
+    String oldLanguageId = languageId;
+    languageId = newLanguageId;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, MoniLogPackage.SET_VARIABLE__VARIABLE, oldVariable, variable));
+      eNotify(new ENotificationImpl(this, Notification.SET, MoniLogPackage.LANGUAGE_VALUE__LANGUAGE_ID, oldLanguageId, languageId));
   }
 
   /**
@@ -113,7 +113,7 @@ public class SetVariableImpl extends ActionImpl implements SetVariable
    * @generated
    */
   @Override
-  public LanguageValue getValue()
+  public EObject getValue()
   {
     return value;
   }
@@ -123,13 +123,13 @@ public class SetVariableImpl extends ActionImpl implements SetVariable
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetValue(LanguageValue newValue, NotificationChain msgs)
+  public NotificationChain basicSetValue(EObject newValue, NotificationChain msgs)
   {
-    LanguageValue oldValue = value;
+    EObject oldValue = value;
     value = newValue;
     if (eNotificationRequired())
     {
-      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, MoniLogPackage.SET_VARIABLE__VALUE, oldValue, newValue);
+      ENotificationImpl notification = new ENotificationImpl(this, Notification.SET, MoniLogPackage.LANGUAGE_VALUE__VALUE, oldValue, newValue);
       if (msgs == null) msgs = notification; else msgs.add(notification);
     }
     return msgs;
@@ -141,20 +141,20 @@ public class SetVariableImpl extends ActionImpl implements SetVariable
    * @generated
    */
   @Override
-  public void setValue(LanguageValue newValue)
+  public void setValue(EObject newValue)
   {
     if (newValue != value)
     {
       NotificationChain msgs = null;
       if (value != null)
-        msgs = ((InternalEObject)value).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - MoniLogPackage.SET_VARIABLE__VALUE, null, msgs);
+        msgs = ((InternalEObject)value).eInverseRemove(this, EOPPOSITE_FEATURE_BASE - MoniLogPackage.LANGUAGE_VALUE__VALUE, null, msgs);
       if (newValue != null)
-        msgs = ((InternalEObject)newValue).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - MoniLogPackage.SET_VARIABLE__VALUE, null, msgs);
+        msgs = ((InternalEObject)newValue).eInverseAdd(this, EOPPOSITE_FEATURE_BASE - MoniLogPackage.LANGUAGE_VALUE__VALUE, null, msgs);
       msgs = basicSetValue(newValue, msgs);
       if (msgs != null) msgs.dispatch();
     }
     else if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, MoniLogPackage.SET_VARIABLE__VALUE, newValue, newValue));
+      eNotify(new ENotificationImpl(this, Notification.SET, MoniLogPackage.LANGUAGE_VALUE__VALUE, newValue, newValue));
   }
 
   /**
@@ -167,7 +167,7 @@ public class SetVariableImpl extends ActionImpl implements SetVariable
   {
     switch (featureID)
     {
-      case MoniLogPackage.SET_VARIABLE__VALUE:
+      case MoniLogPackage.LANGUAGE_VALUE__VALUE:
         return basicSetValue(null, msgs);
     }
     return super.eInverseRemove(otherEnd, featureID, msgs);
@@ -183,9 +183,9 @@ public class SetVariableImpl extends ActionImpl implements SetVariable
   {
     switch (featureID)
     {
-      case MoniLogPackage.SET_VARIABLE__VARIABLE:
-        return getVariable();
-      case MoniLogPackage.SET_VARIABLE__VALUE:
+      case MoniLogPackage.LANGUAGE_VALUE__LANGUAGE_ID:
+        return getLanguageId();
+      case MoniLogPackage.LANGUAGE_VALUE__VALUE:
         return getValue();
     }
     return super.eGet(featureID, resolve, coreType);
@@ -201,11 +201,11 @@ public class SetVariableImpl extends ActionImpl implements SetVariable
   {
     switch (featureID)
     {
-      case MoniLogPackage.SET_VARIABLE__VARIABLE:
-        setVariable((String)newValue);
+      case MoniLogPackage.LANGUAGE_VALUE__LANGUAGE_ID:
+        setLanguageId((String)newValue);
         return;
-      case MoniLogPackage.SET_VARIABLE__VALUE:
-        setValue((LanguageValue)newValue);
+      case MoniLogPackage.LANGUAGE_VALUE__VALUE:
+        setValue((EObject)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -221,11 +221,11 @@ public class SetVariableImpl extends ActionImpl implements SetVariable
   {
     switch (featureID)
     {
-      case MoniLogPackage.SET_VARIABLE__VARIABLE:
-        setVariable(VARIABLE_EDEFAULT);
+      case MoniLogPackage.LANGUAGE_VALUE__LANGUAGE_ID:
+        setLanguageId(LANGUAGE_ID_EDEFAULT);
         return;
-      case MoniLogPackage.SET_VARIABLE__VALUE:
-        setValue((LanguageValue)null);
+      case MoniLogPackage.LANGUAGE_VALUE__VALUE:
+        setValue((EObject)null);
         return;
     }
     super.eUnset(featureID);
@@ -241,9 +241,9 @@ public class SetVariableImpl extends ActionImpl implements SetVariable
   {
     switch (featureID)
     {
-      case MoniLogPackage.SET_VARIABLE__VARIABLE:
-        return VARIABLE_EDEFAULT == null ? variable != null : !VARIABLE_EDEFAULT.equals(variable);
-      case MoniLogPackage.SET_VARIABLE__VALUE:
+      case MoniLogPackage.LANGUAGE_VALUE__LANGUAGE_ID:
+        return LANGUAGE_ID_EDEFAULT == null ? languageId != null : !LANGUAGE_ID_EDEFAULT.equals(languageId);
+      case MoniLogPackage.LANGUAGE_VALUE__VALUE:
         return value != null;
     }
     return super.eIsSet(featureID);
@@ -260,10 +260,10 @@ public class SetVariableImpl extends ActionImpl implements SetVariable
     if (eIsProxy()) return super.toString();
 
     StringBuilder result = new StringBuilder(super.toString());
-    result.append(" (variable: ");
-    result.append(variable);
+    result.append(" (languageId: ");
+    result.append(languageId);
     result.append(')');
     return result.toString();
   }
 
-} //SetVariableImpl
+} //LanguageValueImpl

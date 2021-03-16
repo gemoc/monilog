@@ -42,6 +42,15 @@ public interface MoniLogFactory extends EFactory
   Import createImport();
 
   /**
+   * Returns a new object of class '<em>File Alias</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>File Alias</em>'.
+   * @generated
+   */
+  FileAlias createFileAlias();
+
+  /**
    * Returns a new object of class '<em>Appender</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -321,6 +330,15 @@ public interface MoniLogFactory extends EFactory
   PropertyValue createPropertyValue();
 
   /**
+   * Returns a new object of class '<em>Language Value</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Language Value</em>'.
+   * @generated
+   */
+  LanguageValue createLanguageValue();
+
+  /**
    * Returns a new object of class '<em>Language Expression</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -328,6 +346,15 @@ public interface MoniLogFactory extends EFactory
    * @generated
    */
   LanguageExpression createLanguageExpression();
+
+  /**
+   * Returns a new object of class '<em>Language Call</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Language Call</em>'.
+   * @generated
+   */
+  LanguageCall createLanguageCall();
 
   /**
    * Returns a new object of class '<em>AST Event</em>'.

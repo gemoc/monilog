@@ -25,6 +25,7 @@ import java.util.logging.Level;
 import java.util.stream.Collectors;
 
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.xtext.resource.XtextResourceSet;
 import org.eclipse.xtext.testing.util.ParseHelper;
@@ -46,6 +47,7 @@ import org.gemoc.monilog.moniLog.Expression;
 import org.gemoc.monilog.moniLog.ExternalAppender;
 import org.gemoc.monilog.moniLog.ExternalLayout;
 import org.gemoc.monilog.moniLog.LanguageExpression;
+import org.gemoc.monilog.moniLog.LanguageValue;
 import org.gemoc.monilog.moniLog.Layout;
 import org.gemoc.monilog.moniLog.LayoutCall;
 import org.gemoc.monilog.moniLog.LocalAppender;
@@ -507,8 +509,8 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 					final List<MoniLoggerExecutableNode> actionNodes = new ArrayList<>();
 
 					conditionNodes.addAll(conditions.stream().map(condition -> {
-						final LanguageExpression expression = condition.getExpression();
-						return getExpressionNode(expression, node, languages);
+						final LanguageValue value = condition.getExpression();
+						return getExpressionNode(value, node, languages);
 					}).collect(Collectors.toList()));
 
 					final MoniLoggerConditionalNode conditionNode = new MoniLoggerConditionalNode(
@@ -516,9 +518,9 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 
 					actionNodes.addAll(actions.stream().map(action -> {
 						switch (action.eClass().getClassifierID()) {
-						case MoniLogPackage.LANGUAGE_EXPRESSION: {
-							final LanguageExpression languageExpression = (LanguageExpression) action;
-							return getExpressionNode(languageExpression, node, languages);
+						case MoniLogPackage.LANGUAGE_VALUE: {
+							final LanguageValue languageValue = (LanguageValue) action;
+							return getExpressionNode(languageValue, node, languages);
 						}
 						case MoniLogPackage.APPENDER_CALL:
 							return getAppenderExecutableNode(env, (AppenderCall) action, level, node, languages,
@@ -632,8 +634,8 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 		}
 	}
 
-	private List<LanguageExpression> computeLayoutCallActualArgs(LayoutCall childCall, LayoutCall parentCall,
-			Map<LayoutCall, List<LanguageExpression>> layoutCallToActualArgs) {
+	private List<LanguageValue> computeLayoutCallActualArgs(LayoutCall childCall, LayoutCall parentCall,
+			Map<LayoutCall, List<LanguageValue>> layoutCallToActualArgs) {
 		return childCall.getArgs().stream().map(a -> {
 			if (a instanceof ParameterReference) {
 				final Parameter param = ((ParameterReference) a).getParameter();
@@ -645,15 +647,15 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 							+ " not found in calling layout definition " + parentCall.getLayout().getName() + ".");
 				}
 			}
-			return (LanguageExpression) a;
+			return (LanguageValue) a;
 		}).collect(Collectors.toList());
 	}
 
 	private MoniLoggerExecutableNode getLayoutExecutableNode(Env env, LayoutCall layoutCall, Node node, Level level,
-			Set<String> languages, Map<LayoutCall, List<LanguageExpression>> layoutCallToActualArgs) {
-		if (layoutCall.getArgs().stream().allMatch(a -> a instanceof LanguageExpression)) {
+			Set<String> languages, Map<LayoutCall, List<LanguageValue>> layoutCallToActualArgs) {
+		if (layoutCall.getArgs().stream().allMatch(a -> a instanceof LanguageValue)) {
 			layoutCallToActualArgs.putIfAbsent(layoutCall,
-					layoutCall.getArgs().stream().map(a -> (LanguageExpression) a).collect(Collectors.toList()));
+					layoutCall.getArgs().stream().map(a -> (LanguageValue) a).collect(Collectors.toList()));
 		}
 		final Layout layout = layoutCall.getLayout();
 		switch (layout.eClass().getClassifierID()) {
@@ -697,8 +699,8 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 		case MoniLogPackage.LAYOUT_CALL:
 			return getLayoutExecutableNode(env, (LayoutCall) argument, node, level, languages,
 					/* TODO */ new HashMap<>());
-		case MoniLogPackage.LANGUAGE_EXPRESSION:
-			return getExpressionNode((LanguageExpression) argument, node, languages);
+		case MoniLogPackage.LANGUAGE_VALUE:
+			return getExpressionNode((LanguageValue) argument, node, languages);
 		default:
 			throw new UnsupportedOperationException();
 		}
@@ -706,15 +708,31 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 
 	private MoniLoggerExecutableNode getExpressionNode(Expression expression, Node node, Set<String> languages) {
 		switch (expression.eClass().getClassifierID()) {
-		case MoniLogPackage.LANGUAGE_EXPRESSION: {
-			final LanguageExpression languageExpression = (LanguageExpression) expression;
-			final String languageId = languageExpression.getLanguageId();
+		case MoniLogPackage.LANGUAGE_VALUE: {
+			final LanguageValue languageValue = (LanguageValue) expression;
+			final String languageId = languageValue.getLanguageId();
 			languages.add(languageId);
-			final String expressionString = languageExpression.getExpression();
+			return getLanguageValue(languageId, languageValue);
+		}
+		default:
+			throw new UnsupportedOperationException();
+		}
+	}
+	
+	private MoniLoggerExecutableNode getLanguageValue(String languageId, LanguageValue languageValue) {
+		final EObject value = languageValue.getValue();
+		switch (value.eClass().getClassifierID()) {
+		case MoniLogPackage.LANGUAGE_EXPRESSION: {
+			final LanguageExpression expression = (LanguageExpression) value;
+			final String expressionString = expression.getExpression();
 			final MoniLoggerExecutableNode callNode = new MoniLoggerCallSourceNode(Context.getCurrent(),
 					expressionToSource.computeIfAbsent(expressionString,
 							s -> org.graalvm.polyglot.Source.newBuilder(languageId, s, null).buildLiteral()));
 			return callNode;
+		}
+		case MoniLogPackage.LANGUAGE_CALL: {
+			// TODO
+			throw new UnsupportedOperationException();
 		}
 		default:
 			throw new UnsupportedOperationException();

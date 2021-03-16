@@ -38,9 +38,12 @@ import org.gemoc.monilog.moniLog.Existence;
 import org.gemoc.monilog.moniLog.Expression;
 import org.gemoc.monilog.moniLog.ExternalAppender;
 import org.gemoc.monilog.moniLog.ExternalLayout;
+import org.gemoc.monilog.moniLog.FileAlias;
 import org.gemoc.monilog.moniLog.Globally;
 import org.gemoc.monilog.moniLog.Import;
+import org.gemoc.monilog.moniLog.LanguageCall;
 import org.gemoc.monilog.moniLog.LanguageExpression;
+import org.gemoc.monilog.moniLog.LanguageValue;
 import org.gemoc.monilog.moniLog.Layout;
 import org.gemoc.monilog.moniLog.LayoutCall;
 import org.gemoc.monilog.moniLog.LocalAppender;
@@ -91,6 +94,13 @@ public class MoniLogPackageImpl extends EPackageImpl implements MoniLogPackage
    * @generated
    */
   private EClass importEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass fileAliasEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -314,7 +324,21 @@ public class MoniLogPackageImpl extends EPackageImpl implements MoniLogPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  private EClass languageValueEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   private EClass languageExpressionEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass languageCallEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -630,6 +654,50 @@ public class MoniLogPackageImpl extends EPackageImpl implements MoniLogPackage
   public EAttribute getImport_ImportedNamespace()
   {
     return (EAttribute)importEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getImport_FileURI()
+  {
+    return (EAttribute)importEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getImport_Alias()
+  {
+    return (EReference)importEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getFileAlias()
+  {
+    return fileAliasEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getFileAlias_Name()
+  {
+    return (EAttribute)fileAliasEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -1386,6 +1454,39 @@ public class MoniLogPackageImpl extends EPackageImpl implements MoniLogPackage
    * @generated
    */
   @Override
+  public EClass getLanguageValue()
+  {
+    return languageValueEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getLanguageValue_LanguageId()
+  {
+    return (EAttribute)languageValueEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getLanguageValue_Value()
+  {
+    return (EReference)languageValueEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EClass getLanguageExpression()
   {
     return languageExpressionEClass;
@@ -1397,7 +1498,7 @@ public class MoniLogPackageImpl extends EPackageImpl implements MoniLogPackage
    * @generated
    */
   @Override
-  public EAttribute getLanguageExpression_LanguageId()
+  public EAttribute getLanguageExpression_Expression()
   {
     return (EAttribute)languageExpressionEClass.getEStructuralFeatures().get(0);
   }
@@ -1408,9 +1509,42 @@ public class MoniLogPackageImpl extends EPackageImpl implements MoniLogPackage
    * @generated
    */
   @Override
-  public EAttribute getLanguageExpression_Expression()
+  public EClass getLanguageCall()
   {
-    return (EAttribute)languageExpressionEClass.getEStructuralFeatures().get(1);
+    return languageCallEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getLanguageCall_File()
+  {
+    return (EReference)languageCallEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getLanguageCall_Fqn()
+  {
+    return (EAttribute)languageCallEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getLanguageCall_Args()
+  {
+    return (EReference)languageCallEClass.getEStructuralFeatures().get(2);
   }
 
   /**
@@ -1905,6 +2039,11 @@ public class MoniLogPackageImpl extends EPackageImpl implements MoniLogPackage
 
     importEClass = createEClass(IMPORT);
     createEAttribute(importEClass, IMPORT__IMPORTED_NAMESPACE);
+    createEAttribute(importEClass, IMPORT__FILE_URI);
+    createEReference(importEClass, IMPORT__ALIAS);
+
+    fileAliasEClass = createEClass(FILE_ALIAS);
+    createEAttribute(fileAliasEClass, FILE_ALIAS__NAME);
 
     appenderEClass = createEClass(APPENDER);
     createEAttribute(appenderEClass, APPENDER__NAME);
@@ -2005,9 +2144,17 @@ public class MoniLogPackageImpl extends EPackageImpl implements MoniLogPackage
     createEAttribute(propertyValueEClass, PROPERTY_VALUE__ID);
     createEReference(propertyValueEClass, PROPERTY_VALUE__VALUE);
 
+    languageValueEClass = createEClass(LANGUAGE_VALUE);
+    createEAttribute(languageValueEClass, LANGUAGE_VALUE__LANGUAGE_ID);
+    createEReference(languageValueEClass, LANGUAGE_VALUE__VALUE);
+
     languageExpressionEClass = createEClass(LANGUAGE_EXPRESSION);
-    createEAttribute(languageExpressionEClass, LANGUAGE_EXPRESSION__LANGUAGE_ID);
     createEAttribute(languageExpressionEClass, LANGUAGE_EXPRESSION__EXPRESSION);
+
+    languageCallEClass = createEClass(LANGUAGE_CALL);
+    createEReference(languageCallEClass, LANGUAGE_CALL__FILE);
+    createEAttribute(languageCallEClass, LANGUAGE_CALL__FQN);
+    createEReference(languageCallEClass, LANGUAGE_CALL__ARGS);
 
     astEventEClass = createEClass(AST_EVENT);
     createEReference(astEventEClass, AST_EVENT__KIND);
@@ -2115,8 +2262,8 @@ public class MoniLogPackageImpl extends EPackageImpl implements MoniLogPackage
     expressionEClass.getESuperTypes().add(this.getCallArgument());
     parameterReferenceEClass.getESuperTypes().add(this.getExpression());
     propertyValueEClass.getESuperTypes().add(this.getEmptyOrPropertyValue());
-    languageExpressionEClass.getESuperTypes().add(this.getAction());
-    languageExpressionEClass.getESuperTypes().add(this.getExpression());
+    languageValueEClass.getESuperTypes().add(this.getAction());
+    languageValueEClass.getESuperTypes().add(this.getExpression());
     astEventEClass.getESuperTypes().add(this.getEvent());
     complexEventEClass.getESuperTypes().add(this.getEvent());
     userEventEClass.getESuperTypes().add(this.getEvent());
@@ -2147,6 +2294,11 @@ public class MoniLogPackageImpl extends EPackageImpl implements MoniLogPackage
 
     initEClass(importEClass, Import.class, "Import", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getImport_ImportedNamespace(), ecorePackage.getEString(), "importedNamespace", null, 0, 1, Import.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getImport_FileURI(), ecorePackage.getEString(), "fileURI", null, 0, 1, Import.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getImport_Alias(), this.getFileAlias(), null, "alias", null, 0, 1, Import.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(fileAliasEClass, FileAlias.class, "FileAlias", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getFileAlias_Name(), ecorePackage.getEString(), "name", null, 0, 1, FileAlias.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(appenderEClass, Appender.class, "Appender", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getAppender_Name(), ecorePackage.getEString(), "name", null, 0, 1, Appender.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2190,7 +2342,7 @@ public class MoniLogPackageImpl extends EPackageImpl implements MoniLogPackage
     initEClass(astEventKindEClass, ASTEventKind.class, "ASTEventKind", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(conditionEClass, Condition.class, "Condition", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEReference(getCondition_Expression(), this.getLanguageExpression(), null, "expression", null, 0, 1, Condition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getCondition_Expression(), this.getLanguageValue(), null, "expression", null, 0, 1, Condition.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(temporalPatternEClass, TemporalPattern.class, "TemporalPattern", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getTemporalPattern_Pattern(), this.getPattern(), null, "pattern", null, 0, 1, TemporalPattern.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2227,7 +2379,7 @@ public class MoniLogPackageImpl extends EPackageImpl implements MoniLogPackage
 
     initEClass(setVariableEClass, SetVariable.class, "SetVariable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getSetVariable_Variable(), ecorePackage.getEString(), "variable", null, 0, 1, SetVariable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getSetVariable_Value(), this.getLanguageExpression(), null, "value", null, 0, 1, SetVariable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getSetVariable_Value(), this.getLanguageValue(), null, "value", null, 0, 1, SetVariable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(moniloggerCallEClass, MoniloggerCall.class, "MoniloggerCall", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getMoniloggerCall_Monilogger(), this.getMoniLogger(), null, "monilogger", null, 0, 1, MoniloggerCall.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2247,9 +2399,17 @@ public class MoniLogPackageImpl extends EPackageImpl implements MoniLogPackage
     initEAttribute(getPropertyValue_Id(), ecorePackage.getEString(), "id", null, 0, 1, PropertyValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getPropertyValue_Value(), this.getExpression(), null, "value", null, 0, 1, PropertyValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
+    initEClass(languageValueEClass, LanguageValue.class, "LanguageValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getLanguageValue_LanguageId(), ecorePackage.getEString(), "languageId", null, 0, 1, LanguageValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getLanguageValue_Value(), ecorePackage.getEObject(), null, "value", null, 0, 1, LanguageValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
     initEClass(languageExpressionEClass, LanguageExpression.class, "LanguageExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getLanguageExpression_LanguageId(), ecorePackage.getEString(), "languageId", null, 0, 1, LanguageExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getLanguageExpression_Expression(), ecorePackage.getEString(), "expression", null, 0, 1, LanguageExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(languageCallEClass, LanguageCall.class, "LanguageCall", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getLanguageCall_File(), this.getFileAlias(), null, "file", null, 0, 1, LanguageCall.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getLanguageCall_Fqn(), ecorePackage.getEString(), "fqn", null, 0, 1, LanguageCall.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getLanguageCall_Args(), this.getExpression(), null, "args", null, 0, -1, LanguageCall.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(astEventEClass, ASTEvent.class, "ASTEvent", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getASTEvent_Kind(), this.getASTEventKind(), null, "kind", null, 0, 1, ASTEvent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);

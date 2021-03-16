@@ -5,6 +5,7 @@ grammar InternalMoniLog;
 
 options {
 	superClass=AbstractInternalAntlrParser;
+	backtrack=true;
 }
 
 @lexer::header {
@@ -27,12 +28,18 @@ import org.eclipse.emf.common.util.Enumerator;
 import org.eclipse.xtext.parser.antlr.AbstractInternalAntlrParser;
 import org.eclipse.xtext.parser.antlr.XtextTokenStream;
 import org.eclipse.xtext.parser.antlr.XtextTokenStream.HiddenTokens;
+import org.eclipse.xtext.parser.antlr.IUnorderedGroupHelper.UnorderedGroupState;
 import org.eclipse.xtext.parser.antlr.AntlrDatatypeRuleToken;
 import org.gemoc.monilog.services.MoniLogGrammarAccess;
 
 }
 
 @parser::members {
+
+/*
+  This grammar contains a lot of empty actions to work around a bug in ANTLR.
+  Otherwise the ANTLR tool will create synpreds that cannot be compiled in some rare cases.
+*/
 
  	private MoniLogGrammarAccess grammarAccess;
 
@@ -62,16 +69,26 @@ import org.gemoc.monilog.services.MoniLogGrammarAccess;
 }
 
 // Entry rule entryRuleDocument
-entryRuleDocument returns [EObject current=null]:
+entryRuleDocument returns [EObject current=null]@init {
+	UnorderedGroupState myUnorderedGroupState = getUnorderedGroupHelper().snapShot(
+	grammarAccess.getDocumentAccess().getUnorderedGroup_3()
+	);
+}:
 	{ newCompositeNode(grammarAccess.getDocumentRule()); }
 	iv_ruleDocument=ruleDocument
 	{ $current=$iv_ruleDocument.current; }
 	EOF;
+finally {
+	myUnorderedGroupState.restore();
+}
 
 // Rule Document
 ruleDocument returns [EObject current=null]
 @init {
 	enterRule();
+	UnorderedGroupState myUnorderedGroupState = getUnorderedGroupHelper().snapShot(
+	grammarAccess.getDocumentAccess().getUnorderedGroup_3()
+	);
 }
 @after {
 	leaveRule();
@@ -247,6 +264,9 @@ ruleDocument returns [EObject current=null]
 		)
 	)
 ;
+finally {
+	myUnorderedGroupState.restore();
+}
 
 // Entry rule entryRuleImport
 entryRuleImport returns [EObject current=null]:
@@ -264,28 +284,113 @@ ruleImport returns [EObject current=null]
 	leaveRule();
 }:
 	(
-		otherlv_0='import'
-		{
-			newLeafNode(otherlv_0, grammarAccess.getImportAccess().getImportKeyword_0());
-		}
 		(
+			otherlv_0='import'
+			{
+				newLeafNode(otherlv_0, grammarAccess.getImportAccess().getImportKeyword_0_0());
+			}
 			(
-				{
-					newCompositeNode(grammarAccess.getImportAccess().getImportedNamespaceQualifiedNameWithWildcardParserRuleCall_1_0());
-				}
-				lv_importedNamespace_1_0=ruleQualifiedNameWithWildcard
-				{
-					if ($current==null) {
-						$current = createModelElementForParent(grammarAccess.getImportRule());
+				(
+					{
+						newCompositeNode(grammarAccess.getImportAccess().getImportedNamespaceQualifiedNameWithWildcardParserRuleCall_0_1_0());
 					}
-					set(
-						$current,
-						"importedNamespace",
-						lv_importedNamespace_1_0,
-						"org.gemoc.monilog.MoniLog.QualifiedNameWithWildcard");
-					afterParserOrEnumRuleCall();
-				}
+					lv_importedNamespace_1_0=ruleQualifiedNameWithWildcard
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getImportRule());
+						}
+						set(
+							$current,
+							"importedNamespace",
+							lv_importedNamespace_1_0,
+							"org.gemoc.monilog.MoniLog.QualifiedNameWithWildcard");
+						afterParserOrEnumRuleCall();
+					}
+				)
 			)
+		)
+		    |
+		(
+			otherlv_2='import'
+			{
+				newLeafNode(otherlv_2, grammarAccess.getImportAccess().getImportKeyword_1_0());
+			}
+			(
+				(
+					lv_fileURI_3_0=RULE_STRING
+					{
+						newLeafNode(lv_fileURI_3_0, grammarAccess.getImportAccess().getFileURISTRINGTerminalRuleCall_1_1_0());
+					}
+					{
+						if ($current==null) {
+							$current = createModelElement(grammarAccess.getImportRule());
+						}
+						setWithLastConsumed(
+							$current,
+							"fileURI",
+							lv_fileURI_3_0,
+							"org.eclipse.xtext.common.Terminals.STRING");
+					}
+				)
+			)
+			otherlv_4='as'
+			{
+				newLeafNode(otherlv_4, grammarAccess.getImportAccess().getAsKeyword_1_2());
+			}
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getImportAccess().getAliasFileAliasParserRuleCall_1_3_0());
+					}
+					lv_alias_5_0=ruleFileAlias
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getImportRule());
+						}
+						set(
+							$current,
+							"alias",
+							lv_alias_5_0,
+							"org.gemoc.monilog.MoniLog.FileAlias");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+		)
+	)
+;
+
+// Entry rule entryRuleFileAlias
+entryRuleFileAlias returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getFileAliasRule()); }
+	iv_ruleFileAlias=ruleFileAlias
+	{ $current=$iv_ruleFileAlias.current; }
+	EOF;
+
+// Rule FileAlias
+ruleFileAlias returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			lv_name_0_0=RULE_ID
+			{
+				newLeafNode(lv_name_0_0, grammarAccess.getFileAliasAccess().getNameIDTerminalRuleCall_0());
+			}
+			{
+				if ($current==null) {
+					$current = createModelElement(grammarAccess.getFileAliasRule());
+				}
+				setWithLastConsumed(
+					$current,
+					"name",
+					lv_name_0_0,
+					"org.eclipse.xtext.common.Terminals.ID");
+			}
 		)
 	)
 ;
@@ -307,6 +412,9 @@ ruleAppender returns [EObject current=null]
 }:
 	(
 		{
+			/* */
+		}
+		{
 			newCompositeNode(grammarAccess.getAppenderAccess().getLocalAppenderParserRuleCall_0());
 		}
 		this_LocalAppender_0=ruleLocalAppender
@@ -315,6 +423,9 @@ ruleAppender returns [EObject current=null]
 			afterParserOrEnumRuleCall();
 		}
 		    |
+		{
+			/* */
+		}
 		{
 			newCompositeNode(grammarAccess.getAppenderAccess().getExternalAppenderParserRuleCall_1());
 		}
@@ -560,6 +671,9 @@ ruleLayout returns [EObject current=null]
 }:
 	(
 		{
+			/* */
+		}
+		{
 			newCompositeNode(grammarAccess.getLayoutAccess().getLocalLayoutParserRuleCall_0());
 		}
 		this_LocalLayout_0=ruleLocalLayout
@@ -568,6 +682,9 @@ ruleLayout returns [EObject current=null]
 			afterParserOrEnumRuleCall();
 		}
 		    |
+		{
+			/* */
+		}
 		{
 			newCompositeNode(grammarAccess.getLayoutAccess().getExternalLayoutParserRuleCall_1());
 		}
@@ -764,6 +881,9 @@ ruleParameterDeclVarArgs returns [EObject current=null]
 	(
 		(
 			{
+				/* */
+			}
+			{
 				$current = forceCreateModelElement(
 					grammarAccess.getParameterDeclVarArgsAccess().getParameterDeclAction_0(),
 					$current);
@@ -864,6 +984,9 @@ ruleParameterDeclNoVarArgs returns [EObject current=null]
 }:
 	(
 		(
+			{
+				/* */
+			}
 			{
 				$current = forceCreateModelElement(
 					grammarAccess.getParameterDeclNoVarArgsAccess().getParameterDeclAction_0(),
@@ -1248,6 +1371,9 @@ ruleEvent returns [EObject current=null]
 		(
 			(
 				{
+					/* */
+				}
+				{
 					$current = forceCreateModelElement(
 						grammarAccess.getEventAccess().getASTEventAction_0_0(),
 						$current);
@@ -1353,6 +1479,9 @@ ruleEvent returns [EObject current=null]
 		    |
 		(
 			(
+				{
+					/* */
+				}
 				{
 					$current = forceCreateModelElement(
 						grammarAccess.getEventAccess().getComplexEventAction_1_0(),
@@ -1471,6 +1600,9 @@ ruleEvent returns [EObject current=null]
 		(
 			(
 				{
+					/* */
+				}
+				{
 					$current = forceCreateModelElement(
 						grammarAccess.getEventAccess().getUserEventAction_2_0(),
 						$current);
@@ -1550,6 +1682,9 @@ ruleASTEventKind returns [EObject current=null]
 		(
 			(
 				{
+					/* */
+				}
+				{
 					$current = forceCreateModelElement(
 						grammarAccess.getASTEventKindAccess().getBeforeASTEventAction_0_0(),
 						$current);
@@ -1563,6 +1698,9 @@ ruleASTEventKind returns [EObject current=null]
 		    |
 		(
 			(
+				{
+					/* */
+				}
 				{
 					$current = forceCreateModelElement(
 						grammarAccess.getASTEventKindAccess().getAfterASTEventAction_1_0(),
@@ -1595,9 +1733,9 @@ ruleCondition returns [EObject current=null]
 	(
 		(
 			{
-				newCompositeNode(grammarAccess.getConditionAccess().getExpressionLanguageExpressionParserRuleCall_0());
+				newCompositeNode(grammarAccess.getConditionAccess().getExpressionLanguageValueParserRuleCall_0());
 			}
-			lv_expression_0_0=ruleLanguageExpression
+			lv_expression_0_0=ruleLanguageValue
 			{
 				if ($current==null) {
 					$current = createModelElementForParent(grammarAccess.getConditionRule());
@@ -1606,7 +1744,7 @@ ruleCondition returns [EObject current=null]
 					$current,
 					"expression",
 					lv_expression_0_0,
-					"org.gemoc.monilog.MoniLog.LanguageExpression");
+					"org.gemoc.monilog.MoniLog.LanguageValue");
 				afterParserOrEnumRuleCall();
 			}
 		)
@@ -1689,6 +1827,9 @@ rulePattern returns [EObject current=null]
 		(
 			(
 				{
+					/* */
+				}
+				{
 					$current = forceCreateModelElement(
 						grammarAccess.getPatternAccess().getExistenceAction_0_0(),
 						$current);
@@ -1743,6 +1884,9 @@ rulePattern returns [EObject current=null]
 		(
 			(
 				{
+					/* */
+				}
+				{
 					$current = forceCreateModelElement(
 						grammarAccess.getPatternAccess().getUniversalityAction_1_0(),
 						$current);
@@ -1776,6 +1920,9 @@ rulePattern returns [EObject current=null]
 		(
 			(
 				{
+					/* */
+				}
+				{
 					$current = forceCreateModelElement(
 						grammarAccess.getPatternAccess().getAbsenceAction_2_0(),
 						$current);
@@ -1808,6 +1955,9 @@ rulePattern returns [EObject current=null]
 		    |
 		(
 			(
+				{
+					/* */
+				}
 				{
 					$current = forceCreateModelElement(
 						grammarAccess.getPatternAccess().getPrecedenceAction_3_0(),
@@ -1860,6 +2010,9 @@ rulePattern returns [EObject current=null]
 		    |
 		(
 			(
+				{
+					/* */
+				}
 				{
 					$current = forceCreateModelElement(
 						grammarAccess.getPatternAccess().getResponseAction_4_0(),
@@ -1929,6 +2082,9 @@ ruleBoundType returns [EObject current=null]
 }:
 	(
 		{
+			/* */
+		}
+		{
 			newCompositeNode(grammarAccess.getBoundTypeAccess().getExactBoundParserRuleCall_0());
 		}
 		this_ExactBound_0=ruleExactBound
@@ -1938,6 +2094,9 @@ ruleBoundType returns [EObject current=null]
 		}
 		    |
 		{
+			/* */
+		}
+		{
 			newCompositeNode(grammarAccess.getBoundTypeAccess().getLowerBoundParserRuleCall_1());
 		}
 		this_LowerBound_1=ruleLowerBound
@@ -1946,6 +2105,9 @@ ruleBoundType returns [EObject current=null]
 			afterParserOrEnumRuleCall();
 		}
 		    |
+		{
+			/* */
+		}
 		{
 			newCompositeNode(grammarAccess.getBoundTypeAccess().getUpperBoundParserRuleCall_2());
 		}
@@ -2093,6 +2255,9 @@ ruleScope returns [EObject current=null]
 		(
 			(
 				{
+					/* */
+				}
+				{
 					$current = forceCreateModelElement(
 						grammarAccess.getScopeAccess().getGloballyAction_0_0(),
 						$current);
@@ -2108,6 +2273,9 @@ ruleScope returns [EObject current=null]
 		    |
 		(
 			(
+				{
+					/* */
+				}
 				{
 					$current = forceCreateModelElement(
 						grammarAccess.getScopeAccess().getAfterAction_1_0(),
@@ -2142,6 +2310,9 @@ ruleScope returns [EObject current=null]
 		(
 			(
 				{
+					/* */
+				}
+				{
 					$current = forceCreateModelElement(
 						grammarAccess.getScopeAccess().getBeforeAction_2_0(),
 						$current);
@@ -2174,6 +2345,9 @@ ruleScope returns [EObject current=null]
 		    |
 		(
 			(
+				{
+					/* */
+				}
 				{
 					$current = forceCreateModelElement(
 						grammarAccess.getScopeAccess().getBetweenAction_3_0(),
@@ -2230,6 +2404,9 @@ ruleScope returns [EObject current=null]
 		    |
 		(
 			(
+				{
+					/* */
+				}
 				{
 					$current = forceCreateModelElement(
 						grammarAccess.getScopeAccess().getAfterUntilAction_4_0(),
@@ -2303,14 +2480,20 @@ ruleAction returns [EObject current=null]
 }:
 	(
 		{
-			newCompositeNode(grammarAccess.getActionAccess().getLanguageExpressionParserRuleCall_0());
+			/* */
 		}
-		this_LanguageExpression_0=ruleLanguageExpression
 		{
-			$current = $this_LanguageExpression_0.current;
+			newCompositeNode(grammarAccess.getActionAccess().getLanguageValueParserRuleCall_0());
+		}
+		this_LanguageValue_0=ruleLanguageValue
+		{
+			$current = $this_LanguageValue_0.current;
 			afterParserOrEnumRuleCall();
 		}
 		    |
+		{
+			/* */
+		}
 		{
 			newCompositeNode(grammarAccess.getActionAccess().getAppenderCallParserRuleCall_1());
 		}
@@ -2321,6 +2504,9 @@ ruleAction returns [EObject current=null]
 		}
 		    |
 		{
+			/* */
+		}
+		{
 			newCompositeNode(grammarAccess.getActionAccess().getEmitEventParserRuleCall_2());
 		}
 		this_EmitEvent_2=ruleEmitEvent
@@ -2330,6 +2516,9 @@ ruleAction returns [EObject current=null]
 		}
 		    |
 		{
+			/* */
+		}
+		{
 			newCompositeNode(grammarAccess.getActionAccess().getSetVariableParserRuleCall_3());
 		}
 		this_SetVariable_3=ruleSetVariable
@@ -2338,6 +2527,9 @@ ruleAction returns [EObject current=null]
 			afterParserOrEnumRuleCall();
 		}
 		    |
+		{
+			/* */
+		}
 		{
 			newCompositeNode(grammarAccess.getActionAccess().getMoniloggerCallParserRuleCall_4());
 		}
@@ -2367,6 +2559,9 @@ ruleAppenderCall returns [EObject current=null]
 	(
 		(
 			(
+				{
+					/* */
+				}
 				{
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getAppenderCallRule());
@@ -2463,6 +2658,9 @@ ruleAppenderCallArgument returns [EObject current=null]
 }:
 	(
 		{
+			/* */
+		}
+		{
 			newCompositeNode(grammarAccess.getAppenderCallArgumentAccess().getExpressionParserRuleCall_0());
 		}
 		this_Expression_0=ruleExpression
@@ -2471,6 +2669,9 @@ ruleAppenderCallArgument returns [EObject current=null]
 			afterParserOrEnumRuleCall();
 		}
 		    |
+		{
+			/* */
+		}
 		{
 			newCompositeNode(grammarAccess.getAppenderCallArgumentAccess().getLayoutCallParserRuleCall_1());
 		}
@@ -2500,6 +2701,9 @@ ruleLayoutCall returns [EObject current=null]
 	(
 		(
 			(
+				{
+					/* */
+				}
 				{
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getLayoutCallRule());
@@ -2595,6 +2799,9 @@ ruleLayoutCallArgument returns [EObject current=null]
 	leaveRule();
 }:
 	{
+		/* */
+	}
+	{
 		newCompositeNode(grammarAccess.getLayoutCallArgumentAccess().getExpressionParserRuleCall());
 	}
 	this_Expression_0=ruleExpression
@@ -2622,6 +2829,9 @@ ruleEmitEvent returns [EObject current=null]
 	(
 		(
 			(
+				{
+					/* */
+				}
 				{
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getEmitEventRule());
@@ -2747,9 +2957,9 @@ ruleSetVariable returns [EObject current=null]
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getSetVariableAccess().getValueLanguageExpressionParserRuleCall_4_0());
+					newCompositeNode(grammarAccess.getSetVariableAccess().getValueLanguageValueParserRuleCall_4_0());
 				}
-				lv_value_4_0=ruleLanguageExpression
+				lv_value_4_0=ruleLanguageValue
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getSetVariableRule());
@@ -2758,7 +2968,7 @@ ruleSetVariable returns [EObject current=null]
 						$current,
 						"value",
 						lv_value_4_0,
-						"org.gemoc.monilog.MoniLog.LanguageExpression");
+						"org.gemoc.monilog.MoniLog.LanguageValue");
 					afterParserOrEnumRuleCall();
 				}
 			)
@@ -2789,6 +2999,9 @@ ruleMoniloggerCall returns [EObject current=null]
 		(
 			(
 				{
+					/* */
+				}
+				{
 					$current = forceCreateModelElement(
 						grammarAccess.getMoniloggerCallAccess().getStartMoniLoggerAction_0_0(),
 						$current);
@@ -2796,6 +3009,9 @@ ruleMoniloggerCall returns [EObject current=null]
 			)
 			(
 				(
+					{
+						/* */
+					}
 					{
 						if ($current==null) {
 							$current = createModelElement(grammarAccess.getMoniloggerCallRule());
@@ -2874,6 +3090,9 @@ ruleMoniloggerCall returns [EObject current=null]
 		(
 			(
 				{
+					/* */
+				}
+				{
 					$current = forceCreateModelElement(
 						grammarAccess.getMoniloggerCallAccess().getStopMoniLoggerAction_1_0(),
 						$current);
@@ -2881,6 +3100,9 @@ ruleMoniloggerCall returns [EObject current=null]
 			)
 			(
 				(
+					{
+						/* */
+					}
 					{
 						if ($current==null) {
 							$current = createModelElement(grammarAccess.getMoniloggerCallRule());
@@ -2922,6 +3144,9 @@ ruleStreamEvent returns [EObject current=null]
 	(
 		(
 			(
+				{
+					/* */
+				}
 				{
 					if ($current==null) {
 						$current = createModelElement(grammarAccess.getStreamEventRule());
@@ -3008,12 +3233,18 @@ ruleEmptyOrPropertyValue returns [EObject current=null]
 	(
 		(
 			{
+				/* */
+			}
+			{
 				$current = forceCreateModelElement(
 					grammarAccess.getEmptyOrPropertyValueAccess().getEmptyAction_0(),
 					$current);
 			}
 		)
 		    |
+		{
+			/* */
+		}
 		{
 			newCompositeNode(grammarAccess.getEmptyOrPropertyValueAccess().getPropertyValueParserRuleCall_1());
 		}
@@ -3042,6 +3273,9 @@ ruleExpression returns [EObject current=null]
 }:
 	(
 		{
+			/* */
+		}
+		{
 			newCompositeNode(grammarAccess.getExpressionAccess().getParameterReferenceParserRuleCall_0());
 		}
 		this_ParameterReference_0=ruleParameterReference
@@ -3051,11 +3285,14 @@ ruleExpression returns [EObject current=null]
 		}
 		    |
 		{
-			newCompositeNode(grammarAccess.getExpressionAccess().getLanguageExpressionParserRuleCall_1());
+			/* */
 		}
-		this_LanguageExpression_1=ruleLanguageExpression
 		{
-			$current = $this_LanguageExpression_1.current;
+			newCompositeNode(grammarAccess.getExpressionAccess().getLanguageValueParserRuleCall_1());
+		}
+		this_LanguageValue_1=ruleLanguageValue
+		{
+			$current = $this_LanguageValue_1.current;
 			afterParserOrEnumRuleCall();
 		}
 	)
@@ -3078,6 +3315,9 @@ ruleParameterReference returns [EObject current=null]
 }:
 	(
 		(
+			{
+				/* */
+			}
 			{
 				if ($current==null) {
 					$current = createModelElement(grammarAccess.getParameterReferenceRule());
@@ -3156,9 +3396,9 @@ rulePropertyValue returns [EObject current=null]
 		(
 			(
 				{
-					newCompositeNode(grammarAccess.getPropertyValueAccess().getValueLanguageExpressionParserRuleCall_1_0());
+					newCompositeNode(grammarAccess.getPropertyValueAccess().getValueLanguageValueParserRuleCall_1_0());
 				}
-				lv_value_3_0=ruleLanguageExpression
+				lv_value_3_0=ruleLanguageValue
 				{
 					if ($current==null) {
 						$current = createModelElementForParent(grammarAccess.getPropertyValueRule());
@@ -3167,11 +3407,93 @@ rulePropertyValue returns [EObject current=null]
 						$current,
 						"value",
 						lv_value_3_0,
-						"org.gemoc.monilog.MoniLog.LanguageExpression");
+						"org.gemoc.monilog.MoniLog.LanguageValue");
 					afterParserOrEnumRuleCall();
 				}
 			)
 		)
+	)
+;
+
+// Entry rule entryRuleLanguageValue
+entryRuleLanguageValue returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getLanguageValueRule()); }
+	iv_ruleLanguageValue=ruleLanguageValue
+	{ $current=$iv_ruleLanguageValue.current; }
+	EOF;
+
+// Rule LanguageValue
+ruleLanguageValue returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
+			(
+				lv_languageId_0_0=RULE_ID
+				{
+					newLeafNode(lv_languageId_0_0, grammarAccess.getLanguageValueAccess().getLanguageIdIDTerminalRuleCall_0_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getLanguageValueRule());
+					}
+					setWithLastConsumed(
+						$current,
+						"languageId",
+						lv_languageId_0_0,
+						"org.eclipse.xtext.common.Terminals.ID");
+				}
+			)
+		)
+		otherlv_1='('
+		{
+			newLeafNode(otherlv_1, grammarAccess.getLanguageValueAccess().getLeftParenthesisKeyword_1());
+		}
+		(
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getLanguageValueAccess().getValueLanguageExpressionParserRuleCall_2_0_0());
+					}
+					lv_value_2_1=ruleLanguageExpression
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getLanguageValueRule());
+						}
+						set(
+							$current,
+							"value",
+							lv_value_2_1,
+							"org.gemoc.monilog.MoniLog.LanguageExpression");
+						afterParserOrEnumRuleCall();
+					}
+					    |
+					{
+						newCompositeNode(grammarAccess.getLanguageValueAccess().getValueLanguageCallParserRuleCall_2_0_1());
+					}
+					lv_value_2_2=ruleLanguageCall
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getLanguageValueRule());
+						}
+						set(
+							$current,
+							"value",
+							lv_value_2_2,
+							"org.gemoc.monilog.MoniLog.LanguageCall");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+		)
+		otherlv_3=')'
+		{
+			newLeafNode(otherlv_3, grammarAccess.getLanguageValueAccess().getRightParenthesisKeyword_3());
+		}
 	)
 ;
 
@@ -3192,49 +3514,133 @@ ruleLanguageExpression returns [EObject current=null]
 }:
 	(
 		(
+			lv_expression_0_0=RULE_STRING
+			{
+				newLeafNode(lv_expression_0_0, grammarAccess.getLanguageExpressionAccess().getExpressionSTRINGTerminalRuleCall_0());
+			}
+			{
+				if ($current==null) {
+					$current = createModelElement(grammarAccess.getLanguageExpressionRule());
+				}
+				setWithLastConsumed(
+					$current,
+					"expression",
+					lv_expression_0_0,
+					"org.eclipse.xtext.common.Terminals.STRING");
+			}
+		)
+	)
+;
+
+// Entry rule entryRuleLanguageCall
+entryRuleLanguageCall returns [EObject current=null]:
+	{ newCompositeNode(grammarAccess.getLanguageCallRule()); }
+	iv_ruleLanguageCall=ruleLanguageCall
+	{ $current=$iv_ruleLanguageCall.current; }
+	EOF;
+
+// Rule LanguageCall
+ruleLanguageCall returns [EObject current=null]
+@init {
+	enterRule();
+}
+@after {
+	leaveRule();
+}:
+	(
+		(
 			(
-				lv_languageId_0_0=RULE_ID
 				{
-					newLeafNode(lv_languageId_0_0, grammarAccess.getLanguageExpressionAccess().getLanguageIdIDTerminalRuleCall_0_0());
+					/* */
 				}
 				{
 					if ($current==null) {
-						$current = createModelElement(grammarAccess.getLanguageExpressionRule());
+						$current = createModelElement(grammarAccess.getLanguageCallRule());
 					}
-					setWithLastConsumed(
-						$current,
-						"languageId",
-						lv_languageId_0_0,
-						"org.eclipse.xtext.common.Terminals.ID");
+				}
+				otherlv_0=RULE_ID
+				{
+					newLeafNode(otherlv_0, grammarAccess.getLanguageCallAccess().getFileFileAliasCrossReference_0_0());
 				}
 			)
 		)
-		otherlv_1='('
+		otherlv_1='.'
 		{
-			newLeafNode(otherlv_1, grammarAccess.getLanguageExpressionAccess().getLeftParenthesisKeyword_1());
+			newLeafNode(otherlv_1, grammarAccess.getLanguageCallAccess().getFullStopKeyword_1());
 		}
 		(
 			(
-				lv_expression_2_0=RULE_STRING
 				{
-					newLeafNode(lv_expression_2_0, grammarAccess.getLanguageExpressionAccess().getExpressionSTRINGTerminalRuleCall_2_0());
+					newCompositeNode(grammarAccess.getLanguageCallAccess().getFqnQualifiedNameParserRuleCall_2_0());
 				}
+				lv_fqn_2_0=ruleQualifiedName
 				{
 					if ($current==null) {
-						$current = createModelElement(grammarAccess.getLanguageExpressionRule());
+						$current = createModelElementForParent(grammarAccess.getLanguageCallRule());
 					}
-					setWithLastConsumed(
+					set(
 						$current,
-						"expression",
-						lv_expression_2_0,
-						"org.eclipse.xtext.common.Terminals.STRING");
+						"fqn",
+						lv_fqn_2_0,
+						"org.gemoc.monilog.MoniLog.QualifiedName");
+					afterParserOrEnumRuleCall();
 				}
 			)
 		)
-		otherlv_3=')'
-		{
-			newLeafNode(otherlv_3, grammarAccess.getLanguageExpressionAccess().getRightParenthesisKeyword_3());
-		}
+		(
+			otherlv_3='('
+			{
+				newLeafNode(otherlv_3, grammarAccess.getLanguageCallAccess().getLeftParenthesisKeyword_3_0());
+			}
+			(
+				(
+					{
+						newCompositeNode(grammarAccess.getLanguageCallAccess().getArgsExpressionParserRuleCall_3_1_0());
+					}
+					lv_args_4_0=ruleExpression
+					{
+						if ($current==null) {
+							$current = createModelElementForParent(grammarAccess.getLanguageCallRule());
+						}
+						add(
+							$current,
+							"args",
+							lv_args_4_0,
+							"org.gemoc.monilog.MoniLog.Expression");
+						afterParserOrEnumRuleCall();
+					}
+				)
+			)
+			(
+				otherlv_5=','
+				{
+					newLeafNode(otherlv_5, grammarAccess.getLanguageCallAccess().getCommaKeyword_3_2_0());
+				}
+				(
+					(
+						{
+							newCompositeNode(grammarAccess.getLanguageCallAccess().getArgsExpressionParserRuleCall_3_2_1_0());
+						}
+						lv_args_6_0=ruleExpression
+						{
+							if ($current==null) {
+								$current = createModelElementForParent(grammarAccess.getLanguageCallRule());
+							}
+							add(
+								$current,
+								"args",
+								lv_args_6_0,
+								"org.gemoc.monilog.MoniLog.Expression");
+							afterParserOrEnumRuleCall();
+						}
+					)
+				)
+			)*
+			otherlv_7=')'
+			{
+				newLeafNode(otherlv_7, grammarAccess.getLanguageCallAccess().getRightParenthesisKeyword_3_3());
+			}
+		)?
 	)
 ;
 

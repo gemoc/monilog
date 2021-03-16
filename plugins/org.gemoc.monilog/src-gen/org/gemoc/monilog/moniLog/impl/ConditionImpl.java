@@ -13,7 +13,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
 import org.gemoc.monilog.moniLog.Condition;
-import org.gemoc.monilog.moniLog.LanguageExpression;
+import org.gemoc.monilog.moniLog.LanguageValue;
 import org.gemoc.monilog.moniLog.MoniLogPackage;
 
 /**
@@ -39,7 +39,7 @@ public class ConditionImpl extends MinimalEObjectImpl.Container implements Condi
    * @generated
    * @ordered
    */
-  protected LanguageExpression expression;
+  protected LanguageValue expression;
 
   /**
    * <!-- begin-user-doc -->
@@ -68,7 +68,7 @@ public class ConditionImpl extends MinimalEObjectImpl.Container implements Condi
    * @generated
    */
   @Override
-  public LanguageExpression getExpression()
+  public LanguageValue getExpression()
   {
     return expression;
   }
@@ -78,9 +78,9 @@ public class ConditionImpl extends MinimalEObjectImpl.Container implements Condi
    * <!-- end-user-doc -->
    * @generated
    */
-  public NotificationChain basicSetExpression(LanguageExpression newExpression, NotificationChain msgs)
+  public NotificationChain basicSetExpression(LanguageValue newExpression, NotificationChain msgs)
   {
-    LanguageExpression oldExpression = expression;
+    LanguageValue oldExpression = expression;
     expression = newExpression;
     if (eNotificationRequired())
     {
@@ -96,7 +96,7 @@ public class ConditionImpl extends MinimalEObjectImpl.Container implements Condi
    * @generated
    */
   @Override
-  public void setExpression(LanguageExpression newExpression)
+  public void setExpression(LanguageValue newExpression)
   {
     if (newExpression != expression)
     {
@@ -155,7 +155,7 @@ public class ConditionImpl extends MinimalEObjectImpl.Container implements Condi
     switch (featureID)
     {
       case MoniLogPackage.CONDITION__EXPRESSION:
-        setExpression((LanguageExpression)newValue);
+        setExpression((LanguageValue)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -172,7 +172,7 @@ public class ConditionImpl extends MinimalEObjectImpl.Container implements Condi
     switch (featureID)
     {
       case MoniLogPackage.CONDITION__EXPRESSION:
-        setExpression((LanguageExpression)null);
+        setExpression((LanguageValue)null);
         return;
     }
     super.eUnset(featureID);

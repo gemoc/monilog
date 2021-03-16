@@ -99,26 +99,73 @@ public class MoniLogGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	public class ImportElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.gemoc.monilog.MoniLog.Import");
-		private final Group cGroup = (Group)rule.eContents().get(1);
-		private final Keyword cImportKeyword_0 = (Keyword)cGroup.eContents().get(0);
-		private final Assignment cImportedNamespaceAssignment_1 = (Assignment)cGroup.eContents().get(1);
-		private final RuleCall cImportedNamespaceQualifiedNameWithWildcardParserRuleCall_1_0 = (RuleCall)cImportedNamespaceAssignment_1.eContents().get(0);
+		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
+		private final Group cGroup_0 = (Group)cAlternatives.eContents().get(0);
+		private final Keyword cImportKeyword_0_0 = (Keyword)cGroup_0.eContents().get(0);
+		private final Assignment cImportedNamespaceAssignment_0_1 = (Assignment)cGroup_0.eContents().get(1);
+		private final RuleCall cImportedNamespaceQualifiedNameWithWildcardParserRuleCall_0_1_0 = (RuleCall)cImportedNamespaceAssignment_0_1.eContents().get(0);
+		private final Group cGroup_1 = (Group)cAlternatives.eContents().get(1);
+		private final Keyword cImportKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
+		private final Assignment cFileURIAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final RuleCall cFileURISTRINGTerminalRuleCall_1_1_0 = (RuleCall)cFileURIAssignment_1_1.eContents().get(0);
+		private final Keyword cAsKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
+		private final Assignment cAliasAssignment_1_3 = (Assignment)cGroup_1.eContents().get(3);
+		private final RuleCall cAliasFileAliasParserRuleCall_1_3_0 = (RuleCall)cAliasAssignment_1_3.eContents().get(0);
 		
 		//Import:
-		//	'import' importedNamespace=QualifiedNameWithWildcard;
+		//	'import' importedNamespace=QualifiedNameWithWildcard | 'import' fileURI=STRING 'as' alias=FileAlias;
 		@Override public ParserRule getRule() { return rule; }
 		
+		//'import' importedNamespace=QualifiedNameWithWildcard | 'import' fileURI=STRING 'as' alias=FileAlias
+		public Alternatives getAlternatives() { return cAlternatives; }
+		
 		//'import' importedNamespace=QualifiedNameWithWildcard
-		public Group getGroup() { return cGroup; }
+		public Group getGroup_0() { return cGroup_0; }
 		
 		//'import'
-		public Keyword getImportKeyword_0() { return cImportKeyword_0; }
+		public Keyword getImportKeyword_0_0() { return cImportKeyword_0_0; }
 		
 		//importedNamespace=QualifiedNameWithWildcard
-		public Assignment getImportedNamespaceAssignment_1() { return cImportedNamespaceAssignment_1; }
+		public Assignment getImportedNamespaceAssignment_0_1() { return cImportedNamespaceAssignment_0_1; }
 		
 		//QualifiedNameWithWildcard
-		public RuleCall getImportedNamespaceQualifiedNameWithWildcardParserRuleCall_1_0() { return cImportedNamespaceQualifiedNameWithWildcardParserRuleCall_1_0; }
+		public RuleCall getImportedNamespaceQualifiedNameWithWildcardParserRuleCall_0_1_0() { return cImportedNamespaceQualifiedNameWithWildcardParserRuleCall_0_1_0; }
+		
+		//'import' fileURI=STRING 'as' alias=FileAlias
+		public Group getGroup_1() { return cGroup_1; }
+		
+		//'import'
+		public Keyword getImportKeyword_1_0() { return cImportKeyword_1_0; }
+		
+		//fileURI=STRING
+		public Assignment getFileURIAssignment_1_1() { return cFileURIAssignment_1_1; }
+		
+		//STRING
+		public RuleCall getFileURISTRINGTerminalRuleCall_1_1_0() { return cFileURISTRINGTerminalRuleCall_1_1_0; }
+		
+		//'as'
+		public Keyword getAsKeyword_1_2() { return cAsKeyword_1_2; }
+		
+		//alias=FileAlias
+		public Assignment getAliasAssignment_1_3() { return cAliasAssignment_1_3; }
+		
+		//FileAlias
+		public RuleCall getAliasFileAliasParserRuleCall_1_3_0() { return cAliasFileAliasParserRuleCall_1_3_0; }
+	}
+	public class FileAliasElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.gemoc.monilog.MoniLog.FileAlias");
+		private final Assignment cNameAssignment = (Assignment)rule.eContents().get(1);
+		private final RuleCall cNameIDTerminalRuleCall_0 = (RuleCall)cNameAssignment.eContents().get(0);
+		
+		//FileAlias:
+		//	name=ID;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//name=ID
+		public Assignment getNameAssignment() { return cNameAssignment; }
+		
+		//ID
+		public RuleCall getNameIDTerminalRuleCall_0() { return cNameIDTerminalRuleCall_0; }
 	}
 	public class AppenderElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.gemoc.monilog.MoniLog.Appender");
@@ -941,17 +988,17 @@ public class MoniLogGrammarAccess extends AbstractGrammarElementFinder {
 	public class ConditionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.gemoc.monilog.MoniLog.Condition");
 		private final Assignment cExpressionAssignment = (Assignment)rule.eContents().get(1);
-		private final RuleCall cExpressionLanguageExpressionParserRuleCall_0 = (RuleCall)cExpressionAssignment.eContents().get(0);
+		private final RuleCall cExpressionLanguageValueParserRuleCall_0 = (RuleCall)cExpressionAssignment.eContents().get(0);
 		
 		//Condition:
-		//	expression=LanguageExpression;
+		//	expression=LanguageValue;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//expression=LanguageExpression
+		//expression=LanguageValue
 		public Assignment getExpressionAssignment() { return cExpressionAssignment; }
 		
-		//LanguageExpression
-		public RuleCall getExpressionLanguageExpressionParserRuleCall_0() { return cExpressionLanguageExpressionParserRuleCall_0; }
+		//LanguageValue
+		public RuleCall getExpressionLanguageValueParserRuleCall_0() { return cExpressionLanguageValueParserRuleCall_0; }
 	}
 	public class TemporalPatternElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.gemoc.monilog.MoniLog.TemporalPattern");
@@ -1337,21 +1384,21 @@ public class MoniLogGrammarAccess extends AbstractGrammarElementFinder {
 	public class ActionElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.gemoc.monilog.MoniLog.Action");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
-		private final RuleCall cLanguageExpressionParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
+		private final RuleCall cLanguageValueParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
 		private final RuleCall cAppenderCallParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		private final RuleCall cEmitEventParserRuleCall_2 = (RuleCall)cAlternatives.eContents().get(2);
 		private final RuleCall cSetVariableParserRuleCall_3 = (RuleCall)cAlternatives.eContents().get(3);
 		private final RuleCall cMoniloggerCallParserRuleCall_4 = (RuleCall)cAlternatives.eContents().get(4);
 		
 		//Action:
-		//	LanguageExpression | AppenderCall | EmitEvent | SetVariable | MoniloggerCall;
+		//	LanguageValue | AppenderCall | EmitEvent | SetVariable | MoniloggerCall;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//LanguageExpression | AppenderCall | EmitEvent | SetVariable | MoniloggerCall
+		//LanguageValue | AppenderCall | EmitEvent | SetVariable | MoniloggerCall
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
-		//LanguageExpression
-		public RuleCall getLanguageExpressionParserRuleCall_0() { return cLanguageExpressionParserRuleCall_0; }
+		//LanguageValue
+		public RuleCall getLanguageValueParserRuleCall_0() { return cLanguageValueParserRuleCall_0; }
 		
 		//AppenderCall
 		public RuleCall getAppenderCallParserRuleCall_1() { return cAppenderCallParserRuleCall_1; }
@@ -1605,14 +1652,14 @@ public class MoniLogGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cVariableSTRINGTerminalRuleCall_2_0 = (RuleCall)cVariableAssignment_2.eContents().get(0);
 		private final Keyword cCommaKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		private final Assignment cValueAssignment_4 = (Assignment)cGroup.eContents().get(4);
-		private final RuleCall cValueLanguageExpressionParserRuleCall_4_0 = (RuleCall)cValueAssignment_4.eContents().get(0);
+		private final RuleCall cValueLanguageValueParserRuleCall_4_0 = (RuleCall)cValueAssignment_4.eContents().get(0);
 		private final Keyword cRightParenthesisKeyword_5 = (Keyword)cGroup.eContents().get(5);
 		
 		//SetVariable:
-		//	'set' '(' variable=STRING ',' value=LanguageExpression ')';
+		//	'set' '(' variable=STRING ',' value=LanguageValue ')';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'set' '(' variable=STRING ',' value=LanguageExpression ')'
+		//'set' '(' variable=STRING ',' value=LanguageValue ')'
 		public Group getGroup() { return cGroup; }
 		
 		//'set'
@@ -1630,11 +1677,11 @@ public class MoniLogGrammarAccess extends AbstractGrammarElementFinder {
 		//','
 		public Keyword getCommaKeyword_3() { return cCommaKeyword_3; }
 		
-		//value=LanguageExpression
+		//value=LanguageValue
 		public Assignment getValueAssignment_4() { return cValueAssignment_4; }
 		
-		//LanguageExpression
-		public RuleCall getValueLanguageExpressionParserRuleCall_4_0() { return cValueLanguageExpressionParserRuleCall_4_0; }
+		//LanguageValue
+		public RuleCall getValueLanguageValueParserRuleCall_4_0() { return cValueLanguageValueParserRuleCall_4_0; }
 		
 		//')'
 		public Keyword getRightParenthesisKeyword_5() { return cRightParenthesisKeyword_5; }
@@ -1826,20 +1873,20 @@ public class MoniLogGrammarAccess extends AbstractGrammarElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.gemoc.monilog.MoniLog.Expression");
 		private final Alternatives cAlternatives = (Alternatives)rule.eContents().get(1);
 		private final RuleCall cParameterReferenceParserRuleCall_0 = (RuleCall)cAlternatives.eContents().get(0);
-		private final RuleCall cLanguageExpressionParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
+		private final RuleCall cLanguageValueParserRuleCall_1 = (RuleCall)cAlternatives.eContents().get(1);
 		
 		//Expression:
-		//	ParameterReference | LanguageExpression;
+		//	ParameterReference | LanguageValue;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//ParameterReference | LanguageExpression
+		//ParameterReference | LanguageValue
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//ParameterReference
 		public RuleCall getParameterReferenceParserRuleCall_0() { return cParameterReferenceParserRuleCall_0; }
 		
-		//LanguageExpression
-		public RuleCall getLanguageExpressionParserRuleCall_1() { return cLanguageExpressionParserRuleCall_1; }
+		//LanguageValue
+		public RuleCall getLanguageValueParserRuleCall_1() { return cLanguageValueParserRuleCall_1; }
 	}
 	public class ParameterReferenceElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.gemoc.monilog.MoniLog.ParameterReference");
@@ -1871,13 +1918,13 @@ public class MoniLogGrammarAccess extends AbstractGrammarElementFinder {
 		private final Assignment cValueAssignment_0_1_1 = (Assignment)cGroup_0_1.eContents().get(1);
 		private final RuleCall cValueExpressionParserRuleCall_0_1_1_0 = (RuleCall)cValueAssignment_0_1_1.eContents().get(0);
 		private final Assignment cValueAssignment_1 = (Assignment)cAlternatives.eContents().get(1);
-		private final RuleCall cValueLanguageExpressionParserRuleCall_1_0 = (RuleCall)cValueAssignment_1.eContents().get(0);
+		private final RuleCall cValueLanguageValueParserRuleCall_1_0 = (RuleCall)cValueAssignment_1.eContents().get(0);
 		
 		//PropertyValue:
-		//	id=ID ('=' value=Expression)? | value=LanguageExpression;
+		//	id=ID ('=' value=Expression)? | value=LanguageValue;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//id=ID ('=' value=Expression)? | value=LanguageExpression
+		//id=ID ('=' value=Expression)? | value=LanguageValue
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//id=ID ('=' value=Expression)?
@@ -1901,27 +1948,29 @@ public class MoniLogGrammarAccess extends AbstractGrammarElementFinder {
 		//Expression
 		public RuleCall getValueExpressionParserRuleCall_0_1_1_0() { return cValueExpressionParserRuleCall_0_1_1_0; }
 		
-		//value=LanguageExpression
+		//value=LanguageValue
 		public Assignment getValueAssignment_1() { return cValueAssignment_1; }
 		
-		//LanguageExpression
-		public RuleCall getValueLanguageExpressionParserRuleCall_1_0() { return cValueLanguageExpressionParserRuleCall_1_0; }
+		//LanguageValue
+		public RuleCall getValueLanguageValueParserRuleCall_1_0() { return cValueLanguageValueParserRuleCall_1_0; }
 	}
-	public class LanguageExpressionElements extends AbstractParserRuleElementFinder {
-		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.gemoc.monilog.MoniLog.LanguageExpression");
+	public class LanguageValueElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.gemoc.monilog.MoniLog.LanguageValue");
 		private final Group cGroup = (Group)rule.eContents().get(1);
 		private final Assignment cLanguageIdAssignment_0 = (Assignment)cGroup.eContents().get(0);
 		private final RuleCall cLanguageIdIDTerminalRuleCall_0_0 = (RuleCall)cLanguageIdAssignment_0.eContents().get(0);
 		private final Keyword cLeftParenthesisKeyword_1 = (Keyword)cGroup.eContents().get(1);
-		private final Assignment cExpressionAssignment_2 = (Assignment)cGroup.eContents().get(2);
-		private final RuleCall cExpressionSTRINGTerminalRuleCall_2_0 = (RuleCall)cExpressionAssignment_2.eContents().get(0);
+		private final Assignment cValueAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final Alternatives cValueAlternatives_2_0 = (Alternatives)cValueAssignment_2.eContents().get(0);
+		private final RuleCall cValueLanguageExpressionParserRuleCall_2_0_0 = (RuleCall)cValueAlternatives_2_0.eContents().get(0);
+		private final RuleCall cValueLanguageCallParserRuleCall_2_0_1 = (RuleCall)cValueAlternatives_2_0.eContents().get(1);
 		private final Keyword cRightParenthesisKeyword_3 = (Keyword)cGroup.eContents().get(3);
 		
-		//LanguageExpression:
-		//	languageId=ID '(' expression=STRING ')';
+		//LanguageValue:
+		//	languageId=ID '(' value=(LanguageExpression | LanguageCall) ')';
 		@Override public ParserRule getRule() { return rule; }
 		
-		//languageId=ID '(' expression=STRING ')'
+		//languageId=ID '(' value=(LanguageExpression | LanguageCall) ')'
 		public Group getGroup() { return cGroup; }
 		
 		//languageId=ID
@@ -1933,14 +1982,106 @@ public class MoniLogGrammarAccess extends AbstractGrammarElementFinder {
 		//'('
 		public Keyword getLeftParenthesisKeyword_1() { return cLeftParenthesisKeyword_1; }
 		
-		//expression=STRING
-		public Assignment getExpressionAssignment_2() { return cExpressionAssignment_2; }
+		//value=(LanguageExpression | LanguageCall)
+		public Assignment getValueAssignment_2() { return cValueAssignment_2; }
 		
-		//STRING
-		public RuleCall getExpressionSTRINGTerminalRuleCall_2_0() { return cExpressionSTRINGTerminalRuleCall_2_0; }
+		//(LanguageExpression | LanguageCall)
+		public Alternatives getValueAlternatives_2_0() { return cValueAlternatives_2_0; }
+		
+		//LanguageExpression
+		public RuleCall getValueLanguageExpressionParserRuleCall_2_0_0() { return cValueLanguageExpressionParserRuleCall_2_0_0; }
+		
+		//LanguageCall
+		public RuleCall getValueLanguageCallParserRuleCall_2_0_1() { return cValueLanguageCallParserRuleCall_2_0_1; }
 		
 		//')'
 		public Keyword getRightParenthesisKeyword_3() { return cRightParenthesisKeyword_3; }
+	}
+	public class LanguageExpressionElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.gemoc.monilog.MoniLog.LanguageExpression");
+		private final Assignment cExpressionAssignment = (Assignment)rule.eContents().get(1);
+		private final RuleCall cExpressionSTRINGTerminalRuleCall_0 = (RuleCall)cExpressionAssignment.eContents().get(0);
+		
+		//LanguageExpression:
+		//	expression=STRING;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//expression=STRING
+		public Assignment getExpressionAssignment() { return cExpressionAssignment; }
+		
+		//STRING
+		public RuleCall getExpressionSTRINGTerminalRuleCall_0() { return cExpressionSTRINGTerminalRuleCall_0; }
+	}
+	public class LanguageCallElements extends AbstractParserRuleElementFinder {
+		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.gemoc.monilog.MoniLog.LanguageCall");
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cFileAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final CrossReference cFileFileAliasCrossReference_0_0 = (CrossReference)cFileAssignment_0.eContents().get(0);
+		private final RuleCall cFileFileAliasIDTerminalRuleCall_0_0_1 = (RuleCall)cFileFileAliasCrossReference_0_0.eContents().get(1);
+		private final Keyword cFullStopKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cFqnAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cFqnQualifiedNameParserRuleCall_2_0 = (RuleCall)cFqnAssignment_2.eContents().get(0);
+		private final Group cGroup_3 = (Group)cGroup.eContents().get(3);
+		private final Keyword cLeftParenthesisKeyword_3_0 = (Keyword)cGroup_3.eContents().get(0);
+		private final Assignment cArgsAssignment_3_1 = (Assignment)cGroup_3.eContents().get(1);
+		private final RuleCall cArgsExpressionParserRuleCall_3_1_0 = (RuleCall)cArgsAssignment_3_1.eContents().get(0);
+		private final Group cGroup_3_2 = (Group)cGroup_3.eContents().get(2);
+		private final Keyword cCommaKeyword_3_2_0 = (Keyword)cGroup_3_2.eContents().get(0);
+		private final Assignment cArgsAssignment_3_2_1 = (Assignment)cGroup_3_2.eContents().get(1);
+		private final RuleCall cArgsExpressionParserRuleCall_3_2_1_0 = (RuleCall)cArgsAssignment_3_2_1.eContents().get(0);
+		private final Keyword cRightParenthesisKeyword_3_3 = (Keyword)cGroup_3.eContents().get(3);
+		
+		//LanguageCall:
+		//	file=[FileAlias] '.' fqn=QualifiedName ('(' args+=Expression (',' args+=Expression)* ')')?;
+		@Override public ParserRule getRule() { return rule; }
+		
+		//file=[FileAlias] '.' fqn=QualifiedName ('(' args+=Expression (',' args+=Expression)* ')')?
+		public Group getGroup() { return cGroup; }
+		
+		//file=[FileAlias]
+		public Assignment getFileAssignment_0() { return cFileAssignment_0; }
+		
+		//[FileAlias]
+		public CrossReference getFileFileAliasCrossReference_0_0() { return cFileFileAliasCrossReference_0_0; }
+		
+		//ID
+		public RuleCall getFileFileAliasIDTerminalRuleCall_0_0_1() { return cFileFileAliasIDTerminalRuleCall_0_0_1; }
+		
+		//'.'
+		public Keyword getFullStopKeyword_1() { return cFullStopKeyword_1; }
+		
+		//fqn=QualifiedName
+		public Assignment getFqnAssignment_2() { return cFqnAssignment_2; }
+		
+		//QualifiedName
+		public RuleCall getFqnQualifiedNameParserRuleCall_2_0() { return cFqnQualifiedNameParserRuleCall_2_0; }
+		
+		//('(' args+=Expression (',' args+=Expression)* ')')?
+		public Group getGroup_3() { return cGroup_3; }
+		
+		//'('
+		public Keyword getLeftParenthesisKeyword_3_0() { return cLeftParenthesisKeyword_3_0; }
+		
+		//args+=Expression
+		public Assignment getArgsAssignment_3_1() { return cArgsAssignment_3_1; }
+		
+		//Expression
+		public RuleCall getArgsExpressionParserRuleCall_3_1_0() { return cArgsExpressionParserRuleCall_3_1_0; }
+		
+		//(',' args+=Expression)*
+		public Group getGroup_3_2() { return cGroup_3_2; }
+		
+		//','
+		public Keyword getCommaKeyword_3_2_0() { return cCommaKeyword_3_2_0; }
+		
+		//args+=Expression
+		public Assignment getArgsAssignment_3_2_1() { return cArgsAssignment_3_2_1; }
+		
+		//Expression
+		public RuleCall getArgsExpressionParserRuleCall_3_2_1_0() { return cArgsExpressionParserRuleCall_3_2_1_0; }
+		
+		//')'
+		public Keyword getRightParenthesisKeyword_3_3() { return cRightParenthesisKeyword_3_3; }
 	}
 	public class QualifiedNameElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.gemoc.monilog.MoniLog.QualifiedName");
@@ -2133,6 +2274,7 @@ public class MoniLogGrammarAccess extends AbstractGrammarElementFinder {
 	
 	private final DocumentElements pDocument;
 	private final ImportElements pImport;
+	private final FileAliasElements pFileAlias;
 	private final AppenderElements pAppender;
 	private final LocalAppenderElements pLocalAppender;
 	private final ExternalAppenderElements pExternalAppender;
@@ -2166,7 +2308,9 @@ public class MoniLogGrammarAccess extends AbstractGrammarElementFinder {
 	private final ExpressionElements pExpression;
 	private final ParameterReferenceElements pParameterReference;
 	private final PropertyValueElements pPropertyValue;
+	private final LanguageValueElements pLanguageValue;
 	private final LanguageExpressionElements pLanguageExpression;
+	private final LanguageCallElements pLanguageCall;
 	private final MoniLoggerAnnotationElements eMoniLoggerAnnotation;
 	private final AppenderAnnotationElements eAppenderAnnotation;
 	private final LogLevelElements eLogLevel;
@@ -2185,6 +2329,7 @@ public class MoniLogGrammarAccess extends AbstractGrammarElementFinder {
 		this.gaTerminals = gaTerminals;
 		this.pDocument = new DocumentElements();
 		this.pImport = new ImportElements();
+		this.pFileAlias = new FileAliasElements();
 		this.pAppender = new AppenderElements();
 		this.pLocalAppender = new LocalAppenderElements();
 		this.pExternalAppender = new ExternalAppenderElements();
@@ -2218,7 +2363,9 @@ public class MoniLogGrammarAccess extends AbstractGrammarElementFinder {
 		this.pExpression = new ExpressionElements();
 		this.pParameterReference = new ParameterReferenceElements();
 		this.pPropertyValue = new PropertyValueElements();
+		this.pLanguageValue = new LanguageValueElements();
 		this.pLanguageExpression = new LanguageExpressionElements();
+		this.pLanguageCall = new LanguageCallElements();
 		this.eMoniLoggerAnnotation = new MoniLoggerAnnotationElements();
 		this.eAppenderAnnotation = new AppenderAnnotationElements();
 		this.eLogLevel = new LogLevelElements();
@@ -2266,13 +2413,23 @@ public class MoniLogGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//Import:
-	//	'import' importedNamespace=QualifiedNameWithWildcard;
+	//	'import' importedNamespace=QualifiedNameWithWildcard | 'import' fileURI=STRING 'as' alias=FileAlias;
 	public ImportElements getImportAccess() {
 		return pImport;
 	}
 	
 	public ParserRule getImportRule() {
 		return getImportAccess().getRule();
+	}
+	
+	//FileAlias:
+	//	name=ID;
+	public FileAliasElements getFileAliasAccess() {
+		return pFileAlias;
+	}
+	
+	public ParserRule getFileAliasRule() {
+		return getFileAliasAccess().getRule();
 	}
 	
 	//@Exported
@@ -2416,7 +2573,7 @@ public class MoniLogGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//Condition:
-	//	expression=LanguageExpression;
+	//	expression=LanguageValue;
 	public ConditionElements getConditionAccess() {
 		return pCondition;
 	}
@@ -2500,7 +2657,7 @@ public class MoniLogGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//Action:
-	//	LanguageExpression | AppenderCall | EmitEvent | SetVariable | MoniloggerCall;
+	//	LanguageValue | AppenderCall | EmitEvent | SetVariable | MoniloggerCall;
 	public ActionElements getActionAccess() {
 		return pAction;
 	}
@@ -2560,7 +2717,7 @@ public class MoniLogGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//SetVariable:
-	//	'set' '(' variable=STRING ',' value=LanguageExpression ')';
+	//	'set' '(' variable=STRING ',' value=LanguageValue ')';
 	public SetVariableElements getSetVariableAccess() {
 		return pSetVariable;
 	}
@@ -2601,7 +2758,7 @@ public class MoniLogGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//Expression:
-	//	ParameterReference | LanguageExpression;
+	//	ParameterReference | LanguageValue;
 	public ExpressionElements getExpressionAccess() {
 		return pExpression;
 	}
@@ -2621,7 +2778,7 @@ public class MoniLogGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//PropertyValue:
-	//	id=ID ('=' value=Expression)? | value=LanguageExpression;
+	//	id=ID ('=' value=Expression)? | value=LanguageValue;
 	public PropertyValueElements getPropertyValueAccess() {
 		return pPropertyValue;
 	}
@@ -2630,14 +2787,34 @@ public class MoniLogGrammarAccess extends AbstractGrammarElementFinder {
 		return getPropertyValueAccess().getRule();
 	}
 	
+	//LanguageValue:
+	//	languageId=ID '(' value=(LanguageExpression | LanguageCall) ')';
+	public LanguageValueElements getLanguageValueAccess() {
+		return pLanguageValue;
+	}
+	
+	public ParserRule getLanguageValueRule() {
+		return getLanguageValueAccess().getRule();
+	}
+	
 	//LanguageExpression:
-	//	languageId=ID '(' expression=STRING ')';
+	//	expression=STRING;
 	public LanguageExpressionElements getLanguageExpressionAccess() {
 		return pLanguageExpression;
 	}
 	
 	public ParserRule getLanguageExpressionRule() {
 		return getLanguageExpressionAccess().getRule();
+	}
+	
+	//LanguageCall:
+	//	file=[FileAlias] '.' fqn=QualifiedName ('(' args+=Expression (',' args+=Expression)* ')')?;
+	public LanguageCallElements getLanguageCallAccess() {
+		return pLanguageCall;
+	}
+	
+	public ParserRule getLanguageCallRule() {
+		return getLanguageCallAccess().getRule();
 	}
 	
 	//enum MoniLoggerAnnotation:

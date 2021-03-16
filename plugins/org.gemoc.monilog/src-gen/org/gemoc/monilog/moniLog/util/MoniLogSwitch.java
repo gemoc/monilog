@@ -87,6 +87,13 @@ public class MoniLogSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case MoniLogPackage.FILE_ALIAS:
+      {
+        FileAlias fileAlias = (FileAlias)theEObject;
+        T result = caseFileAlias(fileAlias);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case MoniLogPackage.APPENDER:
       {
         Appender appender = (Appender)theEObject;
@@ -320,13 +327,27 @@ public class MoniLogSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case MoniLogPackage.LANGUAGE_VALUE:
+      {
+        LanguageValue languageValue = (LanguageValue)theEObject;
+        T result = caseLanguageValue(languageValue);
+        if (result == null) result = caseAction(languageValue);
+        if (result == null) result = caseExpression(languageValue);
+        if (result == null) result = caseCallArgument(languageValue);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case MoniLogPackage.LANGUAGE_EXPRESSION:
       {
         LanguageExpression languageExpression = (LanguageExpression)theEObject;
         T result = caseLanguageExpression(languageExpression);
-        if (result == null) result = caseAction(languageExpression);
-        if (result == null) result = caseExpression(languageExpression);
-        if (result == null) result = caseCallArgument(languageExpression);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case MoniLogPackage.LANGUAGE_CALL:
+      {
+        LanguageCall languageCall = (LanguageCall)theEObject;
+        T result = caseLanguageCall(languageCall);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -508,6 +529,22 @@ public class MoniLogSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseImport(Import object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>File Alias</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>File Alias</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseFileAlias(FileAlias object)
   {
     return null;
   }
@@ -1009,6 +1046,22 @@ public class MoniLogSwitch<T> extends Switch<T>
   }
 
   /**
+   * Returns the result of interpreting the object as an instance of '<em>Language Value</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Language Value</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseLanguageValue(LanguageValue object)
+  {
+    return null;
+  }
+
+  /**
    * Returns the result of interpreting the object as an instance of '<em>Language Expression</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -1020,6 +1073,22 @@ public class MoniLogSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseLanguageExpression(LanguageExpression object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Language Call</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Language Call</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseLanguageCall(LanguageCall object)
   {
     return null;
   }

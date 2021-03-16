@@ -8,7 +8,10 @@ Document:
 	(events+=Event* & appenders+=Appender* & layouts+=Layout* & moniloggers+=MoniLogger*);
 
 Import:
-	'import' importedNamespace=QualifiedNameWithWildcard;
+	'import' importedNamespace=QualifiedNameWithWildcard | 'import' fileURI=STRING 'as' alias=FileAlias;
+
+FileAlias:
+	name=ID;
 
 @Exported
 Appender:
@@ -71,7 +74,7 @@ ASTEventKind:
 	{BeforeASTEvent} 'before'| {AfterASTEvent} 'after';
 
 Condition:
-	expression=LanguageExpression;
+	expression=LanguageValue;
 
 TemporalPattern:
 	pattern=Pattern scope=Scope;
@@ -102,7 +105,7 @@ Scope:
 	{AfterUntil} 'after' lowerBound=StreamEvent 'until' upperBound=StreamEvent;
 
 Action:
-	LanguageExpression | AppenderCall | EmitEvent | SetVariable | MoniloggerCall;
+	LanguageValue | AppenderCall | EmitEvent | SetVariable | MoniloggerCall;
 
 AppenderCall:
 	appender=[Appender|QualifiedName] '.' 'call' ( '(' args+=AppenderCallArgument (',' args+=AppenderCallArgument)* ')' )?;
@@ -120,7 +123,7 @@ EmitEvent:
 	event=[UserEvent|ID] '.' 'emit' ('(' args+=Expression (',' args+=Expression)* ')' )?;
 
 SetVariable:
-	'set' '(' variable=STRING ',' value=LanguageExpression ')';
+	'set' '(' variable=STRING ',' value=LanguageValue ')';
 
 MoniloggerCall:
 	{StartMoniLogger} monilogger=[MoniLogger|ID] '.' 'start' ( '(' args+=Expression (',' args+=Expression)* ')' )? |
@@ -133,16 +136,22 @@ EmptyOrPropertyValue:
 	{Empty} | PropertyValue;
 
 Expression:
-	ParameterReference | LanguageExpression;
+	ParameterReference | LanguageValue;
 
 ParameterReference:
 	parameter=[Parameter|ID];
 
 PropertyValue:
-	id=ID ('=' value=Expression)? | value=LanguageExpression;
+	id=ID ('=' value=Expression)? | value=LanguageValue;
+
+LanguageValue:
+	languageId=ID '(' value=(LanguageExpression | LanguageCall) ')';
 
 LanguageExpression:
-	languageId=ID '(' expression=STRING ')';
+	expression=STRING;
+
+LanguageCall:
+	file=[FileAlias|ID] '.' fqn=QualifiedName ('(' args+=Expression (',' args+=Expression)* ')' )?;
 
 enum MoniLoggerAnnotation:
 	inactive='@Inactive';

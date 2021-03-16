@@ -86,6 +86,11 @@ public class MoniLogAdapterFactory extends AdapterFactoryImpl
         return createImportAdapter();
       }
       @Override
+      public Adapter caseFileAlias(FileAlias object)
+      {
+        return createFileAliasAdapter();
+      }
+      @Override
       public Adapter caseAppender(Appender object)
       {
         return createAppenderAdapter();
@@ -241,9 +246,19 @@ public class MoniLogAdapterFactory extends AdapterFactoryImpl
         return createPropertyValueAdapter();
       }
       @Override
+      public Adapter caseLanguageValue(LanguageValue object)
+      {
+        return createLanguageValueAdapter();
+      }
+      @Override
       public Adapter caseLanguageExpression(LanguageExpression object)
       {
         return createLanguageExpressionAdapter();
+      }
+      @Override
+      public Adapter caseLanguageCall(LanguageCall object)
+      {
+        return createLanguageCallAdapter();
       }
       @Override
       public Adapter caseASTEvent(ASTEvent object)
@@ -383,6 +398,21 @@ public class MoniLogAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createImportAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog.FileAlias <em>File Alias</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.gemoc.monilog.moniLog.FileAlias
+   * @generated
+   */
+  public Adapter createFileAliasAdapter()
   {
     return null;
   }
@@ -853,6 +883,21 @@ public class MoniLogAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
+   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog.LanguageValue <em>Language Value</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.gemoc.monilog.moniLog.LanguageValue
+   * @generated
+   */
+  public Adapter createLanguageValueAdapter()
+  {
+    return null;
+  }
+
+  /**
    * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog.LanguageExpression <em>Language Expression</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -863,6 +908,21 @@ public class MoniLogAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createLanguageExpressionAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog.LanguageCall <em>Language Call</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.gemoc.monilog.moniLog.LanguageCall
+   * @generated
+   */
+  public Adapter createLanguageCallAdapter()
   {
     return null;
   }

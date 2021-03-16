@@ -32,9 +32,12 @@ import org.gemoc.monilog.moniLog.ExactBound;
 import org.gemoc.monilog.moniLog.Existence;
 import org.gemoc.monilog.moniLog.ExternalAppender;
 import org.gemoc.monilog.moniLog.ExternalLayout;
+import org.gemoc.monilog.moniLog.FileAlias;
 import org.gemoc.monilog.moniLog.Globally;
 import org.gemoc.monilog.moniLog.Import;
+import org.gemoc.monilog.moniLog.LanguageCall;
 import org.gemoc.monilog.moniLog.LanguageExpression;
+import org.gemoc.monilog.moniLog.LanguageValue;
 import org.gemoc.monilog.moniLog.LayoutCall;
 import org.gemoc.monilog.moniLog.LocalAppender;
 import org.gemoc.monilog.moniLog.LocalLayout;
@@ -124,14 +127,23 @@ public class MoniLogSemanticSequencer extends AbstractDelegatingSemanticSequence
 			case MoniLogPackage.EXTERNAL_LAYOUT:
 				sequence_ExternalLayout(context, (ExternalLayout) semanticObject); 
 				return; 
+			case MoniLogPackage.FILE_ALIAS:
+				sequence_FileAlias(context, (FileAlias) semanticObject); 
+				return; 
 			case MoniLogPackage.GLOBALLY:
 				sequence_Scope(context, (Globally) semanticObject); 
 				return; 
 			case MoniLogPackage.IMPORT:
 				sequence_Import(context, (Import) semanticObject); 
 				return; 
+			case MoniLogPackage.LANGUAGE_CALL:
+				sequence_LanguageCall(context, (LanguageCall) semanticObject); 
+				return; 
 			case MoniLogPackage.LANGUAGE_EXPRESSION:
 				sequence_LanguageExpression(context, (LanguageExpression) semanticObject); 
+				return; 
+			case MoniLogPackage.LANGUAGE_VALUE:
+				sequence_LanguageValue(context, (LanguageValue) semanticObject); 
 				return; 
 			case MoniLogPackage.LAYOUT_CALL:
 				sequence_LayoutCall(context, (LayoutCall) semanticObject); 
@@ -244,7 +256,7 @@ public class MoniLogSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     Condition returns Condition
 	 *
 	 * Constraint:
-	 *     expression=LanguageExpression
+	 *     expression=LanguageValue
 	 */
 	protected void sequence_Condition(ISerializationContext context, Condition semanticObject) {
 		if (errorAcceptor != null) {
@@ -252,7 +264,7 @@ public class MoniLogSemanticSequencer extends AbstractDelegatingSemanticSequence
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MoniLogPackage.Literals.CONDITION__EXPRESSION));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getConditionAccess().getExpressionLanguageExpressionParserRuleCall_0(), semanticObject.getExpression());
+		feeder.accept(grammarAccess.getConditionAccess().getExpressionLanguageValueParserRuleCall_0(), semanticObject.getExpression());
 		feeder.finish();
 	}
 	
@@ -377,44 +389,77 @@ public class MoniLogSemanticSequencer extends AbstractDelegatingSemanticSequence
 	
 	/**
 	 * Contexts:
-	 *     Import returns Import
+	 *     FileAlias returns FileAlias
 	 *
 	 * Constraint:
-	 *     importedNamespace=QualifiedNameWithWildcard
+	 *     name=ID
 	 */
-	protected void sequence_Import(ISerializationContext context, Import semanticObject) {
+	protected void sequence_FileAlias(ISerializationContext context, FileAlias semanticObject) {
 		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, MoniLogPackage.Literals.IMPORT__IMPORTED_NAMESPACE) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MoniLogPackage.Literals.IMPORT__IMPORTED_NAMESPACE));
+			if (transientValues.isValueTransient(semanticObject, MoniLogPackage.Literals.FILE_ALIAS__NAME) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MoniLogPackage.Literals.FILE_ALIAS__NAME));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getImportAccess().getImportedNamespaceQualifiedNameWithWildcardParserRuleCall_1_0(), semanticObject.getImportedNamespace());
+		feeder.accept(grammarAccess.getFileAliasAccess().getNameIDTerminalRuleCall_0(), semanticObject.getName());
 		feeder.finish();
 	}
 	
 	
 	/**
 	 * Contexts:
-	 *     Action returns LanguageExpression
-	 *     AppenderCallArgument returns LanguageExpression
-	 *     LayoutCallArgument returns LanguageExpression
-	 *     Expression returns LanguageExpression
+	 *     Import returns Import
+	 *
+	 * Constraint:
+	 *     (importedNamespace=QualifiedNameWithWildcard | (fileURI=STRING alias=FileAlias))
+	 */
+	protected void sequence_Import(ISerializationContext context, Import semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     LanguageCall returns LanguageCall
+	 *
+	 * Constraint:
+	 *     (file=[FileAlias|ID] fqn=QualifiedName (args+=Expression args+=Expression*)?)
+	 */
+	protected void sequence_LanguageCall(ISerializationContext context, LanguageCall semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     LanguageExpression returns LanguageExpression
 	 *
 	 * Constraint:
-	 *     (languageId=ID expression=STRING)
+	 *     expression=STRING
 	 */
 	protected void sequence_LanguageExpression(ISerializationContext context, LanguageExpression semanticObject) {
 		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, MoniLogPackage.Literals.LANGUAGE_EXPRESSION__LANGUAGE_ID) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MoniLogPackage.Literals.LANGUAGE_EXPRESSION__LANGUAGE_ID));
 			if (transientValues.isValueTransient(semanticObject, MoniLogPackage.Literals.LANGUAGE_EXPRESSION__EXPRESSION) == ValueTransient.YES)
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MoniLogPackage.Literals.LANGUAGE_EXPRESSION__EXPRESSION));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getLanguageExpressionAccess().getLanguageIdIDTerminalRuleCall_0_0(), semanticObject.getLanguageId());
-		feeder.accept(grammarAccess.getLanguageExpressionAccess().getExpressionSTRINGTerminalRuleCall_2_0(), semanticObject.getExpression());
+		feeder.accept(grammarAccess.getLanguageExpressionAccess().getExpressionSTRINGTerminalRuleCall_0(), semanticObject.getExpression());
 		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Action returns LanguageValue
+	 *     AppenderCallArgument returns LanguageValue
+	 *     LayoutCallArgument returns LanguageValue
+	 *     Expression returns LanguageValue
+	 *     LanguageValue returns LanguageValue
+	 *
+	 * Constraint:
+	 *     (languageId=ID (value=LanguageExpression | value=LanguageCall))
+	 */
+	protected void sequence_LanguageValue(ISerializationContext context, LanguageValue semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
 	}
 	
 	
@@ -688,7 +733,7 @@ public class MoniLogSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     PropertyValue returns PropertyValue
 	 *
 	 * Constraint:
-	 *     ((id=ID value=Expression?) | value=LanguageExpression)
+	 *     ((id=ID value=Expression?) | value=LanguageValue)
 	 */
 	protected void sequence_PropertyValue(ISerializationContext context, PropertyValue semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -791,7 +836,7 @@ public class MoniLogSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     SetVariable returns SetVariable
 	 *
 	 * Constraint:
-	 *     (variable=STRING value=LanguageExpression)
+	 *     (variable=STRING value=LanguageValue)
 	 */
 	protected void sequence_SetVariable(ISerializationContext context, SetVariable semanticObject) {
 		if (errorAcceptor != null) {
@@ -802,7 +847,7 @@ public class MoniLogSemanticSequencer extends AbstractDelegatingSemanticSequence
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
 		feeder.accept(grammarAccess.getSetVariableAccess().getVariableSTRINGTerminalRuleCall_2_0(), semanticObject.getVariable());
-		feeder.accept(grammarAccess.getSetVariableAccess().getValueLanguageExpressionParserRuleCall_4_0(), semanticObject.getValue());
+		feeder.accept(grammarAccess.getSetVariableAccess().getValueLanguageValueParserRuleCall_4_0(), semanticObject.getValue());
 		feeder.finish();
 	}
 	

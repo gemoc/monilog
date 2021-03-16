@@ -28,12 +28,12 @@ public interface Condition extends EObject
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the value of the '<em>Expression</em>' containment reference.
-   * @see #setExpression(LanguageExpression)
+   * @see #setExpression(LanguageValue)
    * @see org.gemoc.monilog.moniLog.MoniLogPackage#getCondition_Expression()
    * @model containment="true"
    * @generated
    */
-  LanguageExpression getExpression();
+  LanguageValue getExpression();
 
   /**
    * Sets the value of the '{@link org.gemoc.monilog.moniLog.Condition#getExpression <em>Expression</em>}' containment reference.
@@ -43,6 +43,6 @@ public interface Condition extends EObject
    * @see #getExpression()
    * @generated
    */
-  void setExpression(LanguageExpression value);
+  void setExpression(LanguageValue value);
 
 } // Condition

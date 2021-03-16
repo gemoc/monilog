@@ -68,6 +68,7 @@ public class MoniLogFactoryImpl extends EFactoryImpl implements MoniLogFactory
     {
       case MoniLogPackage.DOCUMENT: return createDocument();
       case MoniLogPackage.IMPORT: return createImport();
+      case MoniLogPackage.FILE_ALIAS: return createFileAlias();
       case MoniLogPackage.APPENDER: return createAppender();
       case MoniLogPackage.LOCAL_APPENDER: return createLocalAppender();
       case MoniLogPackage.EXTERNAL_APPENDER: return createExternalAppender();
@@ -99,7 +100,9 @@ public class MoniLogFactoryImpl extends EFactoryImpl implements MoniLogFactory
       case MoniLogPackage.EXPRESSION: return createExpression();
       case MoniLogPackage.PARAMETER_REFERENCE: return createParameterReference();
       case MoniLogPackage.PROPERTY_VALUE: return createPropertyValue();
+      case MoniLogPackage.LANGUAGE_VALUE: return createLanguageValue();
       case MoniLogPackage.LANGUAGE_EXPRESSION: return createLanguageExpression();
+      case MoniLogPackage.LANGUAGE_CALL: return createLanguageCall();
       case MoniLogPackage.AST_EVENT: return createASTEvent();
       case MoniLogPackage.COMPLEX_EVENT: return createComplexEvent();
       case MoniLogPackage.USER_EVENT: return createUserEvent();
@@ -191,6 +194,18 @@ public class MoniLogFactoryImpl extends EFactoryImpl implements MoniLogFactory
   {
     ImportImpl import_ = new ImportImpl();
     return import_;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public FileAlias createFileAlias()
+  {
+    FileAliasImpl fileAlias = new FileAliasImpl();
+    return fileAlias;
   }
 
   /**
@@ -571,10 +586,34 @@ public class MoniLogFactoryImpl extends EFactoryImpl implements MoniLogFactory
    * @generated
    */
   @Override
+  public LanguageValue createLanguageValue()
+  {
+    LanguageValueImpl languageValue = new LanguageValueImpl();
+    return languageValue;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public LanguageExpression createLanguageExpression()
   {
     LanguageExpressionImpl languageExpression = new LanguageExpressionImpl();
     return languageExpression;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public LanguageCall createLanguageCall()
+  {
+    LanguageCallImpl languageCall = new LanguageCallImpl();
+    return languageCall;
   }
 
   /**

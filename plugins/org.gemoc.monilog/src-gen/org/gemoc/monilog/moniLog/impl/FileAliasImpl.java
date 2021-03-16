@@ -10,50 +10,50 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
 
-import org.gemoc.monilog.moniLog.LanguageExpression;
+import org.gemoc.monilog.moniLog.FileAlias;
 import org.gemoc.monilog.moniLog.MoniLogPackage;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Language Expression</b></em>'.
+ * An implementation of the model object '<em><b>File Alias</b></em>'.
  * <!-- end-user-doc -->
  * <p>
  * The following features are implemented:
  * </p>
  * <ul>
- *   <li>{@link org.gemoc.monilog.moniLog.impl.LanguageExpressionImpl#getExpression <em>Expression</em>}</li>
+ *   <li>{@link org.gemoc.monilog.moniLog.impl.FileAliasImpl#getName <em>Name</em>}</li>
  * </ul>
  *
  * @generated
  */
-public class LanguageExpressionImpl extends MinimalEObjectImpl.Container implements LanguageExpression
+public class FileAliasImpl extends MinimalEObjectImpl.Container implements FileAlias
 {
   /**
-   * The default value of the '{@link #getExpression() <em>Expression</em>}' attribute.
+   * The default value of the '{@link #getName() <em>Name</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getExpression()
+   * @see #getName()
    * @generated
    * @ordered
    */
-  protected static final String EXPRESSION_EDEFAULT = null;
+  protected static final String NAME_EDEFAULT = null;
 
   /**
-   * The cached value of the '{@link #getExpression() <em>Expression</em>}' attribute.
+   * The cached value of the '{@link #getName() <em>Name</em>}' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see #getExpression()
+   * @see #getName()
    * @generated
    * @ordered
    */
-  protected String expression = EXPRESSION_EDEFAULT;
+  protected String name = NAME_EDEFAULT;
 
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected LanguageExpressionImpl()
+  protected FileAliasImpl()
   {
     super();
   }
@@ -66,7 +66,7 @@ public class LanguageExpressionImpl extends MinimalEObjectImpl.Container impleme
   @Override
   protected EClass eStaticClass()
   {
-    return MoniLogPackage.Literals.LANGUAGE_EXPRESSION;
+    return MoniLogPackage.Literals.FILE_ALIAS;
   }
 
   /**
@@ -75,9 +75,9 @@ public class LanguageExpressionImpl extends MinimalEObjectImpl.Container impleme
    * @generated
    */
   @Override
-  public String getExpression()
+  public String getName()
   {
-    return expression;
+    return name;
   }
 
   /**
@@ -86,12 +86,12 @@ public class LanguageExpressionImpl extends MinimalEObjectImpl.Container impleme
    * @generated
    */
   @Override
-  public void setExpression(String newExpression)
+  public void setName(String newName)
   {
-    String oldExpression = expression;
-    expression = newExpression;
+    String oldName = name;
+    name = newName;
     if (eNotificationRequired())
-      eNotify(new ENotificationImpl(this, Notification.SET, MoniLogPackage.LANGUAGE_EXPRESSION__EXPRESSION, oldExpression, expression));
+      eNotify(new ENotificationImpl(this, Notification.SET, MoniLogPackage.FILE_ALIAS__NAME, oldName, name));
   }
 
   /**
@@ -104,8 +104,8 @@ public class LanguageExpressionImpl extends MinimalEObjectImpl.Container impleme
   {
     switch (featureID)
     {
-      case MoniLogPackage.LANGUAGE_EXPRESSION__EXPRESSION:
-        return getExpression();
+      case MoniLogPackage.FILE_ALIAS__NAME:
+        return getName();
     }
     return super.eGet(featureID, resolve, coreType);
   }
@@ -120,8 +120,8 @@ public class LanguageExpressionImpl extends MinimalEObjectImpl.Container impleme
   {
     switch (featureID)
     {
-      case MoniLogPackage.LANGUAGE_EXPRESSION__EXPRESSION:
-        setExpression((String)newValue);
+      case MoniLogPackage.FILE_ALIAS__NAME:
+        setName((String)newValue);
         return;
     }
     super.eSet(featureID, newValue);
@@ -137,8 +137,8 @@ public class LanguageExpressionImpl extends MinimalEObjectImpl.Container impleme
   {
     switch (featureID)
     {
-      case MoniLogPackage.LANGUAGE_EXPRESSION__EXPRESSION:
-        setExpression(EXPRESSION_EDEFAULT);
+      case MoniLogPackage.FILE_ALIAS__NAME:
+        setName(NAME_EDEFAULT);
         return;
     }
     super.eUnset(featureID);
@@ -154,8 +154,8 @@ public class LanguageExpressionImpl extends MinimalEObjectImpl.Container impleme
   {
     switch (featureID)
     {
-      case MoniLogPackage.LANGUAGE_EXPRESSION__EXPRESSION:
-        return EXPRESSION_EDEFAULT == null ? expression != null : !EXPRESSION_EDEFAULT.equals(expression);
+      case MoniLogPackage.FILE_ALIAS__NAME:
+        return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
     }
     return super.eIsSet(featureID);
   }
@@ -171,10 +171,10 @@ public class LanguageExpressionImpl extends MinimalEObjectImpl.Container impleme
     if (eIsProxy()) return super.toString();
 
     StringBuilder result = new StringBuilder(super.toString());
-    result.append(" (expression: ");
-    result.append(expression);
+    result.append(" (name: ");
+    result.append(name);
     result.append(')');
     return result.toString();
   }
 
-} //LanguageExpressionImpl
+} //FileAliasImpl

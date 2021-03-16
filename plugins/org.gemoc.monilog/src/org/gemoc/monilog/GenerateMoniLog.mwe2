@@ -27,7 +27,12 @@ Workflow {
 		language = StandardLanguage {
 			name = "org.gemoc.monilog.MoniLog"
 			fileExtensions = "mnlg"
-
+			
+			parserGenerator = {
+				options = {
+					backtrack = true
+				}
+			}
 			serializer = {
 				generateStub = false
 			}

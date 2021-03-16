@@ -31,6 +31,7 @@ public class MoniLogParser extends AbstractContentAssistParser {
 		}
 		
 		private static void init(ImmutableMap.Builder<AbstractElement, String> builder, MoniLogGrammarAccess grammarAccess) {
+			builder.put(grammarAccess.getImportAccess().getAlternatives(), "rule__Import__Alternatives");
 			builder.put(grammarAccess.getAppenderAccess().getAlternatives(), "rule__Appender__Alternatives");
 			builder.put(grammarAccess.getLayoutAccess().getAlternatives(), "rule__Layout__Alternatives");
 			builder.put(grammarAccess.getEventAccess().getAlternatives(), "rule__Event__Alternatives");
@@ -44,10 +45,12 @@ public class MoniLogParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getEmptyOrPropertyValueAccess().getAlternatives(), "rule__EmptyOrPropertyValue__Alternatives");
 			builder.put(grammarAccess.getExpressionAccess().getAlternatives(), "rule__Expression__Alternatives");
 			builder.put(grammarAccess.getPropertyValueAccess().getAlternatives(), "rule__PropertyValue__Alternatives");
+			builder.put(grammarAccess.getLanguageValueAccess().getValueAlternatives_2_0(), "rule__LanguageValue__ValueAlternatives_2_0");
 			builder.put(grammarAccess.getLogLevelAccess().getAlternatives(), "rule__LogLevel__Alternatives");
 			builder.put(grammarAccess.getTemporalPatternKindAccess().getAlternatives(), "rule__TemporalPatternKind__Alternatives");
 			builder.put(grammarAccess.getDocumentAccess().getGroup(), "rule__Document__Group__0");
-			builder.put(grammarAccess.getImportAccess().getGroup(), "rule__Import__Group__0");
+			builder.put(grammarAccess.getImportAccess().getGroup_0(), "rule__Import__Group_0__0");
+			builder.put(grammarAccess.getImportAccess().getGroup_1(), "rule__Import__Group_1__0");
 			builder.put(grammarAccess.getLocalAppenderAccess().getGroup(), "rule__LocalAppender__Group__0");
 			builder.put(grammarAccess.getLocalAppenderAccess().getGroup_3(), "rule__LocalAppender__Group_3__0");
 			builder.put(grammarAccess.getLocalAppenderAccess().getGroup_6(), "rule__LocalAppender__Group_6__0");
@@ -111,7 +114,10 @@ public class MoniLogParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getStreamEventAccess().getGroup_1_2(), "rule__StreamEvent__Group_1_2__0");
 			builder.put(grammarAccess.getPropertyValueAccess().getGroup_0(), "rule__PropertyValue__Group_0__0");
 			builder.put(grammarAccess.getPropertyValueAccess().getGroup_0_1(), "rule__PropertyValue__Group_0_1__0");
-			builder.put(grammarAccess.getLanguageExpressionAccess().getGroup(), "rule__LanguageExpression__Group__0");
+			builder.put(grammarAccess.getLanguageValueAccess().getGroup(), "rule__LanguageValue__Group__0");
+			builder.put(grammarAccess.getLanguageCallAccess().getGroup(), "rule__LanguageCall__Group__0");
+			builder.put(grammarAccess.getLanguageCallAccess().getGroup_3(), "rule__LanguageCall__Group_3__0");
+			builder.put(grammarAccess.getLanguageCallAccess().getGroup_3_2(), "rule__LanguageCall__Group_3_2__0");
 			builder.put(grammarAccess.getQualifiedNameAccess().getGroup(), "rule__QualifiedName__Group__0");
 			builder.put(grammarAccess.getQualifiedNameAccess().getGroup_1(), "rule__QualifiedName__Group_1__0");
 			builder.put(grammarAccess.getQualifiedNameWithWildcardAccess().getGroup(), "rule__QualifiedNameWithWildcard__Group__0");
@@ -121,7 +127,10 @@ public class MoniLogParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getDocumentAccess().getAppendersAssignment_3_1(), "rule__Document__AppendersAssignment_3_1");
 			builder.put(grammarAccess.getDocumentAccess().getLayoutsAssignment_3_2(), "rule__Document__LayoutsAssignment_3_2");
 			builder.put(grammarAccess.getDocumentAccess().getMoniloggersAssignment_3_3(), "rule__Document__MoniloggersAssignment_3_3");
-			builder.put(grammarAccess.getImportAccess().getImportedNamespaceAssignment_1(), "rule__Import__ImportedNamespaceAssignment_1");
+			builder.put(grammarAccess.getImportAccess().getImportedNamespaceAssignment_0_1(), "rule__Import__ImportedNamespaceAssignment_0_1");
+			builder.put(grammarAccess.getImportAccess().getFileURIAssignment_1_1(), "rule__Import__FileURIAssignment_1_1");
+			builder.put(grammarAccess.getImportAccess().getAliasAssignment_1_3(), "rule__Import__AliasAssignment_1_3");
+			builder.put(grammarAccess.getFileAliasAccess().getNameAssignment(), "rule__FileAlias__NameAssignment");
 			builder.put(grammarAccess.getLocalAppenderAccess().getAnnotationsAssignment_0(), "rule__LocalAppender__AnnotationsAssignment_0");
 			builder.put(grammarAccess.getLocalAppenderAccess().getNameAssignment_2(), "rule__LocalAppender__NameAssignment_2");
 			builder.put(grammarAccess.getLocalAppenderAccess().getParameterDeclAssignment_3_1(), "rule__LocalAppender__ParameterDeclAssignment_3_1");
@@ -201,8 +210,13 @@ public class MoniLogParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getPropertyValueAccess().getIdAssignment_0_0(), "rule__PropertyValue__IdAssignment_0_0");
 			builder.put(grammarAccess.getPropertyValueAccess().getValueAssignment_0_1_1(), "rule__PropertyValue__ValueAssignment_0_1_1");
 			builder.put(grammarAccess.getPropertyValueAccess().getValueAssignment_1(), "rule__PropertyValue__ValueAssignment_1");
-			builder.put(grammarAccess.getLanguageExpressionAccess().getLanguageIdAssignment_0(), "rule__LanguageExpression__LanguageIdAssignment_0");
-			builder.put(grammarAccess.getLanguageExpressionAccess().getExpressionAssignment_2(), "rule__LanguageExpression__ExpressionAssignment_2");
+			builder.put(grammarAccess.getLanguageValueAccess().getLanguageIdAssignment_0(), "rule__LanguageValue__LanguageIdAssignment_0");
+			builder.put(grammarAccess.getLanguageValueAccess().getValueAssignment_2(), "rule__LanguageValue__ValueAssignment_2");
+			builder.put(grammarAccess.getLanguageExpressionAccess().getExpressionAssignment(), "rule__LanguageExpression__ExpressionAssignment");
+			builder.put(grammarAccess.getLanguageCallAccess().getFileAssignment_0(), "rule__LanguageCall__FileAssignment_0");
+			builder.put(grammarAccess.getLanguageCallAccess().getFqnAssignment_2(), "rule__LanguageCall__FqnAssignment_2");
+			builder.put(grammarAccess.getLanguageCallAccess().getArgsAssignment_3_1(), "rule__LanguageCall__ArgsAssignment_3_1");
+			builder.put(grammarAccess.getLanguageCallAccess().getArgsAssignment_3_2_1(), "rule__LanguageCall__ArgsAssignment_3_2_1");
 			builder.put(grammarAccess.getDocumentAccess().getUnorderedGroup_3(), "rule__Document__UnorderedGroup_3");
 		}
 	}
