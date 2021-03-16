@@ -14,6 +14,7 @@ import org.eclipse.emf.ecore.EObject;
  * The following features are supported:
  * </p>
  * <ul>
+ *   <li>{@link org.gemoc.monilog.moniLog.FileAlias#getFilePath <em>File Path</em>}</li>
  *   <li>{@link org.gemoc.monilog.moniLog.FileAlias#getName <em>Name</em>}</li>
  * </ul>
  *
@@ -23,6 +24,28 @@ import org.eclipse.emf.ecore.EObject;
  */
 public interface FileAlias extends EObject
 {
+  /**
+   * Returns the value of the '<em><b>File Path</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the value of the '<em>File Path</em>' attribute.
+   * @see #setFilePath(String)
+   * @see org.gemoc.monilog.moniLog.MoniLogPackage#getFileAlias_FilePath()
+   * @model
+   * @generated
+   */
+  String getFilePath();
+
+  /**
+   * Sets the value of the '{@link org.gemoc.monilog.moniLog.FileAlias#getFilePath <em>File Path</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @param value the new value of the '<em>File Path</em>' attribute.
+   * @see #getFilePath()
+   * @generated
+   */
+  void setFilePath(String value);
+
   /**
    * Returns the value of the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->

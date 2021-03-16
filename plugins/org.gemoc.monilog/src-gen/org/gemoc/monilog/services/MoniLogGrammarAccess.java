@@ -106,17 +106,14 @@ public class MoniLogGrammarAccess extends AbstractGrammarElementFinder {
 		private final RuleCall cImportedNamespaceQualifiedNameWithWildcardParserRuleCall_0_1_0 = (RuleCall)cImportedNamespaceAssignment_0_1.eContents().get(0);
 		private final Group cGroup_1 = (Group)cAlternatives.eContents().get(1);
 		private final Keyword cImportKeyword_1_0 = (Keyword)cGroup_1.eContents().get(0);
-		private final Assignment cFileURIAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
-		private final RuleCall cFileURISTRINGTerminalRuleCall_1_1_0 = (RuleCall)cFileURIAssignment_1_1.eContents().get(0);
-		private final Keyword cAsKeyword_1_2 = (Keyword)cGroup_1.eContents().get(2);
-		private final Assignment cAliasAssignment_1_3 = (Assignment)cGroup_1.eContents().get(3);
-		private final RuleCall cAliasFileAliasParserRuleCall_1_3_0 = (RuleCall)cAliasAssignment_1_3.eContents().get(0);
+		private final Assignment cAliasAssignment_1_1 = (Assignment)cGroup_1.eContents().get(1);
+		private final RuleCall cAliasFileAliasParserRuleCall_1_1_0 = (RuleCall)cAliasAssignment_1_1.eContents().get(0);
 		
 		//Import:
-		//	'import' importedNamespace=QualifiedNameWithWildcard | 'import' fileURI=STRING 'as' alias=FileAlias;
+		//	'import' importedNamespace=QualifiedNameWithWildcard | 'import' alias=FileAlias;
 		@Override public ParserRule getRule() { return rule; }
 		
-		//'import' importedNamespace=QualifiedNameWithWildcard | 'import' fileURI=STRING 'as' alias=FileAlias
+		//'import' importedNamespace=QualifiedNameWithWildcard | 'import' alias=FileAlias
 		public Alternatives getAlternatives() { return cAlternatives; }
 		
 		//'import' importedNamespace=QualifiedNameWithWildcard
@@ -131,41 +128,48 @@ public class MoniLogGrammarAccess extends AbstractGrammarElementFinder {
 		//QualifiedNameWithWildcard
 		public RuleCall getImportedNamespaceQualifiedNameWithWildcardParserRuleCall_0_1_0() { return cImportedNamespaceQualifiedNameWithWildcardParserRuleCall_0_1_0; }
 		
-		//'import' fileURI=STRING 'as' alias=FileAlias
+		//'import' alias=FileAlias
 		public Group getGroup_1() { return cGroup_1; }
 		
 		//'import'
 		public Keyword getImportKeyword_1_0() { return cImportKeyword_1_0; }
 		
-		//fileURI=STRING
-		public Assignment getFileURIAssignment_1_1() { return cFileURIAssignment_1_1; }
-		
-		//STRING
-		public RuleCall getFileURISTRINGTerminalRuleCall_1_1_0() { return cFileURISTRINGTerminalRuleCall_1_1_0; }
-		
-		//'as'
-		public Keyword getAsKeyword_1_2() { return cAsKeyword_1_2; }
-		
 		//alias=FileAlias
-		public Assignment getAliasAssignment_1_3() { return cAliasAssignment_1_3; }
+		public Assignment getAliasAssignment_1_1() { return cAliasAssignment_1_1; }
 		
 		//FileAlias
-		public RuleCall getAliasFileAliasParserRuleCall_1_3_0() { return cAliasFileAliasParserRuleCall_1_3_0; }
+		public RuleCall getAliasFileAliasParserRuleCall_1_1_0() { return cAliasFileAliasParserRuleCall_1_1_0; }
 	}
 	public class FileAliasElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.gemoc.monilog.MoniLog.FileAlias");
-		private final Assignment cNameAssignment = (Assignment)rule.eContents().get(1);
-		private final RuleCall cNameIDTerminalRuleCall_0 = (RuleCall)cNameAssignment.eContents().get(0);
+		private final Group cGroup = (Group)rule.eContents().get(1);
+		private final Assignment cFilePathAssignment_0 = (Assignment)cGroup.eContents().get(0);
+		private final RuleCall cFilePathSTRINGTerminalRuleCall_0_0 = (RuleCall)cFilePathAssignment_0.eContents().get(0);
+		private final Keyword cAsKeyword_1 = (Keyword)cGroup.eContents().get(1);
+		private final Assignment cNameAssignment_2 = (Assignment)cGroup.eContents().get(2);
+		private final RuleCall cNameIDTerminalRuleCall_2_0 = (RuleCall)cNameAssignment_2.eContents().get(0);
 		
 		//FileAlias:
-		//	name=ID;
+		//	filePath=STRING 'as' name=ID;
 		@Override public ParserRule getRule() { return rule; }
 		
+		//filePath=STRING 'as' name=ID
+		public Group getGroup() { return cGroup; }
+		
+		//filePath=STRING
+		public Assignment getFilePathAssignment_0() { return cFilePathAssignment_0; }
+		
+		//STRING
+		public RuleCall getFilePathSTRINGTerminalRuleCall_0_0() { return cFilePathSTRINGTerminalRuleCall_0_0; }
+		
+		//'as'
+		public Keyword getAsKeyword_1() { return cAsKeyword_1; }
+		
 		//name=ID
-		public Assignment getNameAssignment() { return cNameAssignment; }
+		public Assignment getNameAssignment_2() { return cNameAssignment_2; }
 		
 		//ID
-		public RuleCall getNameIDTerminalRuleCall_0() { return cNameIDTerminalRuleCall_0; }
+		public RuleCall getNameIDTerminalRuleCall_2_0() { return cNameIDTerminalRuleCall_2_0; }
 	}
 	public class AppenderElements extends AbstractParserRuleElementFinder {
 		private final ParserRule rule = (ParserRule) GrammarUtil.findRuleForName(getGrammar(), "org.gemoc.monilog.MoniLog.Appender");
@@ -2413,7 +2417,7 @@ public class MoniLogGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//Import:
-	//	'import' importedNamespace=QualifiedNameWithWildcard | 'import' fileURI=STRING 'as' alias=FileAlias;
+	//	'import' importedNamespace=QualifiedNameWithWildcard | 'import' alias=FileAlias;
 	public ImportElements getImportAccess() {
 		return pImport;
 	}
@@ -2423,7 +2427,7 @@ public class MoniLogGrammarAccess extends AbstractGrammarElementFinder {
 	}
 	
 	//FileAlias:
-	//	name=ID;
+	//	filePath=STRING 'as' name=ID;
 	public FileAliasElements getFileAliasAccess() {
 		return pFileAlias;
 	}

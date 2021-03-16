@@ -51,6 +51,7 @@ public class MoniLogParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getDocumentAccess().getGroup(), "rule__Document__Group__0");
 			builder.put(grammarAccess.getImportAccess().getGroup_0(), "rule__Import__Group_0__0");
 			builder.put(grammarAccess.getImportAccess().getGroup_1(), "rule__Import__Group_1__0");
+			builder.put(grammarAccess.getFileAliasAccess().getGroup(), "rule__FileAlias__Group__0");
 			builder.put(grammarAccess.getLocalAppenderAccess().getGroup(), "rule__LocalAppender__Group__0");
 			builder.put(grammarAccess.getLocalAppenderAccess().getGroup_3(), "rule__LocalAppender__Group_3__0");
 			builder.put(grammarAccess.getLocalAppenderAccess().getGroup_6(), "rule__LocalAppender__Group_6__0");
@@ -128,9 +129,9 @@ public class MoniLogParser extends AbstractContentAssistParser {
 			builder.put(grammarAccess.getDocumentAccess().getLayoutsAssignment_3_2(), "rule__Document__LayoutsAssignment_3_2");
 			builder.put(grammarAccess.getDocumentAccess().getMoniloggersAssignment_3_3(), "rule__Document__MoniloggersAssignment_3_3");
 			builder.put(grammarAccess.getImportAccess().getImportedNamespaceAssignment_0_1(), "rule__Import__ImportedNamespaceAssignment_0_1");
-			builder.put(grammarAccess.getImportAccess().getFileURIAssignment_1_1(), "rule__Import__FileURIAssignment_1_1");
-			builder.put(grammarAccess.getImportAccess().getAliasAssignment_1_3(), "rule__Import__AliasAssignment_1_3");
-			builder.put(grammarAccess.getFileAliasAccess().getNameAssignment(), "rule__FileAlias__NameAssignment");
+			builder.put(grammarAccess.getImportAccess().getAliasAssignment_1_1(), "rule__Import__AliasAssignment_1_1");
+			builder.put(grammarAccess.getFileAliasAccess().getFilePathAssignment_0(), "rule__FileAlias__FilePathAssignment_0");
+			builder.put(grammarAccess.getFileAliasAccess().getNameAssignment_2(), "rule__FileAlias__NameAssignment_2");
 			builder.put(grammarAccess.getLocalAppenderAccess().getAnnotationsAssignment_0(), "rule__LocalAppender__AnnotationsAssignment_0");
 			builder.put(grammarAccess.getLocalAppenderAccess().getNameAssignment_2(), "rule__LocalAppender__NameAssignment_2");
 			builder.put(grammarAccess.getLocalAppenderAccess().getParameterDeclAssignment_3_1(), "rule__LocalAppender__ParameterDeclAssignment_3_1");

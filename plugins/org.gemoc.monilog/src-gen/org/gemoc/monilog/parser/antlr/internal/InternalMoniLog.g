@@ -317,32 +317,10 @@ ruleImport returns [EObject current=null]
 			}
 			(
 				(
-					lv_fileURI_3_0=RULE_STRING
 					{
-						newLeafNode(lv_fileURI_3_0, grammarAccess.getImportAccess().getFileURISTRINGTerminalRuleCall_1_1_0());
+						newCompositeNode(grammarAccess.getImportAccess().getAliasFileAliasParserRuleCall_1_1_0());
 					}
-					{
-						if ($current==null) {
-							$current = createModelElement(grammarAccess.getImportRule());
-						}
-						setWithLastConsumed(
-							$current,
-							"fileURI",
-							lv_fileURI_3_0,
-							"org.eclipse.xtext.common.Terminals.STRING");
-					}
-				)
-			)
-			otherlv_4='as'
-			{
-				newLeafNode(otherlv_4, grammarAccess.getImportAccess().getAsKeyword_1_2());
-			}
-			(
-				(
-					{
-						newCompositeNode(grammarAccess.getImportAccess().getAliasFileAliasParserRuleCall_1_3_0());
-					}
-					lv_alias_5_0=ruleFileAlias
+					lv_alias_3_0=ruleFileAlias
 					{
 						if ($current==null) {
 							$current = createModelElementForParent(grammarAccess.getImportRule());
@@ -350,7 +328,7 @@ ruleImport returns [EObject current=null]
 						set(
 							$current,
 							"alias",
-							lv_alias_5_0,
+							lv_alias_3_0,
 							"org.gemoc.monilog.MoniLog.FileAlias");
 						afterParserOrEnumRuleCall();
 					}
@@ -377,20 +355,44 @@ ruleFileAlias returns [EObject current=null]
 }:
 	(
 		(
-			lv_name_0_0=RULE_ID
-			{
-				newLeafNode(lv_name_0_0, grammarAccess.getFileAliasAccess().getNameIDTerminalRuleCall_0());
-			}
-			{
-				if ($current==null) {
-					$current = createModelElement(grammarAccess.getFileAliasRule());
+			(
+				lv_filePath_0_0=RULE_STRING
+				{
+					newLeafNode(lv_filePath_0_0, grammarAccess.getFileAliasAccess().getFilePathSTRINGTerminalRuleCall_0_0());
 				}
-				setWithLastConsumed(
-					$current,
-					"name",
-					lv_name_0_0,
-					"org.eclipse.xtext.common.Terminals.ID");
-			}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getFileAliasRule());
+					}
+					setWithLastConsumed(
+						$current,
+						"filePath",
+						lv_filePath_0_0,
+						"org.eclipse.xtext.common.Terminals.STRING");
+				}
+			)
+		)
+		otherlv_1='as'
+		{
+			newLeafNode(otherlv_1, grammarAccess.getFileAliasAccess().getAsKeyword_1());
+		}
+		(
+			(
+				lv_name_2_0=RULE_ID
+				{
+					newLeafNode(lv_name_2_0, grammarAccess.getFileAliasAccess().getNameIDTerminalRuleCall_2_0());
+				}
+				{
+					if ($current==null) {
+						$current = createModelElement(grammarAccess.getFileAliasRule());
+					}
+					setWithLastConsumed(
+						$current,
+						"name",
+						lv_name_2_0,
+						"org.eclipse.xtext.common.Terminals.ID");
+				}
+			)
 		)
 	)
 ;

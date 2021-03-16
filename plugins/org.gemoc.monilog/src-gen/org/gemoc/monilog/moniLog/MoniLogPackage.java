@@ -151,22 +151,13 @@ public interface MoniLogPackage extends EPackage
   int IMPORT__IMPORTED_NAMESPACE = 0;
 
   /**
-   * The feature id for the '<em><b>File URI</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int IMPORT__FILE_URI = 1;
-
-  /**
    * The feature id for the '<em><b>Alias</b></em>' containment reference.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int IMPORT__ALIAS = 2;
+  int IMPORT__ALIAS = 1;
 
   /**
    * The number of structural features of the '<em>Import</em>' class.
@@ -175,7 +166,7 @@ public interface MoniLogPackage extends EPackage
    * @generated
    * @ordered
    */
-  int IMPORT_FEATURE_COUNT = 3;
+  int IMPORT_FEATURE_COUNT = 2;
 
   /**
    * The meta object id for the '{@link org.gemoc.monilog.moniLog.impl.FileAliasImpl <em>File Alias</em>}' class.
@@ -188,13 +179,22 @@ public interface MoniLogPackage extends EPackage
   int FILE_ALIAS = 2;
 
   /**
+   * The feature id for the '<em><b>File Path</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int FILE_ALIAS__FILE_PATH = 0;
+
+  /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int FILE_ALIAS__NAME = 0;
+  int FILE_ALIAS__NAME = 1;
 
   /**
    * The number of structural features of the '<em>File Alias</em>' class.
@@ -203,7 +203,7 @@ public interface MoniLogPackage extends EPackage
    * @generated
    * @ordered
    */
-  int FILE_ALIAS_FEATURE_COUNT = 1;
+  int FILE_ALIAS_FEATURE_COUNT = 2;
 
   /**
    * The meta object id for the '{@link org.gemoc.monilog.moniLog.impl.AppenderImpl <em>Appender</em>}' class.
@@ -2061,17 +2061,6 @@ public interface MoniLogPackage extends EPackage
   EAttribute getImport_ImportedNamespace();
 
   /**
-   * Returns the meta object for the attribute '{@link org.gemoc.monilog.moniLog.Import#getFileURI <em>File URI</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>File URI</em>'.
-   * @see org.gemoc.monilog.moniLog.Import#getFileURI()
-   * @see #getImport()
-   * @generated
-   */
-  EAttribute getImport_FileURI();
-
-  /**
    * Returns the meta object for the containment reference '{@link org.gemoc.monilog.moniLog.Import#getAlias <em>Alias</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2091,6 +2080,17 @@ public interface MoniLogPackage extends EPackage
    * @generated
    */
   EClass getFileAlias();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.gemoc.monilog.moniLog.FileAlias#getFilePath <em>File Path</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>File Path</em>'.
+   * @see org.gemoc.monilog.moniLog.FileAlias#getFilePath()
+   * @see #getFileAlias()
+   * @generated
+   */
+  EAttribute getFileAlias_FilePath();
 
   /**
    * Returns the meta object for the attribute '{@link org.gemoc.monilog.moniLog.FileAlias#getName <em>Name</em>}'.
@@ -3445,14 +3445,6 @@ public interface MoniLogPackage extends EPackage
     EAttribute IMPORT__IMPORTED_NAMESPACE = eINSTANCE.getImport_ImportedNamespace();
 
     /**
-     * The meta object literal for the '<em><b>File URI</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute IMPORT__FILE_URI = eINSTANCE.getImport_FileURI();
-
-    /**
      * The meta object literal for the '<em><b>Alias</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3469,6 +3461,14 @@ public interface MoniLogPackage extends EPackage
      * @generated
      */
     EClass FILE_ALIAS = eINSTANCE.getFileAlias();
+
+    /**
+     * The meta object literal for the '<em><b>File Path</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute FILE_ALIAS__FILE_PATH = eINSTANCE.getFileAlias_FilePath();
 
     /**
      * The meta object literal for the '<em><b>Name</b></em>' attribute feature.

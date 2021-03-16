@@ -662,20 +662,9 @@ public class MoniLogPackageImpl extends EPackageImpl implements MoniLogPackage
    * @generated
    */
   @Override
-  public EAttribute getImport_FileURI()
-  {
-    return (EAttribute)importEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
   public EReference getImport_Alias()
   {
-    return (EReference)importEClass.getEStructuralFeatures().get(2);
+    return (EReference)importEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -695,9 +684,20 @@ public class MoniLogPackageImpl extends EPackageImpl implements MoniLogPackage
    * @generated
    */
   @Override
-  public EAttribute getFileAlias_Name()
+  public EAttribute getFileAlias_FilePath()
   {
     return (EAttribute)fileAliasEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getFileAlias_Name()
+  {
+    return (EAttribute)fileAliasEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -2039,10 +2039,10 @@ public class MoniLogPackageImpl extends EPackageImpl implements MoniLogPackage
 
     importEClass = createEClass(IMPORT);
     createEAttribute(importEClass, IMPORT__IMPORTED_NAMESPACE);
-    createEAttribute(importEClass, IMPORT__FILE_URI);
     createEReference(importEClass, IMPORT__ALIAS);
 
     fileAliasEClass = createEClass(FILE_ALIAS);
+    createEAttribute(fileAliasEClass, FILE_ALIAS__FILE_PATH);
     createEAttribute(fileAliasEClass, FILE_ALIAS__NAME);
 
     appenderEClass = createEClass(APPENDER);
@@ -2294,10 +2294,10 @@ public class MoniLogPackageImpl extends EPackageImpl implements MoniLogPackage
 
     initEClass(importEClass, Import.class, "Import", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getImport_ImportedNamespace(), ecorePackage.getEString(), "importedNamespace", null, 0, 1, Import.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEAttribute(getImport_FileURI(), ecorePackage.getEString(), "fileURI", null, 0, 1, Import.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getImport_Alias(), this.getFileAlias(), null, "alias", null, 0, 1, Import.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(fileAliasEClass, FileAlias.class, "FileAlias", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getFileAlias_FilePath(), ecorePackage.getEString(), "filePath", null, 0, 1, FileAlias.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getFileAlias_Name(), ecorePackage.getEString(), "name", null, 0, 1, FileAlias.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(appenderEClass, Appender.class, "Appender", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);

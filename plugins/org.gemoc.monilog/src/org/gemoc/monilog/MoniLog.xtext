@@ -8,10 +8,10 @@ Document:
 	(events+=Event* & appenders+=Appender* & layouts+=Layout* & moniloggers+=MoniLogger*);
 
 Import:
-	'import' importedNamespace=QualifiedNameWithWildcard | 'import' fileURI=STRING 'as' alias=FileAlias;
+	'import' importedNamespace=QualifiedNameWithWildcard | 'import' alias=FileAlias;
 
 FileAlias:
-	name=ID;
+	filePath=STRING 'as' name=ID;
 
 @Exported
 Appender:

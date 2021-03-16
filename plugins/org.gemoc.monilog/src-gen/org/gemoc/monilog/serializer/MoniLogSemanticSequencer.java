@@ -392,15 +392,18 @@ public class MoniLogSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     FileAlias returns FileAlias
 	 *
 	 * Constraint:
-	 *     name=ID
+	 *     (filePath=STRING name=ID)
 	 */
 	protected void sequence_FileAlias(ISerializationContext context, FileAlias semanticObject) {
 		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MoniLogPackage.Literals.FILE_ALIAS__FILE_PATH) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MoniLogPackage.Literals.FILE_ALIAS__FILE_PATH));
 			if (transientValues.isValueTransient(semanticObject, MoniLogPackage.Literals.FILE_ALIAS__NAME) == ValueTransient.YES)
 				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MoniLogPackage.Literals.FILE_ALIAS__NAME));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getFileAliasAccess().getNameIDTerminalRuleCall_0(), semanticObject.getName());
+		feeder.accept(grammarAccess.getFileAliasAccess().getFilePathSTRINGTerminalRuleCall_0_0(), semanticObject.getFilePath());
+		feeder.accept(grammarAccess.getFileAliasAccess().getNameIDTerminalRuleCall_2_0(), semanticObject.getName());
 		feeder.finish();
 	}
 	
@@ -410,7 +413,7 @@ public class MoniLogSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     Import returns Import
 	 *
 	 * Constraint:
-	 *     (importedNamespace=QualifiedNameWithWildcard | (fileURI=STRING alias=FileAlias))
+	 *     (importedNamespace=QualifiedNameWithWildcard | alias=FileAlias)
 	 */
 	protected void sequence_Import(ISerializationContext context, Import semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);

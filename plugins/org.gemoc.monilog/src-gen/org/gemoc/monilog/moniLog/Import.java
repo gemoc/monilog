@@ -15,7 +15,6 @@ import org.eclipse.emf.ecore.EObject;
  * </p>
  * <ul>
  *   <li>{@link org.gemoc.monilog.moniLog.Import#getImportedNamespace <em>Imported Namespace</em>}</li>
- *   <li>{@link org.gemoc.monilog.moniLog.Import#getFileURI <em>File URI</em>}</li>
  *   <li>{@link org.gemoc.monilog.moniLog.Import#getAlias <em>Alias</em>}</li>
  * </ul>
  *
@@ -46,28 +45,6 @@ public interface Import extends EObject
    * @generated
    */
   void setImportedNamespace(String value);
-
-  /**
-   * Returns the value of the '<em><b>File URI</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the value of the '<em>File URI</em>' attribute.
-   * @see #setFileURI(String)
-   * @see org.gemoc.monilog.moniLog.MoniLogPackage#getImport_FileURI()
-   * @model
-   * @generated
-   */
-  String getFileURI();
-
-  /**
-   * Sets the value of the '{@link org.gemoc.monilog.moniLog.Import#getFileURI <em>File URI</em>}' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @param value the new value of the '<em>File URI</em>' attribute.
-   * @see #getFileURI()
-   * @generated
-   */
-  void setFileURI(String value);
 
   /**
    * Returns the value of the '<em><b>Alias</b></em>' containment reference.

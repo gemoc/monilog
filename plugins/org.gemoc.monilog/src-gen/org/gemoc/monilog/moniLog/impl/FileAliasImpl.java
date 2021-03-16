@@ -21,6 +21,7 @@ import org.gemoc.monilog.moniLog.MoniLogPackage;
  * The following features are implemented:
  * </p>
  * <ul>
+ *   <li>{@link org.gemoc.monilog.moniLog.impl.FileAliasImpl#getFilePath <em>File Path</em>}</li>
  *   <li>{@link org.gemoc.monilog.moniLog.impl.FileAliasImpl#getName <em>Name</em>}</li>
  * </ul>
  *
@@ -28,6 +29,26 @@ import org.gemoc.monilog.moniLog.MoniLogPackage;
  */
 public class FileAliasImpl extends MinimalEObjectImpl.Container implements FileAlias
 {
+  /**
+   * The default value of the '{@link #getFilePath() <em>File Path</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getFilePath()
+   * @generated
+   * @ordered
+   */
+  protected static final String FILE_PATH_EDEFAULT = null;
+
+  /**
+   * The cached value of the '{@link #getFilePath() <em>File Path</em>}' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see #getFilePath()
+   * @generated
+   * @ordered
+   */
+  protected String filePath = FILE_PATH_EDEFAULT;
+
   /**
    * The default value of the '{@link #getName() <em>Name</em>}' attribute.
    * <!-- begin-user-doc -->
@@ -75,6 +96,31 @@ public class FileAliasImpl extends MinimalEObjectImpl.Container implements FileA
    * @generated
    */
   @Override
+  public String getFilePath()
+  {
+    return filePath;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public void setFilePath(String newFilePath)
+  {
+    String oldFilePath = filePath;
+    filePath = newFilePath;
+    if (eNotificationRequired())
+      eNotify(new ENotificationImpl(this, Notification.SET, MoniLogPackage.FILE_ALIAS__FILE_PATH, oldFilePath, filePath));
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public String getName()
   {
     return name;
@@ -104,6 +150,8 @@ public class FileAliasImpl extends MinimalEObjectImpl.Container implements FileA
   {
     switch (featureID)
     {
+      case MoniLogPackage.FILE_ALIAS__FILE_PATH:
+        return getFilePath();
       case MoniLogPackage.FILE_ALIAS__NAME:
         return getName();
     }
@@ -120,6 +168,9 @@ public class FileAliasImpl extends MinimalEObjectImpl.Container implements FileA
   {
     switch (featureID)
     {
+      case MoniLogPackage.FILE_ALIAS__FILE_PATH:
+        setFilePath((String)newValue);
+        return;
       case MoniLogPackage.FILE_ALIAS__NAME:
         setName((String)newValue);
         return;
@@ -137,6 +188,9 @@ public class FileAliasImpl extends MinimalEObjectImpl.Container implements FileA
   {
     switch (featureID)
     {
+      case MoniLogPackage.FILE_ALIAS__FILE_PATH:
+        setFilePath(FILE_PATH_EDEFAULT);
+        return;
       case MoniLogPackage.FILE_ALIAS__NAME:
         setName(NAME_EDEFAULT);
         return;
@@ -154,6 +208,8 @@ public class FileAliasImpl extends MinimalEObjectImpl.Container implements FileA
   {
     switch (featureID)
     {
+      case MoniLogPackage.FILE_ALIAS__FILE_PATH:
+        return FILE_PATH_EDEFAULT == null ? filePath != null : !FILE_PATH_EDEFAULT.equals(filePath);
       case MoniLogPackage.FILE_ALIAS__NAME:
         return NAME_EDEFAULT == null ? name != null : !NAME_EDEFAULT.equals(name);
     }
@@ -171,7 +227,9 @@ public class FileAliasImpl extends MinimalEObjectImpl.Container implements FileA
     if (eIsProxy()) return super.toString();
 
     StringBuilder result = new StringBuilder(super.toString());
-    result.append(" (name: ");
+    result.append(" (filePath: ");
+    result.append(filePath);
+    result.append(", name: ");
     result.append(name);
     result.append(')');
     return result.toString();

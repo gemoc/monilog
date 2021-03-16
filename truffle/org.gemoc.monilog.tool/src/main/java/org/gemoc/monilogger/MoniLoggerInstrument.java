@@ -1,6 +1,7 @@
 package org.gemoc.monilogger;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -46,6 +47,7 @@ import org.gemoc.monilog.moniLog.Event;
 import org.gemoc.monilog.moniLog.Expression;
 import org.gemoc.monilog.moniLog.ExternalAppender;
 import org.gemoc.monilog.moniLog.ExternalLayout;
+import org.gemoc.monilog.moniLog.LanguageCall;
 import org.gemoc.monilog.moniLog.LanguageExpression;
 import org.gemoc.monilog.moniLog.LanguageValue;
 import org.gemoc.monilog.moniLog.Layout;
@@ -152,6 +154,7 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 	private TruffleLogger logger;
 
 	private Map<String, Source> expressionToSource = new HashMap<>();
+	private Map<String, org.graalvm.polyglot.Source> evaluatedSources = new HashMap<>();
 	private Map<String, AbstractTemporalProperty> temporalPropertyMap = new HashMap<>();
 	private Map<String, List<String>> propertyNameToEventTypes = new HashMap<>();
 	private Map<Event, AbstractTemporalProperty> eventToTemporalProperty = new HashMap<>();
@@ -227,6 +230,7 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 					event.put("EoE", "EoE");
 					epRuntime.getEventService().sendEventMap(event, "EoE");
 				}
+				evaluatedSources.clear();
 				List<EventBinding<MoniLoggerASTEventNodeFactory>> bindings = contextToFactory.remove(context);
 				if (bindings != null) {
 					bindings.forEach(b -> b.dispose());
@@ -712,14 +716,14 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 			final LanguageValue languageValue = (LanguageValue) expression;
 			final String languageId = languageValue.getLanguageId();
 			languages.add(languageId);
-			return getLanguageValue(languageId, languageValue);
+			return getLanguageValue(languageId, languageValue, node, languages);
 		}
 		default:
 			throw new UnsupportedOperationException();
 		}
 	}
 	
-	private MoniLoggerExecutableNode getLanguageValue(String languageId, LanguageValue languageValue) {
+	private MoniLoggerExecutableNode getLanguageValue(String languageId, LanguageValue languageValue, Node node, Set<String> languages) {
 		final EObject value = languageValue.getValue();
 		switch (value.eClass().getClassifierID()) {
 		case MoniLogPackage.LANGUAGE_EXPRESSION: {
@@ -731,8 +735,23 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 			return callNode;
 		}
 		case MoniLogPackage.LANGUAGE_CALL: {
-			// TODO
-			throw new UnsupportedOperationException();
+			final LanguageCall call = (LanguageCall) value;
+			final String filePath = call.getFile().getFilePath();
+			final org.graalvm.polyglot.Source source = evaluatedSources.computeIfAbsent(filePath, p -> {
+				org.graalvm.polyglot.Source src;
+				try {
+					src = org.graalvm.polyglot.Source.newBuilder(languageId, new File(filePath)).build();
+					Context.getCurrent().eval(src);
+					return src;
+				} catch (IOException e) {
+					e.printStackTrace();
+					return null;
+				}
+			});
+			final Value ast = Context.getCurrent().getBindings(languageId).getMember(call.getFqn());
+			final MoniLoggerExecutableNode[] args = call.getArgs().stream().map(e -> getExpressionNode(e, node, languages)).collect(Collectors.toList()).toArray(EMPTY_ARRAY);
+			final MoniLoggerExecutableNode callNode = new MoniLoggerCallSourceNode(Context.getCurrent(), source, ast, args);
+			return callNode;
 		}
 		default:
 			throw new UnsupportedOperationException();
