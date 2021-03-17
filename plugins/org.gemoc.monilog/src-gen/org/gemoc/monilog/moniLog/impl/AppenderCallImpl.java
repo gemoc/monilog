@@ -20,7 +20,7 @@ import org.eclipse.emf.ecore.util.InternalEList;
 
 import org.gemoc.monilog.moniLog.Appender;
 import org.gemoc.monilog.moniLog.AppenderCall;
-import org.gemoc.monilog.moniLog.CallArgument;
+import org.gemoc.monilog.moniLog.Expression;
 import org.gemoc.monilog.moniLog.MoniLogPackage;
 
 /**
@@ -57,7 +57,7 @@ public class AppenderCallImpl extends ActionImpl implements AppenderCall
    * @generated
    * @ordered
    */
-  protected EList<CallArgument> args;
+  protected EList<Expression> args;
 
   /**
    * <!-- begin-user-doc -->
@@ -131,11 +131,11 @@ public class AppenderCallImpl extends ActionImpl implements AppenderCall
    * @generated
    */
   @Override
-  public EList<CallArgument> getArgs()
+  public EList<Expression> getArgs()
   {
     if (args == null)
     {
-      args = new EObjectContainmentEList<CallArgument>(CallArgument.class, this, MoniLogPackage.APPENDER_CALL__ARGS);
+      args = new EObjectContainmentEList<Expression>(Expression.class, this, MoniLogPackage.APPENDER_CALL__ARGS);
     }
     return args;
   }
@@ -191,7 +191,7 @@ public class AppenderCallImpl extends ActionImpl implements AppenderCall
         return;
       case MoniLogPackage.APPENDER_CALL__ARGS:
         getArgs().clear();
-        getArgs().addAll((Collection<? extends CallArgument>)newValue);
+        getArgs().addAll((Collection<? extends Expression>)newValue);
         return;
     }
     super.eSet(featureID, newValue);

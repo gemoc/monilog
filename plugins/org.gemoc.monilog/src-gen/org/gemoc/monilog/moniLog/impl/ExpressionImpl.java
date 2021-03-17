@@ -5,6 +5,8 @@ package org.gemoc.monilog.moniLog.impl;
 
 import org.eclipse.emf.ecore.EClass;
 
+import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
+
 import org.gemoc.monilog.moniLog.Expression;
 import org.gemoc.monilog.moniLog.MoniLogPackage;
 
@@ -15,7 +17,7 @@ import org.gemoc.monilog.moniLog.MoniLogPackage;
  *
  * @generated
  */
-public class ExpressionImpl extends CallArgumentImpl implements Expression
+public class ExpressionImpl extends MinimalEObjectImpl.Container implements Expression
 {
   /**
    * <!-- begin-user-doc -->

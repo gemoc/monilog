@@ -196,11 +196,6 @@ public class MoniLogAdapterFactory extends AdapterFactoryImpl
         return createAppenderCallAdapter();
       }
       @Override
-      public Adapter caseCallArgument(CallArgument object)
-      {
-        return createCallArgumentAdapter();
-      }
-      @Override
       public Adapter caseLayoutCall(LayoutCall object)
       {
         return createLayoutCallAdapter();
@@ -209,11 +204,6 @@ public class MoniLogAdapterFactory extends AdapterFactoryImpl
       public Adapter caseEmitEvent(EmitEvent object)
       {
         return createEmitEventAdapter();
-      }
-      @Override
-      public Adapter caseSetVariable(SetVariable object)
-      {
-        return createSetVariableAdapter();
       }
       @Override
       public Adapter caseMoniloggerCall(MoniloggerCall object)
@@ -231,6 +221,11 @@ public class MoniLogAdapterFactory extends AdapterFactoryImpl
         return createEmptyOrPropertyValueAdapter();
       }
       @Override
+      public Adapter casePropertyValue(PropertyValue object)
+      {
+        return createPropertyValueAdapter();
+      }
+      @Override
       public Adapter caseExpression(Expression object)
       {
         return createExpressionAdapter();
@@ -241,9 +236,9 @@ public class MoniLogAdapterFactory extends AdapterFactoryImpl
         return createParameterReferenceAdapter();
       }
       @Override
-      public Adapter casePropertyValue(PropertyValue object)
+      public Adapter caseMoniLogExpression(MoniLogExpression object)
       {
-        return createPropertyValueAdapter();
+        return createMoniLogExpressionAdapter();
       }
       @Override
       public Adapter caseLanguageValue(LanguageValue object)
@@ -259,6 +254,26 @@ public class MoniLogAdapterFactory extends AdapterFactoryImpl
       public Adapter caseLanguageCall(LanguageCall object)
       {
         return createLanguageCallAdapter();
+      }
+      @Override
+      public Adapter caseSimpleExpression(SimpleExpression object)
+      {
+        return createSimpleExpressionAdapter();
+      }
+      @Override
+      public Adapter caseRef(Ref object)
+      {
+        return createRefAdapter();
+      }
+      @Override
+      public Adapter caseSimpleVarRef(SimpleVarRef object)
+      {
+        return createSimpleVarRefAdapter();
+      }
+      @Override
+      public Adapter caseArraySize(ArraySize object)
+      {
+        return createArraySizeAdapter();
       }
       @Override
       public Adapter caseASTEvent(ASTEvent object)
@@ -349,6 +364,106 @@ public class MoniLogAdapterFactory extends AdapterFactoryImpl
       public Adapter caseEmpty(Empty object)
       {
         return createEmptyAdapter();
+      }
+      @Override
+      public Adapter caseContractedIf(ContractedIf object)
+      {
+        return createContractedIfAdapter();
+      }
+      @Override
+      public Adapter caseOr(Or object)
+      {
+        return createOrAdapter();
+      }
+      @Override
+      public Adapter caseAnd(And object)
+      {
+        return createAndAdapter();
+      }
+      @Override
+      public Adapter caseEquality(Equality object)
+      {
+        return createEqualityAdapter();
+      }
+      @Override
+      public Adapter caseComparison(Comparison object)
+      {
+        return createComparisonAdapter();
+      }
+      @Override
+      public Adapter casePlus(Plus object)
+      {
+        return createPlusAdapter();
+      }
+      @Override
+      public Adapter caseMinus(Minus object)
+      {
+        return createMinusAdapter();
+      }
+      @Override
+      public Adapter caseMul(Mul object)
+      {
+        return createMulAdapter();
+      }
+      @Override
+      public Adapter caseDiv(Div object)
+      {
+        return createDivAdapter();
+      }
+      @Override
+      public Adapter caseModulo(Modulo object)
+      {
+        return createModuloAdapter();
+      }
+      @Override
+      public Adapter caseParenthesis(Parenthesis object)
+      {
+        return createParenthesisAdapter();
+      }
+      @Override
+      public Adapter caseUnaryMinus(UnaryMinus object)
+      {
+        return createUnaryMinusAdapter();
+      }
+      @Override
+      public Adapter caseNot(Not object)
+      {
+        return createNotAdapter();
+      }
+      @Override
+      public Adapter caseIntConstant(IntConstant object)
+      {
+        return createIntConstantAdapter();
+      }
+      @Override
+      public Adapter caseRealConstant(RealConstant object)
+      {
+        return createRealConstantAdapter();
+      }
+      @Override
+      public Adapter caseBoolConstant(BoolConstant object)
+      {
+        return createBoolConstantAdapter();
+      }
+      @Override
+      public Adapter caseStringConstant(StringConstant object)
+      {
+        return createStringConstantAdapter();
+      }
+      @Override
+      public Adapter caseVectorConstant(VectorConstant object)
+      {
+        return createVectorConstantAdapter();
+      }
+      @Override
+      public Adapter caseArrayRef(ArrayRef object)
+      {
+        return createArrayRefAdapter();
+      }
+      @Override
+      public Adapter casePropertyRef(PropertyRef object)
+      {
+        return createPropertyRefAdapter();
       }
       @Override
       public Adapter defaultCase(EObject object)
@@ -733,21 +848,6 @@ public class MoniLogAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog.CallArgument <em>Call Argument</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.gemoc.monilog.moniLog.CallArgument
-   * @generated
-   */
-  public Adapter createCallArgumentAdapter()
-  {
-    return null;
-  }
-
-  /**
    * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog.LayoutCall <em>Layout Call</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -773,21 +873,6 @@ public class MoniLogAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createEmitEventAdapter()
-  {
-    return null;
-  }
-
-  /**
-   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog.SetVariable <em>Set Variable</em>}'.
-   * <!-- begin-user-doc -->
-   * This default implementation returns null so that we can easily ignore cases;
-   * it's useful to ignore a case when inheritance will catch all the cases anyway.
-   * <!-- end-user-doc -->
-   * @return the new adapter.
-   * @see org.gemoc.monilog.moniLog.SetVariable
-   * @generated
-   */
-  public Adapter createSetVariableAdapter()
   {
     return null;
   }
@@ -838,6 +923,21 @@ public class MoniLogAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
+   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog.PropertyValue <em>Property Value</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.gemoc.monilog.moniLog.PropertyValue
+   * @generated
+   */
+  public Adapter createPropertyValueAdapter()
+  {
+    return null;
+  }
+
+  /**
    * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog.Expression <em>Expression</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
@@ -868,16 +968,16 @@ public class MoniLogAdapterFactory extends AdapterFactoryImpl
   }
 
   /**
-   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog.PropertyValue <em>Property Value</em>}'.
+   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog.MoniLogExpression <em>Expression</em>}'.
    * <!-- begin-user-doc -->
    * This default implementation returns null so that we can easily ignore cases;
    * it's useful to ignore a case when inheritance will catch all the cases anyway.
    * <!-- end-user-doc -->
    * @return the new adapter.
-   * @see org.gemoc.monilog.moniLog.PropertyValue
+   * @see org.gemoc.monilog.moniLog.MoniLogExpression
    * @generated
    */
-  public Adapter createPropertyValueAdapter()
+  public Adapter createMoniLogExpressionAdapter()
   {
     return null;
   }
@@ -923,6 +1023,66 @@ public class MoniLogAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createLanguageCallAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog.SimpleExpression <em>Simple Expression</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.gemoc.monilog.moniLog.SimpleExpression
+   * @generated
+   */
+  public Adapter createSimpleExpressionAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog.Ref <em>Ref</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.gemoc.monilog.moniLog.Ref
+   * @generated
+   */
+  public Adapter createRefAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog.SimpleVarRef <em>Simple Var Ref</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.gemoc.monilog.moniLog.SimpleVarRef
+   * @generated
+   */
+  public Adapter createSimpleVarRefAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog.ArraySize <em>Array Size</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.gemoc.monilog.moniLog.ArraySize
+   * @generated
+   */
+  public Adapter createArraySizeAdapter()
   {
     return null;
   }
@@ -1193,6 +1353,306 @@ public class MoniLogAdapterFactory extends AdapterFactoryImpl
    * @generated
    */
   public Adapter createEmptyAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog.ContractedIf <em>Contracted If</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.gemoc.monilog.moniLog.ContractedIf
+   * @generated
+   */
+  public Adapter createContractedIfAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog.Or <em>Or</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.gemoc.monilog.moniLog.Or
+   * @generated
+   */
+  public Adapter createOrAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog.And <em>And</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.gemoc.monilog.moniLog.And
+   * @generated
+   */
+  public Adapter createAndAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog.Equality <em>Equality</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.gemoc.monilog.moniLog.Equality
+   * @generated
+   */
+  public Adapter createEqualityAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog.Comparison <em>Comparison</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.gemoc.monilog.moniLog.Comparison
+   * @generated
+   */
+  public Adapter createComparisonAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog.Plus <em>Plus</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.gemoc.monilog.moniLog.Plus
+   * @generated
+   */
+  public Adapter createPlusAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog.Minus <em>Minus</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.gemoc.monilog.moniLog.Minus
+   * @generated
+   */
+  public Adapter createMinusAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog.Mul <em>Mul</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.gemoc.monilog.moniLog.Mul
+   * @generated
+   */
+  public Adapter createMulAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog.Div <em>Div</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.gemoc.monilog.moniLog.Div
+   * @generated
+   */
+  public Adapter createDivAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog.Modulo <em>Modulo</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.gemoc.monilog.moniLog.Modulo
+   * @generated
+   */
+  public Adapter createModuloAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog.Parenthesis <em>Parenthesis</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.gemoc.monilog.moniLog.Parenthesis
+   * @generated
+   */
+  public Adapter createParenthesisAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog.UnaryMinus <em>Unary Minus</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.gemoc.monilog.moniLog.UnaryMinus
+   * @generated
+   */
+  public Adapter createUnaryMinusAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog.Not <em>Not</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.gemoc.monilog.moniLog.Not
+   * @generated
+   */
+  public Adapter createNotAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog.IntConstant <em>Int Constant</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.gemoc.monilog.moniLog.IntConstant
+   * @generated
+   */
+  public Adapter createIntConstantAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog.RealConstant <em>Real Constant</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.gemoc.monilog.moniLog.RealConstant
+   * @generated
+   */
+  public Adapter createRealConstantAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog.BoolConstant <em>Bool Constant</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.gemoc.monilog.moniLog.BoolConstant
+   * @generated
+   */
+  public Adapter createBoolConstantAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog.StringConstant <em>String Constant</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.gemoc.monilog.moniLog.StringConstant
+   * @generated
+   */
+  public Adapter createStringConstantAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog.VectorConstant <em>Vector Constant</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.gemoc.monilog.moniLog.VectorConstant
+   * @generated
+   */
+  public Adapter createVectorConstantAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog.ArrayRef <em>Array Ref</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.gemoc.monilog.moniLog.ArrayRef
+   * @generated
+   */
+  public Adapter createArrayRefAdapter()
+  {
+    return null;
+  }
+
+  /**
+   * Creates a new adapter for an object of class '{@link org.gemoc.monilog.moniLog.PropertyRef <em>Property Ref</em>}'.
+   * <!-- begin-user-doc -->
+   * This default implementation returns null so that we can easily ignore cases;
+   * it's useful to ignore a case when inheritance will catch all the cases anyway.
+   * <!-- end-user-doc -->
+   * @return the new adapter.
+   * @see org.gemoc.monilog.moniLog.PropertyRef
+   * @generated
+   */
+  public Adapter createPropertyRefAdapter()
   {
     return null;
   }

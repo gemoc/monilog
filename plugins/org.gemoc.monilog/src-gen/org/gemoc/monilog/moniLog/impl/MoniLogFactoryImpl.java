@@ -90,19 +90,22 @@ public class MoniLogFactoryImpl extends EFactoryImpl implements MoniLogFactory
       case MoniLogPackage.SCOPE: return createScope();
       case MoniLogPackage.ACTION: return createAction();
       case MoniLogPackage.APPENDER_CALL: return createAppenderCall();
-      case MoniLogPackage.CALL_ARGUMENT: return createCallArgument();
       case MoniLogPackage.LAYOUT_CALL: return createLayoutCall();
       case MoniLogPackage.EMIT_EVENT: return createEmitEvent();
-      case MoniLogPackage.SET_VARIABLE: return createSetVariable();
       case MoniLogPackage.MONILOGGER_CALL: return createMoniloggerCall();
       case MoniLogPackage.STREAM_EVENT: return createStreamEvent();
       case MoniLogPackage.EMPTY_OR_PROPERTY_VALUE: return createEmptyOrPropertyValue();
+      case MoniLogPackage.PROPERTY_VALUE: return createPropertyValue();
       case MoniLogPackage.EXPRESSION: return createExpression();
       case MoniLogPackage.PARAMETER_REFERENCE: return createParameterReference();
-      case MoniLogPackage.PROPERTY_VALUE: return createPropertyValue();
+      case MoniLogPackage.MONI_LOG_EXPRESSION: return createMoniLogExpression();
       case MoniLogPackage.LANGUAGE_VALUE: return createLanguageValue();
       case MoniLogPackage.LANGUAGE_EXPRESSION: return createLanguageExpression();
       case MoniLogPackage.LANGUAGE_CALL: return createLanguageCall();
+      case MoniLogPackage.SIMPLE_EXPRESSION: return createSimpleExpression();
+      case MoniLogPackage.REF: return createRef();
+      case MoniLogPackage.SIMPLE_VAR_REF: return createSimpleVarRef();
+      case MoniLogPackage.ARRAY_SIZE: return createArraySize();
       case MoniLogPackage.AST_EVENT: return createASTEvent();
       case MoniLogPackage.COMPLEX_EVENT: return createComplexEvent();
       case MoniLogPackage.USER_EVENT: return createUserEvent();
@@ -121,6 +124,26 @@ public class MoniLogFactoryImpl extends EFactoryImpl implements MoniLogFactory
       case MoniLogPackage.START_MONI_LOGGER: return createStartMoniLogger();
       case MoniLogPackage.STOP_MONI_LOGGER: return createStopMoniLogger();
       case MoniLogPackage.EMPTY: return createEmpty();
+      case MoniLogPackage.CONTRACTED_IF: return createContractedIf();
+      case MoniLogPackage.OR: return createOr();
+      case MoniLogPackage.AND: return createAnd();
+      case MoniLogPackage.EQUALITY: return createEquality();
+      case MoniLogPackage.COMPARISON: return createComparison();
+      case MoniLogPackage.PLUS: return createPlus();
+      case MoniLogPackage.MINUS: return createMinus();
+      case MoniLogPackage.MUL: return createMul();
+      case MoniLogPackage.DIV: return createDiv();
+      case MoniLogPackage.MODULO: return createModulo();
+      case MoniLogPackage.PARENTHESIS: return createParenthesis();
+      case MoniLogPackage.UNARY_MINUS: return createUnaryMinus();
+      case MoniLogPackage.NOT: return createNot();
+      case MoniLogPackage.INT_CONSTANT: return createIntConstant();
+      case MoniLogPackage.REAL_CONSTANT: return createRealConstant();
+      case MoniLogPackage.BOOL_CONSTANT: return createBoolConstant();
+      case MoniLogPackage.STRING_CONSTANT: return createStringConstant();
+      case MoniLogPackage.VECTOR_CONSTANT: return createVectorConstant();
+      case MoniLogPackage.ARRAY_REF: return createArrayRef();
+      case MoniLogPackage.PROPERTY_REF: return createPropertyRef();
       default:
         throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
     }
@@ -466,18 +489,6 @@ public class MoniLogFactoryImpl extends EFactoryImpl implements MoniLogFactory
    * @generated
    */
   @Override
-  public CallArgument createCallArgument()
-  {
-    CallArgumentImpl callArgument = new CallArgumentImpl();
-    return callArgument;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
   public LayoutCall createLayoutCall()
   {
     LayoutCallImpl layoutCall = new LayoutCallImpl();
@@ -494,18 +505,6 @@ public class MoniLogFactoryImpl extends EFactoryImpl implements MoniLogFactory
   {
     EmitEventImpl emitEvent = new EmitEventImpl();
     return emitEvent;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public SetVariable createSetVariable()
-  {
-    SetVariableImpl setVariable = new SetVariableImpl();
-    return setVariable;
   }
 
   /**
@@ -550,6 +549,18 @@ public class MoniLogFactoryImpl extends EFactoryImpl implements MoniLogFactory
    * @generated
    */
   @Override
+  public PropertyValue createPropertyValue()
+  {
+    PropertyValueImpl propertyValue = new PropertyValueImpl();
+    return propertyValue;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public Expression createExpression()
   {
     ExpressionImpl expression = new ExpressionImpl();
@@ -574,10 +585,10 @@ public class MoniLogFactoryImpl extends EFactoryImpl implements MoniLogFactory
    * @generated
    */
   @Override
-  public PropertyValue createPropertyValue()
+  public MoniLogExpression createMoniLogExpression()
   {
-    PropertyValueImpl propertyValue = new PropertyValueImpl();
-    return propertyValue;
+    MoniLogExpressionImpl moniLogExpression = new MoniLogExpressionImpl();
+    return moniLogExpression;
   }
 
   /**
@@ -614,6 +625,54 @@ public class MoniLogFactoryImpl extends EFactoryImpl implements MoniLogFactory
   {
     LanguageCallImpl languageCall = new LanguageCallImpl();
     return languageCall;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public SimpleExpression createSimpleExpression()
+  {
+    SimpleExpressionImpl simpleExpression = new SimpleExpressionImpl();
+    return simpleExpression;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Ref createRef()
+  {
+    RefImpl ref = new RefImpl();
+    return ref;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public SimpleVarRef createSimpleVarRef()
+  {
+    SimpleVarRefImpl simpleVarRef = new SimpleVarRefImpl();
+    return simpleVarRef;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public ArraySize createArraySize()
+  {
+    ArraySizeImpl arraySize = new ArraySizeImpl();
+    return arraySize;
   }
 
   /**
@@ -830,6 +889,246 @@ public class MoniLogFactoryImpl extends EFactoryImpl implements MoniLogFactory
   {
     EmptyImpl empty = new EmptyImpl();
     return empty;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public ContractedIf createContractedIf()
+  {
+    ContractedIfImpl contractedIf = new ContractedIfImpl();
+    return contractedIf;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Or createOr()
+  {
+    OrImpl or = new OrImpl();
+    return or;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public And createAnd()
+  {
+    AndImpl and = new AndImpl();
+    return and;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Equality createEquality()
+  {
+    EqualityImpl equality = new EqualityImpl();
+    return equality;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Comparison createComparison()
+  {
+    ComparisonImpl comparison = new ComparisonImpl();
+    return comparison;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Plus createPlus()
+  {
+    PlusImpl plus = new PlusImpl();
+    return plus;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Minus createMinus()
+  {
+    MinusImpl minus = new MinusImpl();
+    return minus;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Mul createMul()
+  {
+    MulImpl mul = new MulImpl();
+    return mul;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Div createDiv()
+  {
+    DivImpl div = new DivImpl();
+    return div;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Modulo createModulo()
+  {
+    ModuloImpl modulo = new ModuloImpl();
+    return modulo;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Parenthesis createParenthesis()
+  {
+    ParenthesisImpl parenthesis = new ParenthesisImpl();
+    return parenthesis;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public UnaryMinus createUnaryMinus()
+  {
+    UnaryMinusImpl unaryMinus = new UnaryMinusImpl();
+    return unaryMinus;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public Not createNot()
+  {
+    NotImpl not = new NotImpl();
+    return not;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public IntConstant createIntConstant()
+  {
+    IntConstantImpl intConstant = new IntConstantImpl();
+    return intConstant;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public RealConstant createRealConstant()
+  {
+    RealConstantImpl realConstant = new RealConstantImpl();
+    return realConstant;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public BoolConstant createBoolConstant()
+  {
+    BoolConstantImpl boolConstant = new BoolConstantImpl();
+    return boolConstant;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public StringConstant createStringConstant()
+  {
+    StringConstantImpl stringConstant = new StringConstantImpl();
+    return stringConstant;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public VectorConstant createVectorConstant()
+  {
+    VectorConstantImpl vectorConstant = new VectorConstantImpl();
+    return vectorConstant;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public ArrayRef createArrayRef()
+  {
+    ArrayRefImpl arrayRef = new ArrayRefImpl();
+    return arrayRef;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public PropertyRef createPropertyRef()
+  {
+    PropertyRefImpl propertyRef = new PropertyRefImpl();
+    return propertyRef;
   }
 
   /**

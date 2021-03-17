@@ -240,15 +240,6 @@ public interface MoniLogFactory extends EFactory
   AppenderCall createAppenderCall();
 
   /**
-   * Returns a new object of class '<em>Call Argument</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Call Argument</em>'.
-   * @generated
-   */
-  CallArgument createCallArgument();
-
-  /**
    * Returns a new object of class '<em>Layout Call</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -265,15 +256,6 @@ public interface MoniLogFactory extends EFactory
    * @generated
    */
   EmitEvent createEmitEvent();
-
-  /**
-   * Returns a new object of class '<em>Set Variable</em>'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return a new object of class '<em>Set Variable</em>'.
-   * @generated
-   */
-  SetVariable createSetVariable();
 
   /**
    * Returns a new object of class '<em>Monilogger Call</em>'.
@@ -303,6 +285,15 @@ public interface MoniLogFactory extends EFactory
   EmptyOrPropertyValue createEmptyOrPropertyValue();
 
   /**
+   * Returns a new object of class '<em>Property Value</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Property Value</em>'.
+   * @generated
+   */
+  PropertyValue createPropertyValue();
+
+  /**
    * Returns a new object of class '<em>Expression</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -321,13 +312,13 @@ public interface MoniLogFactory extends EFactory
   ParameterReference createParameterReference();
 
   /**
-   * Returns a new object of class '<em>Property Value</em>'.
+   * Returns a new object of class '<em>Expression</em>'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return a new object of class '<em>Property Value</em>'.
+   * @return a new object of class '<em>Expression</em>'.
    * @generated
    */
-  PropertyValue createPropertyValue();
+  MoniLogExpression createMoniLogExpression();
 
   /**
    * Returns a new object of class '<em>Language Value</em>'.
@@ -355,6 +346,42 @@ public interface MoniLogFactory extends EFactory
    * @generated
    */
   LanguageCall createLanguageCall();
+
+  /**
+   * Returns a new object of class '<em>Simple Expression</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Simple Expression</em>'.
+   * @generated
+   */
+  SimpleExpression createSimpleExpression();
+
+  /**
+   * Returns a new object of class '<em>Ref</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Ref</em>'.
+   * @generated
+   */
+  Ref createRef();
+
+  /**
+   * Returns a new object of class '<em>Simple Var Ref</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Simple Var Ref</em>'.
+   * @generated
+   */
+  SimpleVarRef createSimpleVarRef();
+
+  /**
+   * Returns a new object of class '<em>Array Size</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Array Size</em>'.
+   * @generated
+   */
+  ArraySize createArraySize();
 
   /**
    * Returns a new object of class '<em>AST Event</em>'.
@@ -517,6 +544,186 @@ public interface MoniLogFactory extends EFactory
    * @generated
    */
   Empty createEmpty();
+
+  /**
+   * Returns a new object of class '<em>Contracted If</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Contracted If</em>'.
+   * @generated
+   */
+  ContractedIf createContractedIf();
+
+  /**
+   * Returns a new object of class '<em>Or</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Or</em>'.
+   * @generated
+   */
+  Or createOr();
+
+  /**
+   * Returns a new object of class '<em>And</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>And</em>'.
+   * @generated
+   */
+  And createAnd();
+
+  /**
+   * Returns a new object of class '<em>Equality</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Equality</em>'.
+   * @generated
+   */
+  Equality createEquality();
+
+  /**
+   * Returns a new object of class '<em>Comparison</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Comparison</em>'.
+   * @generated
+   */
+  Comparison createComparison();
+
+  /**
+   * Returns a new object of class '<em>Plus</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Plus</em>'.
+   * @generated
+   */
+  Plus createPlus();
+
+  /**
+   * Returns a new object of class '<em>Minus</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Minus</em>'.
+   * @generated
+   */
+  Minus createMinus();
+
+  /**
+   * Returns a new object of class '<em>Mul</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Mul</em>'.
+   * @generated
+   */
+  Mul createMul();
+
+  /**
+   * Returns a new object of class '<em>Div</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Div</em>'.
+   * @generated
+   */
+  Div createDiv();
+
+  /**
+   * Returns a new object of class '<em>Modulo</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Modulo</em>'.
+   * @generated
+   */
+  Modulo createModulo();
+
+  /**
+   * Returns a new object of class '<em>Parenthesis</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Parenthesis</em>'.
+   * @generated
+   */
+  Parenthesis createParenthesis();
+
+  /**
+   * Returns a new object of class '<em>Unary Minus</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Unary Minus</em>'.
+   * @generated
+   */
+  UnaryMinus createUnaryMinus();
+
+  /**
+   * Returns a new object of class '<em>Not</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Not</em>'.
+   * @generated
+   */
+  Not createNot();
+
+  /**
+   * Returns a new object of class '<em>Int Constant</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Int Constant</em>'.
+   * @generated
+   */
+  IntConstant createIntConstant();
+
+  /**
+   * Returns a new object of class '<em>Real Constant</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Real Constant</em>'.
+   * @generated
+   */
+  RealConstant createRealConstant();
+
+  /**
+   * Returns a new object of class '<em>Bool Constant</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Bool Constant</em>'.
+   * @generated
+   */
+  BoolConstant createBoolConstant();
+
+  /**
+   * Returns a new object of class '<em>String Constant</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>String Constant</em>'.
+   * @generated
+   */
+  StringConstant createStringConstant();
+
+  /**
+   * Returns a new object of class '<em>Vector Constant</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Vector Constant</em>'.
+   * @generated
+   */
+  VectorConstant createVectorConstant();
+
+  /**
+   * Returns a new object of class '<em>Array Ref</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Array Ref</em>'.
+   * @generated
+   */
+  ArrayRef createArrayRef();
+
+  /**
+   * Returns a new object of class '<em>Property Ref</em>'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return a new object of class '<em>Property Ref</em>'.
+   * @generated
+   */
+  PropertyRef createPropertyRef();
 
   /**
    * Returns the package supported by this factory.

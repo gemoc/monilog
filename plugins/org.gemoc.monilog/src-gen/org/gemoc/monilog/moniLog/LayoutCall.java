@@ -22,7 +22,7 @@ import org.eclipse.emf.common.util.EList;
  * @model
  * @generated
  */
-public interface LayoutCall extends CallArgument
+public interface LayoutCall extends Expression
 {
   /**
    * Returns the value of the '<em><b>Layout</b></em>' reference.
@@ -48,7 +48,7 @@ public interface LayoutCall extends CallArgument
 
   /**
    * Returns the value of the '<em><b>Args</b></em>' containment reference list.
-   * The list contents are of type {@link org.gemoc.monilog.moniLog.CallArgument}.
+   * The list contents are of type {@link org.gemoc.monilog.moniLog.Expression}.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the value of the '<em>Args</em>' containment reference list.
@@ -56,6 +56,6 @@ public interface LayoutCall extends CallArgument
    * @model containment="true"
    * @generated
    */
-  EList<CallArgument> getArgs();
+  EList<Expression> getArgs();
 
 } // LayoutCall

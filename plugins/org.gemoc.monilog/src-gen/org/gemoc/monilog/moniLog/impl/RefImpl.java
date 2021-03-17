@@ -5,26 +5,24 @@ package org.gemoc.monilog.moniLog.impl;
 
 import org.eclipse.emf.ecore.EClass;
 
-import org.eclipse.emf.ecore.impl.MinimalEObjectImpl;
-
-import org.gemoc.monilog.moniLog.CallArgument;
 import org.gemoc.monilog.moniLog.MoniLogPackage;
+import org.gemoc.monilog.moniLog.Ref;
 
 /**
  * <!-- begin-user-doc -->
- * An implementation of the model object '<em><b>Call Argument</b></em>'.
+ * An implementation of the model object '<em><b>Ref</b></em>'.
  * <!-- end-user-doc -->
  *
  * @generated
  */
-public class CallArgumentImpl extends MinimalEObjectImpl.Container implements CallArgument
+public class RefImpl extends SimpleExpressionImpl implements Ref
 {
   /**
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    */
-  protected CallArgumentImpl()
+  protected RefImpl()
   {
     super();
   }
@@ -37,7 +35,7 @@ public class CallArgumentImpl extends MinimalEObjectImpl.Container implements Ca
   @Override
   protected EClass eStaticClass()
   {
-    return MoniLogPackage.Literals.CALL_ARGUMENT;
+    return MoniLogPackage.Literals.REF;
   }
 
-} //CallArgumentImpl
+} //RefImpl

@@ -19,15 +19,23 @@ import org.gemoc.monilog.moniLog.Absence;
 import org.gemoc.monilog.moniLog.After;
 import org.gemoc.monilog.moniLog.AfterASTEvent;
 import org.gemoc.monilog.moniLog.AfterUntil;
+import org.gemoc.monilog.moniLog.And;
 import org.gemoc.monilog.moniLog.AppenderCall;
+import org.gemoc.monilog.moniLog.ArrayRef;
+import org.gemoc.monilog.moniLog.ArraySize;
 import org.gemoc.monilog.moniLog.Before;
 import org.gemoc.monilog.moniLog.BeforeASTEvent;
 import org.gemoc.monilog.moniLog.Between;
+import org.gemoc.monilog.moniLog.BoolConstant;
+import org.gemoc.monilog.moniLog.Comparison;
 import org.gemoc.monilog.moniLog.ComplexEvent;
 import org.gemoc.monilog.moniLog.Condition;
+import org.gemoc.monilog.moniLog.ContractedIf;
+import org.gemoc.monilog.moniLog.Div;
 import org.gemoc.monilog.moniLog.Document;
 import org.gemoc.monilog.moniLog.EmitEvent;
 import org.gemoc.monilog.moniLog.Empty;
+import org.gemoc.monilog.moniLog.Equality;
 import org.gemoc.monilog.moniLog.ExactBound;
 import org.gemoc.monilog.moniLog.Existence;
 import org.gemoc.monilog.moniLog.ExternalAppender;
@@ -35,6 +43,7 @@ import org.gemoc.monilog.moniLog.ExternalLayout;
 import org.gemoc.monilog.moniLog.FileAlias;
 import org.gemoc.monilog.moniLog.Globally;
 import org.gemoc.monilog.moniLog.Import;
+import org.gemoc.monilog.moniLog.IntConstant;
 import org.gemoc.monilog.moniLog.LanguageCall;
 import org.gemoc.monilog.moniLog.LanguageExpression;
 import org.gemoc.monilog.moniLog.LanguageValue;
@@ -42,21 +51,34 @@ import org.gemoc.monilog.moniLog.LayoutCall;
 import org.gemoc.monilog.moniLog.LocalAppender;
 import org.gemoc.monilog.moniLog.LocalLayout;
 import org.gemoc.monilog.moniLog.LowerBound;
+import org.gemoc.monilog.moniLog.Minus;
+import org.gemoc.monilog.moniLog.Modulo;
+import org.gemoc.monilog.moniLog.MoniLogExpression;
 import org.gemoc.monilog.moniLog.MoniLogPackage;
 import org.gemoc.monilog.moniLog.MoniLogger;
+import org.gemoc.monilog.moniLog.Mul;
+import org.gemoc.monilog.moniLog.Not;
+import org.gemoc.monilog.moniLog.Or;
 import org.gemoc.monilog.moniLog.ParameterDecl;
 import org.gemoc.monilog.moniLog.ParameterReference;
+import org.gemoc.monilog.moniLog.Parenthesis;
+import org.gemoc.monilog.moniLog.Plus;
 import org.gemoc.monilog.moniLog.Precedence;
+import org.gemoc.monilog.moniLog.PropertyRef;
 import org.gemoc.monilog.moniLog.PropertyValue;
+import org.gemoc.monilog.moniLog.RealConstant;
 import org.gemoc.monilog.moniLog.Response;
-import org.gemoc.monilog.moniLog.SetVariable;
+import org.gemoc.monilog.moniLog.SimpleVarRef;
 import org.gemoc.monilog.moniLog.StartMoniLogger;
 import org.gemoc.monilog.moniLog.StopMoniLogger;
 import org.gemoc.monilog.moniLog.StreamEvent;
+import org.gemoc.monilog.moniLog.StringConstant;
 import org.gemoc.monilog.moniLog.TemporalPattern;
+import org.gemoc.monilog.moniLog.UnaryMinus;
 import org.gemoc.monilog.moniLog.Universality;
 import org.gemoc.monilog.moniLog.UpperBound;
 import org.gemoc.monilog.moniLog.UserEvent;
+import org.gemoc.monilog.moniLog.VectorConstant;
 import org.gemoc.monilog.services.MoniLogGrammarAccess;
 
 @SuppressWarnings("all")
@@ -88,8 +110,17 @@ public class MoniLogSemanticSequencer extends AbstractDelegatingSemanticSequence
 			case MoniLogPackage.AFTER_UNTIL:
 				sequence_Scope(context, (AfterUntil) semanticObject); 
 				return; 
+			case MoniLogPackage.AND:
+				sequence_And(context, (And) semanticObject); 
+				return; 
 			case MoniLogPackage.APPENDER_CALL:
 				sequence_AppenderCall(context, (AppenderCall) semanticObject); 
+				return; 
+			case MoniLogPackage.ARRAY_REF:
+				sequence_Ref(context, (ArrayRef) semanticObject); 
+				return; 
+			case MoniLogPackage.ARRAY_SIZE:
+				sequence_ArraySize(context, (ArraySize) semanticObject); 
 				return; 
 			case MoniLogPackage.BEFORE:
 				sequence_Scope(context, (Before) semanticObject); 
@@ -100,11 +131,23 @@ public class MoniLogSemanticSequencer extends AbstractDelegatingSemanticSequence
 			case MoniLogPackage.BETWEEN:
 				sequence_Scope(context, (Between) semanticObject); 
 				return; 
+			case MoniLogPackage.BOOL_CONSTANT:
+				sequence_Atomic(context, (BoolConstant) semanticObject); 
+				return; 
+			case MoniLogPackage.COMPARISON:
+				sequence_Comparison(context, (Comparison) semanticObject); 
+				return; 
 			case MoniLogPackage.COMPLEX_EVENT:
 				sequence_Event(context, (ComplexEvent) semanticObject); 
 				return; 
 			case MoniLogPackage.CONDITION:
 				sequence_Condition(context, (Condition) semanticObject); 
+				return; 
+			case MoniLogPackage.CONTRACTED_IF:
+				sequence_ContractedIf(context, (ContractedIf) semanticObject); 
+				return; 
+			case MoniLogPackage.DIV:
+				sequence_MulOrDiv(context, (Div) semanticObject); 
 				return; 
 			case MoniLogPackage.DOCUMENT:
 				sequence_Document(context, (Document) semanticObject); 
@@ -114,6 +157,9 @@ public class MoniLogSemanticSequencer extends AbstractDelegatingSemanticSequence
 				return; 
 			case MoniLogPackage.EMPTY:
 				sequence_EmptyOrPropertyValue(context, (Empty) semanticObject); 
+				return; 
+			case MoniLogPackage.EQUALITY:
+				sequence_Equality(context, (Equality) semanticObject); 
 				return; 
 			case MoniLogPackage.EXACT_BOUND:
 				sequence_ExactBound(context, (ExactBound) semanticObject); 
@@ -136,6 +182,9 @@ public class MoniLogSemanticSequencer extends AbstractDelegatingSemanticSequence
 			case MoniLogPackage.IMPORT:
 				sequence_Import(context, (Import) semanticObject); 
 				return; 
+			case MoniLogPackage.INT_CONSTANT:
+				sequence_Atomic(context, (IntConstant) semanticObject); 
+				return; 
 			case MoniLogPackage.LANGUAGE_CALL:
 				sequence_LanguageCall(context, (LanguageCall) semanticObject); 
 				return; 
@@ -157,8 +206,26 @@ public class MoniLogSemanticSequencer extends AbstractDelegatingSemanticSequence
 			case MoniLogPackage.LOWER_BOUND:
 				sequence_LowerBound(context, (LowerBound) semanticObject); 
 				return; 
+			case MoniLogPackage.MINUS:
+				sequence_PlusOrMinus(context, (Minus) semanticObject); 
+				return; 
+			case MoniLogPackage.MODULO:
+				sequence_Modulo(context, (Modulo) semanticObject); 
+				return; 
+			case MoniLogPackage.MONI_LOG_EXPRESSION:
+				sequence_MoniLogExpression(context, (MoniLogExpression) semanticObject); 
+				return; 
 			case MoniLogPackage.MONI_LOGGER:
 				sequence_MoniLogger(context, (MoniLogger) semanticObject); 
+				return; 
+			case MoniLogPackage.MUL:
+				sequence_MulOrDiv(context, (Mul) semanticObject); 
+				return; 
+			case MoniLogPackage.NOT:
+				sequence_Primary(context, (Not) semanticObject); 
+				return; 
+			case MoniLogPackage.OR:
+				sequence_Or(context, (Or) semanticObject); 
 				return; 
 			case MoniLogPackage.PARAMETER:
 				sequence_Parameter(context, (org.gemoc.monilog.moniLog.Parameter) semanticObject); 
@@ -176,17 +243,29 @@ public class MoniLogSemanticSequencer extends AbstractDelegatingSemanticSequence
 			case MoniLogPackage.PARAMETER_REFERENCE:
 				sequence_ParameterReference(context, (ParameterReference) semanticObject); 
 				return; 
+			case MoniLogPackage.PARENTHESIS:
+				sequence_Primary(context, (Parenthesis) semanticObject); 
+				return; 
+			case MoniLogPackage.PLUS:
+				sequence_PlusOrMinus(context, (Plus) semanticObject); 
+				return; 
 			case MoniLogPackage.PRECEDENCE:
 				sequence_Pattern(context, (Precedence) semanticObject); 
+				return; 
+			case MoniLogPackage.PROPERTY_REF:
+				sequence_Ref(context, (PropertyRef) semanticObject); 
 				return; 
 			case MoniLogPackage.PROPERTY_VALUE:
 				sequence_PropertyValue(context, (PropertyValue) semanticObject); 
 				return; 
+			case MoniLogPackage.REAL_CONSTANT:
+				sequence_Atomic(context, (RealConstant) semanticObject); 
+				return; 
 			case MoniLogPackage.RESPONSE:
 				sequence_Pattern(context, (Response) semanticObject); 
 				return; 
-			case MoniLogPackage.SET_VARIABLE:
-				sequence_SetVariable(context, (SetVariable) semanticObject); 
+			case MoniLogPackage.SIMPLE_VAR_REF:
+				sequence_SimpleVarRef(context, (SimpleVarRef) semanticObject); 
 				return; 
 			case MoniLogPackage.START_MONI_LOGGER:
 				sequence_MoniloggerCall(context, (StartMoniLogger) semanticObject); 
@@ -197,8 +276,14 @@ public class MoniLogSemanticSequencer extends AbstractDelegatingSemanticSequence
 			case MoniLogPackage.STREAM_EVENT:
 				sequence_StreamEvent(context, (StreamEvent) semanticObject); 
 				return; 
+			case MoniLogPackage.STRING_CONSTANT:
+				sequence_Atomic(context, (StringConstant) semanticObject); 
+				return; 
 			case MoniLogPackage.TEMPORAL_PATTERN:
 				sequence_TemporalPattern(context, (TemporalPattern) semanticObject); 
+				return; 
+			case MoniLogPackage.UNARY_MINUS:
+				sequence_Primary(context, (UnaryMinus) semanticObject); 
 				return; 
 			case MoniLogPackage.UNIVERSALITY:
 				sequence_Pattern(context, (Universality) semanticObject); 
@@ -208,6 +293,9 @@ public class MoniLogSemanticSequencer extends AbstractDelegatingSemanticSequence
 				return; 
 			case MoniLogPackage.USER_EVENT:
 				sequence_Event(context, (UserEvent) semanticObject); 
+				return; 
+			case MoniLogPackage.VECTOR_CONSTANT:
+				sequence_Atomic(context, (VectorConstant) semanticObject); 
 				return; 
 			}
 		if (errorAcceptor != null)
@@ -240,13 +328,282 @@ public class MoniLogSemanticSequencer extends AbstractDelegatingSemanticSequence
 	
 	/**
 	 * Contexts:
+	 *     SimpleExpression returns And
+	 *     ContractedIf returns And
+	 *     ContractedIf.ContractedIf_1_0 returns And
+	 *     Or returns And
+	 *     Or.Or_1_0 returns And
+	 *     And returns And
+	 *     And.And_1_0 returns And
+	 *
+	 * Constraint:
+	 *     (left=And_And_1_0 op='&&' right=Equality)
+	 */
+	protected void sequence_And(ISerializationContext context, And semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MoniLogPackage.Literals.AND__LEFT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MoniLogPackage.Literals.AND__LEFT));
+			if (transientValues.isValueTransient(semanticObject, MoniLogPackage.Literals.AND__OP) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MoniLogPackage.Literals.AND__OP));
+			if (transientValues.isValueTransient(semanticObject, MoniLogPackage.Literals.AND__RIGHT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MoniLogPackage.Literals.AND__RIGHT));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getAndAccess().getAndLeftAction_1_0(), semanticObject.getLeft());
+		feeder.accept(grammarAccess.getAndAccess().getOpAmpersandAmpersandKeyword_1_1_0(), semanticObject.getOp());
+		feeder.accept(grammarAccess.getAndAccess().getRightEqualityParserRuleCall_1_2_0(), semanticObject.getRight());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     Action returns AppenderCall
 	 *     AppenderCall returns AppenderCall
 	 *
 	 * Constraint:
-	 *     (appender=[Appender|QualifiedName] (args+=AppenderCallArgument args+=AppenderCallArgument*)?)
+	 *     (appender=[Appender|QualifiedName] (args+=Expression args+=Expression*)?)
 	 */
 	protected void sequence_AppenderCall(ISerializationContext context, AppenderCall semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     SimpleExpression returns ArraySize
+	 *     ContractedIf returns ArraySize
+	 *     ContractedIf.ContractedIf_1_0 returns ArraySize
+	 *     Or returns ArraySize
+	 *     Or.Or_1_0 returns ArraySize
+	 *     And returns ArraySize
+	 *     And.And_1_0 returns ArraySize
+	 *     Equality returns ArraySize
+	 *     Equality.Equality_1_0 returns ArraySize
+	 *     Comparison returns ArraySize
+	 *     Comparison.Comparison_1_0 returns ArraySize
+	 *     PlusOrMinus returns ArraySize
+	 *     PlusOrMinus.Plus_1_0_0_0 returns ArraySize
+	 *     PlusOrMinus.Minus_1_0_1_0 returns ArraySize
+	 *     MulOrDiv returns ArraySize
+	 *     MulOrDiv.Mul_1_0_0_0 returns ArraySize
+	 *     MulOrDiv.Div_1_0_1_0 returns ArraySize
+	 *     Modulo returns ArraySize
+	 *     Modulo.Modulo_1_0 returns ArraySize
+	 *     Primary returns ArraySize
+	 *     Atomic returns ArraySize
+	 *     ArraySize returns ArraySize
+	 *
+	 * Constraint:
+	 *     array=Ref
+	 */
+	protected void sequence_ArraySize(ISerializationContext context, ArraySize semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MoniLogPackage.Literals.ARRAY_SIZE__ARRAY) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MoniLogPackage.Literals.ARRAY_SIZE__ARRAY));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getArraySizeAccess().getArrayRefParserRuleCall_2_0(), semanticObject.getArray());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     SimpleExpression returns BoolConstant
+	 *     ContractedIf returns BoolConstant
+	 *     ContractedIf.ContractedIf_1_0 returns BoolConstant
+	 *     Or returns BoolConstant
+	 *     Or.Or_1_0 returns BoolConstant
+	 *     And returns BoolConstant
+	 *     And.And_1_0 returns BoolConstant
+	 *     Equality returns BoolConstant
+	 *     Equality.Equality_1_0 returns BoolConstant
+	 *     Comparison returns BoolConstant
+	 *     Comparison.Comparison_1_0 returns BoolConstant
+	 *     PlusOrMinus returns BoolConstant
+	 *     PlusOrMinus.Plus_1_0_0_0 returns BoolConstant
+	 *     PlusOrMinus.Minus_1_0_1_0 returns BoolConstant
+	 *     MulOrDiv returns BoolConstant
+	 *     MulOrDiv.Mul_1_0_0_0 returns BoolConstant
+	 *     MulOrDiv.Div_1_0_1_0 returns BoolConstant
+	 *     Modulo returns BoolConstant
+	 *     Modulo.Modulo_1_0 returns BoolConstant
+	 *     Primary returns BoolConstant
+	 *     Atomic returns BoolConstant
+	 *
+	 * Constraint:
+	 *     value?='true'?
+	 */
+	protected void sequence_Atomic(ISerializationContext context, BoolConstant semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     SimpleExpression returns IntConstant
+	 *     ContractedIf returns IntConstant
+	 *     ContractedIf.ContractedIf_1_0 returns IntConstant
+	 *     Or returns IntConstant
+	 *     Or.Or_1_0 returns IntConstant
+	 *     And returns IntConstant
+	 *     And.And_1_0 returns IntConstant
+	 *     Equality returns IntConstant
+	 *     Equality.Equality_1_0 returns IntConstant
+	 *     Comparison returns IntConstant
+	 *     Comparison.Comparison_1_0 returns IntConstant
+	 *     PlusOrMinus returns IntConstant
+	 *     PlusOrMinus.Plus_1_0_0_0 returns IntConstant
+	 *     PlusOrMinus.Minus_1_0_1_0 returns IntConstant
+	 *     MulOrDiv returns IntConstant
+	 *     MulOrDiv.Mul_1_0_0_0 returns IntConstant
+	 *     MulOrDiv.Div_1_0_1_0 returns IntConstant
+	 *     Modulo returns IntConstant
+	 *     Modulo.Modulo_1_0 returns IntConstant
+	 *     Primary returns IntConstant
+	 *     Atomic returns IntConstant
+	 *
+	 * Constraint:
+	 *     value=INT
+	 */
+	protected void sequence_Atomic(ISerializationContext context, IntConstant semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MoniLogPackage.Literals.INT_CONSTANT__VALUE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MoniLogPackage.Literals.INT_CONSTANT__VALUE));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getAtomicAccess().getValueINTTerminalRuleCall_0_1_0(), semanticObject.getValue());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     SimpleExpression returns RealConstant
+	 *     ContractedIf returns RealConstant
+	 *     ContractedIf.ContractedIf_1_0 returns RealConstant
+	 *     Or returns RealConstant
+	 *     Or.Or_1_0 returns RealConstant
+	 *     And returns RealConstant
+	 *     And.And_1_0 returns RealConstant
+	 *     Equality returns RealConstant
+	 *     Equality.Equality_1_0 returns RealConstant
+	 *     Comparison returns RealConstant
+	 *     Comparison.Comparison_1_0 returns RealConstant
+	 *     PlusOrMinus returns RealConstant
+	 *     PlusOrMinus.Plus_1_0_0_0 returns RealConstant
+	 *     PlusOrMinus.Minus_1_0_1_0 returns RealConstant
+	 *     MulOrDiv returns RealConstant
+	 *     MulOrDiv.Mul_1_0_0_0 returns RealConstant
+	 *     MulOrDiv.Div_1_0_1_0 returns RealConstant
+	 *     Modulo returns RealConstant
+	 *     Modulo.Modulo_1_0 returns RealConstant
+	 *     Primary returns RealConstant
+	 *     Atomic returns RealConstant
+	 *
+	 * Constraint:
+	 *     value=REAL
+	 */
+	protected void sequence_Atomic(ISerializationContext context, RealConstant semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MoniLogPackage.Literals.REAL_CONSTANT__VALUE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MoniLogPackage.Literals.REAL_CONSTANT__VALUE));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getAtomicAccess().getValueREALTerminalRuleCall_1_1_0(), semanticObject.getValue());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     SimpleExpression returns StringConstant
+	 *     ContractedIf returns StringConstant
+	 *     ContractedIf.ContractedIf_1_0 returns StringConstant
+	 *     Or returns StringConstant
+	 *     Or.Or_1_0 returns StringConstant
+	 *     And returns StringConstant
+	 *     And.And_1_0 returns StringConstant
+	 *     Equality returns StringConstant
+	 *     Equality.Equality_1_0 returns StringConstant
+	 *     Comparison returns StringConstant
+	 *     Comparison.Comparison_1_0 returns StringConstant
+	 *     PlusOrMinus returns StringConstant
+	 *     PlusOrMinus.Plus_1_0_0_0 returns StringConstant
+	 *     PlusOrMinus.Minus_1_0_1_0 returns StringConstant
+	 *     MulOrDiv returns StringConstant
+	 *     MulOrDiv.Mul_1_0_0_0 returns StringConstant
+	 *     MulOrDiv.Div_1_0_1_0 returns StringConstant
+	 *     Modulo returns StringConstant
+	 *     Modulo.Modulo_1_0 returns StringConstant
+	 *     Primary returns StringConstant
+	 *     Atomic returns StringConstant
+	 *
+	 * Constraint:
+	 *     value=STRING
+	 */
+	protected void sequence_Atomic(ISerializationContext context, StringConstant semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MoniLogPackage.Literals.STRING_CONSTANT__VALUE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MoniLogPackage.Literals.STRING_CONSTANT__VALUE));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getAtomicAccess().getValueSTRINGTerminalRuleCall_3_1_0(), semanticObject.getValue());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     SimpleExpression returns VectorConstant
+	 *     ContractedIf returns VectorConstant
+	 *     ContractedIf.ContractedIf_1_0 returns VectorConstant
+	 *     Or returns VectorConstant
+	 *     Or.Or_1_0 returns VectorConstant
+	 *     And returns VectorConstant
+	 *     And.And_1_0 returns VectorConstant
+	 *     Equality returns VectorConstant
+	 *     Equality.Equality_1_0 returns VectorConstant
+	 *     Comparison returns VectorConstant
+	 *     Comparison.Comparison_1_0 returns VectorConstant
+	 *     PlusOrMinus returns VectorConstant
+	 *     PlusOrMinus.Plus_1_0_0_0 returns VectorConstant
+	 *     PlusOrMinus.Minus_1_0_1_0 returns VectorConstant
+	 *     MulOrDiv returns VectorConstant
+	 *     MulOrDiv.Mul_1_0_0_0 returns VectorConstant
+	 *     MulOrDiv.Div_1_0_1_0 returns VectorConstant
+	 *     Modulo returns VectorConstant
+	 *     Modulo.Modulo_1_0 returns VectorConstant
+	 *     Primary returns VectorConstant
+	 *     Atomic returns VectorConstant
+	 *
+	 * Constraint:
+	 *     (values+=SimpleExpression values+=SimpleExpression*)
+	 */
+	protected void sequence_Atomic(ISerializationContext context, VectorConstant semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     SimpleExpression returns Comparison
+	 *     ContractedIf returns Comparison
+	 *     ContractedIf.ContractedIf_1_0 returns Comparison
+	 *     Or returns Comparison
+	 *     Or.Or_1_0 returns Comparison
+	 *     And returns Comparison
+	 *     And.And_1_0 returns Comparison
+	 *     Equality returns Comparison
+	 *     Equality.Equality_1_0 returns Comparison
+	 *     Comparison returns Comparison
+	 *     Comparison.Comparison_1_0 returns Comparison
+	 *
+	 * Constraint:
+	 *     (left=Comparison_Comparison_1_0 (op='>=' | op='<=' | op='>' | op='<') right=PlusOrMinus)
+	 */
+	protected void sequence_Comparison(ISerializationContext context, Comparison semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -265,6 +622,32 @@ public class MoniLogSemanticSequencer extends AbstractDelegatingSemanticSequence
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
 		feeder.accept(grammarAccess.getConditionAccess().getExpressionLanguageValueParserRuleCall_0(), semanticObject.getExpression());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     SimpleExpression returns ContractedIf
+	 *     ContractedIf returns ContractedIf
+	 *     ContractedIf.ContractedIf_1_0 returns ContractedIf
+	 *
+	 * Constraint:
+	 *     (condition=ContractedIf_ContractedIf_1_0 then=Or else=Or)
+	 */
+	protected void sequence_ContractedIf(ISerializationContext context, ContractedIf semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MoniLogPackage.Literals.CONTRACTED_IF__CONDITION) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MoniLogPackage.Literals.CONTRACTED_IF__CONDITION));
+			if (transientValues.isValueTransient(semanticObject, MoniLogPackage.Literals.CONTRACTED_IF__THEN) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MoniLogPackage.Literals.CONTRACTED_IF__THEN));
+			if (transientValues.isValueTransient(semanticObject, MoniLogPackage.Literals.CONTRACTED_IF__ELSE) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MoniLogPackage.Literals.CONTRACTED_IF__ELSE));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getContractedIfAccess().getContractedIfConditionAction_1_0(), semanticObject.getCondition());
+		feeder.accept(grammarAccess.getContractedIfAccess().getThenOrParserRuleCall_1_2_0(), semanticObject.getThen());
+		feeder.accept(grammarAccess.getContractedIfAccess().getElseOrParserRuleCall_1_4_0(), semanticObject.getElse());
 		feeder.finish();
 	}
 	
@@ -302,6 +685,26 @@ public class MoniLogSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 *     {Empty}
 	 */
 	protected void sequence_EmptyOrPropertyValue(ISerializationContext context, Empty semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     SimpleExpression returns Equality
+	 *     ContractedIf returns Equality
+	 *     ContractedIf.ContractedIf_1_0 returns Equality
+	 *     Or returns Equality
+	 *     Or.Or_1_0 returns Equality
+	 *     And returns Equality
+	 *     And.And_1_0 returns Equality
+	 *     Equality returns Equality
+	 *     Equality.Equality_1_0 returns Equality
+	 *
+	 * Constraint:
+	 *     (left=Equality_Equality_1_0 (op='==' | op='!=') right=Comparison)
+	 */
+	protected void sequence_Equality(ISerializationContext context, Equality semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
 	}
 	
@@ -453,8 +856,6 @@ public class MoniLogSemanticSequencer extends AbstractDelegatingSemanticSequence
 	/**
 	 * Contexts:
 	 *     Action returns LanguageValue
-	 *     AppenderCallArgument returns LanguageValue
-	 *     LayoutCallArgument returns LanguageValue
 	 *     Expression returns LanguageValue
 	 *     LanguageValue returns LanguageValue
 	 *
@@ -468,11 +869,11 @@ public class MoniLogSemanticSequencer extends AbstractDelegatingSemanticSequence
 	
 	/**
 	 * Contexts:
-	 *     AppenderCallArgument returns LayoutCall
 	 *     LayoutCall returns LayoutCall
+	 *     Expression returns LayoutCall
 	 *
 	 * Constraint:
-	 *     (layout=[Layout|QualifiedName] (args+=LayoutCallArgument args+=LayoutCallArgument*)?)
+	 *     (layout=[Layout|QualifiedName] (args+=Expression args+=Expression*)?)
 	 */
 	protected void sequence_LayoutCall(ISerializationContext context, LayoutCall semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
@@ -520,6 +921,67 @@ public class MoniLogSemanticSequencer extends AbstractDelegatingSemanticSequence
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
 		feeder.accept(grammarAccess.getLowerBoundAccess().getNINTTerminalRuleCall_1_0(), semanticObject.getN());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     SimpleExpression returns Modulo
+	 *     ContractedIf returns Modulo
+	 *     ContractedIf.ContractedIf_1_0 returns Modulo
+	 *     Or returns Modulo
+	 *     Or.Or_1_0 returns Modulo
+	 *     And returns Modulo
+	 *     And.And_1_0 returns Modulo
+	 *     Equality returns Modulo
+	 *     Equality.Equality_1_0 returns Modulo
+	 *     Comparison returns Modulo
+	 *     Comparison.Comparison_1_0 returns Modulo
+	 *     PlusOrMinus returns Modulo
+	 *     PlusOrMinus.Plus_1_0_0_0 returns Modulo
+	 *     PlusOrMinus.Minus_1_0_1_0 returns Modulo
+	 *     MulOrDiv returns Modulo
+	 *     MulOrDiv.Mul_1_0_0_0 returns Modulo
+	 *     MulOrDiv.Div_1_0_1_0 returns Modulo
+	 *     Modulo returns Modulo
+	 *     Modulo.Modulo_1_0 returns Modulo
+	 *
+	 * Constraint:
+	 *     (left=Modulo_Modulo_1_0 op='%' right=Primary)
+	 */
+	protected void sequence_Modulo(ISerializationContext context, Modulo semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MoniLogPackage.Literals.MODULO__LEFT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MoniLogPackage.Literals.MODULO__LEFT));
+			if (transientValues.isValueTransient(semanticObject, MoniLogPackage.Literals.MODULO__OP) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MoniLogPackage.Literals.MODULO__OP));
+			if (transientValues.isValueTransient(semanticObject, MoniLogPackage.Literals.MODULO__RIGHT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MoniLogPackage.Literals.MODULO__RIGHT));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getModuloAccess().getModuloLeftAction_1_0(), semanticObject.getLeft());
+		feeder.accept(grammarAccess.getModuloAccess().getOpPercentSignKeyword_1_1_0(), semanticObject.getOp());
+		feeder.accept(grammarAccess.getModuloAccess().getRightPrimaryParserRuleCall_1_2_0(), semanticObject.getRight());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     Expression returns MoniLogExpression
+	 *     MoniLogExpression returns MoniLogExpression
+	 *
+	 * Constraint:
+	 *     expression=SimpleExpression
+	 */
+	protected void sequence_MoniLogExpression(ISerializationContext context, MoniLogExpression semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MoniLogPackage.Literals.MONI_LOG_EXPRESSION__EXPRESSION) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MoniLogPackage.Literals.MONI_LOG_EXPRESSION__EXPRESSION));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getMoniLogExpressionAccess().getExpressionSimpleExpressionParserRuleCall_1_0(), semanticObject.getExpression());
 		feeder.finish();
 	}
 	
@@ -579,6 +1041,114 @@ public class MoniLogSemanticSequencer extends AbstractDelegatingSemanticSequence
 	
 	/**
 	 * Contexts:
+	 *     SimpleExpression returns Div
+	 *     ContractedIf returns Div
+	 *     ContractedIf.ContractedIf_1_0 returns Div
+	 *     Or returns Div
+	 *     Or.Or_1_0 returns Div
+	 *     And returns Div
+	 *     And.And_1_0 returns Div
+	 *     Equality returns Div
+	 *     Equality.Equality_1_0 returns Div
+	 *     Comparison returns Div
+	 *     Comparison.Comparison_1_0 returns Div
+	 *     PlusOrMinus returns Div
+	 *     PlusOrMinus.Plus_1_0_0_0 returns Div
+	 *     PlusOrMinus.Minus_1_0_1_0 returns Div
+	 *     MulOrDiv returns Div
+	 *     MulOrDiv.Mul_1_0_0_0 returns Div
+	 *     MulOrDiv.Div_1_0_1_0 returns Div
+	 *
+	 * Constraint:
+	 *     (Left=MulOrDiv_Div_1_0_1_0 op='/' right=Modulo)
+	 */
+	protected void sequence_MulOrDiv(ISerializationContext context, Div semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MoniLogPackage.Literals.DIV__LEFT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MoniLogPackage.Literals.DIV__LEFT));
+			if (transientValues.isValueTransient(semanticObject, MoniLogPackage.Literals.DIV__OP) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MoniLogPackage.Literals.DIV__OP));
+			if (transientValues.isValueTransient(semanticObject, MoniLogPackage.Literals.DIV__RIGHT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MoniLogPackage.Literals.DIV__RIGHT));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getMulOrDivAccess().getDivLeftAction_1_0_1_0(), semanticObject.getLeft());
+		feeder.accept(grammarAccess.getMulOrDivAccess().getOpSolidusKeyword_1_0_1_1_0(), semanticObject.getOp());
+		feeder.accept(grammarAccess.getMulOrDivAccess().getRightModuloParserRuleCall_1_1_0(), semanticObject.getRight());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     SimpleExpression returns Mul
+	 *     ContractedIf returns Mul
+	 *     ContractedIf.ContractedIf_1_0 returns Mul
+	 *     Or returns Mul
+	 *     Or.Or_1_0 returns Mul
+	 *     And returns Mul
+	 *     And.And_1_0 returns Mul
+	 *     Equality returns Mul
+	 *     Equality.Equality_1_0 returns Mul
+	 *     Comparison returns Mul
+	 *     Comparison.Comparison_1_0 returns Mul
+	 *     PlusOrMinus returns Mul
+	 *     PlusOrMinus.Plus_1_0_0_0 returns Mul
+	 *     PlusOrMinus.Minus_1_0_1_0 returns Mul
+	 *     MulOrDiv returns Mul
+	 *     MulOrDiv.Mul_1_0_0_0 returns Mul
+	 *     MulOrDiv.Div_1_0_1_0 returns Mul
+	 *
+	 * Constraint:
+	 *     (left=MulOrDiv_Mul_1_0_0_0 op='*' right=Modulo)
+	 */
+	protected void sequence_MulOrDiv(ISerializationContext context, Mul semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MoniLogPackage.Literals.MUL__LEFT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MoniLogPackage.Literals.MUL__LEFT));
+			if (transientValues.isValueTransient(semanticObject, MoniLogPackage.Literals.MUL__OP) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MoniLogPackage.Literals.MUL__OP));
+			if (transientValues.isValueTransient(semanticObject, MoniLogPackage.Literals.MUL__RIGHT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MoniLogPackage.Literals.MUL__RIGHT));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getMulOrDivAccess().getMulLeftAction_1_0_0_0(), semanticObject.getLeft());
+		feeder.accept(grammarAccess.getMulOrDivAccess().getOpAsteriskKeyword_1_0_0_1_0(), semanticObject.getOp());
+		feeder.accept(grammarAccess.getMulOrDivAccess().getRightModuloParserRuleCall_1_1_0(), semanticObject.getRight());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     SimpleExpression returns Or
+	 *     ContractedIf returns Or
+	 *     ContractedIf.ContractedIf_1_0 returns Or
+	 *     Or returns Or
+	 *     Or.Or_1_0 returns Or
+	 *
+	 * Constraint:
+	 *     (left=Or_Or_1_0 op='||' right=And)
+	 */
+	protected void sequence_Or(ISerializationContext context, Or semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MoniLogPackage.Literals.OR__LEFT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MoniLogPackage.Literals.OR__LEFT));
+			if (transientValues.isValueTransient(semanticObject, MoniLogPackage.Literals.OR__OP) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MoniLogPackage.Literals.OR__OP));
+			if (transientValues.isValueTransient(semanticObject, MoniLogPackage.Literals.OR__RIGHT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MoniLogPackage.Literals.OR__RIGHT));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getOrAccess().getOrLeftAction_1_0(), semanticObject.getLeft());
+		feeder.accept(grammarAccess.getOrAccess().getOpVerticalLineVerticalLineKeyword_1_1_0(), semanticObject.getOp());
+		feeder.accept(grammarAccess.getOrAccess().getRightAndParserRuleCall_1_2_0(), semanticObject.getRight());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     ParameterDeclNoVarArgs returns ParameterDecl
 	 *
 	 * Constraint:
@@ -603,8 +1173,6 @@ public class MoniLogSemanticSequencer extends AbstractDelegatingSemanticSequence
 	
 	/**
 	 * Contexts:
-	 *     AppenderCallArgument returns ParameterReference
-	 *     LayoutCallArgument returns ParameterReference
 	 *     Expression returns ParameterReference
 	 *     ParameterReference returns ParameterReference
 	 *
@@ -732,6 +1300,191 @@ public class MoniLogSemanticSequencer extends AbstractDelegatingSemanticSequence
 	
 	/**
 	 * Contexts:
+	 *     SimpleExpression returns Minus
+	 *     ContractedIf returns Minus
+	 *     ContractedIf.ContractedIf_1_0 returns Minus
+	 *     Or returns Minus
+	 *     Or.Or_1_0 returns Minus
+	 *     And returns Minus
+	 *     And.And_1_0 returns Minus
+	 *     Equality returns Minus
+	 *     Equality.Equality_1_0 returns Minus
+	 *     Comparison returns Minus
+	 *     Comparison.Comparison_1_0 returns Minus
+	 *     PlusOrMinus returns Minus
+	 *     PlusOrMinus.Plus_1_0_0_0 returns Minus
+	 *     PlusOrMinus.Minus_1_0_1_0 returns Minus
+	 *
+	 * Constraint:
+	 *     (left=PlusOrMinus_Minus_1_0_1_0 op='-' right=MulOrDiv)
+	 */
+	protected void sequence_PlusOrMinus(ISerializationContext context, Minus semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MoniLogPackage.Literals.MINUS__LEFT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MoniLogPackage.Literals.MINUS__LEFT));
+			if (transientValues.isValueTransient(semanticObject, MoniLogPackage.Literals.MINUS__OP) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MoniLogPackage.Literals.MINUS__OP));
+			if (transientValues.isValueTransient(semanticObject, MoniLogPackage.Literals.MINUS__RIGHT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MoniLogPackage.Literals.MINUS__RIGHT));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getPlusOrMinusAccess().getMinusLeftAction_1_0_1_0(), semanticObject.getLeft());
+		feeder.accept(grammarAccess.getPlusOrMinusAccess().getOpHyphenMinusKeyword_1_0_1_1_0(), semanticObject.getOp());
+		feeder.accept(grammarAccess.getPlusOrMinusAccess().getRightMulOrDivParserRuleCall_1_1_0(), semanticObject.getRight());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     SimpleExpression returns Plus
+	 *     ContractedIf returns Plus
+	 *     ContractedIf.ContractedIf_1_0 returns Plus
+	 *     Or returns Plus
+	 *     Or.Or_1_0 returns Plus
+	 *     And returns Plus
+	 *     And.And_1_0 returns Plus
+	 *     Equality returns Plus
+	 *     Equality.Equality_1_0 returns Plus
+	 *     Comparison returns Plus
+	 *     Comparison.Comparison_1_0 returns Plus
+	 *     PlusOrMinus returns Plus
+	 *     PlusOrMinus.Plus_1_0_0_0 returns Plus
+	 *     PlusOrMinus.Minus_1_0_1_0 returns Plus
+	 *
+	 * Constraint:
+	 *     (left=PlusOrMinus_Plus_1_0_0_0 op='+' right=MulOrDiv)
+	 */
+	protected void sequence_PlusOrMinus(ISerializationContext context, Plus semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MoniLogPackage.Literals.PLUS__LEFT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MoniLogPackage.Literals.PLUS__LEFT));
+			if (transientValues.isValueTransient(semanticObject, MoniLogPackage.Literals.PLUS__OP) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MoniLogPackage.Literals.PLUS__OP));
+			if (transientValues.isValueTransient(semanticObject, MoniLogPackage.Literals.PLUS__RIGHT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MoniLogPackage.Literals.PLUS__RIGHT));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getPlusOrMinusAccess().getPlusLeftAction_1_0_0_0(), semanticObject.getLeft());
+		feeder.accept(grammarAccess.getPlusOrMinusAccess().getOpPlusSignKeyword_1_0_0_1_0(), semanticObject.getOp());
+		feeder.accept(grammarAccess.getPlusOrMinusAccess().getRightMulOrDivParserRuleCall_1_1_0(), semanticObject.getRight());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     SimpleExpression returns Not
+	 *     ContractedIf returns Not
+	 *     ContractedIf.ContractedIf_1_0 returns Not
+	 *     Or returns Not
+	 *     Or.Or_1_0 returns Not
+	 *     And returns Not
+	 *     And.And_1_0 returns Not
+	 *     Equality returns Not
+	 *     Equality.Equality_1_0 returns Not
+	 *     Comparison returns Not
+	 *     Comparison.Comparison_1_0 returns Not
+	 *     PlusOrMinus returns Not
+	 *     PlusOrMinus.Plus_1_0_0_0 returns Not
+	 *     PlusOrMinus.Minus_1_0_1_0 returns Not
+	 *     MulOrDiv returns Not
+	 *     MulOrDiv.Mul_1_0_0_0 returns Not
+	 *     MulOrDiv.Div_1_0_1_0 returns Not
+	 *     Modulo returns Not
+	 *     Modulo.Modulo_1_0 returns Not
+	 *     Primary returns Not
+	 *
+	 * Constraint:
+	 *     expression=Primary
+	 */
+	protected void sequence_Primary(ISerializationContext context, Not semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MoniLogPackage.Literals.NOT__EXPRESSION) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MoniLogPackage.Literals.NOT__EXPRESSION));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getPrimaryAccess().getExpressionPrimaryParserRuleCall_2_2_0(), semanticObject.getExpression());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     SimpleExpression returns Parenthesis
+	 *     ContractedIf returns Parenthesis
+	 *     ContractedIf.ContractedIf_1_0 returns Parenthesis
+	 *     Or returns Parenthesis
+	 *     Or.Or_1_0 returns Parenthesis
+	 *     And returns Parenthesis
+	 *     And.And_1_0 returns Parenthesis
+	 *     Equality returns Parenthesis
+	 *     Equality.Equality_1_0 returns Parenthesis
+	 *     Comparison returns Parenthesis
+	 *     Comparison.Comparison_1_0 returns Parenthesis
+	 *     PlusOrMinus returns Parenthesis
+	 *     PlusOrMinus.Plus_1_0_0_0 returns Parenthesis
+	 *     PlusOrMinus.Minus_1_0_1_0 returns Parenthesis
+	 *     MulOrDiv returns Parenthesis
+	 *     MulOrDiv.Mul_1_0_0_0 returns Parenthesis
+	 *     MulOrDiv.Div_1_0_1_0 returns Parenthesis
+	 *     Modulo returns Parenthesis
+	 *     Modulo.Modulo_1_0 returns Parenthesis
+	 *     Primary returns Parenthesis
+	 *
+	 * Constraint:
+	 *     expression=SimpleExpression
+	 */
+	protected void sequence_Primary(ISerializationContext context, Parenthesis semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MoniLogPackage.Literals.PARENTHESIS__EXPRESSION) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MoniLogPackage.Literals.PARENTHESIS__EXPRESSION));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getPrimaryAccess().getExpressionSimpleExpressionParserRuleCall_0_2_0(), semanticObject.getExpression());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     SimpleExpression returns UnaryMinus
+	 *     ContractedIf returns UnaryMinus
+	 *     ContractedIf.ContractedIf_1_0 returns UnaryMinus
+	 *     Or returns UnaryMinus
+	 *     Or.Or_1_0 returns UnaryMinus
+	 *     And returns UnaryMinus
+	 *     And.And_1_0 returns UnaryMinus
+	 *     Equality returns UnaryMinus
+	 *     Equality.Equality_1_0 returns UnaryMinus
+	 *     Comparison returns UnaryMinus
+	 *     Comparison.Comparison_1_0 returns UnaryMinus
+	 *     PlusOrMinus returns UnaryMinus
+	 *     PlusOrMinus.Plus_1_0_0_0 returns UnaryMinus
+	 *     PlusOrMinus.Minus_1_0_1_0 returns UnaryMinus
+	 *     MulOrDiv returns UnaryMinus
+	 *     MulOrDiv.Mul_1_0_0_0 returns UnaryMinus
+	 *     MulOrDiv.Div_1_0_1_0 returns UnaryMinus
+	 *     Modulo returns UnaryMinus
+	 *     Modulo.Modulo_1_0 returns UnaryMinus
+	 *     Primary returns UnaryMinus
+	 *
+	 * Constraint:
+	 *     expression=Primary
+	 */
+	protected void sequence_Primary(ISerializationContext context, UnaryMinus semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MoniLogPackage.Literals.UNARY_MINUS__EXPRESSION) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MoniLogPackage.Literals.UNARY_MINUS__EXPRESSION));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getPrimaryAccess().getExpressionPrimaryParserRuleCall_1_2_0(), semanticObject.getExpression());
+		feeder.finish();
+	}
+	
+	
+	/**
+	 * Contexts:
 	 *     EmptyOrPropertyValue returns PropertyValue
 	 *     PropertyValue returns PropertyValue
 	 *
@@ -740,6 +1493,85 @@ public class MoniLogSemanticSequencer extends AbstractDelegatingSemanticSequence
 	 */
 	protected void sequence_PropertyValue(ISerializationContext context, PropertyValue semanticObject) {
 		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     SimpleExpression returns ArrayRef
+	 *     ContractedIf returns ArrayRef
+	 *     ContractedIf.ContractedIf_1_0 returns ArrayRef
+	 *     Or returns ArrayRef
+	 *     Or.Or_1_0 returns ArrayRef
+	 *     And returns ArrayRef
+	 *     And.And_1_0 returns ArrayRef
+	 *     Equality returns ArrayRef
+	 *     Equality.Equality_1_0 returns ArrayRef
+	 *     Comparison returns ArrayRef
+	 *     Comparison.Comparison_1_0 returns ArrayRef
+	 *     PlusOrMinus returns ArrayRef
+	 *     PlusOrMinus.Plus_1_0_0_0 returns ArrayRef
+	 *     PlusOrMinus.Minus_1_0_1_0 returns ArrayRef
+	 *     MulOrDiv returns ArrayRef
+	 *     MulOrDiv.Mul_1_0_0_0 returns ArrayRef
+	 *     MulOrDiv.Div_1_0_1_0 returns ArrayRef
+	 *     Modulo returns ArrayRef
+	 *     Modulo.Modulo_1_0 returns ArrayRef
+	 *     Primary returns ArrayRef
+	 *     Atomic returns ArrayRef
+	 *     Ref returns ArrayRef
+	 *     Ref.ArrayRef_1_0_0 returns ArrayRef
+	 *     Ref.PropertyRef_1_1_0 returns ArrayRef
+	 *
+	 * Constraint:
+	 *     (array=Ref_ArrayRef_1_0_0 indices+=SimpleExpression indices+=SimpleExpression*)
+	 */
+	protected void sequence_Ref(ISerializationContext context, ArrayRef semanticObject) {
+		genericSequencer.createSequence(context, semanticObject);
+	}
+	
+	
+	/**
+	 * Contexts:
+	 *     SimpleExpression returns PropertyRef
+	 *     ContractedIf returns PropertyRef
+	 *     ContractedIf.ContractedIf_1_0 returns PropertyRef
+	 *     Or returns PropertyRef
+	 *     Or.Or_1_0 returns PropertyRef
+	 *     And returns PropertyRef
+	 *     And.And_1_0 returns PropertyRef
+	 *     Equality returns PropertyRef
+	 *     Equality.Equality_1_0 returns PropertyRef
+	 *     Comparison returns PropertyRef
+	 *     Comparison.Comparison_1_0 returns PropertyRef
+	 *     PlusOrMinus returns PropertyRef
+	 *     PlusOrMinus.Plus_1_0_0_0 returns PropertyRef
+	 *     PlusOrMinus.Minus_1_0_1_0 returns PropertyRef
+	 *     MulOrDiv returns PropertyRef
+	 *     MulOrDiv.Mul_1_0_0_0 returns PropertyRef
+	 *     MulOrDiv.Div_1_0_1_0 returns PropertyRef
+	 *     Modulo returns PropertyRef
+	 *     Modulo.Modulo_1_0 returns PropertyRef
+	 *     Primary returns PropertyRef
+	 *     Atomic returns PropertyRef
+	 *     Ref returns PropertyRef
+	 *     Ref.ArrayRef_1_0_0 returns PropertyRef
+	 *     Ref.PropertyRef_1_1_0 returns PropertyRef
+	 *
+	 * Constraint:
+	 *     (object=Ref_PropertyRef_1_1_0 property=ID)
+	 */
+	protected void sequence_Ref(ISerializationContext context, PropertyRef semanticObject) {
+		if (errorAcceptor != null) {
+			if (transientValues.isValueTransient(semanticObject, MoniLogPackage.Literals.PROPERTY_REF__OBJECT) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MoniLogPackage.Literals.PROPERTY_REF__OBJECT));
+			if (transientValues.isValueTransient(semanticObject, MoniLogPackage.Literals.PROPERTY_REF__PROPERTY) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MoniLogPackage.Literals.PROPERTY_REF__PROPERTY));
+		}
+		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
+		feeder.accept(grammarAccess.getRefAccess().getPropertyRefObjectAction_1_1_0(), semanticObject.getObject());
+		feeder.accept(grammarAccess.getRefAccess().getPropertyIDTerminalRuleCall_1_1_2_0(), semanticObject.getProperty());
+		feeder.finish();
 	}
 	
 	
@@ -835,22 +1667,42 @@ public class MoniLogSemanticSequencer extends AbstractDelegatingSemanticSequence
 	
 	/**
 	 * Contexts:
-	 *     Action returns SetVariable
-	 *     SetVariable returns SetVariable
+	 *     SimpleExpression returns SimpleVarRef
+	 *     ContractedIf returns SimpleVarRef
+	 *     ContractedIf.ContractedIf_1_0 returns SimpleVarRef
+	 *     Or returns SimpleVarRef
+	 *     Or.Or_1_0 returns SimpleVarRef
+	 *     And returns SimpleVarRef
+	 *     And.And_1_0 returns SimpleVarRef
+	 *     Equality returns SimpleVarRef
+	 *     Equality.Equality_1_0 returns SimpleVarRef
+	 *     Comparison returns SimpleVarRef
+	 *     Comparison.Comparison_1_0 returns SimpleVarRef
+	 *     PlusOrMinus returns SimpleVarRef
+	 *     PlusOrMinus.Plus_1_0_0_0 returns SimpleVarRef
+	 *     PlusOrMinus.Minus_1_0_1_0 returns SimpleVarRef
+	 *     MulOrDiv returns SimpleVarRef
+	 *     MulOrDiv.Mul_1_0_0_0 returns SimpleVarRef
+	 *     MulOrDiv.Div_1_0_1_0 returns SimpleVarRef
+	 *     Modulo returns SimpleVarRef
+	 *     Modulo.Modulo_1_0 returns SimpleVarRef
+	 *     Primary returns SimpleVarRef
+	 *     Atomic returns SimpleVarRef
+	 *     Ref returns SimpleVarRef
+	 *     Ref.ArrayRef_1_0_0 returns SimpleVarRef
+	 *     Ref.PropertyRef_1_1_0 returns SimpleVarRef
+	 *     SimpleVarRef returns SimpleVarRef
 	 *
 	 * Constraint:
-	 *     (variable=STRING value=LanguageValue)
+	 *     target=ID
 	 */
-	protected void sequence_SetVariable(ISerializationContext context, SetVariable semanticObject) {
+	protected void sequence_SimpleVarRef(ISerializationContext context, SimpleVarRef semanticObject) {
 		if (errorAcceptor != null) {
-			if (transientValues.isValueTransient(semanticObject, MoniLogPackage.Literals.SET_VARIABLE__VARIABLE) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MoniLogPackage.Literals.SET_VARIABLE__VARIABLE));
-			if (transientValues.isValueTransient(semanticObject, MoniLogPackage.Literals.SET_VARIABLE__VALUE) == ValueTransient.YES)
-				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MoniLogPackage.Literals.SET_VARIABLE__VALUE));
+			if (transientValues.isValueTransient(semanticObject, MoniLogPackage.Literals.SIMPLE_VAR_REF__TARGET) == ValueTransient.YES)
+				errorAcceptor.accept(diagnosticProvider.createFeatureValueMissing(semanticObject, MoniLogPackage.Literals.SIMPLE_VAR_REF__TARGET));
 		}
 		SequenceFeeder feeder = createSequencerFeeder(context, semanticObject);
-		feeder.accept(grammarAccess.getSetVariableAccess().getVariableSTRINGTerminalRuleCall_2_0(), semanticObject.getVariable());
-		feeder.accept(grammarAccess.getSetVariableAccess().getValueLanguageValueParserRuleCall_4_0(), semanticObject.getValue());
+		feeder.accept(grammarAccess.getSimpleVarRefAccess().getTargetIDTerminalRuleCall_0(), semanticObject.getTarget());
 		feeder.finish();
 	}
 	
