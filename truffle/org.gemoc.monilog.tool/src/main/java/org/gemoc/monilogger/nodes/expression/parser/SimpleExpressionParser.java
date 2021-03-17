@@ -2,6 +2,7 @@ package org.gemoc.monilogger.nodes.expression.parser;
 
 import java.util.Iterator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.gemoc.monilog.moniLog.And;
 import org.gemoc.monilog.moniLog.ArrayRef;
@@ -27,6 +28,7 @@ import org.gemoc.monilog.moniLog.SimpleExpression;
 import org.gemoc.monilog.moniLog.SimpleVarRef;
 import org.gemoc.monilog.moniLog.StringConstant;
 import org.gemoc.monilog.moniLog.UnaryMinus;
+import org.gemoc.monilog.moniLog.VectorConstant;
 import org.gemoc.monilogger.nodes.MoniLoggerExecutableNode;
 import org.gemoc.monilogger.nodes.expression.SimpleExpressionAddNodeGen;
 import org.gemoc.monilogger.nodes.expression.SimpleExpressionAndNodeGen;
@@ -54,10 +56,13 @@ import org.gemoc.monilogger.nodes.expression.SimpleExpressionReadPropertyNodeGen
 import org.gemoc.monilogger.nodes.expression.SimpleExpressionStringLiteralNode;
 import org.gemoc.monilogger.nodes.expression.SimpleExpressionSubNodeGen;
 import org.gemoc.monilogger.nodes.expression.SimpleExpressionUnboxValueNodeGen;
+import org.gemoc.monilogger.nodes.expression.SimpleExpressionVectorNode;
 
 import com.oracle.truffle.api.nodes.Node;
 
 public class SimpleExpressionParser {
+	
+	private static final SimpleExpressionNode[] EMPTY_ARRAY = new SimpleExpressionNode[0];
 
 	public MoniLoggerExecutableNode createExpression(MoniLogExpression expression, Node node, boolean onEnter) {
 		return createExpressionNode(expression.getExpression(), node, onEnter);
@@ -77,6 +82,9 @@ public class SimpleExpressionParser {
 			break;
 		case MoniLogPackage.STRING_CONSTANT:
 			expressionNode = createSimpleExpressionStringConstantNode(((StringConstant) expression).getValue());
+			break;
+		case MoniLogPackage.VECTOR_CONSTANT:
+			expressionNode = createSimpleExpressionVectorNode((VectorConstant) expression, node, onEnter);
 			break;
 		case MoniLogPackage.SIMPLE_VAR_REF:
 			expressionNode = createReadVariableNode((SimpleVarRef) expression, node, onEnter);
@@ -149,6 +157,11 @@ public class SimpleExpressionParser {
 
 	private SimpleExpressionNode createSimpleExpressionStringConstantNode(String value) {
 		return new SimpleExpressionStringLiteralNode(value);
+	}
+
+	private SimpleExpressionNode createSimpleExpressionVectorNode(VectorConstant value, Node node, boolean onEnter) {
+		final SimpleExpressionNode[] valueNodes = value.getValues().stream().map(e -> createExpressionNode(e, node, onEnter)).collect(Collectors.toList()).toArray(EMPTY_ARRAY);
+		return new SimpleExpressionVectorNode(valueNodes);
 	}
 
 	private SimpleExpressionNode createReadVariableNode(SimpleVarRef varRef, Node node, boolean onEnter) {
