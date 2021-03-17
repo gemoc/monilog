@@ -48,7 +48,7 @@ public interface AppenderCall extends Action
 
   /**
    * Returns the value of the '<em><b>Args</b></em>' containment reference list.
-   * The list contents are of type {@link org.gemoc.monilog.moniLog.CallArgument}.
+   * The list contents are of type {@link org.gemoc.monilog.moniLog.Expression}.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @return the value of the '<em>Args</em>' containment reference list.
@@ -56,6 +56,6 @@ public interface AppenderCall extends Action
    * @model containment="true"
    * @generated
    */
-  EList<CallArgument> getArgs();
+  EList<Expression> getArgs();
 
 } // AppenderCall

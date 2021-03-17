@@ -9,6 +9,9 @@ public class StringLayout implements IMoniLogLayout {
 
 	@Override
 	public String call(Object... args) {
+		if (args.length == 1) {
+			return args.toString();
+		}
 		return MessageFormat.format(args[0].toString(), Arrays.copyOfRange(args, 1, args.length));
 	}
 

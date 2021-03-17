@@ -105,25 +105,21 @@ Scope:
 	{AfterUntil} 'after' lowerBound=StreamEvent 'until' upperBound=StreamEvent;
 
 Action:
-	LanguageValue | AppenderCall | EmitEvent | SetVariable | MoniloggerCall;
+	LanguageValue | AppenderCall | EmitEvent |
+//	SetVariable |
+	MoniloggerCall;
 
 AppenderCall:
-	appender=[Appender|QualifiedName] '.' 'call' ( '(' args+=AppenderCallArgument (',' args+=AppenderCallArgument)* ')' )?;
-
-AppenderCallArgument returns CallArgument:
-	Expression | LayoutCall;
+	appender=[Appender|QualifiedName] '.' 'call' ( '(' args+=Expression (',' args+=Expression)* ')' )?;
 
 LayoutCall:
-	layout=[Layout|QualifiedName] '.' 'call' ( '(' args+=LayoutCallArgument (',' args+=LayoutCallArgument)* ')' )?;
-
-LayoutCallArgument returns CallArgument:
-	Expression;
+	layout=[Layout|QualifiedName] '.' 'call' ( '(' args+=Expression (',' args+=Expression)* ')' )?;
 
 EmitEvent:
 	event=[UserEvent|ID] '.' 'emit' ('(' args+=Expression (',' args+=Expression)* ')' )?;
 
-SetVariable:
-	'set' '(' variable=STRING ',' value=LanguageValue ')';
+//SetVariable:
+//	'set' '(' variable=STRING ',' value=LanguageValue ')';
 
 MoniloggerCall:
 	{StartMoniLogger} monilogger=[MoniLogger|ID] '.' 'start' ( '(' args+=Expression (',' args+=Expression)* ')' )? |
@@ -135,14 +131,17 @@ StreamEvent:
 EmptyOrPropertyValue:
 	{Empty} | PropertyValue;
 
+PropertyValue:
+	id=ID ('=' value=Expression)? | value=LanguageValue;
+
 Expression:
-	ParameterReference | LanguageValue;
+	ParameterReference | MoniLogExpression | LanguageValue | LayoutCall;
 
 ParameterReference:
 	parameter=[Parameter|ID];
 
-PropertyValue:
-	id=ID ('=' value=Expression)? | value=LanguageValue;
+MoniLogExpression:
+	'{' expression=SimpleExpression '}';
 
 LanguageValue:
 	languageId=ID '(' value=(LanguageExpression | LanguageCall) ')';
@@ -152,6 +151,56 @@ LanguageExpression:
 
 LanguageCall:
 	file=[FileAlias|ID] '.' fqn=QualifiedName ('(' args+=Expression (',' args+=Expression)* ')' )?;
+
+//==================================== SIMPLE EXPRESSIONS ====================================//
+
+SimpleExpression:
+	ContractedIf;
+
+ContractedIf returns SimpleExpression:
+	Or ({ContractedIf.condition=current} '?' then=Or ':' else=Or)*;
+
+Or returns SimpleExpression:
+	And ({Or.left=current} op='||' right=And)*;
+
+And returns SimpleExpression:
+	Equality ({And.left=current} op='&&' right=Equality)*;
+
+Equality returns SimpleExpression:
+	Comparison ({Equality.left=current} op=('==' | '!=') right=Comparison)*;
+
+Comparison returns SimpleExpression:
+	PlusOrMinus ({Comparison.left=current} op=('>=' | '<=' | '>' | '<') right=PlusOrMinus)*;
+
+PlusOrMinus returns SimpleExpression:
+	MulOrDiv (({Plus.left=current} op='+' | {Minus.left=current} op='-') right=MulOrDiv)*;
+
+MulOrDiv returns SimpleExpression:
+	Modulo (({Mul.left=current} op='*' | {Div.Left=current} op='/') right=Modulo)*;
+
+Modulo returns SimpleExpression:
+	Primary ({Modulo.left=current} op='%' right=Primary)*;
+
+Primary returns SimpleExpression:
+	{Parenthesis} '(' expression=SimpleExpression ')' | {UnaryMinus} '-' expression=Primary | {Not} '!' expression=Primary |
+	Atomic;
+
+Atomic returns SimpleExpression:
+	{IntConstant} value=INT | {RealConstant} value=REAL | {BoolConstant} (value?='true' | 'false') | {StringConstant} value=STRING |
+	{VectorConstant} '[' values+=SimpleExpression (',' values+=SimpleExpression)* ']' | Ref | ArraySize;
+
+Ref:
+	SimpleVarRef ({ArrayRef.array=current} '[' indices+=SimpleExpression (',' indices+=SimpleExpression)* ']' |
+	{PropertyRef.object=current} '.' property=ID)*;
+
+SimpleVarRef:
+	target=ID;
+
+ArraySize:
+	'sizeOf' '(' array=Ref ')';
+
+terminal REAL:
+	INT '.' INT;
 
 enum MoniLoggerAnnotation:
 	inactive='@Inactive';

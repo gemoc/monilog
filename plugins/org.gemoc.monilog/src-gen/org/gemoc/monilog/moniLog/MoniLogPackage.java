@@ -929,23 +929,23 @@ public interface MoniLogPackage extends EPackage
   int APPENDER_CALL_FEATURE_COUNT = ACTION_FEATURE_COUNT + 2;
 
   /**
-   * The meta object id for the '{@link org.gemoc.monilog.moniLog.impl.CallArgumentImpl <em>Call Argument</em>}' class.
+   * The meta object id for the '{@link org.gemoc.monilog.moniLog.impl.ExpressionImpl <em>Expression</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @see org.gemoc.monilog.moniLog.impl.CallArgumentImpl
-   * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getCallArgument()
+   * @see org.gemoc.monilog.moniLog.impl.ExpressionImpl
+   * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getExpression()
    * @generated
    */
-  int CALL_ARGUMENT = 24;
+  int EXPRESSION = 30;
 
   /**
-   * The number of structural features of the '<em>Call Argument</em>' class.
+   * The number of structural features of the '<em>Expression</em>' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
    * @generated
    * @ordered
    */
-  int CALL_ARGUMENT_FEATURE_COUNT = 0;
+  int EXPRESSION_FEATURE_COUNT = 0;
 
   /**
    * The meta object id for the '{@link org.gemoc.monilog.moniLog.impl.LayoutCallImpl <em>Layout Call</em>}' class.
@@ -955,7 +955,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getLayoutCall()
    * @generated
    */
-  int LAYOUT_CALL = 25;
+  int LAYOUT_CALL = 24;
 
   /**
    * The feature id for the '<em><b>Layout</b></em>' reference.
@@ -964,7 +964,7 @@ public interface MoniLogPackage extends EPackage
    * @generated
    * @ordered
    */
-  int LAYOUT_CALL__LAYOUT = CALL_ARGUMENT_FEATURE_COUNT + 0;
+  int LAYOUT_CALL__LAYOUT = EXPRESSION_FEATURE_COUNT + 0;
 
   /**
    * The feature id for the '<em><b>Args</b></em>' containment reference list.
@@ -973,7 +973,7 @@ public interface MoniLogPackage extends EPackage
    * @generated
    * @ordered
    */
-  int LAYOUT_CALL__ARGS = CALL_ARGUMENT_FEATURE_COUNT + 1;
+  int LAYOUT_CALL__ARGS = EXPRESSION_FEATURE_COUNT + 1;
 
   /**
    * The number of structural features of the '<em>Layout Call</em>' class.
@@ -982,7 +982,7 @@ public interface MoniLogPackage extends EPackage
    * @generated
    * @ordered
    */
-  int LAYOUT_CALL_FEATURE_COUNT = CALL_ARGUMENT_FEATURE_COUNT + 2;
+  int LAYOUT_CALL_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 2;
 
   /**
    * The meta object id for the '{@link org.gemoc.monilog.moniLog.impl.EmitEventImpl <em>Emit Event</em>}' class.
@@ -992,7 +992,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getEmitEvent()
    * @generated
    */
-  int EMIT_EVENT = 26;
+  int EMIT_EVENT = 25;
 
   /**
    * The feature id for the '<em><b>Event</b></em>' reference.
@@ -1022,43 +1022,6 @@ public interface MoniLogPackage extends EPackage
   int EMIT_EVENT_FEATURE_COUNT = ACTION_FEATURE_COUNT + 2;
 
   /**
-   * The meta object id for the '{@link org.gemoc.monilog.moniLog.impl.SetVariableImpl <em>Set Variable</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.gemoc.monilog.moniLog.impl.SetVariableImpl
-   * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getSetVariable()
-   * @generated
-   */
-  int SET_VARIABLE = 27;
-
-  /**
-   * The feature id for the '<em><b>Variable</b></em>' attribute.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SET_VARIABLE__VARIABLE = ACTION_FEATURE_COUNT + 0;
-
-  /**
-   * The feature id for the '<em><b>Value</b></em>' containment reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SET_VARIABLE__VALUE = ACTION_FEATURE_COUNT + 1;
-
-  /**
-   * The number of structural features of the '<em>Set Variable</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int SET_VARIABLE_FEATURE_COUNT = ACTION_FEATURE_COUNT + 2;
-
-  /**
    * The meta object id for the '{@link org.gemoc.monilog.moniLog.impl.MoniloggerCallImpl <em>Monilogger Call</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1066,7 +1029,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getMoniloggerCall()
    * @generated
    */
-  int MONILOGGER_CALL = 28;
+  int MONILOGGER_CALL = 26;
 
   /**
    * The feature id for the '<em><b>Monilogger</b></em>' reference.
@@ -1094,7 +1057,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getStreamEvent()
    * @generated
    */
-  int STREAM_EVENT = 29;
+  int STREAM_EVENT = 27;
 
   /**
    * The feature id for the '<em><b>Event</b></em>' reference.
@@ -1131,7 +1094,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getEmptyOrPropertyValue()
    * @generated
    */
-  int EMPTY_OR_PROPERTY_VALUE = 30;
+  int EMPTY_OR_PROPERTY_VALUE = 28;
 
   /**
    * The number of structural features of the '<em>Empty Or Property Value</em>' class.
@@ -1143,53 +1106,6 @@ public interface MoniLogPackage extends EPackage
   int EMPTY_OR_PROPERTY_VALUE_FEATURE_COUNT = 0;
 
   /**
-   * The meta object id for the '{@link org.gemoc.monilog.moniLog.impl.ExpressionImpl <em>Expression</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.gemoc.monilog.moniLog.impl.ExpressionImpl
-   * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getExpression()
-   * @generated
-   */
-  int EXPRESSION = 31;
-
-  /**
-   * The number of structural features of the '<em>Expression</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int EXPRESSION_FEATURE_COUNT = CALL_ARGUMENT_FEATURE_COUNT + 0;
-
-  /**
-   * The meta object id for the '{@link org.gemoc.monilog.moniLog.impl.ParameterReferenceImpl <em>Parameter Reference</em>}' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @see org.gemoc.monilog.moniLog.impl.ParameterReferenceImpl
-   * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getParameterReference()
-   * @generated
-   */
-  int PARAMETER_REFERENCE = 32;
-
-  /**
-   * The feature id for the '<em><b>Parameter</b></em>' reference.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PARAMETER_REFERENCE__PARAMETER = EXPRESSION_FEATURE_COUNT + 0;
-
-  /**
-   * The number of structural features of the '<em>Parameter Reference</em>' class.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   * @ordered
-   */
-  int PARAMETER_REFERENCE_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 1;
-
-  /**
    * The meta object id for the '{@link org.gemoc.monilog.moniLog.impl.PropertyValueImpl <em>Property Value</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1197,7 +1113,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getPropertyValue()
    * @generated
    */
-  int PROPERTY_VALUE = 33;
+  int PROPERTY_VALUE = 29;
 
   /**
    * The feature id for the '<em><b>Id</b></em>' attribute.
@@ -1227,6 +1143,62 @@ public interface MoniLogPackage extends EPackage
   int PROPERTY_VALUE_FEATURE_COUNT = EMPTY_OR_PROPERTY_VALUE_FEATURE_COUNT + 2;
 
   /**
+   * The meta object id for the '{@link org.gemoc.monilog.moniLog.impl.ParameterReferenceImpl <em>Parameter Reference</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.gemoc.monilog.moniLog.impl.ParameterReferenceImpl
+   * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getParameterReference()
+   * @generated
+   */
+  int PARAMETER_REFERENCE = 31;
+
+  /**
+   * The feature id for the '<em><b>Parameter</b></em>' reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PARAMETER_REFERENCE__PARAMETER = EXPRESSION_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Parameter Reference</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PARAMETER_REFERENCE_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link org.gemoc.monilog.moniLog.impl.MoniLogExpressionImpl <em>Expression</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.gemoc.monilog.moniLog.impl.MoniLogExpressionImpl
+   * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getMoniLogExpression()
+   * @generated
+   */
+  int MONI_LOG_EXPRESSION = 32;
+
+  /**
+   * The feature id for the '<em><b>Expression</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MONI_LOG_EXPRESSION__EXPRESSION = EXPRESSION_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Expression</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MONI_LOG_EXPRESSION_FEATURE_COUNT = EXPRESSION_FEATURE_COUNT + 1;
+
+  /**
    * The meta object id for the '{@link org.gemoc.monilog.moniLog.impl.LanguageValueImpl <em>Language Value</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1234,7 +1206,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getLanguageValue()
    * @generated
    */
-  int LANGUAGE_VALUE = 34;
+  int LANGUAGE_VALUE = 33;
 
   /**
    * The feature id for the '<em><b>Language Id</b></em>' attribute.
@@ -1271,7 +1243,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getLanguageExpression()
    * @generated
    */
-  int LANGUAGE_EXPRESSION = 35;
+  int LANGUAGE_EXPRESSION = 34;
 
   /**
    * The feature id for the '<em><b>Expression</b></em>' attribute.
@@ -1299,7 +1271,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getLanguageCall()
    * @generated
    */
-  int LANGUAGE_CALL = 36;
+  int LANGUAGE_CALL = 35;
 
   /**
    * The feature id for the '<em><b>File</b></em>' reference.
@@ -1338,6 +1310,100 @@ public interface MoniLogPackage extends EPackage
   int LANGUAGE_CALL_FEATURE_COUNT = 3;
 
   /**
+   * The meta object id for the '{@link org.gemoc.monilog.moniLog.impl.SimpleExpressionImpl <em>Simple Expression</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.gemoc.monilog.moniLog.impl.SimpleExpressionImpl
+   * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getSimpleExpression()
+   * @generated
+   */
+  int SIMPLE_EXPRESSION = 36;
+
+  /**
+   * The number of structural features of the '<em>Simple Expression</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SIMPLE_EXPRESSION_FEATURE_COUNT = 0;
+
+  /**
+   * The meta object id for the '{@link org.gemoc.monilog.moniLog.impl.RefImpl <em>Ref</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.gemoc.monilog.moniLog.impl.RefImpl
+   * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getRef()
+   * @generated
+   */
+  int REF = 37;
+
+  /**
+   * The number of structural features of the '<em>Ref</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REF_FEATURE_COUNT = SIMPLE_EXPRESSION_FEATURE_COUNT + 0;
+
+  /**
+   * The meta object id for the '{@link org.gemoc.monilog.moniLog.impl.SimpleVarRefImpl <em>Simple Var Ref</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.gemoc.monilog.moniLog.impl.SimpleVarRefImpl
+   * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getSimpleVarRef()
+   * @generated
+   */
+  int SIMPLE_VAR_REF = 38;
+
+  /**
+   * The feature id for the '<em><b>Target</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SIMPLE_VAR_REF__TARGET = REF_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Simple Var Ref</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int SIMPLE_VAR_REF_FEATURE_COUNT = REF_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link org.gemoc.monilog.moniLog.impl.ArraySizeImpl <em>Array Size</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.gemoc.monilog.moniLog.impl.ArraySizeImpl
+   * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getArraySize()
+   * @generated
+   */
+  int ARRAY_SIZE = 39;
+
+  /**
+   * The feature id for the '<em><b>Array</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ARRAY_SIZE__ARRAY = SIMPLE_EXPRESSION_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Array Size</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ARRAY_SIZE_FEATURE_COUNT = SIMPLE_EXPRESSION_FEATURE_COUNT + 1;
+
+  /**
    * The meta object id for the '{@link org.gemoc.monilog.moniLog.impl.ASTEventImpl <em>AST Event</em>}' class.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1345,7 +1411,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getASTEvent()
    * @generated
    */
-  int AST_EVENT = 37;
+  int AST_EVENT = 40;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1400,7 +1466,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getComplexEvent()
    * @generated
    */
-  int COMPLEX_EVENT = 38;
+  int COMPLEX_EVENT = 41;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1455,7 +1521,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getUserEvent()
    * @generated
    */
-  int USER_EVENT = 39;
+  int USER_EVENT = 42;
 
   /**
    * The feature id for the '<em><b>Name</b></em>' attribute.
@@ -1492,7 +1558,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getBeforeASTEvent()
    * @generated
    */
-  int BEFORE_AST_EVENT = 40;
+  int BEFORE_AST_EVENT = 43;
 
   /**
    * The number of structural features of the '<em>Before AST Event</em>' class.
@@ -1511,7 +1577,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getAfterASTEvent()
    * @generated
    */
-  int AFTER_AST_EVENT = 41;
+  int AFTER_AST_EVENT = 44;
 
   /**
    * The number of structural features of the '<em>After AST Event</em>' class.
@@ -1530,7 +1596,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getExistence()
    * @generated
    */
-  int EXISTENCE = 42;
+  int EXISTENCE = 45;
 
   /**
    * The feature id for the '<em><b>Bound</b></em>' containment reference.
@@ -1567,7 +1633,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getUniversality()
    * @generated
    */
-  int UNIVERSALITY = 43;
+  int UNIVERSALITY = 46;
 
   /**
    * The feature id for the '<em><b>Event</b></em>' containment reference.
@@ -1595,7 +1661,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getAbsence()
    * @generated
    */
-  int ABSENCE = 44;
+  int ABSENCE = 47;
 
   /**
    * The feature id for the '<em><b>Event</b></em>' containment reference.
@@ -1623,7 +1689,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getPrecedence()
    * @generated
    */
-  int PRECEDENCE = 45;
+  int PRECEDENCE = 48;
 
   /**
    * The feature id for the '<em><b>Predecessor</b></em>' containment reference.
@@ -1660,7 +1726,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getResponse()
    * @generated
    */
-  int RESPONSE = 46;
+  int RESPONSE = 49;
 
   /**
    * The feature id for the '<em><b>Event</b></em>' containment reference.
@@ -1697,7 +1763,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getGlobally()
    * @generated
    */
-  int GLOBALLY = 47;
+  int GLOBALLY = 50;
 
   /**
    * The number of structural features of the '<em>Globally</em>' class.
@@ -1716,7 +1782,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getAfter()
    * @generated
    */
-  int AFTER = 48;
+  int AFTER = 51;
 
   /**
    * The feature id for the '<em><b>Lower Bound</b></em>' containment reference.
@@ -1744,7 +1810,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getBefore()
    * @generated
    */
-  int BEFORE = 49;
+  int BEFORE = 52;
 
   /**
    * The feature id for the '<em><b>Upper Bound</b></em>' containment reference.
@@ -1772,7 +1838,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getBetween()
    * @generated
    */
-  int BETWEEN = 50;
+  int BETWEEN = 53;
 
   /**
    * The feature id for the '<em><b>Lower Bound</b></em>' containment reference.
@@ -1809,7 +1875,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getAfterUntil()
    * @generated
    */
-  int AFTER_UNTIL = 51;
+  int AFTER_UNTIL = 54;
 
   /**
    * The feature id for the '<em><b>Lower Bound</b></em>' containment reference.
@@ -1846,7 +1912,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getStartMoniLogger()
    * @generated
    */
-  int START_MONI_LOGGER = 52;
+  int START_MONI_LOGGER = 55;
 
   /**
    * The feature id for the '<em><b>Monilogger</b></em>' reference.
@@ -1883,7 +1949,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getStopMoniLogger()
    * @generated
    */
-  int STOP_MONI_LOGGER = 53;
+  int STOP_MONI_LOGGER = 56;
 
   /**
    * The feature id for the '<em><b>Monilogger</b></em>' reference.
@@ -1911,7 +1977,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getEmpty()
    * @generated
    */
-  int EMPTY = 54;
+  int EMPTY = 57;
 
   /**
    * The number of structural features of the '<em>Empty</em>' class.
@@ -1923,6 +1989,764 @@ public interface MoniLogPackage extends EPackage
   int EMPTY_FEATURE_COUNT = EMPTY_OR_PROPERTY_VALUE_FEATURE_COUNT + 0;
 
   /**
+   * The meta object id for the '{@link org.gemoc.monilog.moniLog.impl.ContractedIfImpl <em>Contracted If</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.gemoc.monilog.moniLog.impl.ContractedIfImpl
+   * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getContractedIf()
+   * @generated
+   */
+  int CONTRACTED_IF = 58;
+
+  /**
+   * The feature id for the '<em><b>Condition</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CONTRACTED_IF__CONDITION = SIMPLE_EXPRESSION_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Then</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CONTRACTED_IF__THEN = SIMPLE_EXPRESSION_FEATURE_COUNT + 1;
+
+  /**
+   * The feature id for the '<em><b>Else</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CONTRACTED_IF__ELSE = SIMPLE_EXPRESSION_FEATURE_COUNT + 2;
+
+  /**
+   * The number of structural features of the '<em>Contracted If</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int CONTRACTED_IF_FEATURE_COUNT = SIMPLE_EXPRESSION_FEATURE_COUNT + 3;
+
+  /**
+   * The meta object id for the '{@link org.gemoc.monilog.moniLog.impl.OrImpl <em>Or</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.gemoc.monilog.moniLog.impl.OrImpl
+   * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getOr()
+   * @generated
+   */
+  int OR = 59;
+
+  /**
+   * The feature id for the '<em><b>Left</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int OR__LEFT = SIMPLE_EXPRESSION_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Op</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int OR__OP = SIMPLE_EXPRESSION_FEATURE_COUNT + 1;
+
+  /**
+   * The feature id for the '<em><b>Right</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int OR__RIGHT = SIMPLE_EXPRESSION_FEATURE_COUNT + 2;
+
+  /**
+   * The number of structural features of the '<em>Or</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int OR_FEATURE_COUNT = SIMPLE_EXPRESSION_FEATURE_COUNT + 3;
+
+  /**
+   * The meta object id for the '{@link org.gemoc.monilog.moniLog.impl.AndImpl <em>And</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.gemoc.monilog.moniLog.impl.AndImpl
+   * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getAnd()
+   * @generated
+   */
+  int AND = 60;
+
+  /**
+   * The feature id for the '<em><b>Left</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int AND__LEFT = SIMPLE_EXPRESSION_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Op</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int AND__OP = SIMPLE_EXPRESSION_FEATURE_COUNT + 1;
+
+  /**
+   * The feature id for the '<em><b>Right</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int AND__RIGHT = SIMPLE_EXPRESSION_FEATURE_COUNT + 2;
+
+  /**
+   * The number of structural features of the '<em>And</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int AND_FEATURE_COUNT = SIMPLE_EXPRESSION_FEATURE_COUNT + 3;
+
+  /**
+   * The meta object id for the '{@link org.gemoc.monilog.moniLog.impl.EqualityImpl <em>Equality</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.gemoc.monilog.moniLog.impl.EqualityImpl
+   * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getEquality()
+   * @generated
+   */
+  int EQUALITY = 61;
+
+  /**
+   * The feature id for the '<em><b>Left</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EQUALITY__LEFT = SIMPLE_EXPRESSION_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Op</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EQUALITY__OP = SIMPLE_EXPRESSION_FEATURE_COUNT + 1;
+
+  /**
+   * The feature id for the '<em><b>Right</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EQUALITY__RIGHT = SIMPLE_EXPRESSION_FEATURE_COUNT + 2;
+
+  /**
+   * The number of structural features of the '<em>Equality</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int EQUALITY_FEATURE_COUNT = SIMPLE_EXPRESSION_FEATURE_COUNT + 3;
+
+  /**
+   * The meta object id for the '{@link org.gemoc.monilog.moniLog.impl.ComparisonImpl <em>Comparison</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.gemoc.monilog.moniLog.impl.ComparisonImpl
+   * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getComparison()
+   * @generated
+   */
+  int COMPARISON = 62;
+
+  /**
+   * The feature id for the '<em><b>Left</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMPARISON__LEFT = SIMPLE_EXPRESSION_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Op</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMPARISON__OP = SIMPLE_EXPRESSION_FEATURE_COUNT + 1;
+
+  /**
+   * The feature id for the '<em><b>Right</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMPARISON__RIGHT = SIMPLE_EXPRESSION_FEATURE_COUNT + 2;
+
+  /**
+   * The number of structural features of the '<em>Comparison</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int COMPARISON_FEATURE_COUNT = SIMPLE_EXPRESSION_FEATURE_COUNT + 3;
+
+  /**
+   * The meta object id for the '{@link org.gemoc.monilog.moniLog.impl.PlusImpl <em>Plus</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.gemoc.monilog.moniLog.impl.PlusImpl
+   * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getPlus()
+   * @generated
+   */
+  int PLUS = 63;
+
+  /**
+   * The feature id for the '<em><b>Left</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PLUS__LEFT = SIMPLE_EXPRESSION_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Op</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PLUS__OP = SIMPLE_EXPRESSION_FEATURE_COUNT + 1;
+
+  /**
+   * The feature id for the '<em><b>Right</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PLUS__RIGHT = SIMPLE_EXPRESSION_FEATURE_COUNT + 2;
+
+  /**
+   * The number of structural features of the '<em>Plus</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PLUS_FEATURE_COUNT = SIMPLE_EXPRESSION_FEATURE_COUNT + 3;
+
+  /**
+   * The meta object id for the '{@link org.gemoc.monilog.moniLog.impl.MinusImpl <em>Minus</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.gemoc.monilog.moniLog.impl.MinusImpl
+   * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getMinus()
+   * @generated
+   */
+  int MINUS = 64;
+
+  /**
+   * The feature id for the '<em><b>Left</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MINUS__LEFT = SIMPLE_EXPRESSION_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Op</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MINUS__OP = SIMPLE_EXPRESSION_FEATURE_COUNT + 1;
+
+  /**
+   * The feature id for the '<em><b>Right</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MINUS__RIGHT = SIMPLE_EXPRESSION_FEATURE_COUNT + 2;
+
+  /**
+   * The number of structural features of the '<em>Minus</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MINUS_FEATURE_COUNT = SIMPLE_EXPRESSION_FEATURE_COUNT + 3;
+
+  /**
+   * The meta object id for the '{@link org.gemoc.monilog.moniLog.impl.MulImpl <em>Mul</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.gemoc.monilog.moniLog.impl.MulImpl
+   * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getMul()
+   * @generated
+   */
+  int MUL = 65;
+
+  /**
+   * The feature id for the '<em><b>Left</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MUL__LEFT = SIMPLE_EXPRESSION_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Op</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MUL__OP = SIMPLE_EXPRESSION_FEATURE_COUNT + 1;
+
+  /**
+   * The feature id for the '<em><b>Right</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MUL__RIGHT = SIMPLE_EXPRESSION_FEATURE_COUNT + 2;
+
+  /**
+   * The number of structural features of the '<em>Mul</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MUL_FEATURE_COUNT = SIMPLE_EXPRESSION_FEATURE_COUNT + 3;
+
+  /**
+   * The meta object id for the '{@link org.gemoc.monilog.moniLog.impl.DivImpl <em>Div</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.gemoc.monilog.moniLog.impl.DivImpl
+   * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getDiv()
+   * @generated
+   */
+  int DIV = 66;
+
+  /**
+   * The feature id for the '<em><b>Left</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DIV__LEFT = SIMPLE_EXPRESSION_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Op</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DIV__OP = SIMPLE_EXPRESSION_FEATURE_COUNT + 1;
+
+  /**
+   * The feature id for the '<em><b>Right</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DIV__RIGHT = SIMPLE_EXPRESSION_FEATURE_COUNT + 2;
+
+  /**
+   * The number of structural features of the '<em>Div</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int DIV_FEATURE_COUNT = SIMPLE_EXPRESSION_FEATURE_COUNT + 3;
+
+  /**
+   * The meta object id for the '{@link org.gemoc.monilog.moniLog.impl.ModuloImpl <em>Modulo</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.gemoc.monilog.moniLog.impl.ModuloImpl
+   * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getModulo()
+   * @generated
+   */
+  int MODULO = 67;
+
+  /**
+   * The feature id for the '<em><b>Left</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MODULO__LEFT = SIMPLE_EXPRESSION_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Op</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MODULO__OP = SIMPLE_EXPRESSION_FEATURE_COUNT + 1;
+
+  /**
+   * The feature id for the '<em><b>Right</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MODULO__RIGHT = SIMPLE_EXPRESSION_FEATURE_COUNT + 2;
+
+  /**
+   * The number of structural features of the '<em>Modulo</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int MODULO_FEATURE_COUNT = SIMPLE_EXPRESSION_FEATURE_COUNT + 3;
+
+  /**
+   * The meta object id for the '{@link org.gemoc.monilog.moniLog.impl.ParenthesisImpl <em>Parenthesis</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.gemoc.monilog.moniLog.impl.ParenthesisImpl
+   * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getParenthesis()
+   * @generated
+   */
+  int PARENTHESIS = 68;
+
+  /**
+   * The feature id for the '<em><b>Expression</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PARENTHESIS__EXPRESSION = SIMPLE_EXPRESSION_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Parenthesis</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PARENTHESIS_FEATURE_COUNT = SIMPLE_EXPRESSION_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link org.gemoc.monilog.moniLog.impl.UnaryMinusImpl <em>Unary Minus</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.gemoc.monilog.moniLog.impl.UnaryMinusImpl
+   * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getUnaryMinus()
+   * @generated
+   */
+  int UNARY_MINUS = 69;
+
+  /**
+   * The feature id for the '<em><b>Expression</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int UNARY_MINUS__EXPRESSION = SIMPLE_EXPRESSION_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Unary Minus</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int UNARY_MINUS_FEATURE_COUNT = SIMPLE_EXPRESSION_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link org.gemoc.monilog.moniLog.impl.NotImpl <em>Not</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.gemoc.monilog.moniLog.impl.NotImpl
+   * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getNot()
+   * @generated
+   */
+  int NOT = 70;
+
+  /**
+   * The feature id for the '<em><b>Expression</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int NOT__EXPRESSION = SIMPLE_EXPRESSION_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Not</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int NOT_FEATURE_COUNT = SIMPLE_EXPRESSION_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link org.gemoc.monilog.moniLog.impl.IntConstantImpl <em>Int Constant</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.gemoc.monilog.moniLog.impl.IntConstantImpl
+   * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getIntConstant()
+   * @generated
+   */
+  int INT_CONSTANT = 71;
+
+  /**
+   * The feature id for the '<em><b>Value</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int INT_CONSTANT__VALUE = SIMPLE_EXPRESSION_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Int Constant</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int INT_CONSTANT_FEATURE_COUNT = SIMPLE_EXPRESSION_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link org.gemoc.monilog.moniLog.impl.RealConstantImpl <em>Real Constant</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.gemoc.monilog.moniLog.impl.RealConstantImpl
+   * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getRealConstant()
+   * @generated
+   */
+  int REAL_CONSTANT = 72;
+
+  /**
+   * The feature id for the '<em><b>Value</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REAL_CONSTANT__VALUE = SIMPLE_EXPRESSION_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Real Constant</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int REAL_CONSTANT_FEATURE_COUNT = SIMPLE_EXPRESSION_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link org.gemoc.monilog.moniLog.impl.BoolConstantImpl <em>Bool Constant</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.gemoc.monilog.moniLog.impl.BoolConstantImpl
+   * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getBoolConstant()
+   * @generated
+   */
+  int BOOL_CONSTANT = 73;
+
+  /**
+   * The feature id for the '<em><b>Value</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int BOOL_CONSTANT__VALUE = SIMPLE_EXPRESSION_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Bool Constant</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int BOOL_CONSTANT_FEATURE_COUNT = SIMPLE_EXPRESSION_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link org.gemoc.monilog.moniLog.impl.StringConstantImpl <em>String Constant</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.gemoc.monilog.moniLog.impl.StringConstantImpl
+   * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getStringConstant()
+   * @generated
+   */
+  int STRING_CONSTANT = 74;
+
+  /**
+   * The feature id for the '<em><b>Value</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int STRING_CONSTANT__VALUE = SIMPLE_EXPRESSION_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>String Constant</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int STRING_CONSTANT_FEATURE_COUNT = SIMPLE_EXPRESSION_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link org.gemoc.monilog.moniLog.impl.VectorConstantImpl <em>Vector Constant</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.gemoc.monilog.moniLog.impl.VectorConstantImpl
+   * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getVectorConstant()
+   * @generated
+   */
+  int VECTOR_CONSTANT = 75;
+
+  /**
+   * The feature id for the '<em><b>Values</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VECTOR_CONSTANT__VALUES = SIMPLE_EXPRESSION_FEATURE_COUNT + 0;
+
+  /**
+   * The number of structural features of the '<em>Vector Constant</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int VECTOR_CONSTANT_FEATURE_COUNT = SIMPLE_EXPRESSION_FEATURE_COUNT + 1;
+
+  /**
+   * The meta object id for the '{@link org.gemoc.monilog.moniLog.impl.ArrayRefImpl <em>Array Ref</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.gemoc.monilog.moniLog.impl.ArrayRefImpl
+   * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getArrayRef()
+   * @generated
+   */
+  int ARRAY_REF = 76;
+
+  /**
+   * The feature id for the '<em><b>Array</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ARRAY_REF__ARRAY = REF_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Indices</b></em>' containment reference list.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ARRAY_REF__INDICES = REF_FEATURE_COUNT + 1;
+
+  /**
+   * The number of structural features of the '<em>Array Ref</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int ARRAY_REF_FEATURE_COUNT = REF_FEATURE_COUNT + 2;
+
+  /**
+   * The meta object id for the '{@link org.gemoc.monilog.moniLog.impl.PropertyRefImpl <em>Property Ref</em>}' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @see org.gemoc.monilog.moniLog.impl.PropertyRefImpl
+   * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getPropertyRef()
+   * @generated
+   */
+  int PROPERTY_REF = 77;
+
+  /**
+   * The feature id for the '<em><b>Object</b></em>' containment reference.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PROPERTY_REF__OBJECT = REF_FEATURE_COUNT + 0;
+
+  /**
+   * The feature id for the '<em><b>Property</b></em>' attribute.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PROPERTY_REF__PROPERTY = REF_FEATURE_COUNT + 1;
+
+  /**
+   * The number of structural features of the '<em>Property Ref</em>' class.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   * @ordered
+   */
+  int PROPERTY_REF_FEATURE_COUNT = REF_FEATURE_COUNT + 2;
+
+  /**
    * The meta object id for the '{@link org.gemoc.monilog.moniLog.MoniLoggerAnnotation <em>Moni Logger Annotation</em>}' enum.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -1930,7 +2754,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getMoniLoggerAnnotation()
    * @generated
    */
-  int MONI_LOGGER_ANNOTATION = 55;
+  int MONI_LOGGER_ANNOTATION = 78;
 
   /**
    * The meta object id for the '{@link org.gemoc.monilog.moniLog.AppenderAnnotation <em>Appender Annotation</em>}' enum.
@@ -1940,7 +2764,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getAppenderAnnotation()
    * @generated
    */
-  int APPENDER_ANNOTATION = 56;
+  int APPENDER_ANNOTATION = 79;
 
   /**
    * The meta object id for the '{@link org.gemoc.monilog.moniLog.LogLevel <em>Log Level</em>}' enum.
@@ -1950,7 +2774,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getLogLevel()
    * @generated
    */
-  int LOG_LEVEL = 57;
+  int LOG_LEVEL = 80;
 
   /**
    * The meta object id for the '{@link org.gemoc.monilog.moniLog.TemporalPatternKind <em>Temporal Pattern Kind</em>}' enum.
@@ -1960,7 +2784,7 @@ public interface MoniLogPackage extends EPackage
    * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getTemporalPatternKind()
    * @generated
    */
-  int TEMPORAL_PATTERN_KIND = 58;
+  int TEMPORAL_PATTERN_KIND = 81;
 
 
   /**
@@ -2589,16 +3413,6 @@ public interface MoniLogPackage extends EPackage
   EReference getAppenderCall_Args();
 
   /**
-   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog.CallArgument <em>Call Argument</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Call Argument</em>'.
-   * @see org.gemoc.monilog.moniLog.CallArgument
-   * @generated
-   */
-  EClass getCallArgument();
-
-  /**
    * Returns the meta object for class '{@link org.gemoc.monilog.moniLog.LayoutCall <em>Layout Call</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2661,38 +3475,6 @@ public interface MoniLogPackage extends EPackage
    * @generated
    */
   EReference getEmitEvent_Args();
-
-  /**
-   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog.SetVariable <em>Set Variable</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Set Variable</em>'.
-   * @see org.gemoc.monilog.moniLog.SetVariable
-   * @generated
-   */
-  EClass getSetVariable();
-
-  /**
-   * Returns the meta object for the attribute '{@link org.gemoc.monilog.moniLog.SetVariable#getVariable <em>Variable</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Variable</em>'.
-   * @see org.gemoc.monilog.moniLog.SetVariable#getVariable()
-   * @see #getSetVariable()
-   * @generated
-   */
-  EAttribute getSetVariable_Variable();
-
-  /**
-   * Returns the meta object for the containment reference '{@link org.gemoc.monilog.moniLog.SetVariable#getValue <em>Value</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Value</em>'.
-   * @see org.gemoc.monilog.moniLog.SetVariable#getValue()
-   * @see #getSetVariable()
-   * @generated
-   */
-  EReference getSetVariable_Value();
 
   /**
    * Returns the meta object for class '{@link org.gemoc.monilog.moniLog.MoniloggerCall <em>Monilogger Call</em>}'.
@@ -2758,6 +3540,38 @@ public interface MoniLogPackage extends EPackage
   EClass getEmptyOrPropertyValue();
 
   /**
+   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog.PropertyValue <em>Property Value</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Property Value</em>'.
+   * @see org.gemoc.monilog.moniLog.PropertyValue
+   * @generated
+   */
+  EClass getPropertyValue();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.gemoc.monilog.moniLog.PropertyValue#getId <em>Id</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Id</em>'.
+   * @see org.gemoc.monilog.moniLog.PropertyValue#getId()
+   * @see #getPropertyValue()
+   * @generated
+   */
+  EAttribute getPropertyValue_Id();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.gemoc.monilog.moniLog.PropertyValue#getValue <em>Value</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Value</em>'.
+   * @see org.gemoc.monilog.moniLog.PropertyValue#getValue()
+   * @see #getPropertyValue()
+   * @generated
+   */
+  EReference getPropertyValue_Value();
+
+  /**
    * Returns the meta object for class '{@link org.gemoc.monilog.moniLog.Expression <em>Expression</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
@@ -2789,36 +3603,25 @@ public interface MoniLogPackage extends EPackage
   EReference getParameterReference_Parameter();
 
   /**
-   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog.PropertyValue <em>Property Value</em>}'.
+   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog.MoniLogExpression <em>Expression</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for class '<em>Property Value</em>'.
-   * @see org.gemoc.monilog.moniLog.PropertyValue
+   * @return the meta object for class '<em>Expression</em>'.
+   * @see org.gemoc.monilog.moniLog.MoniLogExpression
    * @generated
    */
-  EClass getPropertyValue();
+  EClass getMoniLogExpression();
 
   /**
-   * Returns the meta object for the attribute '{@link org.gemoc.monilog.moniLog.PropertyValue#getId <em>Id</em>}'.
+   * Returns the meta object for the containment reference '{@link org.gemoc.monilog.moniLog.MoniLogExpression#getExpression <em>Expression</em>}'.
    * <!-- begin-user-doc -->
    * <!-- end-user-doc -->
-   * @return the meta object for the attribute '<em>Id</em>'.
-   * @see org.gemoc.monilog.moniLog.PropertyValue#getId()
-   * @see #getPropertyValue()
+   * @return the meta object for the containment reference '<em>Expression</em>'.
+   * @see org.gemoc.monilog.moniLog.MoniLogExpression#getExpression()
+   * @see #getMoniLogExpression()
    * @generated
    */
-  EAttribute getPropertyValue_Id();
-
-  /**
-   * Returns the meta object for the containment reference '{@link org.gemoc.monilog.moniLog.PropertyValue#getValue <em>Value</em>}'.
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @return the meta object for the containment reference '<em>Value</em>'.
-   * @see org.gemoc.monilog.moniLog.PropertyValue#getValue()
-   * @see #getPropertyValue()
-   * @generated
-   */
-  EReference getPropertyValue_Value();
+  EReference getMoniLogExpression_Expression();
 
   /**
    * Returns the meta object for class '{@link org.gemoc.monilog.moniLog.LanguageValue <em>Language Value</em>}'.
@@ -2915,6 +3718,68 @@ public interface MoniLogPackage extends EPackage
    * @generated
    */
   EReference getLanguageCall_Args();
+
+  /**
+   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog.SimpleExpression <em>Simple Expression</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Simple Expression</em>'.
+   * @see org.gemoc.monilog.moniLog.SimpleExpression
+   * @generated
+   */
+  EClass getSimpleExpression();
+
+  /**
+   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog.Ref <em>Ref</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Ref</em>'.
+   * @see org.gemoc.monilog.moniLog.Ref
+   * @generated
+   */
+  EClass getRef();
+
+  /**
+   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog.SimpleVarRef <em>Simple Var Ref</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Simple Var Ref</em>'.
+   * @see org.gemoc.monilog.moniLog.SimpleVarRef
+   * @generated
+   */
+  EClass getSimpleVarRef();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.gemoc.monilog.moniLog.SimpleVarRef#getTarget <em>Target</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Target</em>'.
+   * @see org.gemoc.monilog.moniLog.SimpleVarRef#getTarget()
+   * @see #getSimpleVarRef()
+   * @generated
+   */
+  EAttribute getSimpleVarRef_Target();
+
+  /**
+   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog.ArraySize <em>Array Size</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Array Size</em>'.
+   * @see org.gemoc.monilog.moniLog.ArraySize
+   * @generated
+   */
+  EClass getArraySize();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.gemoc.monilog.moniLog.ArraySize#getArray <em>Array</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Array</em>'.
+   * @see org.gemoc.monilog.moniLog.ArraySize#getArray()
+   * @see #getArraySize()
+   * @generated
+   */
+  EReference getArraySize_Array();
 
   /**
    * Returns the meta object for class '{@link org.gemoc.monilog.moniLog.ASTEvent <em>AST Event</em>}'.
@@ -3304,6 +4169,668 @@ public interface MoniLogPackage extends EPackage
    * @generated
    */
   EClass getEmpty();
+
+  /**
+   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog.ContractedIf <em>Contracted If</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Contracted If</em>'.
+   * @see org.gemoc.monilog.moniLog.ContractedIf
+   * @generated
+   */
+  EClass getContractedIf();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.gemoc.monilog.moniLog.ContractedIf#getCondition <em>Condition</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Condition</em>'.
+   * @see org.gemoc.monilog.moniLog.ContractedIf#getCondition()
+   * @see #getContractedIf()
+   * @generated
+   */
+  EReference getContractedIf_Condition();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.gemoc.monilog.moniLog.ContractedIf#getThen <em>Then</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Then</em>'.
+   * @see org.gemoc.monilog.moniLog.ContractedIf#getThen()
+   * @see #getContractedIf()
+   * @generated
+   */
+  EReference getContractedIf_Then();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.gemoc.monilog.moniLog.ContractedIf#getElse <em>Else</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Else</em>'.
+   * @see org.gemoc.monilog.moniLog.ContractedIf#getElse()
+   * @see #getContractedIf()
+   * @generated
+   */
+  EReference getContractedIf_Else();
+
+  /**
+   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog.Or <em>Or</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Or</em>'.
+   * @see org.gemoc.monilog.moniLog.Or
+   * @generated
+   */
+  EClass getOr();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.gemoc.monilog.moniLog.Or#getLeft <em>Left</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Left</em>'.
+   * @see org.gemoc.monilog.moniLog.Or#getLeft()
+   * @see #getOr()
+   * @generated
+   */
+  EReference getOr_Left();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.gemoc.monilog.moniLog.Or#getOp <em>Op</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Op</em>'.
+   * @see org.gemoc.monilog.moniLog.Or#getOp()
+   * @see #getOr()
+   * @generated
+   */
+  EAttribute getOr_Op();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.gemoc.monilog.moniLog.Or#getRight <em>Right</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Right</em>'.
+   * @see org.gemoc.monilog.moniLog.Or#getRight()
+   * @see #getOr()
+   * @generated
+   */
+  EReference getOr_Right();
+
+  /**
+   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog.And <em>And</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>And</em>'.
+   * @see org.gemoc.monilog.moniLog.And
+   * @generated
+   */
+  EClass getAnd();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.gemoc.monilog.moniLog.And#getLeft <em>Left</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Left</em>'.
+   * @see org.gemoc.monilog.moniLog.And#getLeft()
+   * @see #getAnd()
+   * @generated
+   */
+  EReference getAnd_Left();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.gemoc.monilog.moniLog.And#getOp <em>Op</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Op</em>'.
+   * @see org.gemoc.monilog.moniLog.And#getOp()
+   * @see #getAnd()
+   * @generated
+   */
+  EAttribute getAnd_Op();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.gemoc.monilog.moniLog.And#getRight <em>Right</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Right</em>'.
+   * @see org.gemoc.monilog.moniLog.And#getRight()
+   * @see #getAnd()
+   * @generated
+   */
+  EReference getAnd_Right();
+
+  /**
+   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog.Equality <em>Equality</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Equality</em>'.
+   * @see org.gemoc.monilog.moniLog.Equality
+   * @generated
+   */
+  EClass getEquality();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.gemoc.monilog.moniLog.Equality#getLeft <em>Left</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Left</em>'.
+   * @see org.gemoc.monilog.moniLog.Equality#getLeft()
+   * @see #getEquality()
+   * @generated
+   */
+  EReference getEquality_Left();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.gemoc.monilog.moniLog.Equality#getOp <em>Op</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Op</em>'.
+   * @see org.gemoc.monilog.moniLog.Equality#getOp()
+   * @see #getEquality()
+   * @generated
+   */
+  EAttribute getEquality_Op();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.gemoc.monilog.moniLog.Equality#getRight <em>Right</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Right</em>'.
+   * @see org.gemoc.monilog.moniLog.Equality#getRight()
+   * @see #getEquality()
+   * @generated
+   */
+  EReference getEquality_Right();
+
+  /**
+   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog.Comparison <em>Comparison</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Comparison</em>'.
+   * @see org.gemoc.monilog.moniLog.Comparison
+   * @generated
+   */
+  EClass getComparison();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.gemoc.monilog.moniLog.Comparison#getLeft <em>Left</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Left</em>'.
+   * @see org.gemoc.monilog.moniLog.Comparison#getLeft()
+   * @see #getComparison()
+   * @generated
+   */
+  EReference getComparison_Left();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.gemoc.monilog.moniLog.Comparison#getOp <em>Op</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Op</em>'.
+   * @see org.gemoc.monilog.moniLog.Comparison#getOp()
+   * @see #getComparison()
+   * @generated
+   */
+  EAttribute getComparison_Op();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.gemoc.monilog.moniLog.Comparison#getRight <em>Right</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Right</em>'.
+   * @see org.gemoc.monilog.moniLog.Comparison#getRight()
+   * @see #getComparison()
+   * @generated
+   */
+  EReference getComparison_Right();
+
+  /**
+   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog.Plus <em>Plus</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Plus</em>'.
+   * @see org.gemoc.monilog.moniLog.Plus
+   * @generated
+   */
+  EClass getPlus();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.gemoc.monilog.moniLog.Plus#getLeft <em>Left</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Left</em>'.
+   * @see org.gemoc.monilog.moniLog.Plus#getLeft()
+   * @see #getPlus()
+   * @generated
+   */
+  EReference getPlus_Left();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.gemoc.monilog.moniLog.Plus#getOp <em>Op</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Op</em>'.
+   * @see org.gemoc.monilog.moniLog.Plus#getOp()
+   * @see #getPlus()
+   * @generated
+   */
+  EAttribute getPlus_Op();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.gemoc.monilog.moniLog.Plus#getRight <em>Right</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Right</em>'.
+   * @see org.gemoc.monilog.moniLog.Plus#getRight()
+   * @see #getPlus()
+   * @generated
+   */
+  EReference getPlus_Right();
+
+  /**
+   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog.Minus <em>Minus</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Minus</em>'.
+   * @see org.gemoc.monilog.moniLog.Minus
+   * @generated
+   */
+  EClass getMinus();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.gemoc.monilog.moniLog.Minus#getLeft <em>Left</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Left</em>'.
+   * @see org.gemoc.monilog.moniLog.Minus#getLeft()
+   * @see #getMinus()
+   * @generated
+   */
+  EReference getMinus_Left();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.gemoc.monilog.moniLog.Minus#getOp <em>Op</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Op</em>'.
+   * @see org.gemoc.monilog.moniLog.Minus#getOp()
+   * @see #getMinus()
+   * @generated
+   */
+  EAttribute getMinus_Op();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.gemoc.monilog.moniLog.Minus#getRight <em>Right</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Right</em>'.
+   * @see org.gemoc.monilog.moniLog.Minus#getRight()
+   * @see #getMinus()
+   * @generated
+   */
+  EReference getMinus_Right();
+
+  /**
+   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog.Mul <em>Mul</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Mul</em>'.
+   * @see org.gemoc.monilog.moniLog.Mul
+   * @generated
+   */
+  EClass getMul();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.gemoc.monilog.moniLog.Mul#getLeft <em>Left</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Left</em>'.
+   * @see org.gemoc.monilog.moniLog.Mul#getLeft()
+   * @see #getMul()
+   * @generated
+   */
+  EReference getMul_Left();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.gemoc.monilog.moniLog.Mul#getOp <em>Op</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Op</em>'.
+   * @see org.gemoc.monilog.moniLog.Mul#getOp()
+   * @see #getMul()
+   * @generated
+   */
+  EAttribute getMul_Op();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.gemoc.monilog.moniLog.Mul#getRight <em>Right</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Right</em>'.
+   * @see org.gemoc.monilog.moniLog.Mul#getRight()
+   * @see #getMul()
+   * @generated
+   */
+  EReference getMul_Right();
+
+  /**
+   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog.Div <em>Div</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Div</em>'.
+   * @see org.gemoc.monilog.moniLog.Div
+   * @generated
+   */
+  EClass getDiv();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.gemoc.monilog.moniLog.Div#getLeft <em>Left</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Left</em>'.
+   * @see org.gemoc.monilog.moniLog.Div#getLeft()
+   * @see #getDiv()
+   * @generated
+   */
+  EReference getDiv_Left();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.gemoc.monilog.moniLog.Div#getOp <em>Op</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Op</em>'.
+   * @see org.gemoc.monilog.moniLog.Div#getOp()
+   * @see #getDiv()
+   * @generated
+   */
+  EAttribute getDiv_Op();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.gemoc.monilog.moniLog.Div#getRight <em>Right</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Right</em>'.
+   * @see org.gemoc.monilog.moniLog.Div#getRight()
+   * @see #getDiv()
+   * @generated
+   */
+  EReference getDiv_Right();
+
+  /**
+   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog.Modulo <em>Modulo</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Modulo</em>'.
+   * @see org.gemoc.monilog.moniLog.Modulo
+   * @generated
+   */
+  EClass getModulo();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.gemoc.monilog.moniLog.Modulo#getLeft <em>Left</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Left</em>'.
+   * @see org.gemoc.monilog.moniLog.Modulo#getLeft()
+   * @see #getModulo()
+   * @generated
+   */
+  EReference getModulo_Left();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.gemoc.monilog.moniLog.Modulo#getOp <em>Op</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Op</em>'.
+   * @see org.gemoc.monilog.moniLog.Modulo#getOp()
+   * @see #getModulo()
+   * @generated
+   */
+  EAttribute getModulo_Op();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.gemoc.monilog.moniLog.Modulo#getRight <em>Right</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Right</em>'.
+   * @see org.gemoc.monilog.moniLog.Modulo#getRight()
+   * @see #getModulo()
+   * @generated
+   */
+  EReference getModulo_Right();
+
+  /**
+   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog.Parenthesis <em>Parenthesis</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Parenthesis</em>'.
+   * @see org.gemoc.monilog.moniLog.Parenthesis
+   * @generated
+   */
+  EClass getParenthesis();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.gemoc.monilog.moniLog.Parenthesis#getExpression <em>Expression</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Expression</em>'.
+   * @see org.gemoc.monilog.moniLog.Parenthesis#getExpression()
+   * @see #getParenthesis()
+   * @generated
+   */
+  EReference getParenthesis_Expression();
+
+  /**
+   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog.UnaryMinus <em>Unary Minus</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Unary Minus</em>'.
+   * @see org.gemoc.monilog.moniLog.UnaryMinus
+   * @generated
+   */
+  EClass getUnaryMinus();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.gemoc.monilog.moniLog.UnaryMinus#getExpression <em>Expression</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Expression</em>'.
+   * @see org.gemoc.monilog.moniLog.UnaryMinus#getExpression()
+   * @see #getUnaryMinus()
+   * @generated
+   */
+  EReference getUnaryMinus_Expression();
+
+  /**
+   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog.Not <em>Not</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Not</em>'.
+   * @see org.gemoc.monilog.moniLog.Not
+   * @generated
+   */
+  EClass getNot();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.gemoc.monilog.moniLog.Not#getExpression <em>Expression</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Expression</em>'.
+   * @see org.gemoc.monilog.moniLog.Not#getExpression()
+   * @see #getNot()
+   * @generated
+   */
+  EReference getNot_Expression();
+
+  /**
+   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog.IntConstant <em>Int Constant</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Int Constant</em>'.
+   * @see org.gemoc.monilog.moniLog.IntConstant
+   * @generated
+   */
+  EClass getIntConstant();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.gemoc.monilog.moniLog.IntConstant#getValue <em>Value</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Value</em>'.
+   * @see org.gemoc.monilog.moniLog.IntConstant#getValue()
+   * @see #getIntConstant()
+   * @generated
+   */
+  EAttribute getIntConstant_Value();
+
+  /**
+   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog.RealConstant <em>Real Constant</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Real Constant</em>'.
+   * @see org.gemoc.monilog.moniLog.RealConstant
+   * @generated
+   */
+  EClass getRealConstant();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.gemoc.monilog.moniLog.RealConstant#getValue <em>Value</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Value</em>'.
+   * @see org.gemoc.monilog.moniLog.RealConstant#getValue()
+   * @see #getRealConstant()
+   * @generated
+   */
+  EAttribute getRealConstant_Value();
+
+  /**
+   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog.BoolConstant <em>Bool Constant</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Bool Constant</em>'.
+   * @see org.gemoc.monilog.moniLog.BoolConstant
+   * @generated
+   */
+  EClass getBoolConstant();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.gemoc.monilog.moniLog.BoolConstant#isValue <em>Value</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Value</em>'.
+   * @see org.gemoc.monilog.moniLog.BoolConstant#isValue()
+   * @see #getBoolConstant()
+   * @generated
+   */
+  EAttribute getBoolConstant_Value();
+
+  /**
+   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog.StringConstant <em>String Constant</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>String Constant</em>'.
+   * @see org.gemoc.monilog.moniLog.StringConstant
+   * @generated
+   */
+  EClass getStringConstant();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.gemoc.monilog.moniLog.StringConstant#getValue <em>Value</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Value</em>'.
+   * @see org.gemoc.monilog.moniLog.StringConstant#getValue()
+   * @see #getStringConstant()
+   * @generated
+   */
+  EAttribute getStringConstant_Value();
+
+  /**
+   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog.VectorConstant <em>Vector Constant</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Vector Constant</em>'.
+   * @see org.gemoc.monilog.moniLog.VectorConstant
+   * @generated
+   */
+  EClass getVectorConstant();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link org.gemoc.monilog.moniLog.VectorConstant#getValues <em>Values</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Values</em>'.
+   * @see org.gemoc.monilog.moniLog.VectorConstant#getValues()
+   * @see #getVectorConstant()
+   * @generated
+   */
+  EReference getVectorConstant_Values();
+
+  /**
+   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog.ArrayRef <em>Array Ref</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Array Ref</em>'.
+   * @see org.gemoc.monilog.moniLog.ArrayRef
+   * @generated
+   */
+  EClass getArrayRef();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.gemoc.monilog.moniLog.ArrayRef#getArray <em>Array</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Array</em>'.
+   * @see org.gemoc.monilog.moniLog.ArrayRef#getArray()
+   * @see #getArrayRef()
+   * @generated
+   */
+  EReference getArrayRef_Array();
+
+  /**
+   * Returns the meta object for the containment reference list '{@link org.gemoc.monilog.moniLog.ArrayRef#getIndices <em>Indices</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference list '<em>Indices</em>'.
+   * @see org.gemoc.monilog.moniLog.ArrayRef#getIndices()
+   * @see #getArrayRef()
+   * @generated
+   */
+  EReference getArrayRef_Indices();
+
+  /**
+   * Returns the meta object for class '{@link org.gemoc.monilog.moniLog.PropertyRef <em>Property Ref</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for class '<em>Property Ref</em>'.
+   * @see org.gemoc.monilog.moniLog.PropertyRef
+   * @generated
+   */
+  EClass getPropertyRef();
+
+  /**
+   * Returns the meta object for the containment reference '{@link org.gemoc.monilog.moniLog.PropertyRef#getObject <em>Object</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the containment reference '<em>Object</em>'.
+   * @see org.gemoc.monilog.moniLog.PropertyRef#getObject()
+   * @see #getPropertyRef()
+   * @generated
+   */
+  EReference getPropertyRef_Object();
+
+  /**
+   * Returns the meta object for the attribute '{@link org.gemoc.monilog.moniLog.PropertyRef#getProperty <em>Property</em>}'.
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @return the meta object for the attribute '<em>Property</em>'.
+   * @see org.gemoc.monilog.moniLog.PropertyRef#getProperty()
+   * @see #getPropertyRef()
+   * @generated
+   */
+  EAttribute getPropertyRef_Property();
 
   /**
    * Returns the meta object for enum '{@link org.gemoc.monilog.moniLog.MoniLoggerAnnotation <em>Moni Logger Annotation</em>}'.
@@ -3889,16 +5416,6 @@ public interface MoniLogPackage extends EPackage
     EReference APPENDER_CALL__ARGS = eINSTANCE.getAppenderCall_Args();
 
     /**
-     * The meta object literal for the '{@link org.gemoc.monilog.moniLog.impl.CallArgumentImpl <em>Call Argument</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.gemoc.monilog.moniLog.impl.CallArgumentImpl
-     * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getCallArgument()
-     * @generated
-     */
-    EClass CALL_ARGUMENT = eINSTANCE.getCallArgument();
-
-    /**
      * The meta object literal for the '{@link org.gemoc.monilog.moniLog.impl.LayoutCallImpl <em>Layout Call</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -3949,32 +5466,6 @@ public interface MoniLogPackage extends EPackage
      * @generated
      */
     EReference EMIT_EVENT__ARGS = eINSTANCE.getEmitEvent_Args();
-
-    /**
-     * The meta object literal for the '{@link org.gemoc.monilog.moniLog.impl.SetVariableImpl <em>Set Variable</em>}' class.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @see org.gemoc.monilog.moniLog.impl.SetVariableImpl
-     * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getSetVariable()
-     * @generated
-     */
-    EClass SET_VARIABLE = eINSTANCE.getSetVariable();
-
-    /**
-     * The meta object literal for the '<em><b>Variable</b></em>' attribute feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EAttribute SET_VARIABLE__VARIABLE = eINSTANCE.getSetVariable_Variable();
-
-    /**
-     * The meta object literal for the '<em><b>Value</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference SET_VARIABLE__VALUE = eINSTANCE.getSetVariable_Value();
 
     /**
      * The meta object literal for the '{@link org.gemoc.monilog.moniLog.impl.MoniloggerCallImpl <em>Monilogger Call</em>}' class.
@@ -4031,6 +5522,32 @@ public interface MoniLogPackage extends EPackage
     EClass EMPTY_OR_PROPERTY_VALUE = eINSTANCE.getEmptyOrPropertyValue();
 
     /**
+     * The meta object literal for the '{@link org.gemoc.monilog.moniLog.impl.PropertyValueImpl <em>Property Value</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.gemoc.monilog.moniLog.impl.PropertyValueImpl
+     * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getPropertyValue()
+     * @generated
+     */
+    EClass PROPERTY_VALUE = eINSTANCE.getPropertyValue();
+
+    /**
+     * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute PROPERTY_VALUE__ID = eINSTANCE.getPropertyValue_Id();
+
+    /**
+     * The meta object literal for the '<em><b>Value</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference PROPERTY_VALUE__VALUE = eINSTANCE.getPropertyValue_Value();
+
+    /**
      * The meta object literal for the '{@link org.gemoc.monilog.moniLog.impl.ExpressionImpl <em>Expression</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
@@ -4059,30 +5576,22 @@ public interface MoniLogPackage extends EPackage
     EReference PARAMETER_REFERENCE__PARAMETER = eINSTANCE.getParameterReference_Parameter();
 
     /**
-     * The meta object literal for the '{@link org.gemoc.monilog.moniLog.impl.PropertyValueImpl <em>Property Value</em>}' class.
+     * The meta object literal for the '{@link org.gemoc.monilog.moniLog.impl.MoniLogExpressionImpl <em>Expression</em>}' class.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
-     * @see org.gemoc.monilog.moniLog.impl.PropertyValueImpl
-     * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getPropertyValue()
+     * @see org.gemoc.monilog.moniLog.impl.MoniLogExpressionImpl
+     * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getMoniLogExpression()
      * @generated
      */
-    EClass PROPERTY_VALUE = eINSTANCE.getPropertyValue();
+    EClass MONI_LOG_EXPRESSION = eINSTANCE.getMoniLogExpression();
 
     /**
-     * The meta object literal for the '<em><b>Id</b></em>' attribute feature.
+     * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
      * <!-- begin-user-doc -->
      * <!-- end-user-doc -->
      * @generated
      */
-    EAttribute PROPERTY_VALUE__ID = eINSTANCE.getPropertyValue_Id();
-
-    /**
-     * The meta object literal for the '<em><b>Value</b></em>' containment reference feature.
-     * <!-- begin-user-doc -->
-     * <!-- end-user-doc -->
-     * @generated
-     */
-    EReference PROPERTY_VALUE__VALUE = eINSTANCE.getPropertyValue_Value();
+    EReference MONI_LOG_EXPRESSION__EXPRESSION = eINSTANCE.getMoniLogExpression_Expression();
 
     /**
      * The meta object literal for the '{@link org.gemoc.monilog.moniLog.impl.LanguageValueImpl <em>Language Value</em>}' class.
@@ -4161,6 +5670,62 @@ public interface MoniLogPackage extends EPackage
      * @generated
      */
     EReference LANGUAGE_CALL__ARGS = eINSTANCE.getLanguageCall_Args();
+
+    /**
+     * The meta object literal for the '{@link org.gemoc.monilog.moniLog.impl.SimpleExpressionImpl <em>Simple Expression</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.gemoc.monilog.moniLog.impl.SimpleExpressionImpl
+     * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getSimpleExpression()
+     * @generated
+     */
+    EClass SIMPLE_EXPRESSION = eINSTANCE.getSimpleExpression();
+
+    /**
+     * The meta object literal for the '{@link org.gemoc.monilog.moniLog.impl.RefImpl <em>Ref</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.gemoc.monilog.moniLog.impl.RefImpl
+     * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getRef()
+     * @generated
+     */
+    EClass REF = eINSTANCE.getRef();
+
+    /**
+     * The meta object literal for the '{@link org.gemoc.monilog.moniLog.impl.SimpleVarRefImpl <em>Simple Var Ref</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.gemoc.monilog.moniLog.impl.SimpleVarRefImpl
+     * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getSimpleVarRef()
+     * @generated
+     */
+    EClass SIMPLE_VAR_REF = eINSTANCE.getSimpleVarRef();
+
+    /**
+     * The meta object literal for the '<em><b>Target</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute SIMPLE_VAR_REF__TARGET = eINSTANCE.getSimpleVarRef_Target();
+
+    /**
+     * The meta object literal for the '{@link org.gemoc.monilog.moniLog.impl.ArraySizeImpl <em>Array Size</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.gemoc.monilog.moniLog.impl.ArraySizeImpl
+     * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getArraySize()
+     * @generated
+     */
+    EClass ARRAY_SIZE = eINSTANCE.getArraySize();
+
+    /**
+     * The meta object literal for the '<em><b>Array</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ARRAY_SIZE__ARRAY = eINSTANCE.getArraySize_Array();
 
     /**
      * The meta object literal for the '{@link org.gemoc.monilog.moniLog.impl.ASTEventImpl <em>AST Event</em>}' class.
@@ -4493,6 +6058,542 @@ public interface MoniLogPackage extends EPackage
      * @generated
      */
     EClass EMPTY = eINSTANCE.getEmpty();
+
+    /**
+     * The meta object literal for the '{@link org.gemoc.monilog.moniLog.impl.ContractedIfImpl <em>Contracted If</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.gemoc.monilog.moniLog.impl.ContractedIfImpl
+     * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getContractedIf()
+     * @generated
+     */
+    EClass CONTRACTED_IF = eINSTANCE.getContractedIf();
+
+    /**
+     * The meta object literal for the '<em><b>Condition</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference CONTRACTED_IF__CONDITION = eINSTANCE.getContractedIf_Condition();
+
+    /**
+     * The meta object literal for the '<em><b>Then</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference CONTRACTED_IF__THEN = eINSTANCE.getContractedIf_Then();
+
+    /**
+     * The meta object literal for the '<em><b>Else</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference CONTRACTED_IF__ELSE = eINSTANCE.getContractedIf_Else();
+
+    /**
+     * The meta object literal for the '{@link org.gemoc.monilog.moniLog.impl.OrImpl <em>Or</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.gemoc.monilog.moniLog.impl.OrImpl
+     * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getOr()
+     * @generated
+     */
+    EClass OR = eINSTANCE.getOr();
+
+    /**
+     * The meta object literal for the '<em><b>Left</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference OR__LEFT = eINSTANCE.getOr_Left();
+
+    /**
+     * The meta object literal for the '<em><b>Op</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute OR__OP = eINSTANCE.getOr_Op();
+
+    /**
+     * The meta object literal for the '<em><b>Right</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference OR__RIGHT = eINSTANCE.getOr_Right();
+
+    /**
+     * The meta object literal for the '{@link org.gemoc.monilog.moniLog.impl.AndImpl <em>And</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.gemoc.monilog.moniLog.impl.AndImpl
+     * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getAnd()
+     * @generated
+     */
+    EClass AND = eINSTANCE.getAnd();
+
+    /**
+     * The meta object literal for the '<em><b>Left</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference AND__LEFT = eINSTANCE.getAnd_Left();
+
+    /**
+     * The meta object literal for the '<em><b>Op</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute AND__OP = eINSTANCE.getAnd_Op();
+
+    /**
+     * The meta object literal for the '<em><b>Right</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference AND__RIGHT = eINSTANCE.getAnd_Right();
+
+    /**
+     * The meta object literal for the '{@link org.gemoc.monilog.moniLog.impl.EqualityImpl <em>Equality</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.gemoc.monilog.moniLog.impl.EqualityImpl
+     * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getEquality()
+     * @generated
+     */
+    EClass EQUALITY = eINSTANCE.getEquality();
+
+    /**
+     * The meta object literal for the '<em><b>Left</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference EQUALITY__LEFT = eINSTANCE.getEquality_Left();
+
+    /**
+     * The meta object literal for the '<em><b>Op</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute EQUALITY__OP = eINSTANCE.getEquality_Op();
+
+    /**
+     * The meta object literal for the '<em><b>Right</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference EQUALITY__RIGHT = eINSTANCE.getEquality_Right();
+
+    /**
+     * The meta object literal for the '{@link org.gemoc.monilog.moniLog.impl.ComparisonImpl <em>Comparison</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.gemoc.monilog.moniLog.impl.ComparisonImpl
+     * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getComparison()
+     * @generated
+     */
+    EClass COMPARISON = eINSTANCE.getComparison();
+
+    /**
+     * The meta object literal for the '<em><b>Left</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference COMPARISON__LEFT = eINSTANCE.getComparison_Left();
+
+    /**
+     * The meta object literal for the '<em><b>Op</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute COMPARISON__OP = eINSTANCE.getComparison_Op();
+
+    /**
+     * The meta object literal for the '<em><b>Right</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference COMPARISON__RIGHT = eINSTANCE.getComparison_Right();
+
+    /**
+     * The meta object literal for the '{@link org.gemoc.monilog.moniLog.impl.PlusImpl <em>Plus</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.gemoc.monilog.moniLog.impl.PlusImpl
+     * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getPlus()
+     * @generated
+     */
+    EClass PLUS = eINSTANCE.getPlus();
+
+    /**
+     * The meta object literal for the '<em><b>Left</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference PLUS__LEFT = eINSTANCE.getPlus_Left();
+
+    /**
+     * The meta object literal for the '<em><b>Op</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute PLUS__OP = eINSTANCE.getPlus_Op();
+
+    /**
+     * The meta object literal for the '<em><b>Right</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference PLUS__RIGHT = eINSTANCE.getPlus_Right();
+
+    /**
+     * The meta object literal for the '{@link org.gemoc.monilog.moniLog.impl.MinusImpl <em>Minus</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.gemoc.monilog.moniLog.impl.MinusImpl
+     * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getMinus()
+     * @generated
+     */
+    EClass MINUS = eINSTANCE.getMinus();
+
+    /**
+     * The meta object literal for the '<em><b>Left</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference MINUS__LEFT = eINSTANCE.getMinus_Left();
+
+    /**
+     * The meta object literal for the '<em><b>Op</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute MINUS__OP = eINSTANCE.getMinus_Op();
+
+    /**
+     * The meta object literal for the '<em><b>Right</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference MINUS__RIGHT = eINSTANCE.getMinus_Right();
+
+    /**
+     * The meta object literal for the '{@link org.gemoc.monilog.moniLog.impl.MulImpl <em>Mul</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.gemoc.monilog.moniLog.impl.MulImpl
+     * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getMul()
+     * @generated
+     */
+    EClass MUL = eINSTANCE.getMul();
+
+    /**
+     * The meta object literal for the '<em><b>Left</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference MUL__LEFT = eINSTANCE.getMul_Left();
+
+    /**
+     * The meta object literal for the '<em><b>Op</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute MUL__OP = eINSTANCE.getMul_Op();
+
+    /**
+     * The meta object literal for the '<em><b>Right</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference MUL__RIGHT = eINSTANCE.getMul_Right();
+
+    /**
+     * The meta object literal for the '{@link org.gemoc.monilog.moniLog.impl.DivImpl <em>Div</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.gemoc.monilog.moniLog.impl.DivImpl
+     * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getDiv()
+     * @generated
+     */
+    EClass DIV = eINSTANCE.getDiv();
+
+    /**
+     * The meta object literal for the '<em><b>Left</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference DIV__LEFT = eINSTANCE.getDiv_Left();
+
+    /**
+     * The meta object literal for the '<em><b>Op</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute DIV__OP = eINSTANCE.getDiv_Op();
+
+    /**
+     * The meta object literal for the '<em><b>Right</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference DIV__RIGHT = eINSTANCE.getDiv_Right();
+
+    /**
+     * The meta object literal for the '{@link org.gemoc.monilog.moniLog.impl.ModuloImpl <em>Modulo</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.gemoc.monilog.moniLog.impl.ModuloImpl
+     * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getModulo()
+     * @generated
+     */
+    EClass MODULO = eINSTANCE.getModulo();
+
+    /**
+     * The meta object literal for the '<em><b>Left</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference MODULO__LEFT = eINSTANCE.getModulo_Left();
+
+    /**
+     * The meta object literal for the '<em><b>Op</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute MODULO__OP = eINSTANCE.getModulo_Op();
+
+    /**
+     * The meta object literal for the '<em><b>Right</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference MODULO__RIGHT = eINSTANCE.getModulo_Right();
+
+    /**
+     * The meta object literal for the '{@link org.gemoc.monilog.moniLog.impl.ParenthesisImpl <em>Parenthesis</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.gemoc.monilog.moniLog.impl.ParenthesisImpl
+     * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getParenthesis()
+     * @generated
+     */
+    EClass PARENTHESIS = eINSTANCE.getParenthesis();
+
+    /**
+     * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference PARENTHESIS__EXPRESSION = eINSTANCE.getParenthesis_Expression();
+
+    /**
+     * The meta object literal for the '{@link org.gemoc.monilog.moniLog.impl.UnaryMinusImpl <em>Unary Minus</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.gemoc.monilog.moniLog.impl.UnaryMinusImpl
+     * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getUnaryMinus()
+     * @generated
+     */
+    EClass UNARY_MINUS = eINSTANCE.getUnaryMinus();
+
+    /**
+     * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference UNARY_MINUS__EXPRESSION = eINSTANCE.getUnaryMinus_Expression();
+
+    /**
+     * The meta object literal for the '{@link org.gemoc.monilog.moniLog.impl.NotImpl <em>Not</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.gemoc.monilog.moniLog.impl.NotImpl
+     * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getNot()
+     * @generated
+     */
+    EClass NOT = eINSTANCE.getNot();
+
+    /**
+     * The meta object literal for the '<em><b>Expression</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference NOT__EXPRESSION = eINSTANCE.getNot_Expression();
+
+    /**
+     * The meta object literal for the '{@link org.gemoc.monilog.moniLog.impl.IntConstantImpl <em>Int Constant</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.gemoc.monilog.moniLog.impl.IntConstantImpl
+     * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getIntConstant()
+     * @generated
+     */
+    EClass INT_CONSTANT = eINSTANCE.getIntConstant();
+
+    /**
+     * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute INT_CONSTANT__VALUE = eINSTANCE.getIntConstant_Value();
+
+    /**
+     * The meta object literal for the '{@link org.gemoc.monilog.moniLog.impl.RealConstantImpl <em>Real Constant</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.gemoc.monilog.moniLog.impl.RealConstantImpl
+     * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getRealConstant()
+     * @generated
+     */
+    EClass REAL_CONSTANT = eINSTANCE.getRealConstant();
+
+    /**
+     * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute REAL_CONSTANT__VALUE = eINSTANCE.getRealConstant_Value();
+
+    /**
+     * The meta object literal for the '{@link org.gemoc.monilog.moniLog.impl.BoolConstantImpl <em>Bool Constant</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.gemoc.monilog.moniLog.impl.BoolConstantImpl
+     * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getBoolConstant()
+     * @generated
+     */
+    EClass BOOL_CONSTANT = eINSTANCE.getBoolConstant();
+
+    /**
+     * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute BOOL_CONSTANT__VALUE = eINSTANCE.getBoolConstant_Value();
+
+    /**
+     * The meta object literal for the '{@link org.gemoc.monilog.moniLog.impl.StringConstantImpl <em>String Constant</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.gemoc.monilog.moniLog.impl.StringConstantImpl
+     * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getStringConstant()
+     * @generated
+     */
+    EClass STRING_CONSTANT = eINSTANCE.getStringConstant();
+
+    /**
+     * The meta object literal for the '<em><b>Value</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute STRING_CONSTANT__VALUE = eINSTANCE.getStringConstant_Value();
+
+    /**
+     * The meta object literal for the '{@link org.gemoc.monilog.moniLog.impl.VectorConstantImpl <em>Vector Constant</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.gemoc.monilog.moniLog.impl.VectorConstantImpl
+     * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getVectorConstant()
+     * @generated
+     */
+    EClass VECTOR_CONSTANT = eINSTANCE.getVectorConstant();
+
+    /**
+     * The meta object literal for the '<em><b>Values</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference VECTOR_CONSTANT__VALUES = eINSTANCE.getVectorConstant_Values();
+
+    /**
+     * The meta object literal for the '{@link org.gemoc.monilog.moniLog.impl.ArrayRefImpl <em>Array Ref</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.gemoc.monilog.moniLog.impl.ArrayRefImpl
+     * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getArrayRef()
+     * @generated
+     */
+    EClass ARRAY_REF = eINSTANCE.getArrayRef();
+
+    /**
+     * The meta object literal for the '<em><b>Array</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ARRAY_REF__ARRAY = eINSTANCE.getArrayRef_Array();
+
+    /**
+     * The meta object literal for the '<em><b>Indices</b></em>' containment reference list feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference ARRAY_REF__INDICES = eINSTANCE.getArrayRef_Indices();
+
+    /**
+     * The meta object literal for the '{@link org.gemoc.monilog.moniLog.impl.PropertyRefImpl <em>Property Ref</em>}' class.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @see org.gemoc.monilog.moniLog.impl.PropertyRefImpl
+     * @see org.gemoc.monilog.moniLog.impl.MoniLogPackageImpl#getPropertyRef()
+     * @generated
+     */
+    EClass PROPERTY_REF = eINSTANCE.getPropertyRef();
+
+    /**
+     * The meta object literal for the '<em><b>Object</b></em>' containment reference feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EReference PROPERTY_REF__OBJECT = eINSTANCE.getPropertyRef_Object();
+
+    /**
+     * The meta object literal for the '<em><b>Property</b></em>' attribute feature.
+     * <!-- begin-user-doc -->
+     * <!-- end-user-doc -->
+     * @generated
+     */
+    EAttribute PROPERTY_REF__PROPERTY = eINSTANCE.getPropertyRef_Property();
 
     /**
      * The meta object literal for the '{@link org.gemoc.monilog.moniLog.MoniLoggerAnnotation <em>Moni Logger Annotation</em>}' enum.

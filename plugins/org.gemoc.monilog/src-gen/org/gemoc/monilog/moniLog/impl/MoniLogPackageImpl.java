@@ -18,20 +18,27 @@ import org.gemoc.monilog.moniLog.Action;
 import org.gemoc.monilog.moniLog.After;
 import org.gemoc.monilog.moniLog.AfterASTEvent;
 import org.gemoc.monilog.moniLog.AfterUntil;
+import org.gemoc.monilog.moniLog.And;
 import org.gemoc.monilog.moniLog.Appender;
 import org.gemoc.monilog.moniLog.AppenderAnnotation;
 import org.gemoc.monilog.moniLog.AppenderCall;
+import org.gemoc.monilog.moniLog.ArrayRef;
+import org.gemoc.monilog.moniLog.ArraySize;
 import org.gemoc.monilog.moniLog.Before;
 import org.gemoc.monilog.moniLog.BeforeASTEvent;
 import org.gemoc.monilog.moniLog.Between;
+import org.gemoc.monilog.moniLog.BoolConstant;
 import org.gemoc.monilog.moniLog.BoundType;
-import org.gemoc.monilog.moniLog.CallArgument;
+import org.gemoc.monilog.moniLog.Comparison;
 import org.gemoc.monilog.moniLog.ComplexEvent;
 import org.gemoc.monilog.moniLog.Condition;
+import org.gemoc.monilog.moniLog.ContractedIf;
+import org.gemoc.monilog.moniLog.Div;
 import org.gemoc.monilog.moniLog.Document;
 import org.gemoc.monilog.moniLog.EmitEvent;
 import org.gemoc.monilog.moniLog.Empty;
 import org.gemoc.monilog.moniLog.EmptyOrPropertyValue;
+import org.gemoc.monilog.moniLog.Equality;
 import org.gemoc.monilog.moniLog.Event;
 import org.gemoc.monilog.moniLog.ExactBound;
 import org.gemoc.monilog.moniLog.Existence;
@@ -41,6 +48,7 @@ import org.gemoc.monilog.moniLog.ExternalLayout;
 import org.gemoc.monilog.moniLog.FileAlias;
 import org.gemoc.monilog.moniLog.Globally;
 import org.gemoc.monilog.moniLog.Import;
+import org.gemoc.monilog.moniLog.IntConstant;
 import org.gemoc.monilog.moniLog.LanguageCall;
 import org.gemoc.monilog.moniLog.LanguageExpression;
 import org.gemoc.monilog.moniLog.LanguageValue;
@@ -50,28 +58,43 @@ import org.gemoc.monilog.moniLog.LocalAppender;
 import org.gemoc.monilog.moniLog.LocalLayout;
 import org.gemoc.monilog.moniLog.LogLevel;
 import org.gemoc.monilog.moniLog.LowerBound;
+import org.gemoc.monilog.moniLog.Minus;
+import org.gemoc.monilog.moniLog.Modulo;
+import org.gemoc.monilog.moniLog.MoniLogExpression;
 import org.gemoc.monilog.moniLog.MoniLogFactory;
 import org.gemoc.monilog.moniLog.MoniLogPackage;
 import org.gemoc.monilog.moniLog.MoniLogger;
 import org.gemoc.monilog.moniLog.MoniLoggerAnnotation;
 import org.gemoc.monilog.moniLog.MoniloggerCall;
+import org.gemoc.monilog.moniLog.Mul;
+import org.gemoc.monilog.moniLog.Not;
+import org.gemoc.monilog.moniLog.Or;
 import org.gemoc.monilog.moniLog.Parameter;
 import org.gemoc.monilog.moniLog.ParameterDecl;
 import org.gemoc.monilog.moniLog.ParameterReference;
+import org.gemoc.monilog.moniLog.Parenthesis;
 import org.gemoc.monilog.moniLog.Pattern;
+import org.gemoc.monilog.moniLog.Plus;
 import org.gemoc.monilog.moniLog.Precedence;
+import org.gemoc.monilog.moniLog.PropertyRef;
 import org.gemoc.monilog.moniLog.PropertyValue;
+import org.gemoc.monilog.moniLog.RealConstant;
+import org.gemoc.monilog.moniLog.Ref;
 import org.gemoc.monilog.moniLog.Response;
 import org.gemoc.monilog.moniLog.Scope;
-import org.gemoc.monilog.moniLog.SetVariable;
+import org.gemoc.monilog.moniLog.SimpleExpression;
+import org.gemoc.monilog.moniLog.SimpleVarRef;
 import org.gemoc.monilog.moniLog.StartMoniLogger;
 import org.gemoc.monilog.moniLog.StopMoniLogger;
 import org.gemoc.monilog.moniLog.StreamEvent;
+import org.gemoc.monilog.moniLog.StringConstant;
 import org.gemoc.monilog.moniLog.TemporalPattern;
 import org.gemoc.monilog.moniLog.TemporalPatternKind;
+import org.gemoc.monilog.moniLog.UnaryMinus;
 import org.gemoc.monilog.moniLog.Universality;
 import org.gemoc.monilog.moniLog.UpperBound;
 import org.gemoc.monilog.moniLog.UserEvent;
+import org.gemoc.monilog.moniLog.VectorConstant;
 
 /**
  * <!-- begin-user-doc -->
@@ -254,13 +277,6 @@ public class MoniLogPackageImpl extends EPackageImpl implements MoniLogPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass callArgumentEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
   private EClass layoutCallEClass = null;
 
   /**
@@ -269,13 +285,6 @@ public class MoniLogPackageImpl extends EPackageImpl implements MoniLogPackage
    * @generated
    */
   private EClass emitEventEClass = null;
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  private EClass setVariableEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -303,6 +312,13 @@ public class MoniLogPackageImpl extends EPackageImpl implements MoniLogPackage
    * <!-- end-user-doc -->
    * @generated
    */
+  private EClass propertyValueEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
   private EClass expressionEClass = null;
 
   /**
@@ -317,7 +333,7 @@ public class MoniLogPackageImpl extends EPackageImpl implements MoniLogPackage
    * <!-- end-user-doc -->
    * @generated
    */
-  private EClass propertyValueEClass = null;
+  private EClass moniLogExpressionEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -339,6 +355,34 @@ public class MoniLogPackageImpl extends EPackageImpl implements MoniLogPackage
    * @generated
    */
   private EClass languageCallEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass simpleExpressionEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass refEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass simpleVarRefEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass arraySizeEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -465,6 +509,146 @@ public class MoniLogPackageImpl extends EPackageImpl implements MoniLogPackage
    * @generated
    */
   private EClass emptyEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass contractedIfEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass orEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass andEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass equalityEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass comparisonEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass plusEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass minusEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass mulEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass divEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass moduloEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass parenthesisEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass unaryMinusEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass notEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass intConstantEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass realConstantEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass boolConstantEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass stringConstantEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass vectorConstantEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass arrayRefEClass = null;
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  private EClass propertyRefEClass = null;
 
   /**
    * <!-- begin-user-doc -->
@@ -1212,17 +1396,6 @@ public class MoniLogPackageImpl extends EPackageImpl implements MoniLogPackage
    * @generated
    */
   @Override
-  public EClass getCallArgument()
-  {
-    return callArgumentEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
   public EClass getLayoutCall()
   {
     return layoutCallEClass;
@@ -1281,39 +1454,6 @@ public class MoniLogPackageImpl extends EPackageImpl implements MoniLogPackage
   public EReference getEmitEvent_Args()
   {
     return (EReference)emitEventEClass.getEStructuralFeatures().get(1);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EClass getSetVariable()
-  {
-    return setVariableEClass;
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EAttribute getSetVariable_Variable()
-  {
-    return (EAttribute)setVariableEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EReference getSetVariable_Value()
-  {
-    return (EReference)setVariableEClass.getEStructuralFeatures().get(1);
   }
 
   /**
@@ -1388,6 +1528,39 @@ public class MoniLogPackageImpl extends EPackageImpl implements MoniLogPackage
    * @generated
    */
   @Override
+  public EClass getPropertyValue()
+  {
+    return propertyValueEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getPropertyValue_Id()
+  {
+    return (EAttribute)propertyValueEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getPropertyValue_Value()
+  {
+    return (EReference)propertyValueEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EClass getExpression()
   {
     return expressionEClass;
@@ -1421,9 +1594,9 @@ public class MoniLogPackageImpl extends EPackageImpl implements MoniLogPackage
    * @generated
    */
   @Override
-  public EClass getPropertyValue()
+  public EClass getMoniLogExpression()
   {
-    return propertyValueEClass;
+    return moniLogExpressionEClass;
   }
 
   /**
@@ -1432,20 +1605,9 @@ public class MoniLogPackageImpl extends EPackageImpl implements MoniLogPackage
    * @generated
    */
   @Override
-  public EAttribute getPropertyValue_Id()
+  public EReference getMoniLogExpression_Expression()
   {
-    return (EAttribute)propertyValueEClass.getEStructuralFeatures().get(0);
-  }
-
-  /**
-   * <!-- begin-user-doc -->
-   * <!-- end-user-doc -->
-   * @generated
-   */
-  @Override
-  public EReference getPropertyValue_Value()
-  {
-    return (EReference)propertyValueEClass.getEStructuralFeatures().get(1);
+    return (EReference)moniLogExpressionEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -1545,6 +1707,72 @@ public class MoniLogPackageImpl extends EPackageImpl implements MoniLogPackage
   public EReference getLanguageCall_Args()
   {
     return (EReference)languageCallEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getSimpleExpression()
+  {
+    return simpleExpressionEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getRef()
+  {
+    return refEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getSimpleVarRef()
+  {
+    return simpleVarRefEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getSimpleVarRef_Target()
+  {
+    return (EAttribute)simpleVarRefEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getArraySize()
+  {
+    return arraySizeEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getArraySize_Array()
+  {
+    return (EReference)arraySizeEClass.getEStructuralFeatures().get(0);
   }
 
   /**
@@ -1960,6 +2188,688 @@ public class MoniLogPackageImpl extends EPackageImpl implements MoniLogPackage
    * @generated
    */
   @Override
+  public EClass getContractedIf()
+  {
+    return contractedIfEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getContractedIf_Condition()
+  {
+    return (EReference)contractedIfEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getContractedIf_Then()
+  {
+    return (EReference)contractedIfEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getContractedIf_Else()
+  {
+    return (EReference)contractedIfEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getOr()
+  {
+    return orEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getOr_Left()
+  {
+    return (EReference)orEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getOr_Op()
+  {
+    return (EAttribute)orEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getOr_Right()
+  {
+    return (EReference)orEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getAnd()
+  {
+    return andEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getAnd_Left()
+  {
+    return (EReference)andEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getAnd_Op()
+  {
+    return (EAttribute)andEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getAnd_Right()
+  {
+    return (EReference)andEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getEquality()
+  {
+    return equalityEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getEquality_Left()
+  {
+    return (EReference)equalityEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getEquality_Op()
+  {
+    return (EAttribute)equalityEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getEquality_Right()
+  {
+    return (EReference)equalityEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getComparison()
+  {
+    return comparisonEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getComparison_Left()
+  {
+    return (EReference)comparisonEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getComparison_Op()
+  {
+    return (EAttribute)comparisonEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getComparison_Right()
+  {
+    return (EReference)comparisonEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getPlus()
+  {
+    return plusEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getPlus_Left()
+  {
+    return (EReference)plusEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getPlus_Op()
+  {
+    return (EAttribute)plusEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getPlus_Right()
+  {
+    return (EReference)plusEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getMinus()
+  {
+    return minusEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getMinus_Left()
+  {
+    return (EReference)minusEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getMinus_Op()
+  {
+    return (EAttribute)minusEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getMinus_Right()
+  {
+    return (EReference)minusEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getMul()
+  {
+    return mulEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getMul_Left()
+  {
+    return (EReference)mulEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getMul_Op()
+  {
+    return (EAttribute)mulEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getMul_Right()
+  {
+    return (EReference)mulEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getDiv()
+  {
+    return divEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getDiv_Left()
+  {
+    return (EReference)divEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getDiv_Op()
+  {
+    return (EAttribute)divEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getDiv_Right()
+  {
+    return (EReference)divEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getModulo()
+  {
+    return moduloEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getModulo_Left()
+  {
+    return (EReference)moduloEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getModulo_Op()
+  {
+    return (EAttribute)moduloEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getModulo_Right()
+  {
+    return (EReference)moduloEClass.getEStructuralFeatures().get(2);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getParenthesis()
+  {
+    return parenthesisEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getParenthesis_Expression()
+  {
+    return (EReference)parenthesisEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getUnaryMinus()
+  {
+    return unaryMinusEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getUnaryMinus_Expression()
+  {
+    return (EReference)unaryMinusEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getNot()
+  {
+    return notEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getNot_Expression()
+  {
+    return (EReference)notEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getIntConstant()
+  {
+    return intConstantEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getIntConstant_Value()
+  {
+    return (EAttribute)intConstantEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getRealConstant()
+  {
+    return realConstantEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getRealConstant_Value()
+  {
+    return (EAttribute)realConstantEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getBoolConstant()
+  {
+    return boolConstantEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getBoolConstant_Value()
+  {
+    return (EAttribute)boolConstantEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getStringConstant()
+  {
+    return stringConstantEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getStringConstant_Value()
+  {
+    return (EAttribute)stringConstantEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getVectorConstant()
+  {
+    return vectorConstantEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getVectorConstant_Values()
+  {
+    return (EReference)vectorConstantEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getArrayRef()
+  {
+    return arrayRefEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getArrayRef_Array()
+  {
+    return (EReference)arrayRefEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getArrayRef_Indices()
+  {
+    return (EReference)arrayRefEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EClass getPropertyRef()
+  {
+    return propertyRefEClass;
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EReference getPropertyRef_Object()
+  {
+    return (EReference)propertyRefEClass.getEStructuralFeatures().get(0);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
+  public EAttribute getPropertyRef_Property()
+  {
+    return (EAttribute)propertyRefEClass.getEStructuralFeatures().get(1);
+  }
+
+  /**
+   * <!-- begin-user-doc -->
+   * <!-- end-user-doc -->
+   * @generated
+   */
+  @Override
   public EEnum getMoniLoggerAnnotation()
   {
     return moniLoggerAnnotationEEnum;
@@ -2112,8 +3022,6 @@ public class MoniLogPackageImpl extends EPackageImpl implements MoniLogPackage
     createEReference(appenderCallEClass, APPENDER_CALL__APPENDER);
     createEReference(appenderCallEClass, APPENDER_CALL__ARGS);
 
-    callArgumentEClass = createEClass(CALL_ARGUMENT);
-
     layoutCallEClass = createEClass(LAYOUT_CALL);
     createEReference(layoutCallEClass, LAYOUT_CALL__LAYOUT);
     createEReference(layoutCallEClass, LAYOUT_CALL__ARGS);
@@ -2121,10 +3029,6 @@ public class MoniLogPackageImpl extends EPackageImpl implements MoniLogPackage
     emitEventEClass = createEClass(EMIT_EVENT);
     createEReference(emitEventEClass, EMIT_EVENT__EVENT);
     createEReference(emitEventEClass, EMIT_EVENT__ARGS);
-
-    setVariableEClass = createEClass(SET_VARIABLE);
-    createEAttribute(setVariableEClass, SET_VARIABLE__VARIABLE);
-    createEReference(setVariableEClass, SET_VARIABLE__VALUE);
 
     moniloggerCallEClass = createEClass(MONILOGGER_CALL);
     createEReference(moniloggerCallEClass, MONILOGGER_CALL__MONILOGGER);
@@ -2135,14 +3039,17 @@ public class MoniLogPackageImpl extends EPackageImpl implements MoniLogPackage
 
     emptyOrPropertyValueEClass = createEClass(EMPTY_OR_PROPERTY_VALUE);
 
+    propertyValueEClass = createEClass(PROPERTY_VALUE);
+    createEAttribute(propertyValueEClass, PROPERTY_VALUE__ID);
+    createEReference(propertyValueEClass, PROPERTY_VALUE__VALUE);
+
     expressionEClass = createEClass(EXPRESSION);
 
     parameterReferenceEClass = createEClass(PARAMETER_REFERENCE);
     createEReference(parameterReferenceEClass, PARAMETER_REFERENCE__PARAMETER);
 
-    propertyValueEClass = createEClass(PROPERTY_VALUE);
-    createEAttribute(propertyValueEClass, PROPERTY_VALUE__ID);
-    createEReference(propertyValueEClass, PROPERTY_VALUE__VALUE);
+    moniLogExpressionEClass = createEClass(MONI_LOG_EXPRESSION);
+    createEReference(moniLogExpressionEClass, MONI_LOG_EXPRESSION__EXPRESSION);
 
     languageValueEClass = createEClass(LANGUAGE_VALUE);
     createEAttribute(languageValueEClass, LANGUAGE_VALUE__LANGUAGE_ID);
@@ -2155,6 +3062,16 @@ public class MoniLogPackageImpl extends EPackageImpl implements MoniLogPackage
     createEReference(languageCallEClass, LANGUAGE_CALL__FILE);
     createEAttribute(languageCallEClass, LANGUAGE_CALL__FQN);
     createEReference(languageCallEClass, LANGUAGE_CALL__ARGS);
+
+    simpleExpressionEClass = createEClass(SIMPLE_EXPRESSION);
+
+    refEClass = createEClass(REF);
+
+    simpleVarRefEClass = createEClass(SIMPLE_VAR_REF);
+    createEAttribute(simpleVarRefEClass, SIMPLE_VAR_REF__TARGET);
+
+    arraySizeEClass = createEClass(ARRAY_SIZE);
+    createEReference(arraySizeEClass, ARRAY_SIZE__ARRAY);
 
     astEventEClass = createEClass(AST_EVENT);
     createEReference(astEventEClass, AST_EVENT__KIND);
@@ -2211,6 +3128,88 @@ public class MoniLogPackageImpl extends EPackageImpl implements MoniLogPackage
 
     emptyEClass = createEClass(EMPTY);
 
+    contractedIfEClass = createEClass(CONTRACTED_IF);
+    createEReference(contractedIfEClass, CONTRACTED_IF__CONDITION);
+    createEReference(contractedIfEClass, CONTRACTED_IF__THEN);
+    createEReference(contractedIfEClass, CONTRACTED_IF__ELSE);
+
+    orEClass = createEClass(OR);
+    createEReference(orEClass, OR__LEFT);
+    createEAttribute(orEClass, OR__OP);
+    createEReference(orEClass, OR__RIGHT);
+
+    andEClass = createEClass(AND);
+    createEReference(andEClass, AND__LEFT);
+    createEAttribute(andEClass, AND__OP);
+    createEReference(andEClass, AND__RIGHT);
+
+    equalityEClass = createEClass(EQUALITY);
+    createEReference(equalityEClass, EQUALITY__LEFT);
+    createEAttribute(equalityEClass, EQUALITY__OP);
+    createEReference(equalityEClass, EQUALITY__RIGHT);
+
+    comparisonEClass = createEClass(COMPARISON);
+    createEReference(comparisonEClass, COMPARISON__LEFT);
+    createEAttribute(comparisonEClass, COMPARISON__OP);
+    createEReference(comparisonEClass, COMPARISON__RIGHT);
+
+    plusEClass = createEClass(PLUS);
+    createEReference(plusEClass, PLUS__LEFT);
+    createEAttribute(plusEClass, PLUS__OP);
+    createEReference(plusEClass, PLUS__RIGHT);
+
+    minusEClass = createEClass(MINUS);
+    createEReference(minusEClass, MINUS__LEFT);
+    createEAttribute(minusEClass, MINUS__OP);
+    createEReference(minusEClass, MINUS__RIGHT);
+
+    mulEClass = createEClass(MUL);
+    createEReference(mulEClass, MUL__LEFT);
+    createEAttribute(mulEClass, MUL__OP);
+    createEReference(mulEClass, MUL__RIGHT);
+
+    divEClass = createEClass(DIV);
+    createEReference(divEClass, DIV__LEFT);
+    createEAttribute(divEClass, DIV__OP);
+    createEReference(divEClass, DIV__RIGHT);
+
+    moduloEClass = createEClass(MODULO);
+    createEReference(moduloEClass, MODULO__LEFT);
+    createEAttribute(moduloEClass, MODULO__OP);
+    createEReference(moduloEClass, MODULO__RIGHT);
+
+    parenthesisEClass = createEClass(PARENTHESIS);
+    createEReference(parenthesisEClass, PARENTHESIS__EXPRESSION);
+
+    unaryMinusEClass = createEClass(UNARY_MINUS);
+    createEReference(unaryMinusEClass, UNARY_MINUS__EXPRESSION);
+
+    notEClass = createEClass(NOT);
+    createEReference(notEClass, NOT__EXPRESSION);
+
+    intConstantEClass = createEClass(INT_CONSTANT);
+    createEAttribute(intConstantEClass, INT_CONSTANT__VALUE);
+
+    realConstantEClass = createEClass(REAL_CONSTANT);
+    createEAttribute(realConstantEClass, REAL_CONSTANT__VALUE);
+
+    boolConstantEClass = createEClass(BOOL_CONSTANT);
+    createEAttribute(boolConstantEClass, BOOL_CONSTANT__VALUE);
+
+    stringConstantEClass = createEClass(STRING_CONSTANT);
+    createEAttribute(stringConstantEClass, STRING_CONSTANT__VALUE);
+
+    vectorConstantEClass = createEClass(VECTOR_CONSTANT);
+    createEReference(vectorConstantEClass, VECTOR_CONSTANT__VALUES);
+
+    arrayRefEClass = createEClass(ARRAY_REF);
+    createEReference(arrayRefEClass, ARRAY_REF__ARRAY);
+    createEReference(arrayRefEClass, ARRAY_REF__INDICES);
+
+    propertyRefEClass = createEClass(PROPERTY_REF);
+    createEReference(propertyRefEClass, PROPERTY_REF__OBJECT);
+    createEAttribute(propertyRefEClass, PROPERTY_REF__PROPERTY);
+
     // Create enums
     moniLoggerAnnotationEEnum = createEEnum(MONI_LOGGER_ANNOTATION);
     appenderAnnotationEEnum = createEEnum(APPENDER_ANNOTATION);
@@ -2255,15 +3254,17 @@ public class MoniLogPackageImpl extends EPackageImpl implements MoniLogPackage
     lowerBoundEClass.getESuperTypes().add(this.getBoundType());
     upperBoundEClass.getESuperTypes().add(this.getBoundType());
     appenderCallEClass.getESuperTypes().add(this.getAction());
-    layoutCallEClass.getESuperTypes().add(this.getCallArgument());
+    layoutCallEClass.getESuperTypes().add(this.getExpression());
     emitEventEClass.getESuperTypes().add(this.getAction());
-    setVariableEClass.getESuperTypes().add(this.getAction());
     moniloggerCallEClass.getESuperTypes().add(this.getAction());
-    expressionEClass.getESuperTypes().add(this.getCallArgument());
-    parameterReferenceEClass.getESuperTypes().add(this.getExpression());
     propertyValueEClass.getESuperTypes().add(this.getEmptyOrPropertyValue());
+    parameterReferenceEClass.getESuperTypes().add(this.getExpression());
+    moniLogExpressionEClass.getESuperTypes().add(this.getExpression());
     languageValueEClass.getESuperTypes().add(this.getAction());
     languageValueEClass.getESuperTypes().add(this.getExpression());
+    refEClass.getESuperTypes().add(this.getSimpleExpression());
+    simpleVarRefEClass.getESuperTypes().add(this.getRef());
+    arraySizeEClass.getESuperTypes().add(this.getSimpleExpression());
     astEventEClass.getESuperTypes().add(this.getEvent());
     complexEventEClass.getESuperTypes().add(this.getEvent());
     userEventEClass.getESuperTypes().add(this.getEvent());
@@ -2282,6 +3283,26 @@ public class MoniLogPackageImpl extends EPackageImpl implements MoniLogPackage
     startMoniLoggerEClass.getESuperTypes().add(this.getMoniloggerCall());
     stopMoniLoggerEClass.getESuperTypes().add(this.getMoniloggerCall());
     emptyEClass.getESuperTypes().add(this.getEmptyOrPropertyValue());
+    contractedIfEClass.getESuperTypes().add(this.getSimpleExpression());
+    orEClass.getESuperTypes().add(this.getSimpleExpression());
+    andEClass.getESuperTypes().add(this.getSimpleExpression());
+    equalityEClass.getESuperTypes().add(this.getSimpleExpression());
+    comparisonEClass.getESuperTypes().add(this.getSimpleExpression());
+    plusEClass.getESuperTypes().add(this.getSimpleExpression());
+    minusEClass.getESuperTypes().add(this.getSimpleExpression());
+    mulEClass.getESuperTypes().add(this.getSimpleExpression());
+    divEClass.getESuperTypes().add(this.getSimpleExpression());
+    moduloEClass.getESuperTypes().add(this.getSimpleExpression());
+    parenthesisEClass.getESuperTypes().add(this.getSimpleExpression());
+    unaryMinusEClass.getESuperTypes().add(this.getSimpleExpression());
+    notEClass.getESuperTypes().add(this.getSimpleExpression());
+    intConstantEClass.getESuperTypes().add(this.getSimpleExpression());
+    realConstantEClass.getESuperTypes().add(this.getSimpleExpression());
+    boolConstantEClass.getESuperTypes().add(this.getSimpleExpression());
+    stringConstantEClass.getESuperTypes().add(this.getSimpleExpression());
+    vectorConstantEClass.getESuperTypes().add(this.getSimpleExpression());
+    arrayRefEClass.getESuperTypes().add(this.getRef());
+    propertyRefEClass.getESuperTypes().add(this.getRef());
 
     // Initialize classes and features; add operations and parameters
     initEClass(documentEClass, Document.class, "Document", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
@@ -2365,21 +3386,15 @@ public class MoniLogPackageImpl extends EPackageImpl implements MoniLogPackage
 
     initEClass(appenderCallEClass, AppenderCall.class, "AppenderCall", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getAppenderCall_Appender(), this.getAppender(), null, "appender", null, 0, 1, AppenderCall.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getAppenderCall_Args(), this.getCallArgument(), null, "args", null, 0, -1, AppenderCall.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(callArgumentEClass, CallArgument.class, "CallArgument", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getAppenderCall_Args(), this.getExpression(), null, "args", null, 0, -1, AppenderCall.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(layoutCallEClass, LayoutCall.class, "LayoutCall", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getLayoutCall_Layout(), this.getLayout(), null, "layout", null, 0, 1, LayoutCall.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getLayoutCall_Args(), this.getCallArgument(), null, "args", null, 0, -1, LayoutCall.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getLayoutCall_Args(), this.getExpression(), null, "args", null, 0, -1, LayoutCall.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(emitEventEClass, EmitEvent.class, "EmitEvent", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getEmitEvent_Event(), this.getUserEvent(), null, "event", null, 0, 1, EmitEvent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getEmitEvent_Args(), this.getExpression(), null, "args", null, 0, -1, EmitEvent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-
-    initEClass(setVariableEClass, SetVariable.class, "SetVariable", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getSetVariable_Variable(), ecorePackage.getEString(), "variable", null, 0, 1, SetVariable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getSetVariable_Value(), this.getLanguageValue(), null, "value", null, 0, 1, SetVariable.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(moniloggerCallEClass, MoniloggerCall.class, "MoniloggerCall", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getMoniloggerCall_Monilogger(), this.getMoniLogger(), null, "monilogger", null, 0, 1, MoniloggerCall.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2390,14 +3405,17 @@ public class MoniLogPackageImpl extends EPackageImpl implements MoniLogPackage
 
     initEClass(emptyOrPropertyValueEClass, EmptyOrPropertyValue.class, "EmptyOrPropertyValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
+    initEClass(propertyValueEClass, PropertyValue.class, "PropertyValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getPropertyValue_Id(), ecorePackage.getEString(), "id", null, 0, 1, PropertyValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getPropertyValue_Value(), this.getExpression(), null, "value", null, 0, 1, PropertyValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
     initEClass(expressionEClass, Expression.class, "Expression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(parameterReferenceEClass, ParameterReference.class, "ParameterReference", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getParameterReference_Parameter(), this.getParameter(), null, "parameter", null, 0, 1, ParameterReference.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-    initEClass(propertyValueEClass, PropertyValue.class, "PropertyValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-    initEAttribute(getPropertyValue_Id(), ecorePackage.getEString(), "id", null, 0, 1, PropertyValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-    initEReference(getPropertyValue_Value(), this.getExpression(), null, "value", null, 0, 1, PropertyValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEClass(moniLogExpressionEClass, MoniLogExpression.class, "MoniLogExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getMoniLogExpression_Expression(), this.getSimpleExpression(), null, "expression", null, 0, 1, MoniLogExpression.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(languageValueEClass, LanguageValue.class, "LanguageValue", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEAttribute(getLanguageValue_LanguageId(), ecorePackage.getEString(), "languageId", null, 0, 1, LanguageValue.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2410,6 +3428,16 @@ public class MoniLogPackageImpl extends EPackageImpl implements MoniLogPackage
     initEReference(getLanguageCall_File(), this.getFileAlias(), null, "file", null, 0, 1, LanguageCall.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_COMPOSITE, IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEAttribute(getLanguageCall_Fqn(), ecorePackage.getEString(), "fqn", null, 0, 1, LanguageCall.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
     initEReference(getLanguageCall_Args(), this.getExpression(), null, "args", null, 0, -1, LanguageCall.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(simpleExpressionEClass, SimpleExpression.class, "SimpleExpression", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(refEClass, Ref.class, "Ref", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(simpleVarRefEClass, SimpleVarRef.class, "SimpleVarRef", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getSimpleVarRef_Target(), ecorePackage.getEString(), "target", null, 0, 1, SimpleVarRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(arraySizeEClass, ArraySize.class, "ArraySize", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getArraySize_Array(), this.getRef(), null, "array", null, 0, 1, ArraySize.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     initEClass(astEventEClass, ASTEvent.class, "ASTEvent", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
     initEReference(getASTEvent_Kind(), this.getASTEventKind(), null, "kind", null, 0, 1, ASTEvent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
@@ -2465,6 +3493,88 @@ public class MoniLogPackageImpl extends EPackageImpl implements MoniLogPackage
     initEClass(stopMoniLoggerEClass, StopMoniLogger.class, "StopMoniLogger", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 
     initEClass(emptyEClass, Empty.class, "Empty", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+
+    initEClass(contractedIfEClass, ContractedIf.class, "ContractedIf", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getContractedIf_Condition(), this.getSimpleExpression(), null, "condition", null, 0, 1, ContractedIf.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getContractedIf_Then(), this.getSimpleExpression(), null, "then", null, 0, 1, ContractedIf.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getContractedIf_Else(), this.getSimpleExpression(), null, "else", null, 0, 1, ContractedIf.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(orEClass, Or.class, "Or", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getOr_Left(), this.getSimpleExpression(), null, "left", null, 0, 1, Or.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getOr_Op(), ecorePackage.getEString(), "op", null, 0, 1, Or.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getOr_Right(), this.getSimpleExpression(), null, "right", null, 0, 1, Or.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(andEClass, And.class, "And", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getAnd_Left(), this.getSimpleExpression(), null, "left", null, 0, 1, And.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getAnd_Op(), ecorePackage.getEString(), "op", null, 0, 1, And.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getAnd_Right(), this.getSimpleExpression(), null, "right", null, 0, 1, And.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(equalityEClass, Equality.class, "Equality", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getEquality_Left(), this.getSimpleExpression(), null, "left", null, 0, 1, Equality.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getEquality_Op(), ecorePackage.getEString(), "op", null, 0, 1, Equality.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getEquality_Right(), this.getSimpleExpression(), null, "right", null, 0, 1, Equality.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(comparisonEClass, Comparison.class, "Comparison", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getComparison_Left(), this.getSimpleExpression(), null, "left", null, 0, 1, Comparison.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getComparison_Op(), ecorePackage.getEString(), "op", null, 0, 1, Comparison.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getComparison_Right(), this.getSimpleExpression(), null, "right", null, 0, 1, Comparison.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(plusEClass, Plus.class, "Plus", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getPlus_Left(), this.getSimpleExpression(), null, "left", null, 0, 1, Plus.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getPlus_Op(), ecorePackage.getEString(), "op", null, 0, 1, Plus.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getPlus_Right(), this.getSimpleExpression(), null, "right", null, 0, 1, Plus.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(minusEClass, Minus.class, "Minus", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getMinus_Left(), this.getSimpleExpression(), null, "left", null, 0, 1, Minus.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getMinus_Op(), ecorePackage.getEString(), "op", null, 0, 1, Minus.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getMinus_Right(), this.getSimpleExpression(), null, "right", null, 0, 1, Minus.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(mulEClass, Mul.class, "Mul", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getMul_Left(), this.getSimpleExpression(), null, "left", null, 0, 1, Mul.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getMul_Op(), ecorePackage.getEString(), "op", null, 0, 1, Mul.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getMul_Right(), this.getSimpleExpression(), null, "right", null, 0, 1, Mul.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(divEClass, Div.class, "Div", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getDiv_Left(), this.getSimpleExpression(), null, "Left", null, 0, 1, Div.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getDiv_Op(), ecorePackage.getEString(), "op", null, 0, 1, Div.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getDiv_Right(), this.getSimpleExpression(), null, "right", null, 0, 1, Div.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(moduloEClass, Modulo.class, "Modulo", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getModulo_Left(), this.getSimpleExpression(), null, "left", null, 0, 1, Modulo.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getModulo_Op(), ecorePackage.getEString(), "op", null, 0, 1, Modulo.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getModulo_Right(), this.getSimpleExpression(), null, "right", null, 0, 1, Modulo.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(parenthesisEClass, Parenthesis.class, "Parenthesis", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getParenthesis_Expression(), this.getSimpleExpression(), null, "expression", null, 0, 1, Parenthesis.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(unaryMinusEClass, UnaryMinus.class, "UnaryMinus", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getUnaryMinus_Expression(), this.getSimpleExpression(), null, "expression", null, 0, 1, UnaryMinus.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(notEClass, Not.class, "Not", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getNot_Expression(), this.getSimpleExpression(), null, "expression", null, 0, 1, Not.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(intConstantEClass, IntConstant.class, "IntConstant", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getIntConstant_Value(), ecorePackage.getEInt(), "value", null, 0, 1, IntConstant.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(realConstantEClass, RealConstant.class, "RealConstant", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getRealConstant_Value(), ecorePackage.getEString(), "value", null, 0, 1, RealConstant.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(boolConstantEClass, BoolConstant.class, "BoolConstant", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getBoolConstant_Value(), ecorePackage.getEBoolean(), "value", null, 0, 1, BoolConstant.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(stringConstantEClass, StringConstant.class, "StringConstant", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEAttribute(getStringConstant_Value(), ecorePackage.getEString(), "value", null, 0, 1, StringConstant.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(vectorConstantEClass, VectorConstant.class, "VectorConstant", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getVectorConstant_Values(), this.getSimpleExpression(), null, "values", null, 0, -1, VectorConstant.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(arrayRefEClass, ArrayRef.class, "ArrayRef", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getArrayRef_Array(), this.getRef(), null, "array", null, 0, 1, ArrayRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEReference(getArrayRef_Indices(), this.getSimpleExpression(), null, "indices", null, 0, -1, ArrayRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+
+    initEClass(propertyRefEClass, PropertyRef.class, "PropertyRef", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+    initEReference(getPropertyRef_Object(), this.getRef(), null, "object", null, 0, 1, PropertyRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+    initEAttribute(getPropertyRef_Property(), ecorePackage.getEString(), "property", null, 0, 1, PropertyRef.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
     // Initialize enums and add enum literals
     initEEnum(moniLoggerAnnotationEEnum, MoniLoggerAnnotation.class, "MoniLoggerAnnotation");

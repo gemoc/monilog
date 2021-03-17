@@ -3,6 +3,7 @@
  */
 package org.gemoc.monilog.moniLog;
 
+import org.eclipse.emf.ecore.EObject;
 
 /**
  * <!-- begin-user-doc -->
@@ -14,6 +15,6 @@ package org.gemoc.monilog.moniLog;
  * @model
  * @generated
  */
-public interface Expression extends CallArgument
+public interface Expression extends EObject
 {
 } // Expression

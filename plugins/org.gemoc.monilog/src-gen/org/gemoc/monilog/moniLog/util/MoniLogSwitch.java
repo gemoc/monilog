@@ -249,18 +249,11 @@ public class MoniLogSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case MoniLogPackage.CALL_ARGUMENT:
-      {
-        CallArgument callArgument = (CallArgument)theEObject;
-        T result = caseCallArgument(callArgument);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
       case MoniLogPackage.LAYOUT_CALL:
       {
         LayoutCall layoutCall = (LayoutCall)theEObject;
         T result = caseLayoutCall(layoutCall);
-        if (result == null) result = caseCallArgument(layoutCall);
+        if (result == null) result = caseExpression(layoutCall);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -269,14 +262,6 @@ public class MoniLogSwitch<T> extends Switch<T>
         EmitEvent emitEvent = (EmitEvent)theEObject;
         T result = caseEmitEvent(emitEvent);
         if (result == null) result = caseAction(emitEvent);
-        if (result == null) result = defaultCase(theEObject);
-        return result;
-      }
-      case MoniLogPackage.SET_VARIABLE:
-      {
-        SetVariable setVariable = (SetVariable)theEObject;
-        T result = caseSetVariable(setVariable);
-        if (result == null) result = caseAction(setVariable);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -302,11 +287,18 @@ public class MoniLogSwitch<T> extends Switch<T>
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
+      case MoniLogPackage.PROPERTY_VALUE:
+      {
+        PropertyValue propertyValue = (PropertyValue)theEObject;
+        T result = casePropertyValue(propertyValue);
+        if (result == null) result = caseEmptyOrPropertyValue(propertyValue);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
       case MoniLogPackage.EXPRESSION:
       {
         Expression expression = (Expression)theEObject;
         T result = caseExpression(expression);
-        if (result == null) result = caseCallArgument(expression);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -315,15 +307,14 @@ public class MoniLogSwitch<T> extends Switch<T>
         ParameterReference parameterReference = (ParameterReference)theEObject;
         T result = caseParameterReference(parameterReference);
         if (result == null) result = caseExpression(parameterReference);
-        if (result == null) result = caseCallArgument(parameterReference);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
-      case MoniLogPackage.PROPERTY_VALUE:
+      case MoniLogPackage.MONI_LOG_EXPRESSION:
       {
-        PropertyValue propertyValue = (PropertyValue)theEObject;
-        T result = casePropertyValue(propertyValue);
-        if (result == null) result = caseEmptyOrPropertyValue(propertyValue);
+        MoniLogExpression moniLogExpression = (MoniLogExpression)theEObject;
+        T result = caseMoniLogExpression(moniLogExpression);
+        if (result == null) result = caseExpression(moniLogExpression);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -333,7 +324,6 @@ public class MoniLogSwitch<T> extends Switch<T>
         T result = caseLanguageValue(languageValue);
         if (result == null) result = caseAction(languageValue);
         if (result == null) result = caseExpression(languageValue);
-        if (result == null) result = caseCallArgument(languageValue);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -348,6 +338,38 @@ public class MoniLogSwitch<T> extends Switch<T>
       {
         LanguageCall languageCall = (LanguageCall)theEObject;
         T result = caseLanguageCall(languageCall);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case MoniLogPackage.SIMPLE_EXPRESSION:
+      {
+        SimpleExpression simpleExpression = (SimpleExpression)theEObject;
+        T result = caseSimpleExpression(simpleExpression);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case MoniLogPackage.REF:
+      {
+        Ref ref = (Ref)theEObject;
+        T result = caseRef(ref);
+        if (result == null) result = caseSimpleExpression(ref);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case MoniLogPackage.SIMPLE_VAR_REF:
+      {
+        SimpleVarRef simpleVarRef = (SimpleVarRef)theEObject;
+        T result = caseSimpleVarRef(simpleVarRef);
+        if (result == null) result = caseRef(simpleVarRef);
+        if (result == null) result = caseSimpleExpression(simpleVarRef);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case MoniLogPackage.ARRAY_SIZE:
+      {
+        ArraySize arraySize = (ArraySize)theEObject;
+        T result = caseArraySize(arraySize);
+        if (result == null) result = caseSimpleExpression(arraySize);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -494,6 +516,168 @@ public class MoniLogSwitch<T> extends Switch<T>
         Empty empty = (Empty)theEObject;
         T result = caseEmpty(empty);
         if (result == null) result = caseEmptyOrPropertyValue(empty);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case MoniLogPackage.CONTRACTED_IF:
+      {
+        ContractedIf contractedIf = (ContractedIf)theEObject;
+        T result = caseContractedIf(contractedIf);
+        if (result == null) result = caseSimpleExpression(contractedIf);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case MoniLogPackage.OR:
+      {
+        Or or = (Or)theEObject;
+        T result = caseOr(or);
+        if (result == null) result = caseSimpleExpression(or);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case MoniLogPackage.AND:
+      {
+        And and = (And)theEObject;
+        T result = caseAnd(and);
+        if (result == null) result = caseSimpleExpression(and);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case MoniLogPackage.EQUALITY:
+      {
+        Equality equality = (Equality)theEObject;
+        T result = caseEquality(equality);
+        if (result == null) result = caseSimpleExpression(equality);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case MoniLogPackage.COMPARISON:
+      {
+        Comparison comparison = (Comparison)theEObject;
+        T result = caseComparison(comparison);
+        if (result == null) result = caseSimpleExpression(comparison);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case MoniLogPackage.PLUS:
+      {
+        Plus plus = (Plus)theEObject;
+        T result = casePlus(plus);
+        if (result == null) result = caseSimpleExpression(plus);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case MoniLogPackage.MINUS:
+      {
+        Minus minus = (Minus)theEObject;
+        T result = caseMinus(minus);
+        if (result == null) result = caseSimpleExpression(minus);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case MoniLogPackage.MUL:
+      {
+        Mul mul = (Mul)theEObject;
+        T result = caseMul(mul);
+        if (result == null) result = caseSimpleExpression(mul);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case MoniLogPackage.DIV:
+      {
+        Div div = (Div)theEObject;
+        T result = caseDiv(div);
+        if (result == null) result = caseSimpleExpression(div);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case MoniLogPackage.MODULO:
+      {
+        Modulo modulo = (Modulo)theEObject;
+        T result = caseModulo(modulo);
+        if (result == null) result = caseSimpleExpression(modulo);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case MoniLogPackage.PARENTHESIS:
+      {
+        Parenthesis parenthesis = (Parenthesis)theEObject;
+        T result = caseParenthesis(parenthesis);
+        if (result == null) result = caseSimpleExpression(parenthesis);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case MoniLogPackage.UNARY_MINUS:
+      {
+        UnaryMinus unaryMinus = (UnaryMinus)theEObject;
+        T result = caseUnaryMinus(unaryMinus);
+        if (result == null) result = caseSimpleExpression(unaryMinus);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case MoniLogPackage.NOT:
+      {
+        Not not = (Not)theEObject;
+        T result = caseNot(not);
+        if (result == null) result = caseSimpleExpression(not);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case MoniLogPackage.INT_CONSTANT:
+      {
+        IntConstant intConstant = (IntConstant)theEObject;
+        T result = caseIntConstant(intConstant);
+        if (result == null) result = caseSimpleExpression(intConstant);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case MoniLogPackage.REAL_CONSTANT:
+      {
+        RealConstant realConstant = (RealConstant)theEObject;
+        T result = caseRealConstant(realConstant);
+        if (result == null) result = caseSimpleExpression(realConstant);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case MoniLogPackage.BOOL_CONSTANT:
+      {
+        BoolConstant boolConstant = (BoolConstant)theEObject;
+        T result = caseBoolConstant(boolConstant);
+        if (result == null) result = caseSimpleExpression(boolConstant);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case MoniLogPackage.STRING_CONSTANT:
+      {
+        StringConstant stringConstant = (StringConstant)theEObject;
+        T result = caseStringConstant(stringConstant);
+        if (result == null) result = caseSimpleExpression(stringConstant);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case MoniLogPackage.VECTOR_CONSTANT:
+      {
+        VectorConstant vectorConstant = (VectorConstant)theEObject;
+        T result = caseVectorConstant(vectorConstant);
+        if (result == null) result = caseSimpleExpression(vectorConstant);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case MoniLogPackage.ARRAY_REF:
+      {
+        ArrayRef arrayRef = (ArrayRef)theEObject;
+        T result = caseArrayRef(arrayRef);
+        if (result == null) result = caseRef(arrayRef);
+        if (result == null) result = caseSimpleExpression(arrayRef);
+        if (result == null) result = defaultCase(theEObject);
+        return result;
+      }
+      case MoniLogPackage.PROPERTY_REF:
+      {
+        PropertyRef propertyRef = (PropertyRef)theEObject;
+        T result = casePropertyRef(propertyRef);
+        if (result == null) result = caseRef(propertyRef);
+        if (result == null) result = caseSimpleExpression(propertyRef);
         if (result == null) result = defaultCase(theEObject);
         return result;
       }
@@ -886,22 +1070,6 @@ public class MoniLogSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Call Argument</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Call Argument</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseCallArgument(CallArgument object)
-  {
-    return null;
-  }
-
-  /**
    * Returns the result of interpreting the object as an instance of '<em>Layout Call</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -929,22 +1097,6 @@ public class MoniLogSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseEmitEvent(EmitEvent object)
-  {
-    return null;
-  }
-
-  /**
-   * Returns the result of interpreting the object as an instance of '<em>Set Variable</em>'.
-   * <!-- begin-user-doc -->
-   * This implementation returns null;
-   * returning a non-null result will terminate the switch.
-   * <!-- end-user-doc -->
-   * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Set Variable</em>'.
-   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
-   * @generated
-   */
-  public T caseSetVariable(SetVariable object)
   {
     return null;
   }
@@ -998,6 +1150,22 @@ public class MoniLogSwitch<T> extends Switch<T>
   }
 
   /**
+   * Returns the result of interpreting the object as an instance of '<em>Property Value</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Property Value</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T casePropertyValue(PropertyValue object)
+  {
+    return null;
+  }
+
+  /**
    * Returns the result of interpreting the object as an instance of '<em>Expression</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
@@ -1030,17 +1198,17 @@ public class MoniLogSwitch<T> extends Switch<T>
   }
 
   /**
-   * Returns the result of interpreting the object as an instance of '<em>Property Value</em>'.
+   * Returns the result of interpreting the object as an instance of '<em>Expression</em>'.
    * <!-- begin-user-doc -->
    * This implementation returns null;
    * returning a non-null result will terminate the switch.
    * <!-- end-user-doc -->
    * @param object the target of the switch.
-   * @return the result of interpreting the object as an instance of '<em>Property Value</em>'.
+   * @return the result of interpreting the object as an instance of '<em>Expression</em>'.
    * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
    * @generated
    */
-  public T casePropertyValue(PropertyValue object)
+  public T caseMoniLogExpression(MoniLogExpression object)
   {
     return null;
   }
@@ -1089,6 +1257,70 @@ public class MoniLogSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseLanguageCall(LanguageCall object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Simple Expression</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Simple Expression</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseSimpleExpression(SimpleExpression object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Ref</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Ref</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseRef(Ref object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Simple Var Ref</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Simple Var Ref</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseSimpleVarRef(SimpleVarRef object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Array Size</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Array Size</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseArraySize(ArraySize object)
   {
     return null;
   }
@@ -1377,6 +1609,326 @@ public class MoniLogSwitch<T> extends Switch<T>
    * @generated
    */
   public T caseEmpty(Empty object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Contracted If</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Contracted If</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseContractedIf(ContractedIf object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Or</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Or</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseOr(Or object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>And</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>And</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseAnd(And object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Equality</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Equality</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseEquality(Equality object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Comparison</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Comparison</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseComparison(Comparison object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Plus</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Plus</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T casePlus(Plus object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Minus</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Minus</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseMinus(Minus object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Mul</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Mul</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseMul(Mul object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Div</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Div</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseDiv(Div object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Modulo</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Modulo</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseModulo(Modulo object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Parenthesis</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Parenthesis</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseParenthesis(Parenthesis object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Unary Minus</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Unary Minus</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseUnaryMinus(UnaryMinus object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Not</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Not</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseNot(Not object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Int Constant</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Int Constant</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseIntConstant(IntConstant object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Real Constant</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Real Constant</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseRealConstant(RealConstant object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Bool Constant</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Bool Constant</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseBoolConstant(BoolConstant object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>String Constant</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>String Constant</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseStringConstant(StringConstant object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Vector Constant</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Vector Constant</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseVectorConstant(VectorConstant object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Array Ref</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Array Ref</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T caseArrayRef(ArrayRef object)
+  {
+    return null;
+  }
+
+  /**
+   * Returns the result of interpreting the object as an instance of '<em>Property Ref</em>'.
+   * <!-- begin-user-doc -->
+   * This implementation returns null;
+   * returning a non-null result will terminate the switch.
+   * <!-- end-user-doc -->
+   * @param object the target of the switch.
+   * @return the result of interpreting the object as an instance of '<em>Property Ref</em>'.
+   * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
+   * @generated
+   */
+  public T casePropertyRef(PropertyRef object)
   {
     return null;
   }

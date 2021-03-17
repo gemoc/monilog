@@ -18,7 +18,7 @@ import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
-import org.gemoc.monilog.moniLog.CallArgument;
+import org.gemoc.monilog.moniLog.Expression;
 import org.gemoc.monilog.moniLog.Layout;
 import org.gemoc.monilog.moniLog.LayoutCall;
 import org.gemoc.monilog.moniLog.MoniLogPackage;
@@ -37,7 +37,7 @@ import org.gemoc.monilog.moniLog.MoniLogPackage;
  *
  * @generated
  */
-public class LayoutCallImpl extends CallArgumentImpl implements LayoutCall
+public class LayoutCallImpl extends ExpressionImpl implements LayoutCall
 {
   /**
    * The cached value of the '{@link #getLayout() <em>Layout</em>}' reference.
@@ -57,7 +57,7 @@ public class LayoutCallImpl extends CallArgumentImpl implements LayoutCall
    * @generated
    * @ordered
    */
-  protected EList<CallArgument> args;
+  protected EList<Expression> args;
 
   /**
    * <!-- begin-user-doc -->
@@ -131,11 +131,11 @@ public class LayoutCallImpl extends CallArgumentImpl implements LayoutCall
    * @generated
    */
   @Override
-  public EList<CallArgument> getArgs()
+  public EList<Expression> getArgs()
   {
     if (args == null)
     {
-      args = new EObjectContainmentEList<CallArgument>(CallArgument.class, this, MoniLogPackage.LAYOUT_CALL__ARGS);
+      args = new EObjectContainmentEList<Expression>(Expression.class, this, MoniLogPackage.LAYOUT_CALL__ARGS);
     }
     return args;
   }
@@ -191,7 +191,7 @@ public class LayoutCallImpl extends CallArgumentImpl implements LayoutCall
         return;
       case MoniLogPackage.LAYOUT_CALL__ARGS:
         getArgs().clear();
-        getArgs().addAll((Collection<? extends CallArgument>)newValue);
+        getArgs().addAll((Collection<? extends Expression>)newValue);
         return;
     }
     super.eSet(featureID, newValue);
