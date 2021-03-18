@@ -28,9 +28,6 @@ import java.util.stream.Collectors;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
-import org.eclipse.xtext.resource.XtextResourceSet;
-import org.eclipse.xtext.testing.util.ParseHelper;
-import org.gemoc.monilog.MoniLogStandaloneSetup;
 import org.gemoc.monilog.moniLog.ASTEvent;
 import org.gemoc.monilog.moniLog.ASTEventKind;
 import org.gemoc.monilog.moniLog.Action;
@@ -71,6 +68,7 @@ import org.gemoc.monilogger.nodes.action.MoniLoggerExternalAppenderNodeGen;
 import org.gemoc.monilogger.nodes.action.MoniLoggerExternalLayoutNode;
 import org.gemoc.monilogger.nodes.condition.MoniLoggerConditionalNode;
 import org.gemoc.monilogger.nodes.expression.parser.SimpleExpressionParser;
+import org.gemoc.monilogger.parser.MoniLogParser;
 import org.gemoc.monilogger.temporalpatterns.AbstractTemporalProperty;
 import org.gemoc.monilogger.temporalpatterns.PropertyProvider;
 import org.graalvm.options.OptionCategory;
@@ -93,7 +91,6 @@ import com.espertech.esper.runtime.client.EPRuntime;
 import com.espertech.esper.runtime.client.EPRuntimeDestroyedException;
 import com.espertech.esper.runtime.client.EPRuntimeProvider;
 import com.google.common.collect.Streams;
-import com.google.inject.Injector;
 import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.Option;
@@ -121,14 +118,6 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 	public static final String FILE_OPTION = ID + ".files";
 
 	static final MoniLoggerExecutableNode[] EMPTY_ARRAY = new MoniLoggerExecutableNode[0];
-
-	private static MoniLogStandaloneSetup moniLogSetup = new MoniLogStandaloneSetup();
-
-	private static Injector moniLogInjector = moniLogSetup.createInjectorAndDoEMFRegistration();
-
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	private static ParseHelper<Document> moniLogParseHelper = moniLogInjector
-			.<ParseHelper>getInstance(ParseHelper.class);
 
 	private Configuration configuration;
 	private EPRuntime epRuntime;
@@ -161,6 +150,8 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 	private final Map<Event, Set<Event>> eventToParentEvents = new HashMap<>();
 	private final Map<Event, Set<Event>> eventToChildEvents = new HashMap<>();
 	private final Set<Event> events = new HashSet<>();
+	
+	private MoniLogParser parser = new MoniLogParser();
 
 	@Override
 	protected void onCreate(Env env) {
@@ -272,28 +263,21 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 		final Map<ASTEvent, List<MoniLogger>> astEventToMoniLogger = new HashMap<>();
 		final List<MoniLogger> moniloggers = new ArrayList<>();
 		final List<Event> allEvents = new ArrayList<>();
-		final ResourceSet rs = new XtextResourceSet();
 
-		specifications.forEach(specification -> {
-			if (!specification.isBlank()) {
-				try {
-					final Document model = moniLogParseHelper.parse(specification, rs);
-					specificationModels.add(model);
-					allEvents.addAll(model.getEvents());
-					model.getMoniloggers().forEach(monilogger -> {
-						final Level level = Level.parse(monilogger.getLevel().getLiteral());
-						if (logger.isLoggable(level)) {
-							// Collect all enabled moniloggers
-							moniloggers.add(monilogger);
-							processEvent(monilogger, astEventToMoniLogger);
-						}
-					});
-				} catch (Exception e) {
-					e.printStackTrace();
+		final ResourceSet rs = parser.parse(specifications);
+		Streams.stream(rs.getAllContents()).filter(o -> o instanceof Document).map(o -> (Document) o).forEach(model -> {
+			specificationModels.add(model);
+			allEvents.addAll(model.getEvents());
+			model.getMoniloggers().forEach(monilogger -> {
+				final Level level = Level.parse(monilogger.getLevel().getLiteral());
+				if (logger.isLoggable(level)) {
+					// Collect all enabled moniloggers
+					moniloggers.add(monilogger);
+					processEvent(monilogger, astEventToMoniLogger);
 				}
-			}
+			});
 		});
-
+		
 //		TODO: properly handle complex events
 //		allEvents.stream().filter(e -> e instanceof ComplexEvent).map(e -> {
 //			final ComplexEvent ev = (ComplexEvent) e;
@@ -709,12 +693,12 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 		}
 	}
 
-	private final SimpleExpressionParser parser = new SimpleExpressionParser();
+	private final SimpleExpressionParser expressionParser = new SimpleExpressionParser();
 	
 	private MoniLoggerExecutableNode getExpressionNode(Expression expression, Node node, boolean onEnter, Set<String> languages) {
 		switch (expression.eClass().getClassifierID()) {
 		case MoniLogPackage.MONI_LOG_EXPRESSION: {
-			return parser.createExpression((MoniLogExpression) expression, node, onEnter);
+			return expressionParser.createExpression((MoniLogExpression) expression, node, onEnter);
 		}
 		case MoniLogPackage.LANGUAGE_VALUE: {
 			final LanguageValue languageValue = (LanguageValue) expression;
