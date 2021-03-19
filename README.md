@@ -5,7 +5,7 @@ Requires GraalVM 21.0.0.
 
 ## Setup
 
-To enable the monilog tool on GraalVM, download the archives available [here](https://github.com/gemoc/monilog/releases/tag/v1.0.0) (for the monilog tool) and optionally [here](https://github.com/gemoc/miniexpr/releases/tag/v1.0.0) (for an expression language to use in your moniloggers), extract them in a folder of your choice, and run their corresponding graalvm-setup.sh scripts. Each archive also contain an eclipse update site (packaged as a zip file) which you can use to install the monilogger and miniexpr editors into your Eclipse IDE, providing auto-completion and syntax highlighting for these languages.
+To enable the monilog tool on GraalVM, download the archives available [here](https://github.com/gemoc/monilog/releases/tag/v1.0.0) (for the monilog tool), extract them in a folder of your choice, and run their corresponding graalvm-setup.sh scripts. Each archive also contain an eclipse update site (packaged as a zip file) which you can use to install the MoniLog editor into your Eclipse IDE, providing auto-completion and syntax highlighting for these languages.
 
 ## Use
 
@@ -16,200 +16,142 @@ Example command for node: `node --polyglot --jvm --monilogger.files=todolist.mnl
 
 ## Syntax
 
-A monilog definition can be given a name and is split in three blocks:
+### Imports
 
- - events: allow to specify the name of callable syntactic constructs (e.g. function, job or method names) that trigger monilogging actions.
- - conditions: this block is optional and is used to evaluate expressions on the state of the program to determine whether the monilogging actions should actually be executed.
- - actions: the monilogging actions to be undertaken are listed in this block.
+The MoniLog language allows to import other MoniLog packages so that the entities declared within can be used, including the `org.gemoc.monilog.stl` package, which contains some basic layouts and appenders. The language also allows to import files from other languages such as Python files, and to give them an alias so their callable entities can be referred to.
+
+```
+import org.gemoc.monilog.stl.*
+import fr.cea.nabla.monilog.nablalib.*
+import "/absolute/path/to/file/mylib.py" as mylib
+```
+
+This snippet imports the aforementionned standard library of MoniLog, as well as a NabLab-specific library allowing to print to the NabLab console.
+It also imports a Python file to be used later.
 
 ### Events
 
-When specifying an execution event, you can add the `before` or `after` keywords in front of the reference to the callable, to specify whether monilogging actions should be triggered before or after each call. If no keyword is present, actions are triggered both before and after each call.
+Events are declared using the following syntax:
 
 ```
-monilog "lowPressure" [WARNING] {
-	events {
-		after computePressure
-	}
-
-	...
-
+call Initialized {
+	after InitU
 }
-```
-```
-monilog "invalidDel" [WARNING] {
-	events {
-		before del
-	}
 
-	...
+call BeforeComputeTn {
+	before ComputeTn
+}
 
+call AfterComputeTn {
+	after ComputeTn
 }
 ```
 
-### Conditions
+This snippet declares three events, Initialized, BeforeCOmputeTn and AfterComputeTn, to which moniloggers can listen during the execution. These events are respectively fired after calls to InitU, before calls to ComputeTn, and after calls to ComputeTn.
 
-Two kinds of conditions can be expressed here: structural conditions and temporal conditions. 
+### Expressions
 
-#### Structural Conditions 
+The other entities make use of expressions, which can be MoniLog expressions or language expressions. MoniLog expressions are written between curly braces, such as `{x * 2}`, `{sizeOf(u_nplus1)}`, or `{u_nplus1[0]}`. Language expressions are either calls to functions of imported files, such as `python(mylib.format({u_nplus1})`, or inline snippets of code supplied as strings, such as `python("count % 2 == 0")`. Any language available on your GraalVM installation can be provided by specifying the language id instead of `python` in the examples.
 
-Structural conditions are expressions written in a language available on your GraalVM installation, whose result are interpreted as a boolean (i.e., any value different than 0 is considered as true).
-Structural conditions can be used to determine whether a particular execution event should trigger an action or not, according to the current state of the program under execution.
+
+### Layouts
+
+Personnalized layouts can be declared to fit your needs.
+The following snippet declares a `BasicPythonLayout` which uses the `StringLayout` from the standard library to format a plain string message containing the value of a time variable, followed by the content of an array formatted using a function from the imported `mylib.py` file.
+
+```
+layout BasicPythonLayout {
+	StringLayout.call({"t={0,number,0.000000} u={1}"}, {t_nplus1}, python(mylib.format({u_nplus1})))
+}
+```
+
+The following snippet declares a `SummaryLayout` using exclusively MoniLog expressions to format a plain string message containing the value of a time variable, followed by the first, middle, and last cells of an array.
+
+```
+layout SummaryLayout {
+	StringLayout.call({"[t={0,number,0.000000}] u[0]={1,number,0.000000}; u[{2}]={3,number,0.000000} ; u[{4}]={5,number,0.000000}"},
+		{t_nplus1},
+		{u_nplus1[0]},
+		{sizeOf(u_nplus1) / 2},
+		{u_nplus1[sizeOf(u_nplus1) / 2]},
+		{sizeOf(u_nplus1) - 1},
+		{u_nplus1[sizeOf(u_nplus1) - 1]})
+}
+```
+
+The first parameter of a call to `StringLayout` is the pattern of the message, where curly braces such as `{0,number,0.000000}` indicate where the subsequent parameters should be inserted in the message, and how they should be formatted, according to the semantics of [MessageFormat](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/text/MessageFormat.html?is-external=true).
+Consequently, the following parameters are expressions retrieving and computing the actual values to insert in the message.
+
+### Moniloggers
+
+A monilog definition can be given a name and is split in three blocks:
+
+ - events: allow to specify the name of callable syntactic constructs (e.g. function, job or method names) that trigger the actions of the monilogger.
+ - conditions: this optional block is used to evaluate expressions on the state of the program to determine whether the actions of the monilogger should actually be executed.
+ - actions: the actions to be undertaken by the monilogger are listed in this block.
+
+#### Conditions
+
+Conditions are expressions written in the native MoniLog expression language, or a language available on your GraalVM installation, whose result are interpreted as a boolean (i.e., any value different than 0 is considered as true).
+Conditions can be used to determine whether a particular event should trigger an action or not, according to the current state of the program under execution.
 
 In the following monilogger, a condition specifies that actions should only be triggered if the pressure `p` is below `0.1`.
 
 ```
-monilog "lowPressure" [WARNING] {
-	events {
-		after computePressure
-	}
-
+monilogger lowPressure [WARNING] {
+	event AfterComputePressure
 	conditions {
-		"p <= 0.1"
+		{p <= 0.1}
 	}
-
 	...
-
 }
 ```
 
-In the following monilogger, the condition specifies that the `id` parameter of the request `req` should be greater or equal to the length of the `todolist` of the current session for the monilogger's action to be triggered.
+In the following monilogger, the condition specifies that the `isInvertible` function declared in `mylib.py` should return false on the variable `alpha` (obtained through the MoniLog expression language) for the actions of the `invalidMatrix` monilogger to be executed.
 
 ```
-monilog "invalidDel" [WARNING] {
-	events {
-		before del
-	}
-
+monilogger invalidMatrix [WARNING] {
+	events BeforeUpdateU
 	conditions {
-		"req.params.id >= |req.session.todolist|"
+		python(!mylib.isInvertible({alpha})
 	}
-
 	...
-
 }
 ```
 
-Both of these expressions (and all other expressions in the examples thereafter) are written using the MiniExpr language, which is available [here](https://github.com/gemoc/miniexpr/).
+#### Actions
 
-#### Temporal Conditions
+Two types of actions are available to moniloggers: evaluating expressions, in particular language expression with side-effects (MoniLog expressions are side-effect-free), and calling appenders.
+Two appenders are provided as part of the MoniLog standard library: `ConsoleAppender` and `FileAppender`.
 
-Temporal conditions are expressed using the `stream` condition and by specifying a temporal pattern from a list of predefined patterns (`always`, `exists`, `never`, `precedence` and `response`) and scopes (`globally`, which is the default one, `after`, `before`, `between-and` and `after-until`).
-In more details, temporal patterns are defined as follows:
+##### Printing to the console
 
-```
-TemporalPattern: <Pattern> <Scope>?
-
-Pattern:
-	'always' <event> |
-	'exists' (n | 'atleast' n | atmost 'n')? <event> |
-	'never' <event> |
-	<event> 'precedes' <event> |
-	<event> 'respondsTo' <event>;
-
-Scope:
-	'globally' |
-	'after' <event> |
-	'before' <event> |
-	'between' <event> 'and' <event> |
-	'after' <event> 'until' <event>;
-```
-
-The `<event>` tag is a placeholder for events defined by the user, such as the `InvalidDel` event in the example below.
-Events can hold parameters, declared as a comma-separated list of key/value pairs between brackets.
-
-In the following monilogger, the temporal condition evaluates to `true` whenever the event stream (see [Actions](https://github.com/gemoc/monilog#actions) below) contains at least 3 `InvalidDel` events, each holding a parameter equal to the `uuid` of the current `session`.
-This pattern of 3 event occurrences is evaluated over the complete execution as no scope has been specified, which leads to the default `globally` scope being used.
-This effectively triggers the monilogger's actions whenever a user issues three invalid delete requests.
+The `ConsoleAppender` allows to print text to the console.
+The following monilogger uses the `SummaryLayout` to print a summary of an array to the console.
 
 ```
-monilog "suspiciousBehavior" [SEVERE] {
-	events {
-		before del
-	}
-	conditions {
-		stream(exists atleast 3 InvalidDel[x="req.session.uuid"])
-	}
-
-	...
-
-}
-```
-
-### Actions
-
-Three types of actions are available to moniloggers: printing to the console, to a file or pushing events to the stream for the subsequent evaluation of temporal conditions.
-
-#### Printing to the console
-
-Printing a message to the console is done through the `append console` action.
-The following monilogger prints the first, middle and last values of an array named `u_nplus1`:
-
-```
-monilog "logU" [INFO] {
-	events {
-		after ComputeTn
-	}
+monilog "printU" [INFO] {
+	event AfterComputeTn
 	actions {
-		append console("u[0]={0}; u[{1}]={2} ; u[{3}]={4}",
-				"u_nplus1[0]",
-				"|u_nplus1| / 2",
-				"u_nplus1[|u_nplus1| / 2]",
-				"|u_nplus1| - 1",
-				"u_nplus1[|u_nplus1| - 1]")
+		ConsoleAppender.call(SummaryLayout.call)
 	}
 }
 ```
 
-The first parameter is the pattern of the message, where curly braces such as `{0}` indicate where the subsequent parameters should be inserted in the message.
-Consequently, the following parameters are expressions computing the dynamic values to insert in the message.
+##### Printing to a file
 
-Here is an example of message that is printed by this monilogger:
-
-```
-[monilogger] INFO: u[0]=0.031; u[800]=0.133 ; u[1,599]=0.031
-```
-
-#### Printing to a file
-
-Printing a message to a file is very similar to printing to the console, and is done through the `append file` action.
-The following monilogger prints a message to the `log.txt` file whenever `p` is negative after a call to `computePressure`.
+The `FileAppender` allows to print text to a file.
+The following monilogger prints the same array summaries as the example above, but this time to the `log.txt` file.
 
 ```
-monilog "negativePressure" [SEVERE] {
-	events {
-		after computePressure
-	}
-	conditions {
-		"p < 0"
-	}
+monilog "traceU" [INFO] {
+	event AfterComputeTn
 	actions {
-		append file("log.txt", "Negative pressure: p={0}", "p")
+		FileAppender.call(SummaryLayout.call, {"/absolute/path/to/log.txt"}, {true})
 	}
 }
 ```
 
-The first parameter is the path to the file where the message should be printed.
-The following parameters are the same as those used for printing to the console (the pattern for the message, and the dynamic values to insert into that pattern).
+The second parameter is the path to the file where the message should be printed.
+The third parameter is a boolean expression indicated whether calls to the appender should overwrite the file or add lines to it.
 
-#### Pushing events to the stream
-
-Pushing events to the stream is done through the `append stream` action.
-You must provide a name for the event, and can then specify values held by the occurrence by providing a comma separated list of expressions inside brackets `[...]`.
-
-The following monilogger prints a message to the `log.txt` file and then pushes an occurrence of the `InvalidDel` event with the `uuid` of the current `session` whenever an invalid request to delete an item of `todolist` is received.
-
-```
-monilog {
-	events {
-		before del
-	}
-	conditions {
-		"req.params.id >= |req.session.todolist|"
-	}
-	actions {
-		append file("log.txt", "Invalid delete call by {0} on id {1}", "req.session.uuid", "req.params.id"),
-		append stream(InvalidDel["req.session.uuid"])
-	}
-}
-```
