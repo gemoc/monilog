@@ -86,7 +86,7 @@ Consequently, the following parameters are expressions retrieving and computing 
 
 A monilog definition can be given a name and is split in three blocks:
 
- - events: allow to specify the name of callable syntactic constructs (e.g. function, job or method names) that trigger the actions of the monilogger.
+ - events: allow to specify the name of declared events that trigger the actions of the monilogger.
  - conditions: this optional block is used to evaluate expressions on the state of the program to determine whether the actions of the monilogger should actually be executed.
  - actions: the actions to be undertaken by the monilogger are listed in this block.
 
