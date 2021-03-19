@@ -1,11 +1,11 @@
-# Monilog
+# MoniLog
 Monitoring and logging tool for executable domain-specific models run on GraalVM.
 
 Requires GraalVM 21.0.0.
 
 ## Setup
 
-To enable the monilog tool on GraalVM, download the archives available [here](https://github.com/gemoc/monilog/releases/tag/v1.0.0) (for the monilog tool), extract them in a folder of your choice, and run their corresponding graalvm-setup.sh scripts. Each archive also contain an eclipse update site (packaged as a zip file) which you can use to install the MoniLog editor into your Eclipse IDE, providing auto-completion and syntax highlighting for these languages.
+To enable MoniLog on GraalVM, download the archive available [here](https://github.com/gemoc/monilog/releases/tag/v1.0.0), extract it in a folder of your choice, and run its graalvm-setup.sh script. The archive also contains an eclipse update site (packaged as a zip file) which you can use to install the MoniLog editor into your Eclipse IDE, providing auto-completion and syntax highlighting for the MoniLog language.
 
 ## Use
 
@@ -84,7 +84,7 @@ Consequently, the following parameters are expressions retrieving and computing 
 
 ### Moniloggers
 
-A monilog definition can be given a name and is split in three blocks:
+A monilogger definition can be given a name and is split in three blocks:
 
  - events: allow to specify the name of declared events that trigger the actions of the monilogger.
  - conditions: this optional block is used to evaluate expressions on the state of the program to determine whether the actions of the monilogger should actually be executed.
@@ -121,8 +121,21 @@ monilogger invalidMatrix [WARNING] {
 
 #### Actions
 
-Two types of actions are available to moniloggers: evaluating expressions, in particular language expression with side-effects (MoniLog expressions are side-effect-free), and calling appenders.
+Two types of actions are available to moniloggers: evaluating language expressions, in particular expressions with side-effects, and calling appenders.
 Two appenders are provided as part of the MoniLog standard library: `ConsoleAppender` and `FileAppender`.
+
+##### Executing languages expressions
+
+The following monilogger evaluates a Python statement that increments a `count` variable (accessible only from Python expressions) whenever an AfterComputeTn occurs.
+
+```
+monilogger updateCount [INFO] {
+	event AfterComputeTn
+	actions {
+		python("count = count + 1");
+	}
+}
+```
 
 ##### Printing to the console
 
@@ -130,7 +143,7 @@ The `ConsoleAppender` allows to print text to the console.
 The following monilogger uses the `SummaryLayout` to print a summary of an array to the console.
 
 ```
-monilog "printU" [INFO] {
+monilogger "printU" [INFO] {
 	event AfterComputeTn
 	actions {
 		ConsoleAppender.call(SummaryLayout.call)
@@ -144,7 +157,7 @@ The `FileAppender` allows to print text to a file.
 The following monilogger prints the same array summaries as the example above, but this time to the `log.txt` file.
 
 ```
-monilog "traceU" [INFO] {
+monilogger "traceU" [INFO] {
 	event AfterComputeTn
 	actions {
 		FileAppender.call(SummaryLayout.call, {"/absolute/path/to/log.txt"}, {true})

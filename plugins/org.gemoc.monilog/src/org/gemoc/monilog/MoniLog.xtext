@@ -64,11 +64,12 @@ Event:
 	({ASTEvent}
 	'call' name=ID ('(' parameterDecl=ParameterDeclNoVarArgs ')')? '{'
 		kind=ASTEventKind ruleID=ID
-	'}') |
-	({ComplexEvent} 'complex' name=ID ('[' kind=TemporalPatternKind ']')? ('(' parameterDecl=ParameterDeclNoVarArgs ')')? '{'
-		pattern=TemporalPattern
-	'}') |
-	({UserEvent} 'custom' name=ID ('(' parameterDecl=ParameterDeclNoVarArgs ')')?);
+	'}');
+//	'}') |
+//	({ComplexEvent} 'complex' name=ID ('[' kind=TemporalPatternKind ']')? ('(' parameterDecl=ParameterDeclNoVarArgs ')')? '{'
+//		pattern=TemporalPattern
+//	'}') |
+//	({UserEvent} 'custom' name=ID ('(' parameterDecl=ParameterDeclNoVarArgs ')')?);
 
 ASTEventKind:
 	{BeforeASTEvent} 'before'| {AfterASTEvent} 'after';
@@ -105,9 +106,9 @@ Scope:
 	{AfterUntil} 'after' lowerBound=StreamEvent 'until' upperBound=StreamEvent;
 
 Action:
-	LanguageValue | AppenderCall | EmitEvent |
-//	SetVariable |
-	MoniloggerCall;
+	LanguageValue | AppenderCall
+//	| EmitEvent | SetVariable | MoniloggerCall
+;
 
 AppenderCall:
 	appender=[Appender|QualifiedName] '.' 'call' ( '(' args+=Expression (',' args+=Expression)* ')' )?;
@@ -115,8 +116,8 @@ AppenderCall:
 LayoutCall:
 	layout=[Layout|QualifiedName] '.' 'call' ( '(' args+=Expression (',' args+=Expression)* ')' )?;
 
-EmitEvent:
-	event=[UserEvent|ID] '.' 'emit' ('(' args+=Expression (',' args+=Expression)* ')' )?;
+//EmitEvent:
+//	event=[UserEvent|ID] '.' 'emit' ('(' args+=Expression (',' args+=Expression)* ')' )?;
 
 //SetVariable:
 //	'set' '(' variable=STRING ',' value=LanguageValue ')';

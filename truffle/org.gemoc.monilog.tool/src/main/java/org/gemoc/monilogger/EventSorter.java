@@ -8,18 +8,13 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.gemoc.monilog.moniLog.ASTEvent;
-import org.gemoc.monilog.moniLog.ComplexEvent;
-import org.gemoc.monilog.moniLog.EmitEvent;
 import org.gemoc.monilog.moniLog.Event;
 import org.gemoc.monilog.moniLog.MoniLogger;
-import org.gemoc.monilog.moniLog.StreamEvent;
 import org.jgrapht.GraphPath;
 import org.jgrapht.alg.cycle.CycleDetector;
 import org.jgrapht.alg.shortestpath.FloydWarshallShortestPaths;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.DirectedWeightedPseudograph;
-
-import com.google.common.collect.Streams;
 
 public class EventSorter {
 
@@ -52,18 +47,20 @@ public class EventSorter {
 
 		// For each complex event, iterate over composing events and add the complex
 		// event as child event.
-		events.stream().filter(event -> event instanceof ComplexEvent).map(event -> (ComplexEvent) event)
-				.forEach(childEvent -> Streams.stream(childEvent.getPattern().eAllContents())
-						.filter(o -> o instanceof StreamEvent).map(o -> ((StreamEvent) o).getEvent())
-						.forEach(parentEvent -> graph.addEdge(parentEvent, childEvent)));
+//		TODO:
+//		events.stream().filter(event -> event instanceof ComplexEvent).map(event -> (ComplexEvent) event)
+//				.forEach(childEvent -> Streams.stream(childEvent.getPattern().eAllContents())
+//						.filter(o -> o instanceof StreamEvent).map(o -> ((StreamEvent) o).getEvent())
+//						.forEach(parentEvent -> graph.addEdge(parentEvent, childEvent)));
 
 		// For each user event, iterate over triggering event of all moniloggers
 		// emitting this event and add the user event as child event.
-		moniloggers.forEach(monilogger -> {
-			final Event parentEvent = monilogger.getStreamEvent().getEvent();
-			monilogger.getActions().stream().filter(o -> o instanceof EmitEvent).map(o -> ((EmitEvent) o).getEvent())
-					.forEach(childEvent -> graph.addEdge(parentEvent, childEvent));
-		});
+//		TODO:
+//		moniloggers.forEach(monilogger -> {
+//			final Event parentEvent = monilogger.getStreamEvent().getEvent();
+//			monilogger.getActions().stream().filter(o -> o instanceof EmitEvent).map(o -> ((EmitEvent) o).getEvent())
+//					.forEach(childEvent -> graph.addEdge(parentEvent, childEvent));
+//		});
 
 		final CycleDetector<Event, DefaultWeightedEdge> cycleDetector = new CycleDetector<>(graph);
 		if (cycleDetector.detectCycles()) {

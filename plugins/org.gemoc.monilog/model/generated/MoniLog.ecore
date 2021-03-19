@@ -64,11 +64,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="Parameter">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Event">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="parameterDecl" eType="#//ParameterDecl"
-        containment="true"/>
-  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Event"/>
   <eClassifiers xsi:type="ecore:EClass" name="ASTEventKind"/>
   <eClassifiers xsi:type="ecore:EClass" name="Condition">
     <eStructuralFeatures xsi:type="ecore:EReference" name="expression" eType="#//LanguageValue"
@@ -99,12 +95,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="args" upperBound="-1" eType="#//Expression"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="EmitEvent" eSuperTypes="#//Action">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="event" eType="#//UserEvent"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="args" upperBound="-1" eType="#//Expression"
-        containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="MoniloggerCall" eSuperTypes="#//Action">
+  <eClassifiers xsi:type="ecore:EClass" name="MoniloggerCall">
     <eStructuralFeatures xsi:type="ecore:EReference" name="monilogger" eType="#//MoniLogger"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="StreamEvent">
@@ -164,16 +155,13 @@
     <eLiterals name="nV" value="3" literal="nV"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ASTEvent" eSuperTypes="#//Event">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parameterDecl" eType="#//ParameterDecl"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="kind" eType="#//ASTEventKind"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="ruleID" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ComplexEvent" eSuperTypes="#//Event">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="kind" eType="#//TemporalPatternKind"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="pattern" eType="#//TemporalPattern"
-        containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="UserEvent" eSuperTypes="#//Event"/>
   <eClassifiers xsi:type="ecore:EClass" name="BeforeASTEvent" eSuperTypes="#//ASTEventKind"/>
   <eClassifiers xsi:type="ecore:EClass" name="AfterASTEvent" eSuperTypes="#//ASTEventKind"/>
   <eClassifiers xsi:type="ecore:EClass" name="Existence" eSuperTypes="#//Pattern">

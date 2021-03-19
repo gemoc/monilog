@@ -14,7 +14,6 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -35,10 +34,8 @@ import org.gemoc.monilog.moniLog.AfterASTEvent;
 import org.gemoc.monilog.moniLog.Appender;
 import org.gemoc.monilog.moniLog.AppenderCall;
 import org.gemoc.monilog.moniLog.BeforeASTEvent;
-import org.gemoc.monilog.moniLog.ComplexEvent;
 import org.gemoc.monilog.moniLog.Condition;
 import org.gemoc.monilog.moniLog.Document;
-import org.gemoc.monilog.moniLog.EmitEvent;
 import org.gemoc.monilog.moniLog.Event;
 import org.gemoc.monilog.moniLog.Expression;
 import org.gemoc.monilog.moniLog.ExternalAppender;
@@ -55,22 +52,18 @@ import org.gemoc.monilog.moniLog.MoniLogPackage;
 import org.gemoc.monilog.moniLog.MoniLogger;
 import org.gemoc.monilog.moniLog.Parameter;
 import org.gemoc.monilog.moniLog.ParameterReference;
-import org.gemoc.monilog.moniLog.StreamEvent;
-import org.gemoc.monilog.moniLog.UserEvent;
 import org.gemoc.monilogger.nodes.MoniLoggerBlockNode;
 import org.gemoc.monilogger.nodes.MoniLoggerCallSourceNode;
 import org.gemoc.monilogger.nodes.MoniLoggerCopyVariablesFromScopeNodeGen;
 import org.gemoc.monilogger.nodes.MoniLoggerExecutableNode;
 import org.gemoc.monilogger.nodes.MoniLoggerNode;
 import org.gemoc.monilogger.nodes.MoniLoggerNodeGen;
-import org.gemoc.monilogger.nodes.action.MoniLoggerEmitEventNode;
 import org.gemoc.monilogger.nodes.action.MoniLoggerExternalAppenderNodeGen;
 import org.gemoc.monilogger.nodes.action.MoniLoggerExternalLayoutNode;
 import org.gemoc.monilogger.nodes.condition.MoniLoggerConditionalNode;
 import org.gemoc.monilogger.nodes.expression.parser.SimpleExpressionParser;
 import org.gemoc.monilogger.parser.MoniLogParser;
 import org.gemoc.monilogger.temporalpatterns.AbstractTemporalProperty;
-import org.gemoc.monilogger.temporalpatterns.PropertyProvider;
 import org.graalvm.options.OptionCategory;
 import org.graalvm.options.OptionDescriptors;
 import org.graalvm.options.OptionKey;
@@ -82,7 +75,6 @@ import org.graalvm.polyglot.Value;
 
 import com.espertech.esper.common.client.EPCompiled;
 import com.espertech.esper.common.client.configuration.Configuration;
-import com.espertech.esper.common.client.configuration.common.ConfigurationCommonVariantStream;
 import com.espertech.esper.compiler.client.CompilerArguments;
 import com.espertech.esper.compiler.client.EPCompileException;
 import com.espertech.esper.compiler.client.EPCompilerProvider;
@@ -338,34 +330,35 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 		final EClass eClass = event.eClass();
 		final int classifierID = eClass.getClassifierID();
 		eventToMoniLoggers.computeIfAbsent(event, o -> new ArrayList<>()).add(monilogger);
-		final List<UserEvent> emittedEvents = monilogger.getActions().stream().filter(a -> a instanceof EmitEvent)
-				.map(a -> ((EmitEvent) a).getEvent()).collect(Collectors.toList());
+//		TODO:
+//		final List<UserEvent> emittedEvents = monilogger.getActions().stream().filter(a -> a instanceof EmitEvent)
+//				.map(a -> ((EmitEvent) a).getEvent()).collect(Collectors.toList());
 		events.add(event);
-		events.addAll(emittedEvents);
-		setChildEvents(event, emittedEvents);
+//		events.addAll(emittedEvents);
+//		setChildEvents(event, emittedEvents);
 		switch (classifierID) {
 		case MoniLogPackage.AST_EVENT: {
 			final ASTEvent ev = (ASTEvent) event;
 			astEventToMoniLogger.computeIfAbsent(ev, o -> new ArrayList<>()).add(monilogger);
 			break;
 		}
-		case MoniLogPackage.COMPLEX_EVENT: {
-			final ComplexEvent ev = (ComplexEvent) event;
-			// Creating esper statement and subscriber for complex event directly referred
-			// to by moniloggers
-			eventToTemporalProperty.put(event, PropertyProvider.compileProperty(monilogger.getStreamEvent()));
-			final Set<Event> parentEvents = Streams.stream(ev.eAllContents()).filter(o -> o instanceof StreamEvent)
-					.map(o -> ((StreamEvent) o).getEvent()).collect(Collectors.toSet());
-			events.addAll(parentEvents);
-			setParentEvents(ev, parentEvents);
-			break;
-		}
-		case MoniLogPackage.USER_EVENT: {
-			// Creating esper statement and subscriber for user events directly referred to
-			// by moniloggers
-			eventToTemporalProperty.put(event, PropertyProvider.compileProperty(monilogger.getStreamEvent()));
-			break;
-		}
+//		case MoniLogPackage.COMPLEX_EVENT: {
+//			final ComplexEvent ev = (ComplexEvent) event;
+//			// Creating esper statement and subscriber for complex event directly referred
+//			// to by moniloggers
+//			eventToTemporalProperty.put(event, PropertyProvider.compileProperty(monilogger.getStreamEvent()));
+//			final Set<Event> parentEvents = Streams.stream(ev.eAllContents()).filter(o -> o instanceof StreamEvent)
+//					.map(o -> ((StreamEvent) o).getEvent()).collect(Collectors.toSet());
+//			events.addAll(parentEvents);
+//			setParentEvents(ev, parentEvents);
+//			break;
+//		}
+//		case MoniLogPackage.USER_EVENT: {
+//			// Creating esper statement and subscriber for user events directly referred to
+//			// by moniloggers
+//			eventToTemporalProperty.put(event, PropertyProvider.compileProperty(monilogger.getStreamEvent()));
+//			break;
+//		}
 		}
 	}
 
@@ -395,34 +388,35 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 				final ASTEvent ev = (ASTEvent) e;
 				final Map<String, Object> streamEvent = new HashMap<>();
 				// TODO: change to "name"?
-				streamEvent.put(e.getName(), String.class);
+				streamEvent.put(ev.getName(), String.class);
 				ev.getParameterDecl().getParameters().stream().forEach(p -> streamEvent.put(p.getName(), Object.class));
 				final ASTEventKind kind = ev.getKind();
 				if (kind instanceof AfterASTEvent) {
 					streamEvent.put("result", Object.class);
 				}
-				streamEvents.put(e.getName(), streamEvent);
+				streamEvents.put(ev.getName(), streamEvent);
 				break;
 			}
-			case MoniLogPackage.COMPLEX_EVENT: {
-				final ComplexEvent ev = (ComplexEvent) e;
-				final Map<String, Object> streamEvent = new HashMap<>();
-				streamEvent.put(e.getName(), String.class);
-				ev.getParameterDecl().getParameters().stream().forEach(p -> streamEvent.put(p.getName(), Object.class));
-				streamEvents.put(e.getName(), streamEvent);
-				eventToSubEvents.computeIfAbsent(ev, o -> new HashSet<>()).addAll(eventToParentEvents.get(ev));
-				break;
-			}
-			case MoniLogPackage.USER_EVENT: {
-				final UserEvent ev = (UserEvent) e;
-				final Map<String, Object> streamEvent = new HashMap<>();
-				streamEvent.put(e.getName(), String.class);
-				ev.getParameterDecl().getParameters().stream().forEach(p -> streamEvent.put(p.getName(), Object.class));
-				streamEvents.put(e.getName(), streamEvent);
-				// User event streams are only created if they are directly used by monilogger.
-				eventToSubEvents.computeIfAbsent(ev, o -> Collections.singleton(o));
-				break;
-			}
+//			TODO:
+//			case MoniLogPackage.COMPLEX_EVENT: {
+//				final ComplexEvent ev = (ComplexEvent) e;
+//				final Map<String, Object> streamEvent = new HashMap<>();
+//				streamEvent.put(e.getName(), String.class);
+//				ev.getParameterDecl().getParameters().stream().forEach(p -> streamEvent.put(p.getName(), Object.class));
+//				streamEvents.put(e.getName(), streamEvent);
+//				eventToSubEvents.computeIfAbsent(ev, o -> new HashSet<>()).addAll(eventToParentEvents.get(ev));
+//				break;
+//			}
+//			case MoniLogPackage.USER_EVENT: {
+//				final UserEvent ev = (UserEvent) e;
+//				final Map<String, Object> streamEvent = new HashMap<>();
+//				streamEvent.put(e.getName(), String.class);
+//				ev.getParameterDecl().getParameters().stream().forEach(p -> streamEvent.put(p.getName(), Object.class));
+//				streamEvents.put(e.getName(), streamEvent);
+//				// User event streams are only created if they are directly used by monilogger.
+//				eventToSubEvents.computeIfAbsent(ev, o -> Collections.singleton(o));
+//				break;
+//			}
 			}
 		});
 
@@ -434,18 +428,18 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 			configuration.getCommon().addEventType("EoE", eoeEventProperties);
 			// Creating the insert statements for events involved in complex events and for
 			// user events directly referred to by moniloggers.
-			eventToSubEvents.forEach((e, es) -> {
-				final String eventName = e.getName();
-				final ConfigurationCommonVariantStream variantStream = new ConfigurationCommonVariantStream();
-				es.forEach(subEvent -> {
-					final String eventType = subEvent.getName();
-					variantStream.addEventTypeName(eventType);
-					streamInsertStatements.add("insert into " + eventName + " select * from " + eventType);
-				});
-				variantStream.addEventTypeName("EoE");
-				streamInsertStatements.add("insert into " + eventName + " select * from EoE");
-				configuration.getCommon().addVariantStream(eventName, variantStream);
-			});
+//			eventToSubEvents.forEach((e, es) -> {
+//				final String eventName = e.getName();
+//				final ConfigurationCommonVariantStream variantStream = new ConfigurationCommonVariantStream();
+//				es.forEach(subEvent -> {
+//					final String eventType = subEvent.getName();
+//					variantStream.addEventTypeName(eventType);
+//					streamInsertStatements.add("insert into " + eventName + " select * from " + eventType);
+//				});
+//				variantStream.addEventTypeName("EoE");
+//				streamInsertStatements.add("insert into " + eventName + " select * from EoE");
+//				configuration.getCommon().addVariantStream(eventName, variantStream);
+//			});
 			configuration.getCompiler().getExpression().setDuckTyping(true);
 			epRuntime = EPRuntimeProvider.getRuntime(ID, configuration);
 			streamInsertStatements.forEach(s -> compileAndDeploy(s));
@@ -512,9 +506,10 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 						case MoniLogPackage.APPENDER_CALL:
 							return getAppenderExecutableNode(env, (AppenderCall) action, level, node, onEnter, languages,
 									new HashMap<>());
-						case MoniLogPackage.EMIT_EVENT:
-							return new MoniLoggerEmitEventNode(epRuntime, ((EmitEvent) action).getEvent().getName(),
-									EMPTY_ARRAY);
+//						TODO:
+//						case MoniLogPackage.EMIT_EVENT:
+//							return new MoniLoggerEmitEventNode(epRuntime, ((EmitEvent) action).getEvent().getName(),
+//									EMPTY_ARRAY);
 //						case MoniLogPackage.SET_VARIABLE:
 //							final SetVariable setVariable = (SetVariable) action;
 //							return MoniLoggerSetVariableNodeGen.create(setVariable.getVariable(), node, onEnter,
