@@ -29,8 +29,6 @@
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="LocalAppender" eSuperTypes="#//Appender">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="annotations" unique="false"
-        upperBound="-1" eType="#//AppenderAnnotation"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="calls" upperBound="-1"
         eType="#//AppenderCall" containment="true"/>
   </eClassifiers>
@@ -52,8 +50,6 @@
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="MoniLogger">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="annotations" unique="false"
-        upperBound="-1" eType="#//MoniLoggerAnnotation"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="parameterDecl" eType="#//ParameterDecl"
         containment="true"/>
@@ -151,12 +147,6 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ArraySize" eSuperTypes="#//SimpleExpression">
     <eStructuralFeatures xsi:type="ecore:EReference" name="array" eType="#//Ref" containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EEnum" name="MoniLoggerAnnotation">
-    <eLiterals name="inactive" literal="@Inactive"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EEnum" name="AppenderAnnotation">
-    <eLiterals name="async" literal="@Async"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="LogLevel">
     <eLiterals name="info" literal="INFO"/>

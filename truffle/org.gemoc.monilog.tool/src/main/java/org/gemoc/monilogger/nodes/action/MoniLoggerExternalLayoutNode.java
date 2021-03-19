@@ -1,12 +1,8 @@
 package org.gemoc.monilogger.nodes.action;
 
-import java.util.logging.Level;
-
-import org.gemoc.monilogger.MoniLoggerInstrument;
 import org.gemoc.monilogger.nodes.MoniLoggerExecutableNode;
 import org.graalvm.polyglot.Value;
 
-import com.oracle.truffle.api.TruffleLogger;
 import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.ExplodeLoop;
@@ -18,14 +14,9 @@ public class MoniLoggerExternalLayoutNode extends MoniLoggerExecutableNode {
 	@Children
 	private final MoniLoggerExecutableNode[] argNodes;
 	
-	private final TruffleLogger logger;
-	private final Level level;
-	
-	public MoniLoggerExternalLayoutNode(Value layoutValue, MoniLoggerExecutableNode[] argNodes, Level level) {
+	public MoniLoggerExternalLayoutNode(Value layoutValue, MoniLoggerExecutableNode[] argNodes) {
 		this.layoutValue = layoutValue;
 		this.argNodes = argNodes;
-		this.level = level;
-		this.logger = TruffleLogger.getLogger(MoniLoggerInstrument.ID);
 	}
 	
 	@Override

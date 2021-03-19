@@ -18,7 +18,7 @@ Appender:
 	LocalAppender | ExternalAppender;
 
 LocalAppender:
-	annotations+=AppenderAnnotation*
+//	annotations+=AppenderAnnotation*
 	'appender' name=ID ('(' parameterDecl=ParameterDeclVarArgs ')')? '{'
 		calls+=AppenderCall (';' calls+=AppenderCall)* ';'?
 	'}';
@@ -49,7 +49,7 @@ ParameterDeclNoVarArgs returns ParameterDecl:
 
 @Exported
 MoniLogger:
-	annotations+=MoniLoggerAnnotation*
+//	annotations+=MoniLoggerAnnotation*
 	'monilogger' name=ID ('(' parameterDecl=ParameterDeclVarArgs ')')? ('[' level=LogLevel ']')? '{'
 		'event' streamEvent=StreamEvent
 		('conditions' '{' (conditions+=Condition) (';' conditions+=Condition)* ';'? '}')?
@@ -202,11 +202,11 @@ ArraySize:
 terminal REAL:
 	INT '.' INT;
 
-enum MoniLoggerAnnotation:
-	inactive='@Inactive';
+//enum MoniLoggerAnnotation:
+//	inactive='@Inactive';
 
-enum AppenderAnnotation:
-	async='@Async';
+//enum AppenderAnnotation:
+//	async='@Async';
 
 enum LogLevel:
 	info='INFO' | config='CONFIG' | fine='FINE' | finer='FINER' |

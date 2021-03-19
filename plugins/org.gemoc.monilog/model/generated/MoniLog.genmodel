@@ -6,12 +6,6 @@
     copyrightFields="false" runtimeVersion="2.20">
   <genPackages prefix="MoniLog" basePackage="org.gemoc.monilog" disposableProviderFactory="true"
       fileExtensions="mnlg" ecorePackage="MoniLog.ecore#/">
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="MoniLog.ecore#//MoniLoggerAnnotation">
-      <genEnumLiterals ecoreEnumLiteral="MoniLog.ecore#//MoniLoggerAnnotation/inactive"/>
-    </genEnums>
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="MoniLog.ecore#//AppenderAnnotation">
-      <genEnumLiterals ecoreEnumLiteral="MoniLog.ecore#//AppenderAnnotation/async"/>
-    </genEnums>
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="MoniLog.ecore#//LogLevel">
       <genEnumLiterals ecoreEnumLiteral="MoniLog.ecore#//LogLevel/info"/>
       <genEnumLiterals ecoreEnumLiteral="MoniLog.ecore#//LogLevel/config"/>
@@ -48,7 +42,6 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//Appender/parameterDecl"/>
     </genClasses>
     <genClasses ecoreClass="MoniLog.ecore#//LocalAppender">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog.ecore#//LocalAppender/annotations"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//LocalAppender/calls"/>
     </genClasses>
     <genClasses ecoreClass="MoniLog.ecore#//ExternalAppender"/>
@@ -65,7 +58,6 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//ParameterDecl/varArgs"/>
     </genClasses>
     <genClasses ecoreClass="MoniLog.ecore#//MoniLogger">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog.ecore#//MoniLogger/annotations"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog.ecore#//MoniLogger/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//MoniLogger/parameterDecl"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog.ecore#//MoniLogger/level"/>

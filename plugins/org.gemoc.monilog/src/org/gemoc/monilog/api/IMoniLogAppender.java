@@ -7,6 +7,6 @@ public interface IMoniLogAppender {
 	int getNbMinArgs();
 
 	int getNbMaxArgs();
-	
+
 	Class<?> getArgType(int argIndex);
 }
