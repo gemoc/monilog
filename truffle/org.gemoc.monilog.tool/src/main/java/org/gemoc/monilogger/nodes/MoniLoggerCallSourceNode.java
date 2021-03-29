@@ -19,7 +19,6 @@ public class MoniLoggerCallSourceNode extends MoniLoggerExecutableNode {
 	public MoniLoggerCallSourceNode(Context context, Source source) {
 		this.context = context;
 		this.source = source;
-		// TODO use TruffleInstrument.Env.parse to provide the args of the calling monilogger/appender/layout
 		this.ast = this.context.parse(this.source);
 		this.args = new MoniLoggerExecutableNode[0];
 	}

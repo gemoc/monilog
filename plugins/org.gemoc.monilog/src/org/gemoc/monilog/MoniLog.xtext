@@ -1,5 +1,7 @@
 grammar org.gemoc.monilog.MoniLog with org.eclipse.xtext.common.Terminals
 
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+
 generate moniLog "http://www.gemoc.org/monilog/MoniLog"
 
 Document:
@@ -63,13 +65,17 @@ Parameter:
 Event:
 	({ASTEvent}
 	'call' name=ID ('(' parameterDecl=ParameterDeclNoVarArgs ')')? '{'
-		kind=ASTEventKind ruleID=ID
+		kind=ASTEventKind element=CallableElementReference
 	'}');
 //	'}') |
 //	({ComplexEvent} 'complex' name=ID ('[' kind=TemporalPatternKind ']')? ('(' parameterDecl=ParameterDeclNoVarArgs ')')? '{'
 //		pattern=TemporalPattern
 //	'}') |
 //	({UserEvent} 'custom' name=ID ('(' parameterDecl=ParameterDeclNoVarArgs ')')?);
+
+CallableElementReference:
+//	{CallableElementObjectReference} '$' target=[ecore::EObject|ID] |
+	{CallableElementNamedReference} target=ID;
 
 ASTEventKind:
 	{BeforeASTEvent} 'before'| {AfterASTEvent} 'after';
@@ -142,7 +148,7 @@ ParameterReference:
 	parameter=[Parameter|ID];
 
 MoniLogExpression:
-	'{' expression=SimpleExpression '}';
+	expression=SimpleExpression;
 
 LanguageValue:
 	languageId=ID '(' value=(LanguageExpression | LanguageCall) ')';
@@ -191,11 +197,11 @@ Atomic returns SimpleExpression:
 	{VectorConstant} '[' values+=SimpleExpression (',' values+=SimpleExpression)* ']' | Ref | ArraySize;
 
 Ref:
-	SimpleVarRef ({ArrayRef.array=current} '[' indices+=SimpleExpression (',' indices+=SimpleExpression)* ']' |
+	'$' SimpleVarRef ({ArrayRef.array=current} '[' indices+=SimpleExpression (',' indices+=SimpleExpression)* ']' |
 	{PropertyRef.object=current} '.' property=ID)*;
 
 SimpleVarRef:
-	target=ID;
+	{SimpleVarNameReference} target=ID;
 
 ArraySize:
 	'sizeOf' '(' array=Ref ')';

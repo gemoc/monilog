@@ -69,6 +69,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog.ecore#//Parameter/name"/>
     </genClasses>
     <genClasses ecoreClass="MoniLog.ecore#//Event"/>
+    <genClasses ecoreClass="MoniLog.ecore#//CallableElementReference"/>
     <genClasses ecoreClass="MoniLog.ecore#//ASTEventKind"/>
     <genClasses ecoreClass="MoniLog.ecore#//Condition">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//Condition/expression"/>
@@ -127,9 +128,7 @@
     </genClasses>
     <genClasses ecoreClass="MoniLog.ecore#//SimpleExpression"/>
     <genClasses ecoreClass="MoniLog.ecore#//Ref"/>
-    <genClasses ecoreClass="MoniLog.ecore#//SimpleVarRef">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog.ecore#//SimpleVarRef/target"/>
-    </genClasses>
+    <genClasses ecoreClass="MoniLog.ecore#//SimpleVarRef"/>
     <genClasses ecoreClass="MoniLog.ecore#//ArraySize">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//ArraySize/array"/>
     </genClasses>
@@ -137,7 +136,10 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog.ecore#//ASTEvent/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//ASTEvent/parameterDecl"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//ASTEvent/kind"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog.ecore#//ASTEvent/ruleID"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//ASTEvent/element"/>
+    </genClasses>
+    <genClasses ecoreClass="MoniLog.ecore#//CallableElementNamedReference">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog.ecore#//CallableElementNamedReference/target"/>
     </genClasses>
     <genClasses ecoreClass="MoniLog.ecore#//BeforeASTEvent"/>
     <genClasses ecoreClass="MoniLog.ecore#//AfterASTEvent"/>
@@ -260,6 +262,9 @@
     <genClasses ecoreClass="MoniLog.ecore#//PropertyRef">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//PropertyRef/object"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog.ecore#//PropertyRef/property"/>
+    </genClasses>
+    <genClasses ecoreClass="MoniLog.ecore#//SimpleVarNameReference">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog.ecore#//SimpleVarNameReference/target"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

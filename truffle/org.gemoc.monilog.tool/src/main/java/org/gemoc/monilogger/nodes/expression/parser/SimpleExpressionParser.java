@@ -25,6 +25,7 @@ import org.gemoc.monilog.moniLog.Plus;
 import org.gemoc.monilog.moniLog.PropertyRef;
 import org.gemoc.monilog.moniLog.RealConstant;
 import org.gemoc.monilog.moniLog.SimpleExpression;
+import org.gemoc.monilog.moniLog.SimpleVarNameReference;
 import org.gemoc.monilog.moniLog.SimpleVarRef;
 import org.gemoc.monilog.moniLog.StringConstant;
 import org.gemoc.monilog.moniLog.UnaryMinus;
@@ -86,8 +87,8 @@ public class SimpleExpressionParser {
 		case MoniLogPackage.VECTOR_CONSTANT:
 			expressionNode = createSimpleExpressionVectorNode((VectorConstant) expression, node, onEnter);
 			break;
-		case MoniLogPackage.SIMPLE_VAR_REF:
-			expressionNode = createReadVariableNode((SimpleVarRef) expression, node, onEnter);
+		case MoniLogPackage.SIMPLE_VAR_NAME_REFERENCE:
+			expressionNode = createReadVariableNode((SimpleVarNameReference) expression, node, onEnter);
 			break;
 		case MoniLogPackage.ARRAY_REF:
 			expressionNode = createReadArrayNode((ArrayRef) expression, node, onEnter);
@@ -164,7 +165,7 @@ public class SimpleExpressionParser {
 		return new SimpleExpressionVectorNode(valueNodes);
 	}
 
-	private SimpleExpressionNode createReadVariableNode(SimpleVarRef varRef, Node node, boolean onEnter) {
+	private SimpleExpressionNode createReadVariableNode(SimpleVarNameReference varRef, Node node, boolean onEnter) {
 		return SimpleExpressionReadLocalVariableNodeGen.create(varRef.getTarget(), node, onEnter);
 	}
 
