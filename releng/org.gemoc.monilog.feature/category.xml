@@ -3,8 +3,5 @@
    <feature id="org.gemoc.monilog.feature">
       <category name="org.gemoc.monilog.category"/>
    </feature>
-   <bundle id="org.antlr.runtime">
-      <category name="org.gemoc.monilog.category"/>
-   </bundle>
    <category-def name="org.gemoc.monilog.category" label="Monilog"/>
 </site>

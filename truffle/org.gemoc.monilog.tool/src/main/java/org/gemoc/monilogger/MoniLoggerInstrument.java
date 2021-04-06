@@ -65,7 +65,6 @@ import org.gemoc.monilogger.nodes.action.MoniLoggerExternalLayoutNode;
 import org.gemoc.monilogger.nodes.condition.MoniLoggerConditionalNode;
 import org.gemoc.monilogger.nodes.expression.parser.SimpleExpressionParser;
 import org.gemoc.monilogger.parser.MoniLogParser;
-import org.gemoc.monilogger.temporalpatterns.AbstractTemporalProperty;
 import org.graalvm.options.OptionCategory;
 import org.graalvm.options.OptionDescriptors;
 import org.graalvm.options.OptionKey;
@@ -137,9 +136,9 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 
 	private Map<String, Source> expressionToSource = new HashMap<>();
 	private Map<String, org.graalvm.polyglot.Source> evaluatedSources = new HashMap<>();
-	private Map<String, AbstractTemporalProperty> temporalPropertyMap = new HashMap<>();
+//	private Map<String, AbstractTemporalProperty> temporalPropertyMap = new HashMap<>();
 	private Map<String, List<String>> propertyNameToEventTypes = new HashMap<>();
-	private Map<Event, AbstractTemporalProperty> eventToTemporalProperty = new HashMap<>();
+//	private Map<Event, AbstractTemporalProperty> eventToTemporalProperty = new HashMap<>();
 	private Map<Event, List<MoniLogger>> eventToMoniLoggers = new HashMap<>();
 	private final Map<Event, Set<Event>> eventToParentEvents = new HashMap<>();
 	private final Map<Event, Set<Event>> eventToChildEvents = new HashMap<>();
@@ -444,10 +443,10 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 			configuration.getCompiler().getExpression().setDuckTyping(true);
 			epRuntime = EPRuntimeProvider.getRuntime(ID, configuration);
 			streamInsertStatements.forEach(s -> compileAndDeploy(s));
-			temporalPropertyMap.values().forEach(p -> {
-				p.compileEPL(configuration);
-				p.deploy(epRuntime);
-			});
+//			temporalPropertyMap.values().forEach(p -> {
+//				p.compileEPL(configuration);
+//				p.deploy(epRuntime);
+//			});
 		} finally {
 			Thread.currentThread().setContextClassLoader(oldClassLoader);
 		}
