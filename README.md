@@ -5,7 +5,7 @@ Requires GraalVM 21.0.0.
 
 ## Setup
 
-To enable MoniLog on GraalVM, download the jar file available [here](https://github.com/gemoc/monilog/releases/tag/v1.0.0), and put it in the `tools/monilogger/` folder of your GraalVM installation. To enable the Xtext editor on your Eclipse IDE, download the `monilog-syntax.zip` file, available [here](https://github.com/gemoc/monilog/releases/tag/v1.0.0), and install it through the **Install New Software...** menu.
+To enable MoniLog on GraalVM, download the jar file available [here](https://github.com/gemoc/monilog/releases/tag/v2.0.0), and put it in the `tools/monilogger/` folder of your GraalVM installation. To enable the Xtext editor on your Eclipse IDE, download the `monilog-syntax.zip` file, available [here](https://github.com/gemoc/monilog/releases/tag/v2.0.0), and install it through the **Install New Software...** menu.
 
 ## Use
 
