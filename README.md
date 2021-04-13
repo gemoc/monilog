@@ -5,11 +5,11 @@ Requires GraalVM 21.0.0.
 
 ## Setup
 
-To enable MoniLog on GraalVM, download the archive available [here](https://github.com/gemoc/monilog/releases/tag/v1.0.0), extract it in a folder of your choice, and run its graalvm-setup.sh script. The archive also contains an eclipse update site (packaged as a zip file) which you can use to install the MoniLog editor into your Eclipse IDE, providing auto-completion and syntax highlighting for the MoniLog language.
+To enable MoniLog on GraalVM, download the jar file available [here](https://github.com/gemoc/monilog/releases/tag/v1.0.0), and put it in the `tools/monilogger/` folder of your GraalVM installation. To enable the Xtext editor on your Eclipse IDE, download the `monilog-syntax.zip` file, available [here](https://github.com/gemoc/monilog/releases/tag/v1.0.0), and install it through the **Install New Software...** menu.
 
 ## Use
 
-Use the `--monilogger.files=` option when starting an execution from the command line, and supply the list of monilogger files (.mnlg) you want to include in the execution, as a comma-separated list.
+Use the `--monilogger.files=` option when starting an execution from the command line, and supply the list of MoniLog files (.mnlg) you want to include in the execution, as a comma-separated list.
 In addition, according to the language you are using (e.g. js/node), you might need to use the `--jvm` and `--polyglot` options or their equivalents to enable execution on the VM and polyglot access.
 
 Example command for node: `node --polyglot --jvm --monilogger.files=todolist.mnlg todolist.js`
