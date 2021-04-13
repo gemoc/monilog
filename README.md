@@ -51,7 +51,7 @@ This snippet declares three events, Initialized, BeforeCOmputeTn and AfterComput
 
 ### Expressions
 
-The other entities make use of expressions, which can be MoniLog expressions or language expressions. MoniLog expressions are written between curly braces, such as `{x * 2}`, `{sizeOf(u_nplus1)}`, or `{u_nplus1[0]}`. Language expressions are either calls to functions of imported files, such as `python(mylib.format({u_nplus1})`, or inline snippets of code supplied as strings, such as `python("count % 2 == 0")`. Any language available on your GraalVM installation can be provided by specifying the language id instead of `python` in the examples.
+The other entities make use of expressions, which can be MoniLog expressions or language expressions. In MoniLog expressions, references to variables of the context of the instrumented program are written with a `$` symbol in front, such as `$x * 2`, `sizeOf($u_nplus1)`, or `$u_nplus1[0]`. Language expressions are either calls to functions of imported files, such as `python(mylib.format($u_nplus1)`, or inline snippets of code supplied as strings, such as `python("count % 2 == 0")`. Any language available on your GraalVM installation can be provided by specifying the language id instead of `python` in the examples.
 
 
 ### Layouts
@@ -61,7 +61,7 @@ The following snippet declares a `BasicPythonLayout` which uses the `StringLayou
 
 ```
 layout BasicPythonLayout {
-	StringLayout.call({"t={0,number,0.000000} u={1}"}, {t_nplus1}, python(mylib.format({u_nplus1})))
+	StringLayout.call("t={0,number,0.000000} u={1}", $t_nplus1, python(mylib.format($u_nplus1)))
 }
 ```
 
@@ -69,13 +69,13 @@ The following snippet declares a `SummaryLayout` using exclusively MoniLog expre
 
 ```
 layout SummaryLayout {
-	StringLayout.call({"[t={0,number,0.000000}] u[0]={1,number,0.000000}; u[{2}]={3,number,0.000000} ; u[{4}]={5,number,0.000000}"},
-		{t_nplus1},
-		{u_nplus1[0]},
-		{sizeOf(u_nplus1) / 2},
-		{u_nplus1[sizeOf(u_nplus1) / 2]},
-		{sizeOf(u_nplus1) - 1},
-		{u_nplus1[sizeOf(u_nplus1) - 1]})
+	StringLayout.call("[t={0,number,0.000000}] u[0]={1,number,0.000000}; u[{2}]={3,number,0.000000} ; u[{4}]={5,number,0.000000}",
+		$t_nplus1,
+		$u_nplus1[0],
+		sizeOf($u_nplus1) / 2,
+		$u_nplus1[sizeOf($u_nplus1) / 2],
+		sizeOf($u_nplus1) - 1,
+		$u_nplus1[sizeOf($u_nplus1) - 1])
 }
 ```
 
@@ -101,7 +101,7 @@ In the following monilogger, a condition specifies that actions should only be t
 monilogger lowPressure [WARNING] {
 	event AfterComputePressure
 	conditions {
-		{p <= 0.1}
+		$p <= 0.1
 	}
 	...
 }
@@ -113,7 +113,7 @@ In the following monilogger, the condition specifies that the `isInvertible` fun
 monilogger invalidMatrix [WARNING] {
 	events BeforeUpdateU
 	conditions {
-		python(!mylib.isInvertible({alpha})
+		python(!mylib.isInvertible($alpha)
 	}
 	...
 }
@@ -160,7 +160,7 @@ The following monilogger prints the same array summaries as the example above, b
 monilogger "traceU" [INFO] {
 	event AfterComputeTn
 	actions {
-		FileAppender.call(SummaryLayout.call, {"/absolute/path/to/log.txt"}, {true})
+		FileAppender.call(SummaryLayout.call, "/absolute/path/to/log.txt", true)
 	}
 }
 ```
