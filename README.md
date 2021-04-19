@@ -5,11 +5,11 @@ Requires GraalVM 21.0.0.
 
 ## Setup
 
-To enable MoniLog on GraalVM, download the archive available [here](https://github.com/gemoc/monilog/releases/tag/v1.0.0), extract it in a folder of your choice, and run its graalvm-setup.sh script. The archive also contains an eclipse update site (packaged as a zip file) which you can use to install the MoniLog editor into your Eclipse IDE, providing auto-completion and syntax highlighting for the MoniLog language.
+To enable MoniLog on GraalVM, download the jar file available [here](https://github.com/gemoc/monilog/releases/tag/v2.0.0), and put it in the `tools/monilogger/` folder of your GraalVM installation. To enable the Xtext editor on your Eclipse IDE, download the `monilog-syntax.zip` file, available [here](https://github.com/gemoc/monilog/releases/tag/v2.0.0), and install it through the **Install New Software...** menu.
 
 ## Use
 
-Use the `--monilogger.files=` option when starting an execution from the command line, and supply the list of monilogger files (.mnlg) you want to include in the execution, as a comma-separated list.
+Use the `--monilogger.files=` option when starting an execution from the command line, and supply the list of MoniLog files (.mnlg) you want to include in the execution, as a comma-separated list.
 In addition, according to the language you are using (e.g. js/node), you might need to use the `--jvm` and `--polyglot` options or their equivalents to enable execution on the VM and polyglot access.
 
 Example command for node: `node --polyglot --jvm --monilogger.files=todolist.mnlg todolist.js`
@@ -51,7 +51,7 @@ This snippet declares three events, Initialized, BeforeCOmputeTn and AfterComput
 
 ### Expressions
 
-The other entities make use of expressions, which can be MoniLog expressions or language expressions. MoniLog expressions are written between curly braces, such as `{x * 2}`, `{sizeOf(u_nplus1)}`, or `{u_nplus1[0]}`. Language expressions are either calls to functions of imported files, such as `python(mylib.format({u_nplus1})`, or inline snippets of code supplied as strings, such as `python("count % 2 == 0")`. Any language available on your GraalVM installation can be provided by specifying the language id instead of `python` in the examples.
+The other entities make use of expressions, which can be MoniLog expressions or language expressions. In MoniLog expressions, references to variables of the context of the instrumented program are written with a `$` symbol in front, such as `$x * 2`, `sizeOf($u_nplus1)`, or `$u_nplus1[0]`. Language expressions are either calls to functions of imported files, such as `python(mylib.format($u_nplus1)`, or inline snippets of code supplied as strings, such as `python("count % 2 == 0")`. Any language available on your GraalVM installation can be provided by specifying the language id instead of `python` in the examples.
 
 
 ### Layouts
@@ -61,7 +61,7 @@ The following snippet declares a `BasicPythonLayout` which uses the `StringLayou
 
 ```
 layout BasicPythonLayout {
-	StringLayout.call({"t={0,number,0.000000} u={1}"}, {t_nplus1}, python(mylib.format({u_nplus1})))
+	StringLayout.call("t={0,number,0.000000} u={1}", $t_nplus1, python(mylib.format($u_nplus1)))
 }
 ```
 
@@ -69,13 +69,13 @@ The following snippet declares a `SummaryLayout` using exclusively MoniLog expre
 
 ```
 layout SummaryLayout {
-	StringLayout.call({"[t={0,number,0.000000}] u[0]={1,number,0.000000}; u[{2}]={3,number,0.000000} ; u[{4}]={5,number,0.000000}"},
-		{t_nplus1},
-		{u_nplus1[0]},
-		{sizeOf(u_nplus1) / 2},
-		{u_nplus1[sizeOf(u_nplus1) / 2]},
-		{sizeOf(u_nplus1) - 1},
-		{u_nplus1[sizeOf(u_nplus1) - 1]})
+	StringLayout.call("[t={0,number,0.000000}] u[0]={1,number,0.000000}; u[{2}]={3,number,0.000000} ; u[{4}]={5,number,0.000000}",
+		$t_nplus1,
+		$u_nplus1[0],
+		sizeOf($u_nplus1) / 2,
+		$u_nplus1[sizeOf($u_nplus1) / 2],
+		sizeOf($u_nplus1) - 1,
+		$u_nplus1[sizeOf($u_nplus1) - 1])
 }
 ```
 
@@ -101,7 +101,7 @@ In the following monilogger, a condition specifies that actions should only be t
 monilogger lowPressure [WARNING] {
 	event AfterComputePressure
 	conditions {
-		{p <= 0.1}
+		$p <= 0.1
 	}
 	...
 }
@@ -113,7 +113,7 @@ In the following monilogger, the condition specifies that the `isInvertible` fun
 monilogger invalidMatrix [WARNING] {
 	events BeforeUpdateU
 	conditions {
-		python(!mylib.isInvertible({alpha})
+		python(!mylib.isInvertible($alpha)
 	}
 	...
 }
@@ -160,7 +160,7 @@ The following monilogger prints the same array summaries as the example above, b
 monilogger "traceU" [INFO] {
 	event AfterComputeTn
 	actions {
-		FileAppender.call(SummaryLayout.call, {"/absolute/path/to/log.txt"}, {true})
+		FileAppender.call(SummaryLayout.call, "/absolute/path/to/log.txt", true)
 	}
 }
 ```
