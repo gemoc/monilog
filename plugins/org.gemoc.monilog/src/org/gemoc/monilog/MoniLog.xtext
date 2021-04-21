@@ -66,12 +66,11 @@ Event:
 	({ASTEvent}
 	'call' name=ID ('(' parameterDecl=ParameterDeclNoVarArgs ')')? '{'
 		kind=ASTEventKind element=CallableElementReference
-	'}');
-//	'}') |
-//	({ComplexEvent} 'complex' name=ID ('[' kind=TemporalPatternKind ']')? ('(' parameterDecl=ParameterDeclNoVarArgs ')')? '{'
-//		pattern=TemporalPattern
-//	'}') |
-//	({UserEvent} 'custom' name=ID ('(' parameterDecl=ParameterDeclNoVarArgs ')')?);
+	'}') |
+	({ComplexEvent} 'complex' name=ID ('(' parameterDecl=ParameterDeclNoVarArgs ')')? '{'
+		pattern=Alternation
+	'}') |
+	({UserEvent} 'custom' name=ID ('(' parameterDecl=ParameterDeclNoVarArgs ')')?);
 
 CallableElementReference:
 //	{CallableElementObjectReference} '$' target=[ecore::EObject|ID] |
@@ -82,9 +81,6 @@ ASTEventKind:
 
 Condition:
 	expression=LanguageValue;
-
-TemporalPattern:
-	pattern=Pattern scope=Scope;
 
 Pattern:
 	{Existence} 'exists'? bound=BoundType? event=StreamEvent |
@@ -113,7 +109,8 @@ Scope:
 
 Action:
 	LanguageValue | AppenderCall
-//	| EmitEvent | SetVariable | MoniloggerCall
+	| EmitEvent | MoniloggerCall
+//	| SetVariable 
 ;
 
 AppenderCall:
@@ -122,8 +119,8 @@ AppenderCall:
 LayoutCall:
 	layout=[Layout|QualifiedName] '.' 'call' ( '(' args+=Expression (',' args+=Expression)* ')' )?;
 
-//EmitEvent:
-//	event=[UserEvent|ID] '.' 'emit' ('(' args+=Expression (',' args+=Expression)* ')' )?;
+EmitEvent:
+	event=[UserEvent|ID] '.' 'emit' ('(' args+=Expression (',' args+=Expression)* ')' )?;
 
 //SetVariable:
 //	'set' '(' variable=STRING ',' value=LanguageValue ')';
@@ -131,9 +128,6 @@ LayoutCall:
 MoniloggerCall:
 	{StartMoniLogger} monilogger=[MoniLogger|ID] '.' 'start' ( '(' args+=Expression (',' args+=Expression)* ')' )? |
 	{StopMoniLogger} monilogger=[MoniLogger|ID] '.' 'stop';
-
-StreamEvent:
-	event=[Event|ID] ('(' values+=EmptyOrPropertyValue (',' values+=EmptyOrPropertyValue)* ')' )?;
 
 EmptyOrPropertyValue:
 	{Empty} | PropertyValue;
@@ -158,6 +152,24 @@ LanguageExpression:
 
 LanguageCall:
 	file=[FileAlias|ID] '.' fqn=QualifiedName ('(' args+=Expression (',' args+=Expression)* ')' )?;
+
+//====================================== COMPLEX EVENTS ======================================//
+
+Alternation returns ComplexEventPattern:
+	Concatenation ({Alternation.left=current} '|' right=Concatenation)*;
+
+Concatenation returns ComplexEventPattern:
+	Quantifier ({Concatenation.left=current} right=Quantifier)*;
+
+Quantifier returns ComplexEventPattern:
+	Grouping ({ZeroOrMore.pattern=current} '*' (reluctant?='?')? | {OneOrMore.pattern=current} '+' (reluctant?='?')? |
+		{ZeroOrOne.pattern=current} '?' (reluctant?='?')? | {BetweenNAndM.pattern=current} '{' ( ',' max=INT | min=INT ',' max=INT | min=INT ',' ) '}' )?;
+
+Grouping returns ComplexEventPattern:
+	{Grouping} '(' pattern=Alternation ')' | StreamEvent;
+
+StreamEvent:
+	event=[Event|ID] ('[' values+=EmptyOrPropertyValue (',' values+=EmptyOrPropertyValue)* ']' )?;
 
 //==================================== SIMPLE EXPRESSIONS ====================================//
 
