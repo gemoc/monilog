@@ -20,7 +20,6 @@ Appender:
 	LocalAppender | ExternalAppender;
 
 LocalAppender:
-//	annotations+=AppenderAnnotation*
 	'appender' name=ID ('(' parameterDecl=ParameterDeclVarArgs ')')? '{'
 		calls+=AppenderCall (';' calls+=AppenderCall)* ';'?
 	'}';
@@ -42,16 +41,14 @@ ExternalLayout:
 	'layout' name=ID ('(' parameterDecl=ParameterDeclVarArgs ')')?;
 
 ParameterDeclVarArgs returns ParameterDecl:
-	{ParameterDecl}
-	(parameters+=Parameter (',' parameters+=Parameter)* (',' varArgs=Parameter '...')?)?;
+	{ParameterDecl} (parameters+=Parameter (',' parameters+=Parameter)* (',' varArgs=Parameter '...')?)?;
 
 ParameterDeclNoVarArgs returns ParameterDecl:
-	{ParameterDecl}
-	(parameters+=Parameter (',' parameters+=Parameter)*)?;
+	{ParameterDecl} (parameters+=Parameter (',' parameters+=Parameter)*)?;
 
 @Exported
 MoniLogger:
-//	annotations+=MoniLoggerAnnotation*
+	annotations+=MoniLoggerAnnotation*
 	'monilogger' name=ID ('(' parameterDecl=ParameterDeclVarArgs ')')? ('[' level=LogLevel ']')? '{'
 		'event' streamEvent=StreamEvent
 		('conditions' '{' (conditions+=Condition) (';' conditions+=Condition)* ';'? '}')?
@@ -67,45 +64,19 @@ Event:
 	'call' name=ID ('(' parameterDecl=ParameterDeclNoVarArgs ')')? '{'
 		kind=ASTEventKind element=CallableElementReference
 	'}') |
-	({ComplexEvent} 'complex' name=ID ('(' parameterDecl=ParameterDeclNoVarArgs ')')? '{'
+	({ComplexEvent} 'complex' name=ID ('(' (properties+=PropertyReference (',' properties+=PropertyReference)*)? ')')? '{'
 		pattern=Alternation
 	'}') |
 	({UserEvent} 'custom' name=ID ('(' parameterDecl=ParameterDeclNoVarArgs ')')?);
 
 CallableElementReference:
-//	{CallableElementObjectReference} '$' target=[ecore::EObject|ID] |
 	{CallableElementNamedReference} target=ID;
 
 ASTEventKind:
 	{BeforeASTEvent} 'before'| {AfterASTEvent} 'after';
 
 Condition:
-	expression=LanguageValue;
-
-Pattern:
-	{Existence} 'exists'? bound=BoundType? event=StreamEvent |
-	{Universality} 'always' event=StreamEvent |
-	{Absence} 'never' event=StreamEvent |
-	{Precedence} predecessor=StreamEvent 'precedes' successor=StreamEvent |
-	{Response} event=StreamEvent 'respondsTo' trigger=StreamEvent;
-
-BoundType:
-	ExactBound | LowerBound | UpperBound;
-
-ExactBound:
-	n=INT;
-
-LowerBound:
-	'atleast' n=INT;
-
-UpperBound:
-	'atmost' n=INT;
-
-Scope:
-	{Globally} ('globally')? |
-	{After} 'after' lowerBound=StreamEvent | {Before} 'before' upperBound=StreamEvent |
-	{Between} 'between' lowerBound=StreamEvent 'and' upperBound=StreamEvent |
-	{AfterUntil} 'after' lowerBound=StreamEvent 'until' upperBound=StreamEvent;
+	expression=Expression;
 
 Action:
 	LanguageValue | AppenderCall
@@ -114,35 +85,20 @@ Action:
 ;
 
 AppenderCall:
-	appender=[Appender|QualifiedName] '.' 'call' ( '(' args+=Expression (',' args+=Expression)* ')' )?;
+	appender=[Appender|QualifiedName] '.' 'call' ( '(' (args+=Expression (',' args+=Expression)*)? ')' )?;
 
 LayoutCall:
 	layout=[Layout|QualifiedName] '.' 'call' ( '(' args+=Expression (',' args+=Expression)* ')' )?;
 
 EmitEvent:
-	event=[UserEvent|ID] '.' 'emit' ('(' args+=Expression (',' args+=Expression)* ')' )?;
+	event=[UserEvent|ID] '.' 'emit' ('(' (args+=Expression (',' args+=Expression)*)? ')' )?;
 
 //SetVariable:
 //	'set' '(' variable=STRING ',' value=LanguageValue ')';
 
 MoniloggerCall:
-	{StartMoniLogger} monilogger=[MoniLogger|ID] '.' 'start' ( '(' args+=Expression (',' args+=Expression)* ')' )? |
-	{StopMoniLogger} monilogger=[MoniLogger|ID] '.' 'stop';
-
-EmptyOrPropertyValue:
-	{Empty} | PropertyValue;
-
-PropertyValue:
-	id=ID ('=' value=Expression)? | value=LanguageValue;
-
-Expression:
-	ParameterReference | MoniLogExpression | LanguageValue | LayoutCall;
-
-ParameterReference:
-	parameter=[Parameter|ID];
-
-MoniLogExpression:
-	expression=SimpleExpression;
+	{StartMoniLogger} monilogger=[MoniLogger|ID] '.' 'start' ( '(' (args+=Expression (',' args+=Expression)*)? ')' )? |
+	{StopMoniLogger} monilogger=[MoniLogger|ID] '.' 'stop' ('(' ')')?;
 
 LanguageValue:
 	languageId=ID '(' value=(LanguageExpression | LanguageCall) ')';
@@ -151,7 +107,7 @@ LanguageExpression:
 	expression=STRING;
 
 LanguageCall:
-	file=[FileAlias|ID] '.' fqn=QualifiedName ('(' args+=Expression (',' args+=Expression)* ')' )?;
+	file=[FileAlias|ID] '.' fqn=QualifiedName ('(' (args+=Expression (',' args+=Expression)*)? ')' )?;
 
 //====================================== COMPLEX EVENTS ======================================//
 
@@ -169,11 +125,21 @@ Grouping returns ComplexEventPattern:
 	{Grouping} '(' pattern=Alternation ')' | StreamEvent;
 
 StreamEvent:
-	event=[Event|ID] ('[' values+=EmptyOrPropertyValue (',' values+=EmptyOrPropertyValue)* ']' )?;
+	event=[Event|ID] ('[' propertyConstraints+=PropertyConstraint (',' propertyConstraints+=PropertyConstraint)* ']')?;
+
+PropertyConstraint:
+	{Empty} | {PropertyDefinition} property=Property ('=' '$' value=PropertyReference)? | {PropertyValue} '$' value=PropertyReference;
+//	{Empty} | {PropertyDefinition} property=Property ('=' value=Expression)? | {PropertyValue} value=Expression;
+
+Property:
+	name=ID;
+
+PropertyReference:
+	property=[Property|ID];
 
 //==================================== SIMPLE EXPRESSIONS ====================================//
 
-SimpleExpression:
+Expression:
 	ContractedIf;
 
 ContractedIf returns SimpleExpression:
@@ -201,19 +167,20 @@ Modulo returns SimpleExpression:
 	Primary ({Modulo.left=current} op='%' right=Primary)*;
 
 Primary returns SimpleExpression:
-	{Parenthesis} '(' expression=SimpleExpression ')' | {UnaryMinus} '-' expression=Primary | {Not} '!' expression=Primary |
+	{Parenthesis} '(' expression=Expression ')' | {UnaryMinus} '-' expression=Primary | {Not} '!' expression=Primary |
 	Atomic;
 
 Atomic returns SimpleExpression:
 	{IntConstant} value=INT | {RealConstant} value=REAL | {BoolConstant} (value?='true' | 'false') | {StringConstant} value=STRING |
-	{VectorConstant} '[' values+=SimpleExpression (',' values+=SimpleExpression)* ']' | Ref | ArraySize;
+	{VectorConstant} '[' values+=Expression (',' values+=Expression)* ']' | Ref | ArraySize | LanguageValue | LayoutCall;
 
 Ref:
-	'$' SimpleVarRef ({ArrayRef.array=current} '[' indices+=SimpleExpression (',' indices+=SimpleExpression)* ']' |
+	'$' VarRef ({ArrayRef.array=current} '[' indices+=Expression (',' indices+=Expression)* ']' |
 	{PropertyRef.object=current} '.' property=ID)*;
 
-SimpleVarRef:
-	{SimpleVarNameReference} target=ID;
+VarRef:
+	{SpecVarNameReference} target=[ecore::EObject|ID] |
+	{ContextVarReference} 'context' '(' target=ID ')';
 
 ArraySize:
 	'sizeOf' '(' array=Ref ')';
@@ -221,18 +188,12 @@ ArraySize:
 terminal REAL:
 	INT '.' INT;
 
-//enum MoniLoggerAnnotation:
-//	inactive='@Inactive';
-
-//enum AppenderAnnotation:
-//	async='@Async';
+enum MoniLoggerAnnotation:
+	inactive='@Inactive';
 
 enum LogLevel:
 	info='INFO' | config='CONFIG' | fine='FINE' | finer='FINER' |
 	finest='FINEST' | severe='SEVERE' | warning='WARNING';
-
-enum TemporalPatternKind:
-	s='S'|v='V'|nS='nS'|nV='nV';
 
 QualifiedName: ID ('.' ID)*;
 QualifiedNameWithWildcard: QualifiedName '.*'?;

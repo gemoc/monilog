@@ -1,5 +1,6 @@
-package org.gemoc.monilogger.nodes;
+package org.gemoc.monilogger.nodes.expression;
 
+import org.gemoc.monilogger.nodes.MoniLoggerExecutableNode;
 import org.graalvm.polyglot.Context;
 import org.graalvm.polyglot.Source;
 import org.graalvm.polyglot.Value;
@@ -8,7 +9,7 @@ import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.ExplodeLoop;
 
-public class MoniLoggerCallSourceNode extends MoniLoggerExecutableNode {
+public class MoniLoggerCallSourceNode extends SimpleExpressionNode {
 
 	private final Context context;
 	private final Source source;

@@ -6,6 +6,9 @@
     copyrightFields="false" runtimeVersion="2.20">
   <genPackages prefix="MoniLog" basePackage="org.gemoc.monilog" disposableProviderFactory="true"
       fileExtensions="mnlg" ecorePackage="MoniLog.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="MoniLog.ecore#//MoniLoggerAnnotation">
+      <genEnumLiterals ecoreEnumLiteral="MoniLog.ecore#//MoniLoggerAnnotation/inactive"/>
+    </genEnums>
     <genEnums typeSafeEnumCompatible="false" ecoreEnum="MoniLog.ecore#//LogLevel">
       <genEnumLiterals ecoreEnumLiteral="MoniLog.ecore#//LogLevel/info"/>
       <genEnumLiterals ecoreEnumLiteral="MoniLog.ecore#//LogLevel/config"/>
@@ -14,12 +17,6 @@
       <genEnumLiterals ecoreEnumLiteral="MoniLog.ecore#//LogLevel/finest"/>
       <genEnumLiterals ecoreEnumLiteral="MoniLog.ecore#//LogLevel/severe"/>
       <genEnumLiterals ecoreEnumLiteral="MoniLog.ecore#//LogLevel/warning"/>
-    </genEnums>
-    <genEnums typeSafeEnumCompatible="false" ecoreEnum="MoniLog.ecore#//TemporalPatternKind">
-      <genEnumLiterals ecoreEnumLiteral="MoniLog.ecore#//TemporalPatternKind/s"/>
-      <genEnumLiterals ecoreEnumLiteral="MoniLog.ecore#//TemporalPatternKind/v"/>
-      <genEnumLiterals ecoreEnumLiteral="MoniLog.ecore#//TemporalPatternKind/nS"/>
-      <genEnumLiterals ecoreEnumLiteral="MoniLog.ecore#//TemporalPatternKind/nV"/>
     </genEnums>
     <genClasses ecoreClass="MoniLog.ecore#//Document">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog.ecore#//Document/name"/>
@@ -58,6 +55,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//ParameterDecl/varArgs"/>
     </genClasses>
     <genClasses ecoreClass="MoniLog.ecore#//MoniLogger">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog.ecore#//MoniLogger/annotations"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog.ecore#//MoniLogger/name"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//MoniLogger/parameterDecl"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog.ecore#//MoniLogger/level"/>
@@ -70,21 +68,12 @@
     </genClasses>
     <genClasses ecoreClass="MoniLog.ecore#//Event">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog.ecore#//Event/name"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//Event/parameterDecl"/>
     </genClasses>
     <genClasses ecoreClass="MoniLog.ecore#//CallableElementReference"/>
     <genClasses ecoreClass="MoniLog.ecore#//ASTEventKind"/>
     <genClasses ecoreClass="MoniLog.ecore#//Condition">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//Condition/expression"/>
     </genClasses>
-    <genClasses ecoreClass="MoniLog.ecore#//Pattern"/>
-    <genClasses ecoreClass="MoniLog.ecore#//BoundType">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog.ecore#//BoundType/n"/>
-    </genClasses>
-    <genClasses ecoreClass="MoniLog.ecore#//ExactBound"/>
-    <genClasses ecoreClass="MoniLog.ecore#//LowerBound"/>
-    <genClasses ecoreClass="MoniLog.ecore#//UpperBound"/>
-    <genClasses ecoreClass="MoniLog.ecore#//Scope"/>
     <genClasses ecoreClass="MoniLog.ecore#//Action"/>
     <genClasses ecoreClass="MoniLog.ecore#//AppenderCall">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference MoniLog.ecore#//AppenderCall/appender"/>
@@ -101,18 +90,6 @@
     <genClasses ecoreClass="MoniLog.ecore#//MoniloggerCall">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference MoniLog.ecore#//MoniloggerCall/monilogger"/>
     </genClasses>
-    <genClasses ecoreClass="MoniLog.ecore#//EmptyOrPropertyValue"/>
-    <genClasses ecoreClass="MoniLog.ecore#//PropertyValue">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog.ecore#//PropertyValue/id"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//PropertyValue/value"/>
-    </genClasses>
-    <genClasses ecoreClass="MoniLog.ecore#//Expression"/>
-    <genClasses ecoreClass="MoniLog.ecore#//ParameterReference">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference MoniLog.ecore#//ParameterReference/parameter"/>
-    </genClasses>
-    <genClasses ecoreClass="MoniLog.ecore#//MoniLogExpression">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//MoniLogExpression/expression"/>
-    </genClasses>
     <genClasses ecoreClass="MoniLog.ecore#//LanguageValue">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog.ecore#//LanguageValue/languageId"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//LanguageValue/value"/>
@@ -128,65 +105,43 @@
     <genClasses ecoreClass="MoniLog.ecore#//ComplexEventPattern"/>
     <genClasses ecoreClass="MoniLog.ecore#//StreamEvent">
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference MoniLog.ecore#//StreamEvent/event"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//StreamEvent/values"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//StreamEvent/propertyConstraints"/>
     </genClasses>
+    <genClasses ecoreClass="MoniLog.ecore#//PropertyConstraint"/>
+    <genClasses ecoreClass="MoniLog.ecore#//Property">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog.ecore#//Property/name"/>
+    </genClasses>
+    <genClasses ecoreClass="MoniLog.ecore#//PropertyReference">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference MoniLog.ecore#//PropertyReference/property"/>
+    </genClasses>
+    <genClasses ecoreClass="MoniLog.ecore#//Expression"/>
     <genClasses ecoreClass="MoniLog.ecore#//SimpleExpression"/>
     <genClasses ecoreClass="MoniLog.ecore#//Ref"/>
-    <genClasses ecoreClass="MoniLog.ecore#//SimpleVarRef"/>
+    <genClasses ecoreClass="MoniLog.ecore#//VarRef"/>
     <genClasses ecoreClass="MoniLog.ecore#//ArraySize">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//ArraySize/array"/>
     </genClasses>
     <genClasses ecoreClass="MoniLog.ecore#//ASTEvent">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//ASTEvent/parameterDecl"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//ASTEvent/kind"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//ASTEvent/element"/>
     </genClasses>
     <genClasses ecoreClass="MoniLog.ecore#//ComplexEvent">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//ComplexEvent/properties"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//ComplexEvent/pattern"/>
     </genClasses>
-    <genClasses ecoreClass="MoniLog.ecore#//UserEvent"/>
+    <genClasses ecoreClass="MoniLog.ecore#//UserEvent">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//UserEvent/parameterDecl"/>
+    </genClasses>
     <genClasses ecoreClass="MoniLog.ecore#//CallableElementNamedReference">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog.ecore#//CallableElementNamedReference/target"/>
     </genClasses>
     <genClasses ecoreClass="MoniLog.ecore#//BeforeASTEvent"/>
     <genClasses ecoreClass="MoniLog.ecore#//AfterASTEvent"/>
-    <genClasses ecoreClass="MoniLog.ecore#//Existence">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//Existence/bound"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//Existence/event"/>
-    </genClasses>
-    <genClasses ecoreClass="MoniLog.ecore#//Universality">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//Universality/event"/>
-    </genClasses>
-    <genClasses ecoreClass="MoniLog.ecore#//Absence">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//Absence/event"/>
-    </genClasses>
-    <genClasses ecoreClass="MoniLog.ecore#//Precedence">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//Precedence/predecessor"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//Precedence/successor"/>
-    </genClasses>
-    <genClasses ecoreClass="MoniLog.ecore#//Response">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//Response/event"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//Response/trigger"/>
-    </genClasses>
-    <genClasses ecoreClass="MoniLog.ecore#//Globally"/>
-    <genClasses ecoreClass="MoniLog.ecore#//After">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//After/lowerBound"/>
-    </genClasses>
-    <genClasses ecoreClass="MoniLog.ecore#//Before">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//Before/upperBound"/>
-    </genClasses>
-    <genClasses ecoreClass="MoniLog.ecore#//Between">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//Between/lowerBound"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//Between/upperBound"/>
-    </genClasses>
-    <genClasses ecoreClass="MoniLog.ecore#//AfterUntil">
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//AfterUntil/lowerBound"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//AfterUntil/upperBound"/>
-    </genClasses>
     <genClasses ecoreClass="MoniLog.ecore#//StartMoniLogger">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//StartMoniLogger/args"/>
     </genClasses>
     <genClasses ecoreClass="MoniLog.ecore#//StopMoniLogger"/>
-    <genClasses ecoreClass="MoniLog.ecore#//Empty"/>
     <genClasses ecoreClass="MoniLog.ecore#//Alternation">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//Alternation/left"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//Alternation/right"/>
@@ -214,6 +169,14 @@
     </genClasses>
     <genClasses ecoreClass="MoniLog.ecore#//Grouping">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//Grouping/pattern"/>
+    </genClasses>
+    <genClasses ecoreClass="MoniLog.ecore#//Empty"/>
+    <genClasses ecoreClass="MoniLog.ecore#//PropertyDefinition">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//PropertyDefinition/property"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//PropertyDefinition/value"/>
+    </genClasses>
+    <genClasses ecoreClass="MoniLog.ecore#//PropertyValue">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//PropertyValue/value"/>
     </genClasses>
     <genClasses ecoreClass="MoniLog.ecore#//ContractedIf">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//ContractedIf/condition"/>
@@ -297,8 +260,11 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//PropertyRef/object"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog.ecore#//PropertyRef/property"/>
     </genClasses>
-    <genClasses ecoreClass="MoniLog.ecore#//SimpleVarNameReference">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog.ecore#//SimpleVarNameReference/target"/>
+    <genClasses ecoreClass="MoniLog.ecore#//SpecVarNameReference">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference MoniLog.ecore#//SpecVarNameReference/target"/>
+    </genClasses>
+    <genClasses ecoreClass="MoniLog.ecore#//ContextVarReference">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog.ecore#//ContextVarReference/target"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

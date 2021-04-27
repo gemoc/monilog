@@ -1,4 +1,4 @@
-package org.gemoc.monilogger.nodes.action;
+package org.gemoc.monilogger.nodes.expression;
 
 import org.gemoc.monilogger.nodes.MoniLoggerExecutableNode;
 import org.graalvm.polyglot.Value;
@@ -7,7 +7,7 @@ import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.ExplodeLoop;
 
-public class MoniLoggerExternalLayoutNode extends MoniLoggerExecutableNode {
+public class MoniLoggerExternalLayoutNode extends SimpleExpressionNode {
 	
 	private final Value layoutValue;
 

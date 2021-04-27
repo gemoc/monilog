@@ -1,21 +1,37 @@
 package org.gemoc.monilogger.nodes.expression.parser;
 
+import java.io.File;
+import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.eclipse.emf.ecore.EObject;
 import org.gemoc.monilog.moniLog.And;
 import org.gemoc.monilog.moniLog.ArrayRef;
 import org.gemoc.monilog.moniLog.ArraySize;
 import org.gemoc.monilog.moniLog.BoolConstant;
 import org.gemoc.monilog.moniLog.Comparison;
+import org.gemoc.monilog.moniLog.ContextVarReference;
 import org.gemoc.monilog.moniLog.ContractedIf;
 import org.gemoc.monilog.moniLog.Div;
+import org.gemoc.monilog.moniLog.Document;
 import org.gemoc.monilog.moniLog.Equality;
+import org.gemoc.monilog.moniLog.Expression;
+import org.gemoc.monilog.moniLog.ExternalLayout;
 import org.gemoc.monilog.moniLog.IntConstant;
+import org.gemoc.monilog.moniLog.LanguageCall;
+import org.gemoc.monilog.moniLog.LanguageExpression;
+import org.gemoc.monilog.moniLog.LanguageValue;
+import org.gemoc.monilog.moniLog.Layout;
+import org.gemoc.monilog.moniLog.LayoutCall;
+import org.gemoc.monilog.moniLog.LocalLayout;
 import org.gemoc.monilog.moniLog.Minus;
 import org.gemoc.monilog.moniLog.Modulo;
-import org.gemoc.monilog.moniLog.MoniLogExpression;
 import org.gemoc.monilog.moniLog.MoniLogPackage;
 import org.gemoc.monilog.moniLog.Mul;
 import org.gemoc.monilog.moniLog.Not;
@@ -24,13 +40,12 @@ import org.gemoc.monilog.moniLog.Parenthesis;
 import org.gemoc.monilog.moniLog.Plus;
 import org.gemoc.monilog.moniLog.PropertyRef;
 import org.gemoc.monilog.moniLog.RealConstant;
-import org.gemoc.monilog.moniLog.SimpleExpression;
-import org.gemoc.monilog.moniLog.SimpleVarNameReference;
-import org.gemoc.monilog.moniLog.SimpleVarRef;
+import org.gemoc.monilog.moniLog.SpecVarNameReference;
 import org.gemoc.monilog.moniLog.StringConstant;
 import org.gemoc.monilog.moniLog.UnaryMinus;
 import org.gemoc.monilog.moniLog.VectorConstant;
-import org.gemoc.monilogger.nodes.MoniLoggerExecutableNode;
+import org.gemoc.monilogger.nodes.expression.MoniLoggerCallSourceNode;
+import org.gemoc.monilogger.nodes.expression.MoniLoggerExternalLayoutNode;
 import org.gemoc.monilogger.nodes.expression.SimpleExpressionAddNodeGen;
 import org.gemoc.monilogger.nodes.expression.SimpleExpressionAndNodeGen;
 import org.gemoc.monilogger.nodes.expression.SimpleExpressionArraySizeNodeGen;
@@ -58,18 +73,20 @@ import org.gemoc.monilogger.nodes.expression.SimpleExpressionStringLiteralNode;
 import org.gemoc.monilogger.nodes.expression.SimpleExpressionSubNodeGen;
 import org.gemoc.monilogger.nodes.expression.SimpleExpressionUnboxValueNodeGen;
 import org.gemoc.monilogger.nodes.expression.SimpleExpressionVectorNode;
+import org.graalvm.polyglot.Context;
+import org.graalvm.polyglot.Source;
+import org.graalvm.polyglot.Value;
 
 import com.oracle.truffle.api.nodes.Node;
 
 public class SimpleExpressionParser {
 	
 	private static final SimpleExpressionNode[] EMPTY_ARRAY = new SimpleExpressionNode[0];
+	
+	private Map<String, Source> expressionToSource = new HashMap<>();
+	private Map<String, Source> evaluatedSources = new HashMap<>();
 
-	public MoniLoggerExecutableNode createExpression(MoniLogExpression expression, Node node, boolean onEnter) {
-		return createExpressionNode(expression.getExpression(), node, onEnter);
-	}
-
-	private SimpleExpressionNode createExpressionNode(SimpleExpression expression, Node node, boolean onEnter) {
+	public SimpleExpressionNode createExpressionNode(Expression expression, Node node, boolean onEnter) {
 		final SimpleExpressionNode expressionNode;
 		switch (expression.eClass().getClassifierID()) {
 		case MoniLogPackage.INT_CONSTANT:
@@ -87,8 +104,11 @@ public class SimpleExpressionParser {
 		case MoniLogPackage.VECTOR_CONSTANT:
 			expressionNode = createSimpleExpressionVectorNode((VectorConstant) expression, node, onEnter);
 			break;
-		case MoniLogPackage.SIMPLE_VAR_NAME_REFERENCE:
-			expressionNode = createReadVariableNode((SimpleVarNameReference) expression, node, onEnter);
+		case MoniLogPackage.SPEC_VAR_NAME_REFERENCE:
+			expressionNode = createReadVariableNode((SpecVarNameReference) expression, node, onEnter);
+			break;
+		case MoniLogPackage.CONTEXT_VAR_REFERENCE:
+			expressionNode = createReadVariableNode((ContextVarReference) expression, node, onEnter);
 			break;
 		case MoniLogPackage.ARRAY_REF:
 			expressionNode = createReadArrayNode((ArrayRef) expression, node, onEnter);
@@ -138,6 +158,16 @@ public class SimpleExpressionParser {
 		case MoniLogPackage.ARRAY_SIZE:
 			expressionNode = createArraySizeNode((ArraySize) expression, node, onEnter);
 			break;
+		case MoniLogPackage.LANGUAGE_VALUE: {
+			final LanguageValue languageValue = (LanguageValue) expression;
+			expressionNode = createLanguageValue(languageValue.getLanguageId(), languageValue, node, onEnter);
+			break;
+		}
+		case MoniLogPackage.LAYOUT_CALL:
+			final LayoutCall layoutCall = (LayoutCall) expression;
+			expressionNode = createLayoutExecutableNode(layoutCall, node, onEnter, /* TODO */ new HashMap<>());
+			break;
+		
 		default:
 			throw new UnsupportedOperationException();
 		}
@@ -165,14 +195,18 @@ public class SimpleExpressionParser {
 		return new SimpleExpressionVectorNode(valueNodes);
 	}
 
-	private SimpleExpressionNode createReadVariableNode(SimpleVarNameReference varRef, Node node, boolean onEnter) {
+	private SimpleExpressionNode createReadVariableNode(ContextVarReference varRef, Node node, boolean onEnter) {
 		return SimpleExpressionReadLocalVariableNodeGen.create(varRef.getTarget(), node, onEnter);
+	}
+
+	private SimpleExpressionNode createReadVariableNode(SpecVarNameReference varRef, Node node, boolean onEnter) {
+		throw new UnsupportedOperationException("Not yet implemented");
 	}
 
 	private SimpleExpressionNode createReadArrayNode(ArrayRef arrayRef, Node node, boolean onEnter) {
 		SimpleExpressionNode array = createExpressionNode(arrayRef.getArray(), node, onEnter);
-		final List<SimpleExpression> indices = arrayRef.getIndices();
-		final Iterator<SimpleExpression> indicesIterator = indices.iterator();
+		final List<Expression> indices = arrayRef.getIndices();
+		final Iterator<Expression> indicesIterator = indices.iterator();
 		while (indicesIterator.hasNext()) {
 			array = SimpleExpressionReadArrayNodeGen.create(array, createExpressionNode(indicesIterator.next(), node, onEnter));
 		}
@@ -280,4 +314,106 @@ public class SimpleExpressionParser {
 		return SimpleExpressionArraySizeNodeGen.create(expr);
 	}
 	
+	private SimpleExpressionNode createLanguageValue(String languageId, LanguageValue languageValue, Node node,
+			boolean onEnter) {
+		final EObject value = languageValue.getValue();
+		switch (value.eClass().getClassifierID()) {
+		case MoniLogPackage.LANGUAGE_EXPRESSION: {
+			final LanguageExpression expression = (LanguageExpression) value;
+			final String expressionString = expression.getExpression();
+			final SimpleExpressionNode callNode = new MoniLoggerCallSourceNode(Context.getCurrent(),
+					expressionToSource.computeIfAbsent(expressionString,
+							s -> Source.newBuilder(languageId, s, null).buildLiteral()));
+			return callNode;
+		}
+		case MoniLogPackage.LANGUAGE_CALL: {
+			final LanguageCall call = (LanguageCall) value;
+			final String filePath = call.getFile().getFilePath();
+			final Source source = evaluatedSources.computeIfAbsent(filePath, p -> {
+				Source src;
+				try {
+					src = Source.newBuilder(languageId, new File(filePath)).build();
+					Context.getCurrent().eval(src);
+					return src;
+				} catch (IOException e) {
+					e.printStackTrace();
+					return null;
+				}
+			});
+			final Value ast = Context.getCurrent().getBindings(languageId).getMember(call.getFqn());
+			final SimpleExpressionNode[] args = call.getArgs().stream()
+					.map(e -> createExpressionNode(e, node, onEnter)).collect(Collectors.toList())
+					.toArray(EMPTY_ARRAY);
+			final SimpleExpressionNode callNode = new MoniLoggerCallSourceNode(Context.getCurrent(), source, ast,
+					args);
+			return callNode;
+		}
+		default:
+			throw new UnsupportedOperationException();
+		}
+	}
+	
+	private List<Expression> computeLayoutCallActualArgs(LayoutCall childCall, LayoutCall parentCall,
+			Map<LayoutCall, List<Expression>> layoutCallToActualArgs) {
+		return childCall.getArgs().stream().map(a -> {
+//			FIXME
+//			if (a instanceof ParameterReference) {
+//				final Parameter param = ((ParameterReference) a).getParameter();
+//				final int paramIdx = parentCall.getLayout().getParameterDecl().getParameters().indexOf(param);
+//				if (paramIdx > -1) {
+//					return layoutCallToActualArgs.get(parentCall).get(paramIdx);
+//				} else {
+//					throw new IllegalArgumentException("Referenced parameter " + param.getName()
+//							+ " not found in calling layout definition " + parentCall.getLayout().getName() + ".");
+//				}
+//			}
+			return a;
+		}).collect(Collectors.toList());
+	}
+	
+	private SimpleExpressionNode createLayoutExecutableNode(LayoutCall layoutCall, Node node, boolean onEnter,
+			Map<LayoutCall, List<Expression>> layoutCallToActualArgs) {
+		if (layoutCall.getArgs().stream().allMatch(a -> a instanceof LanguageValue)) {
+			layoutCallToActualArgs.putIfAbsent(layoutCall,
+					layoutCall.getArgs().stream().map(a -> (LanguageValue) a).collect(Collectors.toList()));
+		}
+		final Layout layout = layoutCall.getLayout();
+		switch (layout.eClass().getClassifierID()) {
+		case MoniLogPackage.LOCAL_LAYOUT: {
+			final LocalLayout localLayout = (LocalLayout) layout;
+			final LayoutCall childCall = localLayout.getCall();
+			layoutCallToActualArgs.computeIfAbsent(childCall,
+					l -> computeLayoutCallActualArgs(l, layoutCall, layoutCallToActualArgs));
+			return createLayoutExecutableNode(childCall, node, onEnter, layoutCallToActualArgs);
+		}
+		case MoniLogPackage.EXTERNAL_LAYOUT: {
+			final ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
+			final ExternalLayout externalLayout = (ExternalLayout) layout;
+			final String className = ((Document) externalLayout.eContainer()).getName() + "."
+					+ externalLayout.getName();
+			try {
+				final Class<?> layoutClass = contextClassLoader.loadClass(className);
+				final Constructor<?> constructor = layoutClass.getConstructor();
+				final Value layoutValue = Value.asValue(constructor.newInstance());
+				final SimpleExpressionNode[] valueNodes = layoutCallToActualArgs.get(layoutCall).stream()
+						.map(arg -> createExpressionNode(arg, node, onEnter)).collect(Collectors.toList())
+						.toArray(EMPTY_ARRAY);
+				return new MoniLoggerExternalLayoutNode(layoutValue, valueNodes);
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			} catch (NoSuchMethodException | SecurityException e) {
+				e.printStackTrace();
+			} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
+					| InvocationTargetException e) {
+				e.printStackTrace();
+			}
+		}
+		default:
+			throw new UnsupportedOperationException();
+		}
+	}
+	
+	public void clean() {
+		evaluatedSources.clear();
+	}
 }
