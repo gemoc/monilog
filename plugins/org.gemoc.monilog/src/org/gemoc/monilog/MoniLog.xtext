@@ -77,6 +77,7 @@ ASTEventKind:
 
 Condition:
 	expression=Expression;
+//	expression=(LanguageValue | MoniLogExpression);
 
 Action:
 	LanguageValue | AppenderCall
@@ -122,7 +123,7 @@ Quantifier returns ComplexEventPattern:
 		{ZeroOrOne.pattern=current} '?' (reluctant?='?')? | {BetweenNAndM.pattern=current} '{' ( ',' max=INT | min=INT ',' max=INT | min=INT ',' ) '}' )?;
 
 Grouping returns ComplexEventPattern:
-	{Grouping} '(' pattern=Alternation ')' | StreamEvent;
+	{Grouping} (absence?='not')? '(' pattern=Alternation ')' | StreamEvent;
 
 StreamEvent:
 	event=[Event|ID] ('[' propertyConstraints+=PropertyConstraint (',' propertyConstraints+=PropertyConstraint)* ']')?;
