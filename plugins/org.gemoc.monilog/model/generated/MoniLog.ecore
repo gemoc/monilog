@@ -69,7 +69,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="Event">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="CallableElementReference"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ASTReference"/>
   <eClassifiers xsi:type="ecore:EClass" name="ASTEventKind"/>
   <eClassifiers xsi:type="ecore:EClass" name="Condition">
     <eStructuralFeatures xsi:type="ecore:EReference" name="expression" eType="#//Expression"
@@ -145,7 +145,7 @@
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="kind" eType="#//ASTEventKind"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="element" eType="#//CallableElementReference"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="element" eType="#//ASTReference"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ComplexEvent" eSuperTypes="#//Event">
@@ -158,8 +158,13 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="parameterDecl" eType="#//ParameterDecl"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="CallableElementNamedReference" eSuperTypes="#//CallableElementReference">
+  <eClassifiers xsi:type="ecore:EClass" name="CallableElementNamedReference" eSuperTypes="#//ASTReference">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="target" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SourceRangeReference" eSuperTypes="#//ASTReference">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="line" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="from" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="to" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="BeforeASTEvent" eSuperTypes="#//ASTEventKind"/>
   <eClassifiers xsi:type="ecore:EClass" name="AfterASTEvent" eSuperTypes="#//ASTEventKind"/>
@@ -202,6 +207,7 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="min" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Grouping" eSuperTypes="#//ComplexEventPattern">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="absence" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="pattern" eType="#//ComplexEventPattern"
         containment="true"/>
   </eClassifiers>

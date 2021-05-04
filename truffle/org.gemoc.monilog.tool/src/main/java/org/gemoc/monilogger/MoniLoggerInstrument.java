@@ -27,13 +27,13 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.gemoc.monilog.moniLog.ASTEvent;
 import org.gemoc.monilog.moniLog.ASTEventKind;
+import org.gemoc.monilog.moniLog.ASTReference;
 import org.gemoc.monilog.moniLog.Action;
 import org.gemoc.monilog.moniLog.AfterASTEvent;
 import org.gemoc.monilog.moniLog.Appender;
 import org.gemoc.monilog.moniLog.AppenderCall;
 import org.gemoc.monilog.moniLog.BeforeASTEvent;
 import org.gemoc.monilog.moniLog.CallableElementNamedReference;
-import org.gemoc.monilog.moniLog.CallableElementReference;
 import org.gemoc.monilog.moniLog.Condition;
 import org.gemoc.monilog.moniLog.Document;
 import org.gemoc.monilog.moniLog.Event;
@@ -43,6 +43,7 @@ import org.gemoc.monilog.moniLog.LanguageValue;
 import org.gemoc.monilog.moniLog.LocalAppender;
 import org.gemoc.monilog.moniLog.MoniLogPackage;
 import org.gemoc.monilog.moniLog.MoniLogger;
+import org.gemoc.monilog.moniLog.SourceRangeReference;
 import org.gemoc.monilogger.nodes.MoniLoggerBlockNode;
 import org.gemoc.monilogger.nodes.MoniLoggerCopyVariablesFromScopeNodeGen;
 import org.gemoc.monilogger.nodes.MoniLoggerExecutableNode;
@@ -78,6 +79,7 @@ import com.oracle.truffle.api.instrumentation.ContextsListener;
 import com.oracle.truffle.api.instrumentation.EventBinding;
 import com.oracle.truffle.api.instrumentation.Instrumenter;
 import com.oracle.truffle.api.instrumentation.SourceSectionFilter;
+import com.oracle.truffle.api.instrumentation.SourceSectionFilter.IndexRange;
 import com.oracle.truffle.api.instrumentation.StandardTags.RootBodyTag;
 import com.oracle.truffle.api.instrumentation.TruffleInstrument;
 import com.oracle.truffle.api.instrumentation.TruffleInstrument.Registration;
@@ -163,7 +165,7 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 				final ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
 
 				final OptionValues contextOptions = env.getOptions(context);
-
+				
 				final List<String> files = MoniLoggerContext.FILES.getValue(contextOptions);
 				final List<String> specs = files.stream().map(path -> {
 					try {
@@ -444,34 +446,43 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 			e1.printStackTrace();
 		}
 	}
-
-	private String getCallableName(CallableElementReference callableElementReference) {
-		switch (callableElementReference.eClass().getClassifierID()) {
+	
+	private SourceSectionFilter getSourceFilter(ASTEvent event) {
+		final ASTReference astReference = event.getElement();
+		switch (astReference.eClass().getClassifierID()) {
 //		TODO case MoniLogPackage.CALLABLE_ELEMENT_OBJECT_REFERENCE:
-//			final EStructuralFeature nameFeature = callableElementReference.eClass()
-//			.getEAllStructuralFeatures().stream().filter(f -> f.getName().equals("name")).findFirst().orElse(null);
-//			if (nameFeature != null) {
-//				return ((CallableElementObjectReference) callableElementReference).getTarget().eGet(nameFeature).toString();
-//			} else {
-//				return "";
-//			}
+//		final EStructuralFeature nameFeature = callableElementReference.eClass()
+//		.getEAllStructuralFeatures().stream().filter(f -> f.getName().equals("name")).findFirst().orElse(null);
+//		if (nameFeature != null) {
+//			return ((CallableElementObjectReference) callableElementReference).getTarget().eGet(nameFeature).toString();
+//		} else {
+//			return "";
+//		}
 		case MoniLogPackage.CALLABLE_ELEMENT_NAMED_REFERENCE:
-			return ((CallableElementNamedReference) callableElementReference).getTarget();
-		default:
-			return "";
+			final String name = ((CallableElementNamedReference) astReference).getTarget();
+			return SourceSectionFilter.newBuilder() //
+					.includeInternal(false) //
+					.tagIs(RootBodyTag.class) //
+					.rootNameIs(s -> name.equals(s)).build();
+		case MoniLogPackage.SOURCE_RANGE_REFERENCE:
+			final SourceRangeReference range = (SourceRangeReference) astReference;
+			final int line = range.getLine();
+			final int start = range.getFrom();
+			final int end = range.getTo();
+			return SourceSectionFilter.newBuilder() //
+					.includeInternal(false) //
+					.lineIs(line)
+					.columnStartsIn(IndexRange.byLength(start, 1))
+					.columnEndsIn(IndexRange.byLength(end, 1)).build();
+		default: throw new UnsupportedOperationException();
 		}
 	}
 
 	private EventBinding<MoniLoggerASTEventNodeFactory> createASTEventBinding(ASTEvent event,
 			List<MoniLogger> relatedMoniLoggers) {
 		final boolean usePolyglotContext = USE_POLYGLOT_CONTEXT.getValue(env.getOptions());
-
-		final String name = getCallableName(event.getElement());
-
-		final SourceSectionFilter filterRules = SourceSectionFilter.newBuilder() //
-				.tagIs(RootBodyTag.class) //
-				// TODO FQN or ID
-				.rootNameIs(s -> name.equals(s)).build();
+		
+		final SourceSectionFilter filterRules = getSourceFilter(event);
 
 		final BiFunction<String, Node, MoniLoggerExecutableNode> moniloggerFactory = new BiFunction<String, Node, MoniLoggerExecutableNode>() {
 

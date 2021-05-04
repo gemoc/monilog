@@ -69,7 +69,7 @@
     <genClasses ecoreClass="MoniLog.ecore#//Event">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog.ecore#//Event/name"/>
     </genClasses>
-    <genClasses ecoreClass="MoniLog.ecore#//CallableElementReference"/>
+    <genClasses ecoreClass="MoniLog.ecore#//ASTReference"/>
     <genClasses ecoreClass="MoniLog.ecore#//ASTEventKind"/>
     <genClasses ecoreClass="MoniLog.ecore#//Condition">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//Condition/expression"/>
@@ -136,6 +136,11 @@
     <genClasses ecoreClass="MoniLog.ecore#//CallableElementNamedReference">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog.ecore#//CallableElementNamedReference/target"/>
     </genClasses>
+    <genClasses ecoreClass="MoniLog.ecore#//SourceRangeReference">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog.ecore#//SourceRangeReference/line"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog.ecore#//SourceRangeReference/from"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog.ecore#//SourceRangeReference/to"/>
+    </genClasses>
     <genClasses ecoreClass="MoniLog.ecore#//BeforeASTEvent"/>
     <genClasses ecoreClass="MoniLog.ecore#//AfterASTEvent"/>
     <genClasses ecoreClass="MoniLog.ecore#//StartMoniLogger">
@@ -168,6 +173,7 @@
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog.ecore#//BetweenNAndM/min"/>
     </genClasses>
     <genClasses ecoreClass="MoniLog.ecore#//Grouping">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog.ecore#//Grouping/absence"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//Grouping/pattern"/>
     </genClasses>
     <genClasses ecoreClass="MoniLog.ecore#//Empty"/>

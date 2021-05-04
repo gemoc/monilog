@@ -67,10 +67,12 @@ import org.gemoc.monilogger.nodes.expression.SimpleExpressionNode;
 import org.gemoc.monilogger.nodes.expression.SimpleExpressionNotNodeGen;
 import org.gemoc.monilogger.nodes.expression.SimpleExpressionOrNodeGen;
 import org.gemoc.monilogger.nodes.expression.SimpleExpressionReadArrayNodeGen;
+import org.gemoc.monilogger.nodes.expression.SimpleExpressionReadLocalVariableNode;
 import org.gemoc.monilogger.nodes.expression.SimpleExpressionReadLocalVariableNodeGen;
 import org.gemoc.monilogger.nodes.expression.SimpleExpressionReadPropertyNodeGen;
 import org.gemoc.monilogger.nodes.expression.SimpleExpressionStringLiteralNode;
 import org.gemoc.monilogger.nodes.expression.SimpleExpressionSubNodeGen;
+import org.gemoc.monilogger.nodes.expression.SimpleExpressionUnboxValueNode;
 import org.gemoc.monilogger.nodes.expression.SimpleExpressionUnboxValueNodeGen;
 import org.gemoc.monilogger.nodes.expression.SimpleExpressionVectorNode;
 import org.graalvm.polyglot.Context;
@@ -196,7 +198,9 @@ public class SimpleExpressionParser {
 	}
 
 	private SimpleExpressionNode createReadVariableNode(ContextVarReference varRef, Node node, boolean onEnter) {
-		return SimpleExpressionReadLocalVariableNodeGen.create(varRef.getTarget(), node, onEnter);
+		final SimpleExpressionReadLocalVariableNode readLocal = SimpleExpressionReadLocalVariableNodeGen.create(varRef.getTarget(), node, onEnter);
+		final SimpleExpressionUnboxValueNode unbox = SimpleExpressionUnboxValueNodeGen.create(readLocal);
+		return unbox;
 	}
 
 	private SimpleExpressionNode createReadVariableNode(SpecVarNameReference varRef, Node node, boolean onEnter) {

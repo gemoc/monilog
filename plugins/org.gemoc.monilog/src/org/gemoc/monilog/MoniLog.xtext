@@ -62,22 +62,27 @@ Parameter:
 Event:
 	({ASTEvent}
 	'call' name=ID ('(' parameterDecl=ParameterDeclNoVarArgs ')')? '{'
-		kind=ASTEventKind element=CallableElementReference
+		kind=ASTEventKind element=ASTReference
 	'}') |
 	({ComplexEvent} 'complex' name=ID ('(' (properties+=PropertyReference (',' properties+=PropertyReference)*)? ')')? '{'
 		pattern=Alternation
 	'}') |
 	({UserEvent} 'custom' name=ID ('(' parameterDecl=ParameterDeclNoVarArgs ')')?);
+//	'}') |
+//	({ComplexEvent} 'complex' name=ID ('[' kind=TemporalPatternKind ']')? ('(' parameterDecl=ParameterDeclNoVarArgs ')')? '{'
+//		pattern=TemporalPattern
+//	'}') |
+//	({UserEvent} 'custom' name=ID ('(' parameterDecl=ParameterDeclNoVarArgs ')')?);
 
-CallableElementReference:
-	{CallableElementNamedReference} target=ID;
+ASTReference:
+//	{CallableElementObjectReference} '$' target=[ecore::EObject|ID] |
+	{CallableElementNamedReference} target=ID | {SourceRangeReference} 'l' line=INT '['from=INT ',' to=INT ']';
 
 ASTEventKind:
 	{BeforeASTEvent} 'before'| {AfterASTEvent} 'after';
 
 Condition:
-	expression=Expression;
-//	expression=(LanguageValue | MoniLogExpression);
+	expression=(Expression | LanguageValue);
 
 Action:
 	LanguageValue | AppenderCall
