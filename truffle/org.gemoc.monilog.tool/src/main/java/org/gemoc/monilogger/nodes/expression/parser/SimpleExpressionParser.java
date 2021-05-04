@@ -26,7 +26,6 @@ import org.gemoc.monilog.moniLog.PropertyRef;
 import org.gemoc.monilog.moniLog.RealConstant;
 import org.gemoc.monilog.moniLog.SimpleExpression;
 import org.gemoc.monilog.moniLog.SimpleVarNameReference;
-import org.gemoc.monilog.moniLog.SimpleVarRef;
 import org.gemoc.monilog.moniLog.StringConstant;
 import org.gemoc.monilog.moniLog.UnaryMinus;
 import org.gemoc.monilog.moniLog.VectorConstant;
@@ -52,10 +51,12 @@ import org.gemoc.monilogger.nodes.expression.SimpleExpressionNode;
 import org.gemoc.monilogger.nodes.expression.SimpleExpressionNotNodeGen;
 import org.gemoc.monilogger.nodes.expression.SimpleExpressionOrNodeGen;
 import org.gemoc.monilogger.nodes.expression.SimpleExpressionReadArrayNodeGen;
+import org.gemoc.monilogger.nodes.expression.SimpleExpressionReadLocalVariableNode;
 import org.gemoc.monilogger.nodes.expression.SimpleExpressionReadLocalVariableNodeGen;
 import org.gemoc.monilogger.nodes.expression.SimpleExpressionReadPropertyNodeGen;
 import org.gemoc.monilogger.nodes.expression.SimpleExpressionStringLiteralNode;
 import org.gemoc.monilogger.nodes.expression.SimpleExpressionSubNodeGen;
+import org.gemoc.monilogger.nodes.expression.SimpleExpressionUnboxValueNode;
 import org.gemoc.monilogger.nodes.expression.SimpleExpressionUnboxValueNodeGen;
 import org.gemoc.monilogger.nodes.expression.SimpleExpressionVectorNode;
 
@@ -166,7 +167,10 @@ public class SimpleExpressionParser {
 	}
 
 	private SimpleExpressionNode createReadVariableNode(SimpleVarNameReference varRef, Node node, boolean onEnter) {
-		return SimpleExpressionReadLocalVariableNodeGen.create(varRef.getTarget(), node, onEnter);
+		// TODO: unbox value.
+		final SimpleExpressionReadLocalVariableNode readLocal = SimpleExpressionReadLocalVariableNodeGen.create(varRef.getTarget(), node, onEnter);
+		final SimpleExpressionUnboxValueNode unbox = SimpleExpressionUnboxValueNodeGen.create(readLocal);
+		return unbox;
 	}
 
 	private SimpleExpressionNode createReadArrayNode(ArrayRef arrayRef, Node node, boolean onEnter) {

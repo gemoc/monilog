@@ -65,7 +65,7 @@ Parameter:
 Event:
 	({ASTEvent}
 	'call' name=ID ('(' parameterDecl=ParameterDeclNoVarArgs ')')? '{'
-		kind=ASTEventKind element=CallableElementReference
+		kind=ASTEventKind element=ASTReference
 	'}');
 //	'}') |
 //	({ComplexEvent} 'complex' name=ID ('[' kind=TemporalPatternKind ']')? ('(' parameterDecl=ParameterDeclNoVarArgs ')')? '{'
@@ -73,15 +73,15 @@ Event:
 //	'}') |
 //	({UserEvent} 'custom' name=ID ('(' parameterDecl=ParameterDeclNoVarArgs ')')?);
 
-CallableElementReference:
+ASTReference:
 //	{CallableElementObjectReference} '$' target=[ecore::EObject|ID] |
-	{CallableElementNamedReference} target=ID;
+	{CallableElementNamedReference} target=ID | {SourceRangeReference} 'l' line=INT '['from=INT ',' to=INT ']';
 
 ASTEventKind:
 	{BeforeASTEvent} 'before'| {AfterASTEvent} 'after';
 
 Condition:
-	expression=LanguageValue;
+	expression=(MoniLogExpression | LanguageValue);
 
 TemporalPattern:
 	pattern=Pattern scope=Scope;

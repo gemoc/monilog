@@ -29,13 +29,13 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.gemoc.monilog.moniLog.ASTEvent;
 import org.gemoc.monilog.moniLog.ASTEventKind;
+import org.gemoc.monilog.moniLog.ASTReference;
 import org.gemoc.monilog.moniLog.Action;
 import org.gemoc.monilog.moniLog.AfterASTEvent;
 import org.gemoc.monilog.moniLog.Appender;
 import org.gemoc.monilog.moniLog.AppenderCall;
 import org.gemoc.monilog.moniLog.BeforeASTEvent;
 import org.gemoc.monilog.moniLog.CallableElementNamedReference;
-import org.gemoc.monilog.moniLog.CallableElementReference;
 import org.gemoc.monilog.moniLog.Condition;
 import org.gemoc.monilog.moniLog.Document;
 import org.gemoc.monilog.moniLog.Event;
@@ -54,6 +54,7 @@ import org.gemoc.monilog.moniLog.MoniLogPackage;
 import org.gemoc.monilog.moniLog.MoniLogger;
 import org.gemoc.monilog.moniLog.Parameter;
 import org.gemoc.monilog.moniLog.ParameterReference;
+import org.gemoc.monilog.moniLog.SourceRangeReference;
 import org.gemoc.monilogger.nodes.MoniLoggerBlockNode;
 import org.gemoc.monilogger.nodes.MoniLoggerCallSourceNode;
 import org.gemoc.monilogger.nodes.MoniLoggerCopyVariablesFromScopeNodeGen;
@@ -93,6 +94,7 @@ import com.oracle.truffle.api.instrumentation.ContextsListener;
 import com.oracle.truffle.api.instrumentation.EventBinding;
 import com.oracle.truffle.api.instrumentation.Instrumenter;
 import com.oracle.truffle.api.instrumentation.SourceSectionFilter;
+import com.oracle.truffle.api.instrumentation.SourceSectionFilter.IndexRange;
 import com.oracle.truffle.api.instrumentation.StandardTags.RootBodyTag;
 import com.oracle.truffle.api.instrumentation.TruffleInstrument;
 import com.oracle.truffle.api.instrumentation.TruffleInstrument.Registration;
@@ -180,7 +182,7 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 				final ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
 
 				final OptionValues contextOptions = env.getOptions(context);
-
+				
 				final List<String> files = MoniLoggerContext.FILES.getValue(contextOptions);
 				final List<String> specs = files.stream().map(path -> {
 					try {
@@ -461,20 +463,35 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 			e1.printStackTrace();
 		}
 	}
-
-	private String getCallableName(CallableElementReference callableElementReference) {
-		switch (callableElementReference.eClass().getClassifierID()) {
+	
+	private SourceSectionFilter getSourceFilter(ASTEvent event) {
+		final ASTReference astReference = event.getElement();
+		switch (astReference.eClass().getClassifierID()) {
 //		TODO case MoniLogPackage.CALLABLE_ELEMENT_OBJECT_REFERENCE:
-//			final EStructuralFeature nameFeature = callableElementReference.eClass()
-//			.getEAllStructuralFeatures().stream().filter(f -> f.getName().equals("name")).findFirst().orElse(null);
-//			if (nameFeature != null) {
-//				return ((CallableElementObjectReference) callableElementReference).getTarget().eGet(nameFeature).toString();
-//			} else {
-//				return "";
-//			}
+//		final EStructuralFeature nameFeature = callableElementReference.eClass()
+//		.getEAllStructuralFeatures().stream().filter(f -> f.getName().equals("name")).findFirst().orElse(null);
+//		if (nameFeature != null) {
+//			return ((CallableElementObjectReference) callableElementReference).getTarget().eGet(nameFeature).toString();
+//		} else {
+//			return "";
+//		}
 		case MoniLogPackage.CALLABLE_ELEMENT_NAMED_REFERENCE:
-			return ((CallableElementNamedReference) callableElementReference).getTarget();
-		default: return "";
+			final String name = ((CallableElementNamedReference) astReference).getTarget();
+			return SourceSectionFilter.newBuilder() //
+					.includeInternal(false) //
+					.tagIs(RootBodyTag.class) //
+					.rootNameIs(s -> name.equals(s)).build();
+		case MoniLogPackage.SOURCE_RANGE_REFERENCE:
+			final SourceRangeReference range = (SourceRangeReference) astReference;
+			final int line = range.getLine();
+			final int start = range.getFrom();
+			final int end = range.getTo();
+			return SourceSectionFilter.newBuilder() //
+					.includeInternal(false) //
+					.lineIs(line)
+					.columnStartsIn(IndexRange.byLength(start, 1))
+					.columnEndsIn(IndexRange.byLength(end, 1)).build();
+		default: throw new UnsupportedOperationException();
 		}
 	}
 
@@ -482,12 +499,7 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 			List<MoniLogger> relatedMoniLoggers) {
 		final boolean usePolyglotContext = USE_POLYGLOT_CONTEXT.getValue(env.getOptions());
 		
-		final String name = getCallableName(event.getElement());
-
-		final SourceSectionFilter filterRules = SourceSectionFilter.newBuilder() //
-				.tagIs(RootBodyTag.class) //
-				// TODO FQN or ID
-				.rootNameIs(s -> name.equals(s)).build();
+		final SourceSectionFilter filterRules = getSourceFilter(event);
 
 		final BiFunction<String, Node, MoniLoggerExecutableNode> moniloggerFactory = new BiFunction<String, Node, MoniLoggerExecutableNode>() {
 
@@ -509,7 +521,7 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 					final List<MoniLoggerExecutableNode> actionNodes = new ArrayList<>();
 
 					conditionNodes.addAll(conditions.stream().map(condition -> {
-						final LanguageValue value = condition.getExpression();
+						final Expression value = condition.getExpression();
 						return getExpressionNode(value, node, onEnter, languages);
 					}).collect(Collectors.toList()));
 
@@ -656,9 +668,9 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 
 	private MoniLoggerExecutableNode getLayoutExecutableNode(Env env, LayoutCall layoutCall, Node node, boolean onEnter,
 			Set<String> languages, Map<LayoutCall, List<Expression>> layoutCallToActualArgs) {
-		if (layoutCall.getArgs().stream().allMatch(a -> a instanceof LanguageValue)) {
+		if (layoutCall.getArgs().stream().allMatch(a -> a instanceof Expression)) {
 			layoutCallToActualArgs.putIfAbsent(layoutCall,
-					layoutCall.getArgs().stream().map(a -> (LanguageValue) a).collect(Collectors.toList()));
+					layoutCall.getArgs().stream().map(a -> (Expression) a).collect(Collectors.toList()));
 		}
 		final Layout layout = layoutCall.getLayout();
 		switch (layout.eClass().getClassifierID()) {
@@ -727,7 +739,7 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 			final String expressionString = expression.getExpression();
 			final MoniLoggerExecutableNode callNode = new MoniLoggerCallSourceNode(Context.getCurrent(),
 					expressionToSource.computeIfAbsent(expressionString,
-							s -> org.graalvm.polyglot.Source.newBuilder(languageId, s, null).buildLiteral()));
+							s -> Source.newBuilder(languageId, s, null).buildLiteral()));
 			return callNode;
 		}
 		case MoniLogPackage.LANGUAGE_CALL: {
