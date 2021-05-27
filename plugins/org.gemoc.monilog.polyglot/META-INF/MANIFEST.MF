@@ -1,9 +1,12 @@
 Manifest-Version: 1.0
+Automatic-Module-Name: org.gemoc.monilog.polyglot
 Bundle-ManifestVersion: 2
 Bundle-Name: Polyglot
-Bundle-SymbolicName: org.gemoc.monilog.polyglot;singleton:=true
+Bundle-Vendor: CEA
 Bundle-Version: 1.0.0.qualifier
-Automatic-Module-Name: org.gemoc.monilog.polyglot
-Bundle-RequiredExecutionEnvironment: JavaSE-11
+Bundle-SymbolicName: org.gemoc.monilog.polyglot;singleton:=true
+Bundle-ActivationPolicy: lazy
 Require-Bundle: truffle-api-wrapper;bundle-version="1.0.0",
  org.gemoc.monilog;bundle-version="1.0.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Export-Package: org.gemoc.monilog.polyglot
