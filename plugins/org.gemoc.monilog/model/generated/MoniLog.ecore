@@ -5,6 +5,8 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="imports" upperBound="-1"
         eType="#//Import" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="setup" eType="#//Setup"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="events" upperBound="-1"
         eType="#//Event" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="appenders" upperBound="-1"
@@ -22,6 +24,16 @@
   <eClassifiers xsi:type="ecore:EClass" name="FileAlias">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="filePath" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Setup">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="properties" upperBound="-1"
+        eType="#//PropertyDefinition" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="PropertyDefinition">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="property" eType="#//Property"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//Expression"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Appender">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -68,6 +80,8 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Event">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parameterDecl" eType="#//ParameterDecl"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ASTReference"/>
   <eClassifiers xsi:type="ecore:EClass" name="ASTEventKind"/>
@@ -91,6 +105,12 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="args" upperBound="-1" eType="#//Expression"
         containment="true"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SetVariable" eSuperTypes="#//Action">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="variable" eType="#//PropertyReference"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//Expression"
+        containment="true"/>
+  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="MoniloggerCall" eSuperTypes="#//Action">
     <eStructuralFeatures xsi:type="ecore:EReference" name="monilogger" eType="#//MoniLogger"/>
   </eClassifiers>
@@ -108,17 +128,14 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="args" upperBound="-1" eType="#//Expression"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ComplexEventPattern"/>
-  <eClassifiers xsi:type="ecore:EClass" name="StreamEvent" eSuperTypes="#//ComplexEventPattern">
+  <eClassifiers xsi:type="ecore:EClass" name="StreamEvent">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="event" eType="#//Event"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="propertyConstraints" upperBound="-1"
-        eType="#//PropertyConstraint" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="PropertyConstraint"/>
   <eClassifiers xsi:type="ecore:EClass" name="Property">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="PropertyReference">
+  <eClassifiers xsi:type="ecore:EClass" name="PropertyReference" eSuperTypes="#//VarRef">
     <eStructuralFeatures xsi:type="ecore:EReference" name="property" eType="#//Property"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Expression"/>
@@ -141,23 +158,12 @@
     <eLiterals name="warning" value="6" literal="WARNING"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ASTEvent" eSuperTypes="#//Event">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="parameterDecl" eType="#//ParameterDecl"
-        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="kind" eType="#//ASTEventKind"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="element" eType="#//ASTReference"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ComplexEvent" eSuperTypes="#//Event">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="properties" upperBound="-1"
-        eType="#//PropertyReference" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="pattern" eType="#//ComplexEventPattern"
-        containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="UserEvent" eSuperTypes="#//Event">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="parameterDecl" eType="#//ParameterDecl"
-        containment="true"/>
-  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="UserEvent" eSuperTypes="#//Event"/>
   <eClassifiers xsi:type="ecore:EClass" name="CallableElementNamedReference" eSuperTypes="#//ASTReference">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="target" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
@@ -173,55 +179,6 @@
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="StopMoniLogger" eSuperTypes="#//MoniloggerCall"/>
-  <eClassifiers xsi:type="ecore:EClass" name="Alternation" eSuperTypes="#//ComplexEventPattern">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="left" eType="#//ComplexEventPattern"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="right" eType="#//ComplexEventPattern"
-        containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Concatenation" eSuperTypes="#//ComplexEventPattern">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="left" eType="#//ComplexEventPattern"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="right" eType="#//ComplexEventPattern"
-        containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ZeroOrMore" eSuperTypes="#//ComplexEventPattern">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="pattern" eType="#//ComplexEventPattern"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="reluctant" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="OneOrMore" eSuperTypes="#//ComplexEventPattern">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="pattern" eType="#//ComplexEventPattern"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="reluctant" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ZeroOrOne" eSuperTypes="#//ComplexEventPattern">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="pattern" eType="#//ComplexEventPattern"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="reluctant" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="BetweenNAndM" eSuperTypes="#//ComplexEventPattern">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="pattern" eType="#//ComplexEventPattern"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="max" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="min" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Grouping" eSuperTypes="#//ComplexEventPattern">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="absence" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="pattern" eType="#//ComplexEventPattern"
-        containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Empty" eSuperTypes="#//PropertyConstraint"/>
-  <eClassifiers xsi:type="ecore:EClass" name="PropertyDefinition" eSuperTypes="#//PropertyConstraint">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="property" eType="#//Property"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//PropertyReference"
-        containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="PropertyValue" eSuperTypes="#//PropertyConstraint">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="#//PropertyReference"
-        containment="true"/>
-  </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ContractedIf" eSuperTypes="#//SimpleExpression">
     <eStructuralFeatures xsi:type="ecore:EReference" name="condition" eType="#//SimpleExpression"
         containment="true"/>
@@ -326,13 +283,10 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="indices" upperBound="-1"
         eType="#//Expression" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="PropertyRef" eSuperTypes="#//Ref">
+  <eClassifiers xsi:type="ecore:EClass" name="FieldReference" eSuperTypes="#//Ref">
     <eStructuralFeatures xsi:type="ecore:EReference" name="object" eType="#//Ref"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="property" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="SpecVarNameReference" eSuperTypes="#//VarRef">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="target" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="field" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ContextVarReference" eSuperTypes="#//VarRef">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="target" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

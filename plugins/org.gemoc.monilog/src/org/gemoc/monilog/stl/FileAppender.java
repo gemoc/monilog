@@ -8,16 +8,16 @@ import org.gemoc.monilog.api.IMoniLogAppender;
 public class FileAppender implements IMoniLogAppender {
 
 	@Override
-	public void call(String message, Object... args) {
-		final String fileName = args[0].toString();
+	public void call(Object... args) {
+		final String fileName = args[1].toString();
 		Boolean append = true;
-		if (args.length > 1) {
-			append = (Boolean) args[1];
+		if (args.length > 2) {
+			append = (Boolean) args[2];
 		}
 		FileOutputStream fos;
 		try {
 			fos = new FileOutputStream(fileName, append);
-			fos.write((message + "\n").getBytes());
+			fos.write((args[0] + "\n").getBytes());
 			fos.close();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -39,7 +39,7 @@ public class FileAppender implements IMoniLogAppender {
 		if (argIndex == 0 || argIndex == 1) {
 			return String.class;
 		}
-		if (argIndex == 3) {
+		if (argIndex == 2) {
 			return Boolean.class;
 		}
 		return null;

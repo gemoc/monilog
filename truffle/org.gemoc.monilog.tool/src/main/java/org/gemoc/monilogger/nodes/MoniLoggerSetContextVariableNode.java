@@ -20,7 +20,7 @@ import com.oracle.truffle.api.nodes.ExplodeLoop;
 import com.oracle.truffle.api.nodes.Node;
 
 @NodeChild(value = "value", type = MoniLoggerExecutableNode.class)
-public abstract class MoniLoggerSetVariableNode extends MoniLoggerExecutableNode {
+public abstract class MoniLoggerSetContextVariableNode extends MoniLoggerExecutableNode {
 
 	@Child
 	private InteropLibrary variables;
@@ -41,7 +41,7 @@ public abstract class MoniLoggerSetVariableNode extends MoniLoggerExecutableNode
 	@CompilationFinal
 	private boolean inLocalScope = false;
 	
-	protected MoniLoggerSetVariableNode(String variableName, Node localNode, boolean onEnter) {
+	protected MoniLoggerSetContextVariableNode(String variableName, Node localNode, boolean onEnter) {
 		this.variableName = variableName;
 		this.localNode = localNode;
 		this.instrument = Context.getCurrent().getEngine().getInstruments().get(MoniLoggerInstrument.ID)

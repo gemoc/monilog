@@ -1,14 +1,18 @@
 package org.gemoc.monilog.instrument.internal;
 
+import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.stream.Collectors;
@@ -16,45 +20,56 @@ import java.util.stream.Collectors;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IConfigurationElement;
 import org.eclipse.core.runtime.IExtensionPoint;
+import org.eclipse.core.runtime.IExtensionRegistry;
 import org.eclipse.core.runtime.Platform;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.xtext.resource.XtextResourceSet;
 import org.eclipse.xtext.testing.util.ParseHelper;
 import org.gemoc.instrument.IContextWrapper;
 import org.gemoc.instrument.IInstrument;
-import org.gemoc.monilog.MoniLog4DSLStandaloneSetup;
+import org.gemoc.monilog.MoniLogStandaloneSetup;
 import org.gemoc.monilog.api.IMoniLogAppender;
 import org.gemoc.monilog.api.IMoniLogLayout;
-import org.gemoc.monilog.moniLog4DSL.ASTEvent;
-import org.gemoc.monilog.moniLog4DSL.AfterASTEvent;
-import org.gemoc.monilog.moniLog4DSL.Appender;
-import org.gemoc.monilog.moniLog4DSL.AppenderCall;
-import org.gemoc.monilog.moniLog4DSL.BeforeASTEvent;
-import org.gemoc.monilog.moniLog4DSL.CallArgument;
-import org.gemoc.monilog.moniLog4DSL.Document;
-import org.gemoc.monilog.moniLog4DSL.LanguageExpression;
-import org.gemoc.monilog.moniLog4DSL.Layout;
-import org.gemoc.monilog.moniLog4DSL.LayoutCall;
-import org.gemoc.monilog.moniLog4DSL.LocalAppender;
-import org.gemoc.monilog.moniLog4DSL.LocalLayout;
-import org.gemoc.monilog.moniLog4DSL.MoniLog4DSLPackage;
-import org.gemoc.monilog.moniLog4DSL.MoniLogger;
-import org.gemoc.monilog.moniLog4DSL.Parameter;
-import org.gemoc.monilog.moniLog4DSL.ParameterDecl;
-import org.gemoc.monilog.moniLog4DSL.ParameterReference;
-import org.gemoc.monilog.moniLog4DSL.SetVariable;
+import org.gemoc.monilog.moniLog.ASTEvent;
+import org.gemoc.monilog.moniLog.AfterASTEvent;
+import org.gemoc.monilog.moniLog.Appender;
+import org.gemoc.monilog.moniLog.AppenderCall;
+import org.gemoc.monilog.moniLog.BeforeASTEvent;
+import org.gemoc.monilog.moniLog.BoolConstant;
+import org.gemoc.monilog.moniLog.CallableElementNamedReference;
+import org.gemoc.monilog.moniLog.Comparison;
+import org.gemoc.monilog.moniLog.ContextVarReference;
+import org.gemoc.monilog.moniLog.Document;
+import org.gemoc.monilog.moniLog.Expression;
+import org.gemoc.monilog.moniLog.FileAlias;
+import org.gemoc.monilog.moniLog.LanguageCall;
+import org.gemoc.monilog.moniLog.LanguageValue;
+import org.gemoc.monilog.moniLog.Layout;
+import org.gemoc.monilog.moniLog.LayoutCall;
+import org.gemoc.monilog.moniLog.LocalAppender;
+import org.gemoc.monilog.moniLog.LocalLayout;
+import org.gemoc.monilog.moniLog.MoniLogPackage;
+import org.gemoc.monilog.moniLog.MoniLogger;
+import org.gemoc.monilog.moniLog.Parameter;
+import org.gemoc.monilog.moniLog.ParameterDecl;
+import org.gemoc.monilog.moniLog.Property;
+import org.gemoc.monilog.moniLog.PropertyReference;
+import org.gemoc.monilog.moniLog.RealConstant;
+import org.gemoc.monilog.moniLog.SetVariable;
+import org.gemoc.monilog.moniLog.StopMoniLogger;
+import org.gemoc.monilog.moniLog.StringConstant;
 import org.graalvm.polyglot.Context;
 import org.graalvm.polyglot.Engine;
 import org.graalvm.polyglot.Source;
 import org.graalvm.polyglot.Value;
-import org.python.util.PythonInterpreter;
 
 import com.google.common.collect.Streams;
 import com.google.inject.Injector;
 
 public class MoniLogInstrument implements IInstrument {
 
-	private static MoniLog4DSLStandaloneSetup moniLogSetup = new MoniLog4DSLStandaloneSetup();
+	private static MoniLogStandaloneSetup moniLogSetup = new MoniLogStandaloneSetup();
 
 	private static Injector moniLogInjector = moniLogSetup.createInjectorAndDoEMFRegistration();
 
@@ -65,18 +80,18 @@ public class MoniLogInstrument implements IInstrument {
 	private final Map<String, List<MoniLogger>> beforeEventToMoniLoggers = new HashMap<>();
 	private final Map<String, List<MoniLogger>> afterEventToMoniLoggers = new HashMap<>();
 
-	private final Map<LanguageExpression, Source> sourceCodeToSource = new HashMap<>();
-
 	private final Map<Appender, IMoniLogAppender> appenderToExecutableExtension = new HashMap<>();
 	private final Map<Layout, IMoniLogLayout> layoutToExecutableExtension = new HashMap<>();
 
 	private final Set<String> languageIds = new HashSet<>();
 
+	private final Map<Property, Object> propertyToValue = new HashMap<>();
+
 	private final Engine engine = Engine.newBuilder() //
 			.allowExperimentalOptions(true).build();
 
 	private final Context polyglotContext = Context.newBuilder().engine(engine).allowAllAccess(true)
-			.option("python.Executable", "/home/dleroy/venv-graalpython/bin/graalpython") //
+			.option("python.Executable", "/home/dleroy/test-venv/bin/graalpython") //
 			.option("python.ForceImportSite", "true").build();
 
 	public MoniLogInstrument(List<String> specificationFiles) {
@@ -99,14 +114,21 @@ public class MoniLogInstrument implements IInstrument {
 			}
 			return null;
 		}).filter(specification -> specification != null).collect(Collectors.toList());
-		documents.forEach(d -> Streams.stream(d.eAllContents()).filter(o -> o instanceof LanguageExpression)
-				.forEach(o -> languageIds.add(((LanguageExpression) o).getLanguageId())));
+		EcoreUtil.resolveAll(rs);
+		documents.forEach(d -> {
+			Streams.stream(d.eAllContents()).filter(o -> o instanceof LanguageValue)
+					.forEach(o -> languageIds.add(((LanguageValue) o).getLanguageId()));
+			Optional.ofNullable(d.getSetup())
+					.ifPresent(s -> s.getProperties().forEach(p -> propertyToValue.put(p.getProperty(),
+							evaluateExpression((Expression) p.getValue(), null, Collections.emptyMap()))));
+		});
+
 		final Map<ASTEvent, List<MoniLogger>> eventToMoniLoggers = (new MoniLog2Ir()).buildIr(documents, Level.INFO);
 		eventToMoniLoggers.forEach((e, l) -> {
 			if (e.getKind() instanceof BeforeASTEvent) {
-				beforeEventToMoniLoggers.put(e.getRuleID(), l);
+				beforeEventToMoniLoggers.put(((CallableElementNamedReference) e.getElement()).getTarget(), l);
 			} else if (e.getKind() instanceof AfterASTEvent) {
-				afterEventToMoniLoggers.put(e.getRuleID(), l);
+				afterEventToMoniLoggers.put(((CallableElementNamedReference) e.getElement()).getTarget(), l);
 			}
 		});
 	}
@@ -115,7 +137,6 @@ public class MoniLogInstrument implements IInstrument {
 	public void notifyBefore(String name, IContextWrapper context) {
 		final List<MoniLogger> moniLoggers = beforeEventToMoniLoggers.get(name);
 		if (moniLoggers != null && !moniLoggers.isEmpty()) {
-			injectContext(context);
 			moniLoggers.forEach(m -> {
 				if (executeConditions(m, context)) {
 					executeActions(m, context);
@@ -129,7 +150,6 @@ public class MoniLogInstrument implements IInstrument {
 		final List<MoniLogger> moniLoggers = afterEventToMoniLoggers.get(name);
 		if (moniLoggers != null && !moniLoggers.isEmpty()) {
 			// TODO handle result.
-			injectContext(context);
 			moniLoggers.forEach(m -> {
 				if (executeConditions(m, context)) {
 					executeActions(m, context);
@@ -138,21 +158,12 @@ public class MoniLogInstrument implements IInstrument {
 		}
 	}
 
-	private void injectContext(IContextWrapper context) {
-		languageIds.forEach(id -> {
-			final Value bindings = polyglotContext.getBindings(id);
-			context.getVariableNames().forEach(v -> {
-				bindings.putMember(v, context.getVariableValue(v));
-			});
-		});
-	}
-
 	private boolean executeConditions(MoniLogger moniLogger, IContextWrapper context) {
 		final int[] iPtr = new int[] { 0 };
 		final String name = moniLogger.getName();
 		return moniLogger.getConditions().stream().allMatch(c -> {
-			final String sourceName = name + "_condition_" + iPtr[0]++;
-			final Value result = executeLanguageExpression(c.getExpression(), sourceName);
+			iPtr[0]++;
+			final Value result = Value.asValue(evaluateExpression(c.getExpression(), context, Collections.emptyMap()));
 			if (result.isBoolean()) {
 				return result.asBoolean();
 			} else {
@@ -164,29 +175,26 @@ public class MoniLogInstrument implements IInstrument {
 
 	private void executeActions(MoniLogger moniLogger, IContextWrapper context) {
 		final int[] iPtr = new int[] { 0 };
-		final String name = moniLogger.getName();
 		moniLogger.getActions().forEach(action -> {
 			switch (action.eClass().getClassifierID()) {
-			case MoniLog4DSLPackage.LANGUAGE_EXPRESSION: {
-				final LanguageExpression languageExpression = (LanguageExpression) action;
-				final String sourceName = name + "_action_" + iPtr[0];
-				executeLanguageExpression(languageExpression, sourceName);
-				break;
-			}
-			case MoniLog4DSLPackage.APPENDER_CALL:
+			case MoniLogPackage.APPENDER_CALL:
 				final AppenderCall appenderCall = (AppenderCall) action;
-				executeAppenderCall(appenderCall, gatherCallArgs(appenderCall.getAppender().getParameterDecl(),
-						appenderCall.getArgs(), Collections.emptyMap()));
+				executeAppenderCall(appenderCall, context, gatherCallArgs(appenderCall.getAppender().getParameterDecl(),
+						appenderCall.getArgs(), context, Collections.emptyMap()));
 				break;
-			case MoniLog4DSLPackage.EMIT_EVENT:
-				throw new UnsupportedOperationException();
-			case MoniLog4DSLPackage.SET_VARIABLE:
+			case MoniLogPackage.STOP_MONI_LOGGER:
+				final StopMoniLogger stop = (StopMoniLogger) action;
+				final MoniLogger toStop = stop.getMonilogger();
+				//FIXME concurrent mod
+				beforeEventToMoniLoggers.keySet().forEach(s -> beforeEventToMoniLoggers.get(s).remove(toStop));
+				afterEventToMoniLoggers.keySet().forEach(s -> afterEventToMoniLoggers.get(s).remove(toStop));
+				break;
+			case MoniLogPackage.SET_VARIABLE:
 				final SetVariable setVariable = (SetVariable) action;
-				final String sourceName = name + "_action_" + iPtr[0];
-				final Object value = executeLanguageExpression(setVariable.getValue(), sourceName).as(Object.class);
-				context.setVariableValue(setVariable.getVariable(), value);
+				final Value value = Value.asValue(evaluateExpression(setVariable.getValue(), context, Collections.emptyMap()));
+				propertyToValue.put(setVariable.getVariable().getProperty(), value);
 				break;
-			case MoniLog4DSLPackage.MONILOGGER_CALL:
+			case MoniLogPackage.EMIT_EVENT:
 				throw new UnsupportedOperationException();
 			default:
 				throw new UnsupportedOperationException();
@@ -195,31 +203,17 @@ public class MoniLogInstrument implements IInstrument {
 		});
 	}
 
-	private Value executeLanguageExpression(LanguageExpression expression, String sourceName) {
-
-		try (PythonInterpreter pyInterp = new PythonInterpreter()) {
-			pyInterp.exec("print('Hello Python World!')");
-		}
-
-		final Source source = sourceCodeToSource.computeIfAbsent(expression, e -> {
-			final String languageId = e.getLanguageId();
-			final String sourceCode = e.getExpression();
-			return Source.newBuilder(languageId, sourceCode, sourceName).buildLiteral();
-		});
-		return polyglotContext.eval(source);
-	}
-
-	private void executeAppenderCall(AppenderCall appenderCall, Map<String, Object> args) {
+	private void executeAppenderCall(AppenderCall appenderCall, IContextWrapper context, Map<String, Object> args) {
 		final Appender appender = appenderCall.getAppender();
 		switch (appender.eClass().getClassifierID()) {
-		case MoniLog4DSLPackage.LOCAL_APPENDER:
+		case MoniLogPackage.LOCAL_APPENDER:
 			final LocalAppender localAppender = (LocalAppender) appender;
 			localAppender.getCalls().forEach(innerCall -> {
-				executeAppenderCall(innerCall,
-						gatherCallArgs(innerCall.getAppender().getParameterDecl(), innerCall.getArgs(), args));
+				executeAppenderCall(innerCall, context,
+						gatherCallArgs(innerCall.getAppender().getParameterDecl(), innerCall.getArgs(), context, args));
 			});
 			break;
-		case MoniLog4DSLPackage.EXTERNAL_APPENDER:
+		case MoniLogPackage.EXTERNAL_APPENDER:
 			final IMoniLogAppender externalAppender = getExternalAppender(appender);
 			final ParameterDecl parameterDecl = appenderCall.getAppender().getParameterDecl();
 			final List<Parameter> parameters = parameterDecl.getParameters();
@@ -231,16 +225,16 @@ public class MoniLogInstrument implements IInstrument {
 		}
 	}
 
-	private Object executeLayoutCall(LayoutCall layoutCall, Map<String, Object> args) {
+	private Object executeLayoutCall(LayoutCall layoutCall, IContextWrapper context, Map<String, Object> args) {
 		final Layout layout = layoutCall.getLayout();
 		switch (layout.eClass().getClassifierID()) {
-		case MoniLog4DSLPackage.LOCAL_LAYOUT:
+		case MoniLogPackage.LOCAL_LAYOUT:
 			final LocalLayout localLayout = (LocalLayout) layout;
 			// TODO populate args passed to innerCall with args of this layout call.
 			final LayoutCall innerCall = localLayout.getCall();
-			return executeLayoutCall(innerCall,
-					gatherCallArgs(innerCall.getLayout().getParameterDecl(), innerCall.getArgs(), args));
-		case MoniLog4DSLPackage.EXTERNAL_LAYOUT:
+			return executeLayoutCall(innerCall, context,
+					gatherCallArgs(innerCall.getLayout().getParameterDecl(), innerCall.getArgs(), context, args));
+		case MoniLogPackage.EXTERNAL_LAYOUT:
 			final IMoniLogLayout externalLayout = getExternalLayout(layout);
 			final ParameterDecl parameterDecl = layoutCall.getLayout().getParameterDecl();
 			return externalLayout.call(getArgs(parameterDecl, 0, args));
@@ -268,14 +262,14 @@ public class MoniLogInstrument implements IInstrument {
 	/*
 	 * Varargs are provided as a List<Object>.
 	 */
-	private Map<String, Object> gatherCallArgs(ParameterDecl parameterDecl, List<CallArgument> callArgs,
-			Map<String, Object> args) {
+	private Map<String, Object> gatherCallArgs(ParameterDecl parameterDecl, List<Expression> callArgs,
+			IContextWrapper context, Map<String, Object> args) {
 		final List<Parameter> parameters = parameterDecl.getParameters();
 		final Map<String, Object> result = new HashMap<>(args);
 		int i = 0;
 		for (; i < parameters.size(); i++) {
 			// TODO eventually handle monilog parameter references.
-			final Object argValue = evaluateCallArg(callArgs.get(i), args);
+			final Object argValue = evaluateExpression(callArgs.get(i), context, args);
 			result.put(parameters.get(i).getName(), argValue);
 		}
 		if (parameterDecl.getVarArgs() != null) {
@@ -283,7 +277,7 @@ public class MoniLogInstrument implements IInstrument {
 			final List<Object> varArgs = new ArrayList<>();
 			for (; i < callArgs.size(); i++) {
 				// TODO eventually handle monilog parameter references.
-				final Object argValue = evaluateCallArg(callArgs.get(i), args);
+				final Object argValue = evaluateExpression(callArgs.get(i), context, args);
 				varArgs.add(argValue);
 			}
 			result.put(varArgsName, varArgs);
@@ -291,17 +285,70 @@ public class MoniLogInstrument implements IInstrument {
 		return result;
 	}
 
-	private Object evaluateCallArg(CallArgument arg, Map<String, Object> args) {
+	private Map<String, Value> fileAliasToAST = new HashMap<>();
+	private Map<String, Value> memberToAST = new HashMap<>();
+
+	private Object evaluateExpression(Expression arg, IContextWrapper context, Map<String, Object> args) {
 		switch (arg.eClass().getClassifierID()) {
-		case MoniLog4DSLPackage.PARAMETER_REFERENCE:
-			return args.get(((ParameterReference) arg).getParameter().getName());
-		case MoniLog4DSLPackage.LAYOUT_CALL:
+		case MoniLogPackage.LAYOUT_CALL:
 			final LayoutCall layoutCall = (LayoutCall) arg;
-			return executeLayoutCall(layoutCall,
-					gatherCallArgs(layoutCall.getLayout().getParameterDecl(), layoutCall.getArgs(), args));
-		case MoniLog4DSLPackage.LANGUAGE_EXPRESSION:
-			// TODO give it a proper name.
-			return executeLanguageExpression((LanguageExpression) arg, "appender-call-arg").as(Object.class);
+			return executeLayoutCall(layoutCall, context,
+					gatherCallArgs(layoutCall.getLayout().getParameterDecl(), layoutCall.getArgs(), context, args));
+		case MoniLogPackage.CONTEXT_VAR_REFERENCE:
+			final ContextVarReference contextVarReference = (ContextVarReference) arg;
+			return context.getVariableValue(contextVarReference.getTarget());
+		case MoniLogPackage.PROPERTY_REFERENCE:
+			final PropertyReference specVarNameReference = (PropertyReference) arg;
+			return propertyToValue.get(specVarNameReference.getProperty());
+		case MoniLogPackage.LANGUAGE_VALUE:
+			final LanguageValue languageValue = (LanguageValue) arg;
+			final String languageId = languageValue.getLanguageId();
+			switch (languageValue.getValue().eClass().getClassifierID()) {
+			case MoniLogPackage.LANGUAGE_CALL:
+				final LanguageCall languageCall = (LanguageCall) languageValue.getValue();
+				final String memberName = languageCall.getFqn();
+				final FileAlias alias = languageCall.getFile();
+				final Value ast = memberToAST.computeIfAbsent(alias.getName() + "." + memberName, fqn -> {
+					try {
+						polyglotContext.eval(Source.newBuilder(languageId, new File(alias.getFilePath())).build());
+						final Value languageBindings = polyglotContext.getBindings(languageId);
+						if (languageBindings.hasMember(memberName)) {
+							return languageBindings.getMember(memberName);
+						} else {
+							return null;
+						}
+					} catch (IOException e) {
+						e.printStackTrace();
+						return null;
+					}
+				});
+				if (ast != null) {
+					final Object[] callArgs = languageCall.getArgs().stream()
+							.map(a -> evaluateExpression(a, context, args)).collect(Collectors.toList()).toArray();
+					if (callArgs.length == 0) {
+						return ast.execute();
+					} else if (callArgs.length == 1) {
+						return ast.execute(callArgs[0]);
+					} else {
+						return ast.execute(callArgs);
+					}
+				} else {
+					return null;
+				}
+			default:
+				throw new UnsupportedOperationException();
+			}
+		case MoniLogPackage.STRING_CONSTANT:
+			return ((StringConstant) arg).getValue();
+		case MoniLogPackage.BOOL_CONSTANT:
+			return ((BoolConstant) arg).isValue();
+		case MoniLogPackage.REAL_CONSTANT:
+			return Double.valueOf(((RealConstant) arg).getValue());
+		case MoniLogPackage.COMPARISON:
+			final Comparison comp = (Comparison) arg;
+			final Value left = Value.asValue(evaluateExpression(comp.getLeft(), context, args));
+			final Value right = Value.asValue(evaluateExpression(comp.getRight(), context, args));
+			return left.asDouble() < right.asDouble();
 		default:
 			throw new UnsupportedOperationException();
 		}
@@ -332,18 +379,32 @@ public class MoniLogInstrument implements IInstrument {
 	private Object getExecutableExtension(String extensionName, String extensionPointName)
 			throws ClassNotFoundException, CoreException {
 		IConfigurationElement configurationElement = null;
-		final IExtensionPoint extensionPoint = Platform.getExtensionRegistry().getExtensionPoint(extensionPointName);
-		final IConfigurationElement[] configurationElements = extensionPoint.getConfigurationElements();
-		for (int i = 0; i < configurationElements.length; i++) {
-			if (configurationElements[i].getAttribute("name").equals(extensionName)) {
-				configurationElement = configurationElements[i];
+		final IExtensionRegistry extensionRegistry = Platform.getExtensionRegistry();
+		if (extensionRegistry != null) {
+			final IExtensionPoint extensionPoint = extensionRegistry.getExtensionPoint(extensionPointName);
+			final IConfigurationElement[] configurationElements = extensionPoint.getConfigurationElements();
+			for (int i = 0; i < configurationElements.length; i++) {
+				if (configurationElements[i].getAttribute("name").equals(extensionName)) {
+					configurationElement = configurationElements[i];
+				}
 			}
-		}
-		if (configurationElement != null) {
-			return configurationElement.createExecutableExtension("class");
+			if (configurationElement != null) {
+				return configurationElement.createExecutableExtension("class");
+			} else {
+				throw new ClassNotFoundException(
+						"Could not find class " + extensionName + " within extensions org.gemoc.monilog.appender");
+			}
 		} else {
-			throw new ClassNotFoundException(
-					"Could not find class " + extensionName + " within extensions org.gemoc.monilog.appender");
+			final Class<?> extensionClass = Class.forName("org.gemoc.monilog.stl." + extensionName);
+			return Arrays.stream(extensionClass.getConstructors()).findFirst().map(c -> {
+				try {
+					return c.newInstance();
+				} catch (InstantiationException | IllegalAccessException | IllegalArgumentException
+						| InvocationTargetException e) {
+					e.printStackTrace();
+					return null;
+				}
+			}).orElseThrow();
 		}
 	}
 }

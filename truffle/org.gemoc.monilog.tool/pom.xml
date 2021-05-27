@@ -11,7 +11,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
-		<graalvm.version>21.0.0</graalvm.version>
+		<graalvm.version>21.1.0</graalvm.version>
 		<xtext.version>2.22.0</xtext.version>
 		<esper.version>8.7.0</esper.version>
 	</properties>
@@ -108,21 +108,6 @@
 			<groupId>org.gemoc.monilog</groupId>
 			<artifactId>org.gemoc.monilog</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
-		</dependency>
-		<dependency>
-			<groupId>com.espertech</groupId>
-			<artifactId>esper-common</artifactId>
-			<version>${esper.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.espertech</groupId>
-			<artifactId>esper-compiler</artifactId>
-			<version>${esper.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.espertech</groupId>
-			<artifactId>esper-runtime</artifactId>
-			<version>${esper.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.apache.commons</groupId>

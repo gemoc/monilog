@@ -5,7 +5,6 @@ import org.graalvm.polyglot.Context;
 import org.graalvm.polyglot.Source;
 import org.graalvm.polyglot.Value;
 
-import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.ExplodeLoop;
 
@@ -33,15 +32,16 @@ public class MoniLoggerCallSourceNode extends SimpleExpressionNode {
 	
 	@ExplodeLoop
 	public Object execute(VirtualFrame frame) {
-		final Object[] effectiveArgs = new Object[args.length];
-		for (int i = 0; i < args.length; i++) {
-			effectiveArgs[i] = args[i].execute(frame);
+		if (args.length == 0) {
+			return ast.execute();
+		} else if (args.length == 1) {
+			return ast.execute(args[0].execute(frame));
+		} else {
+			final Object[] effectiveArgs = new Object[args.length];
+			for (int i = 0; i < args.length; i++) {
+				effectiveArgs[i] = args[i].execute(frame);
+			}
+			return ast.execute(effectiveArgs);
 		}
-		return doExecute(effectiveArgs);
-	}
-
-	@TruffleBoundary
-	private Object doExecute(Object[] effectiveArgs) {
-		return ast.execute(effectiveArgs);
 	}
 }

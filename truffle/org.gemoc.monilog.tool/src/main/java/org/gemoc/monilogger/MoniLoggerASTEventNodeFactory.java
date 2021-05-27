@@ -9,7 +9,6 @@ import org.gemoc.monilog.moniLog.BeforeASTEvent;
 import org.gemoc.monilogger.nodes.MoniLoggerASTEventNode;
 import org.gemoc.monilogger.nodes.MoniLoggerExecutableNode;
 
-import com.espertech.esper.runtime.client.EPRuntime;
 import com.oracle.truffle.api.instrumentation.EventContext;
 import com.oracle.truffle.api.instrumentation.ExecutionEventNode;
 import com.oracle.truffle.api.instrumentation.ExecutionEventNodeFactory;
@@ -20,24 +19,20 @@ public class MoniLoggerASTEventNodeFactory implements ExecutionEventNodeFactory 
 	private final String name;
 	private final boolean before;
 
-	private final EPRuntime epRuntime;
-
 	private final BiFunction<String, Node, MoniLoggerExecutableNode> moniloggerFactory;
 
-	MoniLoggerASTEventNodeFactory(ASTEvent event, BiFunction<String, Node, MoniLoggerExecutableNode> moniloggerFactory,
-			EPRuntime epRuntime) {
+	MoniLoggerASTEventNodeFactory(ASTEvent event, BiFunction<String, Node, MoniLoggerExecutableNode> moniloggerFactory) {
 		this.name = event.getName();
 		final ASTEventKind kind = event.getKind();
 		this.before = kind instanceof BeforeASTEvent;
 		this.moniloggerFactory = moniloggerFactory;
-		this.epRuntime = epRuntime;
 	}
 
 	@Override
 	public ExecutionEventNode create(final EventContext ec) {
 		// TODO: for each property state
 		final String languageId = ec.getInstrumentedSourceSection().getSource().getLanguage();
-		return new MoniLoggerASTEventNode(name, before, Collections.emptyList(),
-				moniloggerFactory.apply(languageId, ec.getInstrumentedNode()), epRuntime);
+		return new MoniLoggerASTEventNode(name, before, /* TODO */ Collections.emptyList(),
+				moniloggerFactory.apply(languageId, ec.getInstrumentedNode()));
 	}
 }

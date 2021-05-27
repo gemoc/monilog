@@ -7,6 +7,7 @@ generate moniLog "http://www.gemoc.org/monilog/MoniLog"
 Document:
 	'package' name=QualifiedName
 	imports+=Import*
+	(setup=Setup)?
 	(events+=Event* & appenders+=Appender* & layouts+=Layout* & moniloggers+=MoniLogger*);
 
 Import:
@@ -14,6 +15,12 @@ Import:
 
 FileAlias:
 	filePath=STRING 'as' name=ID;
+
+Setup:
+	{Setup} 'setup' '{' (properties+=PropertyDefinition (';' properties+=PropertyDefinition)* ';'?)? '}';
+
+PropertyDefinition:
+	property=Property (':=' value=Expression)?;
 
 @Exported
 Appender:
@@ -64,15 +71,7 @@ Event:
 	'call' name=ID ('(' parameterDecl=ParameterDeclNoVarArgs ')')? '{'
 		kind=ASTEventKind element=ASTReference
 	'}') |
-	({ComplexEvent} 'complex' name=ID ('(' (properties+=PropertyReference (',' properties+=PropertyReference)*)? ')')? '{'
-		pattern=Alternation
-	'}') |
 	({UserEvent} 'custom' name=ID ('(' parameterDecl=ParameterDeclNoVarArgs ')')?);
-//	'}') |
-//	({ComplexEvent} 'complex' name=ID ('[' kind=TemporalPatternKind ']')? ('(' parameterDecl=ParameterDeclNoVarArgs ')')? '{'
-//		pattern=TemporalPattern
-//	'}') |
-//	({UserEvent} 'custom' name=ID ('(' parameterDecl=ParameterDeclNoVarArgs ')')?);
 
 ASTReference:
 //	{CallableElementObjectReference} '$' target=[ecore::EObject|ID] |
@@ -87,7 +86,7 @@ Condition:
 Action:
 	LanguageValue | AppenderCall
 	| EmitEvent | MoniloggerCall
-//	| SetVariable 
+	| SetVariable
 ;
 
 AppenderCall:
@@ -99,8 +98,8 @@ LayoutCall:
 EmitEvent:
 	event=[UserEvent|ID] '.' 'emit' ('(' (args+=Expression (',' args+=Expression)*)? ')' )?;
 
-//SetVariable:
-//	'set' '(' variable=STRING ',' value=LanguageValue ')';
+SetVariable:
+	variable=PropertyReference ':=' value=Expression;
 
 MoniloggerCall:
 	{StartMoniLogger} monilogger=[MoniLogger|ID] '.' 'start' ( '(' (args+=Expression (',' args+=Expression)*)? ')' )? |
@@ -115,27 +114,8 @@ LanguageExpression:
 LanguageCall:
 	file=[FileAlias|ID] '.' fqn=QualifiedName ('(' (args+=Expression (',' args+=Expression)*)? ')' )?;
 
-//====================================== COMPLEX EVENTS ======================================//
-
-Alternation returns ComplexEventPattern:
-	Concatenation ({Alternation.left=current} '|' right=Concatenation)*;
-
-Concatenation returns ComplexEventPattern:
-	Quantifier ({Concatenation.left=current} right=Quantifier)*;
-
-Quantifier returns ComplexEventPattern:
-	Grouping ({ZeroOrMore.pattern=current} '*' (reluctant?='?')? | {OneOrMore.pattern=current} '+' (reluctant?='?')? |
-		{ZeroOrOne.pattern=current} '?' (reluctant?='?')? | {BetweenNAndM.pattern=current} '{' ( ',' max=INT | min=INT ',' max=INT | min=INT ',' ) '}' )?;
-
-Grouping returns ComplexEventPattern:
-	{Grouping} (absence?='not')? '(' pattern=Alternation ')' | StreamEvent;
-
 StreamEvent:
-	event=[Event|ID] ('[' propertyConstraints+=PropertyConstraint (',' propertyConstraints+=PropertyConstraint)* ']')?;
-
-PropertyConstraint:
-	{Empty} | {PropertyDefinition} property=Property ('=' '$' value=PropertyReference)? | {PropertyValue} '$' value=PropertyReference;
-//	{Empty} | {PropertyDefinition} property=Property ('=' value=Expression)? | {PropertyValue} value=Expression;
+	name=ID '=' event=[Event|ID];
 
 Property:
 	name=ID;
@@ -182,11 +162,10 @@ Atomic returns SimpleExpression:
 
 Ref:
 	'$' VarRef ({ArrayRef.array=current} '[' indices+=Expression (',' indices+=Expression)* ']' |
-	{PropertyRef.object=current} '.' property=ID)*;
+	{FieldReference.object=current} '.' field=ID)*;
 
 VarRef:
-	{SpecVarNameReference} target=[ecore::EObject|ID] |
-	{ContextVarReference} 'context' '(' target=ID ')';
+	PropertyReference | {ContextVarReference} 'context' '(' target=ID ')';
 
 ArraySize:
 	'sizeOf' '(' array=Ref ')';

@@ -5,8 +5,8 @@ import org.gemoc.monilog.api.IMoniLogAppender;
 public class ConsoleAppender implements IMoniLogAppender {
 
 	@Override
-	public void call(String message, Object... args) {
-		System.out.println(message);
+	public void call(Object... args) {
+		System.out.println(args[0]);
 	}
 
 	@Override

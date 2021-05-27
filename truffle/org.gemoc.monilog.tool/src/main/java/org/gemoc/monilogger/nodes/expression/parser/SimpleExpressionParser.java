@@ -23,6 +23,7 @@ import org.gemoc.monilog.moniLog.Document;
 import org.gemoc.monilog.moniLog.Equality;
 import org.gemoc.monilog.moniLog.Expression;
 import org.gemoc.monilog.moniLog.ExternalLayout;
+import org.gemoc.monilog.moniLog.FieldReference;
 import org.gemoc.monilog.moniLog.IntConstant;
 import org.gemoc.monilog.moniLog.LanguageCall;
 import org.gemoc.monilog.moniLog.LanguageExpression;
@@ -38,12 +39,13 @@ import org.gemoc.monilog.moniLog.Not;
 import org.gemoc.monilog.moniLog.Or;
 import org.gemoc.monilog.moniLog.Parenthesis;
 import org.gemoc.monilog.moniLog.Plus;
-import org.gemoc.monilog.moniLog.PropertyRef;
+import org.gemoc.monilog.moniLog.PropertyDefinition;
+import org.gemoc.monilog.moniLog.PropertyReference;
 import org.gemoc.monilog.moniLog.RealConstant;
-import org.gemoc.monilog.moniLog.SpecVarNameReference;
 import org.gemoc.monilog.moniLog.StringConstant;
 import org.gemoc.monilog.moniLog.UnaryMinus;
 import org.gemoc.monilog.moniLog.VectorConstant;
+import org.gemoc.monilogger.MoniLoggerInstrument;
 import org.gemoc.monilogger.nodes.expression.MoniLoggerCallSourceNode;
 import org.gemoc.monilogger.nodes.expression.MoniLoggerExternalLayoutNode;
 import org.gemoc.monilogger.nodes.expression.SimpleExpressionAddNodeGen;
@@ -67,8 +69,10 @@ import org.gemoc.monilogger.nodes.expression.SimpleExpressionNode;
 import org.gemoc.monilogger.nodes.expression.SimpleExpressionNotNodeGen;
 import org.gemoc.monilogger.nodes.expression.SimpleExpressionOrNodeGen;
 import org.gemoc.monilogger.nodes.expression.SimpleExpressionReadArrayNodeGen;
+import org.gemoc.monilogger.nodes.expression.SimpleExpressionReadFieldNodeGen;
 import org.gemoc.monilogger.nodes.expression.SimpleExpressionReadLocalVariableNode;
 import org.gemoc.monilogger.nodes.expression.SimpleExpressionReadLocalVariableNodeGen;
+import org.gemoc.monilogger.nodes.expression.SimpleExpressionReadPropertyNode;
 import org.gemoc.monilogger.nodes.expression.SimpleExpressionReadPropertyNodeGen;
 import org.gemoc.monilogger.nodes.expression.SimpleExpressionStringLiteralNode;
 import org.gemoc.monilogger.nodes.expression.SimpleExpressionSubNodeGen;
@@ -106,8 +110,8 @@ public class SimpleExpressionParser {
 		case MoniLogPackage.VECTOR_CONSTANT:
 			expressionNode = createSimpleExpressionVectorNode((VectorConstant) expression, node, onEnter);
 			break;
-		case MoniLogPackage.SPEC_VAR_NAME_REFERENCE:
-			expressionNode = createReadVariableNode((SpecVarNameReference) expression, node, onEnter);
+		case MoniLogPackage.PROPERTY_REFERENCE:
+			expressionNode = createReadPropertyNode((PropertyReference) expression, node, onEnter);
 			break;
 		case MoniLogPackage.CONTEXT_VAR_REFERENCE:
 			expressionNode = createReadVariableNode((ContextVarReference) expression, node, onEnter);
@@ -115,8 +119,8 @@ public class SimpleExpressionParser {
 		case MoniLogPackage.ARRAY_REF:
 			expressionNode = createReadArrayNode((ArrayRef) expression, node, onEnter);
 			break;
-		case MoniLogPackage.PROPERTY_REF:
-			expressionNode = createReadPropertyNode((PropertyRef) expression, node, onEnter);
+		case MoniLogPackage.FIELD_REFERENCE:
+			expressionNode = createFieldReferenceNode((FieldReference) expression, node, onEnter);
 			break;
 		case MoniLogPackage.PARENTHESIS:
 			expressionNode = createExpressionNode(((Parenthesis) expression).getExpression(), node, onEnter);
@@ -160,16 +164,14 @@ public class SimpleExpressionParser {
 		case MoniLogPackage.ARRAY_SIZE:
 			expressionNode = createArraySizeNode((ArraySize) expression, node, onEnter);
 			break;
-		case MoniLogPackage.LANGUAGE_VALUE: {
+		case MoniLogPackage.LANGUAGE_VALUE:
 			final LanguageValue languageValue = (LanguageValue) expression;
 			expressionNode = createLanguageValue(languageValue.getLanguageId(), languageValue, node, onEnter);
 			break;
-		}
 		case MoniLogPackage.LAYOUT_CALL:
 			final LayoutCall layoutCall = (LayoutCall) expression;
-			expressionNode = createLayoutExecutableNode(layoutCall, node, onEnter, /* TODO */ new HashMap<>());
+			expressionNode = createLayoutExecutableNode(layoutCall, node, onEnter);
 			break;
-		
 		default:
 			throw new UnsupportedOperationException();
 		}
@@ -203,8 +205,13 @@ public class SimpleExpressionParser {
 		return unbox;
 	}
 
-	private SimpleExpressionNode createReadVariableNode(SpecVarNameReference varRef, Node node, boolean onEnter) {
-		throw new UnsupportedOperationException("Not yet implemented");
+	private SimpleExpressionNode createReadPropertyNode(PropertyReference varRef, Node node, boolean onEnter) {
+		final PropertyDefinition def = (PropertyDefinition) varRef.getProperty().eContainer();
+		final SimpleExpressionNode defaultValue = createExpressionNode(def.getValue(), node, onEnter);
+		final String varName = MoniLoggerInstrument.getPropertyFQN(varRef.getProperty());
+		final SimpleExpressionReadPropertyNode readProperty = SimpleExpressionReadPropertyNodeGen.create(varName, defaultValue);
+		final SimpleExpressionUnboxValueNode unbox = SimpleExpressionUnboxValueNodeGen.create(readProperty);
+		return unbox;
 	}
 
 	private SimpleExpressionNode createReadArrayNode(ArrayRef arrayRef, Node node, boolean onEnter) {
@@ -217,9 +224,9 @@ public class SimpleExpressionParser {
 		return SimpleExpressionUnboxValueNodeGen.create(array);
 	}
 
-	private SimpleExpressionNode createReadPropertyNode(PropertyRef propRef, Node node, boolean onEnter) {
-		final SimpleExpressionNode object = createExpressionNode(propRef.getObject(), node, onEnter);
-		final SimpleExpressionNode value = SimpleExpressionReadPropertyNodeGen.create(propRef.getProperty(), object);
+	private SimpleExpressionNode createFieldReferenceNode(FieldReference fieldRef, Node node, boolean onEnter) {
+		final SimpleExpressionNode object = createExpressionNode(fieldRef.getObject(), node, onEnter);
+		final SimpleExpressionNode value = SimpleExpressionReadFieldNodeGen.create(fieldRef.getField(), object);
 		return SimpleExpressionUnboxValueNodeGen.create(value);
 	}
 
@@ -375,20 +382,13 @@ public class SimpleExpressionParser {
 		}).collect(Collectors.toList());
 	}
 	
-	private SimpleExpressionNode createLayoutExecutableNode(LayoutCall layoutCall, Node node, boolean onEnter,
-			Map<LayoutCall, List<Expression>> layoutCallToActualArgs) {
-		if (layoutCall.getArgs().stream().allMatch(a -> a instanceof LanguageValue)) {
-			layoutCallToActualArgs.putIfAbsent(layoutCall,
-					layoutCall.getArgs().stream().map(a -> (LanguageValue) a).collect(Collectors.toList()));
-		}
+	private SimpleExpressionNode createLayoutExecutableNode(LayoutCall layoutCall, Node node, boolean onEnter) {
 		final Layout layout = layoutCall.getLayout();
 		switch (layout.eClass().getClassifierID()) {
 		case MoniLogPackage.LOCAL_LAYOUT: {
 			final LocalLayout localLayout = (LocalLayout) layout;
 			final LayoutCall childCall = localLayout.getCall();
-			layoutCallToActualArgs.computeIfAbsent(childCall,
-					l -> computeLayoutCallActualArgs(l, layoutCall, layoutCallToActualArgs));
-			return createLayoutExecutableNode(childCall, node, onEnter, layoutCallToActualArgs);
+			return createLayoutExecutableNode(childCall, node, onEnter);
 		}
 		case MoniLogPackage.EXTERNAL_LAYOUT: {
 			final ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
@@ -399,7 +399,7 @@ public class SimpleExpressionParser {
 				final Class<?> layoutClass = contextClassLoader.loadClass(className);
 				final Constructor<?> constructor = layoutClass.getConstructor();
 				final Value layoutValue = Value.asValue(constructor.newInstance());
-				final SimpleExpressionNode[] valueNodes = layoutCallToActualArgs.get(layoutCall).stream()
+				final SimpleExpressionNode[] valueNodes = layoutCall.getArgs().stream()
 						.map(arg -> createExpressionNode(arg, node, onEnter)).collect(Collectors.toList())
 						.toArray(EMPTY_ARRAY);
 				return new MoniLoggerExternalLayoutNode(layoutValue, valueNodes);

@@ -5,6 +5,8 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class InstrumentRegistry {
+	
+	private static InstrumentRegistry instance;
 
 	final Set<IInstrument> registeredInstruments = new HashSet<>();
 	
@@ -24,4 +26,10 @@ public class InstrumentRegistry {
 		registeredInstruments.clear();
 	}
 	
+	public static InstrumentRegistry getInstance() {
+		if (instance == null) {
+			instance = new InstrumentRegistry();
+		}
+		return instance;
+	}
 }

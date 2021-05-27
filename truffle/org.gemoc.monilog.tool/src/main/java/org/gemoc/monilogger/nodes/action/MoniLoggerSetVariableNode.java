@@ -1,50 +1,45 @@
-package org.gemoc.monilogger.nodes.expression;
+package org.gemoc.monilogger.nodes.action;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import org.gemoc.monilogger.MoniLoggerInstrument;
+import org.gemoc.monilogger.nodes.MoniLoggerExecutableNode;
 import org.graalvm.polyglot.Context;
 import org.graalvm.polyglot.Value;
 
 import com.oracle.truffle.api.dsl.Cached;
+import com.oracle.truffle.api.dsl.NodeChild;
 import com.oracle.truffle.api.dsl.Specialization;
 import com.oracle.truffle.api.frame.VirtualFrame;
 
-public abstract class SimpleExpressionReadPropertyNode extends SimpleExpressionNode {
+@NodeChild(value = "value", type = MoniLoggerExecutableNode.class)
+public abstract class MoniLoggerSetVariableNode extends MoniLoggerExecutableNode {
 
-	static final int LIBRARY_LIMIT = 3;
-	
-	private final String propertyName;
-	
+	protected final String variableName;
+
 	protected final MoniLoggerInstrument instrument;
-	
-	@Child
-	private SimpleExpressionNode defaultValue;
-	
-	protected SimpleExpressionReadPropertyNode(String propertyName, SimpleExpressionNode defaultValue) {
-		this.propertyName = propertyName;
-		this.defaultValue = defaultValue;
+
+	protected MoniLoggerSetVariableNode(String variableName) {
+		this.variableName = variableName;
 		this.instrument = Context.getCurrent().getEngine().getInstruments().get(MoniLoggerInstrument.ID)
 				.lookup(MoniLoggerInstrument.class);
 	}
 
 	@Specialization(assumptions = "instrument.getContextActive().getAssumption()")
-	protected Object doRead(VirtualFrame frame, //
-			@Cached("getMoniLogContext(frame)") Value monilogContext) {
-		return monilogContext.getHashValue(propertyName);
+	protected Object doSet(VirtualFrame frame, Object value, //
+			@Cached("getMoniLogContext()") Value monilogContext) {
+		monilogContext.putHashEntry(variableName, value);
+		return value;
 	}
-	
-	protected Value getMoniLogContext(VirtualFrame frame) {
+
+	protected Value getMoniLogContext() {
 		final Value bindings = Context.getCurrent().getPolyglotBindings();
 		if (!bindings.hasMember(MoniLoggerInstrument.MONILOG_CONTEXT)) {
 			final Map<String, Object> monilogContext = new HashMap<>();
 			bindings.putMember(MoniLoggerInstrument.MONILOG_CONTEXT, monilogContext);
 		}
-		final Value context = bindings.getMember(MoniLoggerInstrument.MONILOG_CONTEXT);
-		if (!context.hasHashEntry(propertyName)) {
-			context.putHashEntry(propertyName, defaultValue.execute(frame));
-		}
-		return context;
+		return bindings.getMember(MoniLoggerInstrument.MONILOG_CONTEXT);
 	}
+
 }

@@ -13,17 +13,19 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiFunction;
 import java.util.logging.Level;
 import java.util.stream.Collectors;
 
-import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.gemoc.monilog.moniLog.ASTEvent;
 import org.gemoc.monilog.moniLog.ASTEventKind;
@@ -43,13 +45,21 @@ import org.gemoc.monilog.moniLog.LanguageValue;
 import org.gemoc.monilog.moniLog.LocalAppender;
 import org.gemoc.monilog.moniLog.MoniLogPackage;
 import org.gemoc.monilog.moniLog.MoniLogger;
+import org.gemoc.monilog.moniLog.ParameterDecl;
+import org.gemoc.monilog.moniLog.Property;
+import org.gemoc.monilog.moniLog.PropertyReference;
+import org.gemoc.monilog.moniLog.SetVariable;
+import org.gemoc.monilog.moniLog.Setup;
 import org.gemoc.monilog.moniLog.SourceRangeReference;
+import org.gemoc.monilog.moniLog.StreamEvent;
+import org.gemoc.monilog.moniLog.UserEvent;
 import org.gemoc.monilogger.nodes.MoniLoggerBlockNode;
 import org.gemoc.monilogger.nodes.MoniLoggerCopyVariablesFromScopeNodeGen;
 import org.gemoc.monilogger.nodes.MoniLoggerExecutableNode;
 import org.gemoc.monilogger.nodes.MoniLoggerNode;
 import org.gemoc.monilogger.nodes.MoniLoggerNodeGen;
 import org.gemoc.monilogger.nodes.action.MoniLoggerExternalAppenderNodeGen;
+import org.gemoc.monilogger.nodes.action.MoniLoggerSetVariableNodeGen;
 import org.gemoc.monilogger.nodes.condition.MoniLoggerConditionalNode;
 import org.gemoc.monilogger.nodes.expression.parser.SimpleExpressionParser;
 import org.gemoc.monilogger.parser.MoniLogParser;
@@ -58,20 +68,11 @@ import org.graalvm.options.OptionDescriptors;
 import org.graalvm.options.OptionKey;
 import org.graalvm.options.OptionStability;
 import org.graalvm.options.OptionValues;
+import org.graalvm.polyglot.Context;
 import org.graalvm.polyglot.Value;
 
-import com.espertech.esper.common.client.EPCompiled;
-import com.espertech.esper.common.client.configuration.Configuration;
-import com.espertech.esper.compiler.client.CompilerArguments;
-import com.espertech.esper.compiler.client.EPCompileException;
-import com.espertech.esper.compiler.client.EPCompilerProvider;
-import com.espertech.esper.runtime.client.EPDeployException;
-import com.espertech.esper.runtime.client.EPRuntime;
-import com.espertech.esper.runtime.client.EPRuntimeDestroyedException;
-import com.espertech.esper.runtime.client.EPRuntimeProvider;
 import com.google.common.collect.Streams;
 import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
-import com.oracle.truffle.api.CompilerDirectives.TruffleBoundary;
 import com.oracle.truffle.api.Option;
 import com.oracle.truffle.api.TruffleContext;
 import com.oracle.truffle.api.TruffleLogger;
@@ -85,6 +86,7 @@ import com.oracle.truffle.api.instrumentation.TruffleInstrument;
 import com.oracle.truffle.api.instrumentation.TruffleInstrument.Registration;
 import com.oracle.truffle.api.nodes.LanguageInfo;
 import com.oracle.truffle.api.nodes.Node;
+import com.oracle.truffle.api.utilities.CyclicAssumption;
 
 @Registration(id = MoniLoggerInstrument.ID, name = "MoniLogger", version = "0.0.1", services = MoniLoggerInstrument.class)
 public class MoniLoggerInstrument extends TruffleInstrument {
@@ -93,6 +95,8 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 
 	@Option(name = "polyglotContext", help = "Use polyglot context.", category = OptionCategory.EXPERT, stability = OptionStability.STABLE)
 	public static final OptionKey<Boolean> USE_POLYGLOT_CONTEXT = new OptionKey<Boolean>(false);
+	
+	public static final String MONILOG_CONTEXT = "monilog-context";
 
 	public static final String ID = "monilogger";
 	public static final String FILE_OPTION = ID + ".files";
@@ -100,9 +104,6 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 	static final MoniLoggerExecutableNode[] EMPTY_ARRAY = new MoniLoggerExecutableNode[0];
 
 	private final SimpleExpressionParser expressionParser = new SimpleExpressionParser();
-
-	private Configuration configuration;
-	private EPRuntime epRuntime;
 
 	@CompilationFinal
 	private int offset;
@@ -123,7 +124,8 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 	@CompilationFinal
 	private TruffleLogger logger;
 
-	private Map<String, List<String>> propertyNameToEventTypes = new HashMap<>();
+	private final CyclicAssumption contextActive = new CyclicAssumption("MoniLog context active");
+
 	private Map<Event, List<MoniLogger>> eventToMoniLoggers = new HashMap<>();
 	private final Map<Event, Set<Event>> eventToParentEvents = new HashMap<>();
 	private final Map<Event, Set<Event>> eventToChildEvents = new HashMap<>();
@@ -165,7 +167,7 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 				final ClassLoader contextClassLoader = Thread.currentThread().getContextClassLoader();
 
 				final OptionValues contextOptions = env.getOptions(context);
-				
+
 				final List<String> files = MoniLoggerContext.FILES.getValue(contextOptions);
 				final List<String> specs = files.stream().map(path -> {
 					try {
@@ -193,54 +195,33 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 
 			@Override
 			public void onContextClosed(TruffleContext context) {
-				if (epRuntime != null) {
-					final Map<String, Object> event = new HashMap<>(1);
-					event.put("EoE", "EoE");
-					epRuntime.getEventService().sendEventMap(event, "EoE");
-				}
 				expressionParser.clean();
 				List<EventBinding<MoniLoggerASTEventNodeFactory>> bindings = contextToFactory.remove(context);
 				if (bindings != null) {
 					bindings.forEach(b -> b.dispose());
 				}
+				contextActive.invalidate("context closed");
 			}
 		}, true);
 	}
 
 	@Override
 	protected void onFinalize(Env env) {
-		if (epRuntime != null) {
-			epRuntime.destroy();
-		}
+		
 	}
 
-	/*
-	 * 1) Collect all the specification models. 2) Collect all the enabled
-	 * moniloggers (w.r.t. logging level). 3) Compute the tree of the events of
-	 * interest. 4) For each complex event from which a monilogger is directly or
-	 * transitively accessible, create a possibly parameterized Esper statement. 5)
-	 * For each monilogger directly referring to a user or complex event, create a
-	 * possibly parameterized Esper statement and subscriber. 6) For each AST event
-	 * directly referred to by a monilogger or a complex event, create an AST
-	 * execution event node pushing the AST event to the stream, and calling every
-	 * moniloggers directly and transitively accessible from that AST event through
-	 * the event tree.
-	 * 
-	 * OR
-	 * 
-	 * Let Esper do the work, gather matches in a Queue and process them FIFO,
-	 * emitted events being only taken into account the next time -> violates the
-	 * hypothesis allowing to only instrument a few AST nodes and not all of them ->
-	 * all must be resolved upon reaching an observable state. If a monilogger is
-	 * triggered upon a single user event, it must be called after all moniloggers
-	 * that can emit such event on a particular AST node.
-	 */
+	public CyclicAssumption getContextActive() {
+		return contextActive;
+	}
+
+	private final Map<String, Map<String, Object>> eventTypes = new HashMap<>();
+
 	private List<EventBinding<MoniLoggerASTEventNodeFactory>> enable(final List<String> specifications) {
 		final List<Document> specificationModels = new ArrayList<>();
-		final List<EventBinding<MoniLoggerASTEventNodeFactory>> bindings = new ArrayList<>();
-		final Map<ASTEvent, List<MoniLogger>> astEventToMoniLogger = new HashMap<>();
 		final List<MoniLogger> moniloggers = new ArrayList<>();
 		final List<Event> allEvents = new ArrayList<>();
+
+		final List<EventBinding<MoniLoggerASTEventNodeFactory>> bindings = new ArrayList<>();
 
 		final ResourceSet rs = parser.parse(specifications);
 		Streams.stream(rs.getAllContents()).filter(o -> o instanceof Document).map(o -> (Document) o).forEach(model -> {
@@ -249,204 +230,69 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 			model.getMoniloggers().forEach(monilogger -> {
 				final Level level = Level.parse(monilogger.getLevel().getLiteral());
 				if (logger.isLoggable(level)) {
-					// Collect all enabled moniloggers
 					moniloggers.add(monilogger);
-					processEvent(monilogger, astEventToMoniLogger);
 				}
 			});
 		});
 
-//		TODO: properly handle complex events
-//		allEvents.stream().filter(e -> e instanceof ComplexEvent).map(e -> {
-//			final ComplexEvent ev = (ComplexEvent) e;
-//			final String statement = "insert into" + e.getName() + "select";
-//			// TODO create esper statement selecting events from 
-//			return "";
-//		});
+		eventTypes.clear();
+		eventToMoniLoggers.clear();
 
-//		TODO: compute the ordering of moniloggers triggered by user or complex events
-//		/*
-//		 * At this point, moniloggers and events are computed, so we can compute the partial ordering
-//		 * of events from each AST event.
-//		 */
-//		Map<ASTEvent, List<Event>> eventTrees = EventSorter.getEventTrees(events, moniloggers);
-//		eventTrees.forEach((event, children) -> {
-//			/* 
-//			 * For each event in the event tree, check the status of their associated subscriber,
-//			 * then 1) re-inject events into the esper runtime (for complex events), and 2) call
-//			 * the associated moniloggers.
-//			 */
-//			children.stream().map(e -> {
-//				
-//				return "";
-//			});
-//		});
 
-		astEventToMoniLogger.forEach((event, triggeredMoniloggers) -> {
-			final List<MoniLogger> related = new ArrayList<>(triggeredMoniloggers);
-//			TODO: add the transitive closure of moniloggers triggered by 'event'
-//			final Set<Event> openSet = new HashSet<>();
-//			final Set<Event> closedSet = new HashSet<>();
-//			openSet.add(event);
-//			while (!openSet.isEmpty()) {
-//				final Event current = openSet.stream().findFirst().get();
-//				openSet.remove(current);
-//				final Set<Event> childEvents = eventToChildEvents.get(current);
-//				childEvents.stream().filter(e -> closedSet.contains(e)).forEach(e -> {
-//					openSet.add(e);
-//					related.addAll(eventToMoniLoggers.computeIfAbsent(e, o -> new ArrayList<>()));
-//				});
-//				closedSet.add(current);
-//			}
+		moniloggers.forEach(m -> processMonilogger(m));
 
-			bindings.add(createASTEventBinding(event, related));
+		eventToMoniLoggers.forEach((event, triggeredMoniloggers) -> {
+			if (event instanceof ASTEvent) {
+				final List<Event> compositeEvents = eventToCompositeEvents.computeIfAbsent(event,
+						e -> Collections.emptyList());
+				final List<MoniLogger> related = new ArrayList<>(triggeredMoniloggers);
+				related.addAll(compositeEvents.stream()
+						.flatMap(e -> eventToMoniLoggers.getOrDefault(e, new ArrayList<>()).stream())
+						.collect(Collectors.toList()));
+				bindings.add(createASTEventBinding((ASTEvent) event, related));
+			}
 		});
-
-//		List<String> moniloggerS
-//		moniloggers.stream().filter(m -> !(m.getEvent().getEvent() instanceof ASTEvent))
-//				.map(m -> m.getEvent());
-
-//		configureEsper(streamEvents);
 
 		return bindings;
 	}
 
-	private void processEvent(MoniLogger monilogger, Map<ASTEvent, List<MoniLogger>> astEventToMoniLogger) {
+	private void processMonilogger(MoniLogger monilogger) {
 		final Event event = monilogger.getStreamEvent().getEvent();
-		final EClass eClass = event.eClass();
-		final int classifierID = eClass.getClassifierID();
 		eventToMoniLoggers.computeIfAbsent(event, o -> new ArrayList<>()).add(monilogger);
-//		TODO:
-//		final List<UserEvent> emittedEvents = monilogger.getActions().stream().filter(a -> a instanceof EmitEvent)
-//				.map(a -> ((EmitEvent) a).getEvent()).collect(Collectors.toList());
-		events.add(event);
-//		events.addAll(emittedEvents);
-//		setChildEvents(event, emittedEvents);
-		switch (classifierID) {
-		case MoniLogPackage.AST_EVENT: {
-			final ASTEvent ev = (ASTEvent) event;
-			astEventToMoniLogger.computeIfAbsent(ev, o -> new ArrayList<>()).add(monilogger);
-			break;
-		}
-//		case MoniLogPackage.COMPLEX_EVENT: {
-//			final ComplexEvent ev = (ComplexEvent) event;
-//			// Creating esper statement and subscriber for complex event directly referred
-//			// to by moniloggers
-//			eventToTemporalProperty.put(event, PropertyProvider.compileProperty(monilogger.getStreamEvent()));
-//			final Set<Event> parentEvents = Streams.stream(ev.eAllContents()).filter(o -> o instanceof StreamEvent)
-//					.map(o -> ((StreamEvent) o).getEvent()).collect(Collectors.toSet());
-//			events.addAll(parentEvents);
-//			setParentEvents(ev, parentEvents);
-//			break;
-//		}
-//		case MoniLogPackage.USER_EVENT: {
-//			// Creating esper statement and subscriber for user events directly referred to
-//			// by moniloggers
-//			eventToTemporalProperty.put(event, PropertyProvider.compileProperty(monilogger.getStreamEvent()));
-//			break;
-//		}
-		}
+		processEvent(event);
 	}
 
-	private void setChildEvents(Event parent, Collection<? extends Event> children) {
-		eventToChildEvents.computeIfAbsent(parent, o -> new HashSet<>()).addAll(children);
-		children.forEach(e -> eventToParentEvents.computeIfAbsent(e, o -> new HashSet<>()).add(parent));
-	}
+	private final Map<Event, List<Event>> eventToCompositeEvents = new HashMap<>();
 
-	private void setParentEvents(Event child, Collection<? extends Event> parents) {
-		eventToParentEvents.computeIfAbsent(child, o -> new HashSet<>()).addAll(parents);
-		parents.forEach(e -> eventToChildEvents.computeIfAbsent(e, o -> new HashSet<>()).add(child));
-	}
-
-	@TruffleBoundary
-	private void configureEsper(List<MoniLogger> moniloggers) {
-
-		final Map<Event, Set<Event>> eventToSubEvents = new HashMap<>();
-		final Map<String, Map<String, Object>> streamEvents = new HashMap<>();
-
-		configuration = new Configuration();
-		ClassLoader oldClassLoader = Thread.currentThread().getContextClassLoader();
-		Thread.currentThread().setContextClassLoader(configuration.getClass().getClassLoader());
-
-		events.stream().forEach(e -> {
-			switch (e.eClass().getClassifierID()) {
+	private void processEvent(Event event) {
+		if (events.add(event)) {
+			switch (event.eClass().getClassifierID()) {
 			case MoniLogPackage.AST_EVENT: {
-				final ASTEvent ev = (ASTEvent) e;
-				final Map<String, Object> streamEvent = new HashMap<>();
-				streamEvent.put(ev.getName(), String.class);
-				ev.getParameterDecl().getParameters().stream().forEach(p -> streamEvent.put(p.getName(), Object.class));
-				final ASTEventKind kind = ev.getKind();
-				if (kind instanceof AfterASTEvent) {
-					streamEvent.put("result", Object.class);
+				final ASTEvent astEvent = (ASTEvent) event;
+				final Map<String, Object> eventType = new HashMap<>();
+				final ParameterDecl decl = astEvent.getParameterDecl();
+				if (decl != null) {
+					decl.getParameters().stream().forEach(p -> eventType.put(p.getName(), Object.class));
 				}
-				streamEvents.put(ev.getName(), streamEvent);
+				final ASTEventKind kind = astEvent.getKind();
+				if (kind instanceof AfterASTEvent) {
+					eventType.put("result", Object.class);
+				}
+				eventTypes.put(event.getName(), eventType);
 				break;
 			}
-//			TODO:
-//			case MoniLogPackage.COMPLEX_EVENT: {
-//				final ComplexEvent ev = (ComplexEvent) e;
-//				final Map<String, Object> streamEvent = new HashMap<>();
-//				streamEvent.put(e.getName(), String.class);
-//				ev.getParameterDecl().getParameters().stream().forEach(p -> streamEvent.put(p.getName(), Object.class));
-//				streamEvents.put(e.getName(), streamEvent);
-//				eventToSubEvents.computeIfAbsent(ev, o -> new HashSet<>()).addAll(eventToParentEvents.get(ev));
-//				break;
-//			}
-//			case MoniLogPackage.USER_EVENT: {
-//				final UserEvent ev = (UserEvent) e;
-//				final Map<String, Object> streamEvent = new HashMap<>();
-//				streamEvent.put(e.getName(), String.class);
-//				ev.getParameterDecl().getParameters().stream().forEach(p -> streamEvent.put(p.getName(), Object.class));
-//				streamEvents.put(e.getName(), streamEvent);
-//				// User event streams are only created if they are directly used by monilogger.
-//				eventToSubEvents.computeIfAbsent(ev, o -> Collections.singleton(o));
-//				break;
-//			}
+			case MoniLogPackage.USER_EVENT: {
+				final UserEvent userEvent = (UserEvent) event;
+				final Map<String, Object> eventType = new HashMap<>();
+				userEvent.getParameterDecl().getParameters().stream()
+						.forEach(p -> eventType.put(p.getName(), Object.class));
+				eventTypes.put(event.getName(), eventType);
+				break;
 			}
-		});
-
-		try {
-			final List<String> streamInsertStatements = new ArrayList<>();
-			streamEvents.forEach((e, p) -> configuration.getCommon().addEventType(e, p));
-			final Map<String, Object> eoeEventProperties = new HashMap<>();
-			eoeEventProperties.put("EoE", String.class);
-			configuration.getCommon().addEventType("EoE", eoeEventProperties);
-			// Creating the insert statements for events involved in complex events and for
-			// user events directly referred to by moniloggers.
-//			eventToSubEvents.forEach((e, es) -> {
-//				final String eventName = e.getName();
-//				final ConfigurationCommonVariantStream variantStream = new ConfigurationCommonVariantStream();
-//				es.forEach(subEvent -> {
-//					final String eventType = subEvent.getName();
-//					variantStream.addEventTypeName(eventType);
-//					streamInsertStatements.add("insert into " + eventName + " select * from " + eventType);
-//				});
-//				variantStream.addEventTypeName("EoE");
-//				streamInsertStatements.add("insert into " + eventName + " select * from EoE");
-//				configuration.getCommon().addVariantStream(eventName, variantStream);
-//			});
-			configuration.getCompiler().getExpression().setDuckTyping(true);
-			epRuntime = EPRuntimeProvider.getRuntime(ID, configuration);
-			streamInsertStatements.forEach(s -> compileAndDeploy(s));
-//			temporalPropertyMap.values().forEach(p -> {
-//				p.compileEPL(configuration);
-//				p.deploy(epRuntime);
-//			});
-		} finally {
-			Thread.currentThread().setContextClassLoader(oldClassLoader);
+			}
 		}
 	}
 
-	private void compileAndDeploy(String statement) {
-		try {
-			final EPCompiled compiled = EPCompilerProvider.getCompiler().compile(statement,
-					new CompilerArguments(configuration));
-			epRuntime.getDeploymentService().deploy(compiled);
-		} catch (EPCompileException | EPRuntimeDestroyedException | EPDeployException e1) {
-			e1.printStackTrace();
-		}
-	}
-	
 	private SourceSectionFilter getSourceFilter(ASTEvent event) {
 		final ASTReference astReference = event.getElement();
 		switch (astReference.eClass().getClassifierID()) {
@@ -471,17 +317,17 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 			final int end = range.getTo();
 			return SourceSectionFilter.newBuilder() //
 					.includeInternal(false) //
-					.lineIs(line)
-					.columnStartsIn(IndexRange.byLength(start, 1))
+					.lineIs(line).columnStartsIn(IndexRange.byLength(start, 1))
 					.columnEndsIn(IndexRange.byLength(end, 1)).build();
-		default: throw new UnsupportedOperationException();
+		default:
+			throw new UnsupportedOperationException();
 		}
 	}
 
 	private EventBinding<MoniLoggerASTEventNodeFactory> createASTEventBinding(ASTEvent event,
 			List<MoniLogger> relatedMoniLoggers) {
 		final boolean usePolyglotContext = USE_POLYGLOT_CONTEXT.getValue(env.getOptions());
-		
+
 		final SourceSectionFilter filterRules = getSourceFilter(event);
 
 		final BiFunction<String, Node, MoniLoggerExecutableNode> moniloggerFactory = new BiFunction<String, Node, MoniLoggerExecutableNode>() {
@@ -497,6 +343,8 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 					final Set<String> languages = Streams.stream(m.eAllContents())
 							.filter(o -> o instanceof LanguageValue).map(o -> ((LanguageValue) o).getLanguageId())
 							.collect(Collectors.toSet());
+
+					final String packageName = ((Document) m.eContainer()).getName();
 
 					final List<Condition> conditions = m.getConditions();
 					final List<Action> actions = m.getActions();
@@ -520,15 +368,16 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 							return getExpressionNode(languageValue, node, onEnter);
 						}
 						case MoniLogPackage.APPENDER_CALL:
-							return getAppenderExecutableNode(env, (AppenderCall) action, level, node, onEnter, new HashMap<>());
-//						TODO:
+							return getAppenderExecutableNode(env, (AppenderCall) action, level, node, onEnter,
+									new HashMap<>());
 //						case MoniLogPackage.EMIT_EVENT:
 //							return new MoniLoggerEmitEventNode(epRuntime, ((EmitEvent) action).getEvent().getName(),
 //									EMPTY_ARRAY);
-//						case MoniLogPackage.SET_VARIABLE:
-//							final SetVariable setVariable = (SetVariable) action;
-//							return MoniLoggerSetVariableNodeGen.create(setVariable.getVariable(), node, onEnter,
-//									getExpressionNode(setVariable.getValue(), node, languages));
+						case MoniLogPackage.SET_VARIABLE:
+							final SetVariable setVariable = (SetVariable) action;
+							return MoniLoggerSetVariableNodeGen.create(
+									getPropertyFQN(setVariable.getVariable().getProperty()),
+									getExpressionNode(setVariable.getValue(), node, onEnter));
 						case MoniLogPackage.MONILOGGER_CALL:
 							throw new UnsupportedOperationException();
 						default:
@@ -558,9 +407,22 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 		};
 
 		final EventBinding<MoniLoggerASTEventNodeFactory> binding = instrumenter.attachExecutionEventFactory(
-				filterRules, new MoniLoggerASTEventNodeFactory(event, moniloggerFactory, epRuntime));
+				filterRules, new MoniLoggerASTEventNodeFactory(event, moniloggerFactory));
 
 		return binding;
+	}
+
+	public static String getPropertyFQN(Property property) {
+		final String pName = property.getName();
+		final EObject container = property.eContainer().eContainer();
+		if (container instanceof MoniLogger) {
+			final MoniLogger m = (MoniLogger) container;
+			return ((Document) m.eContainer()).getName() + "." + m.getName() + "." + pName;
+		} else if (container instanceof Setup) {
+			return ((Document) container.eContainer()).getName() + "." + pName;
+		} else {
+			throw new UnsupportedOperationException();
+		}
 	}
 
 	private List<Expression> computeAppenderCallActualArgs(AppenderCall childCall, AppenderCall parentCall,
@@ -583,10 +445,10 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 
 	private MoniLoggerExecutableNode getAppenderExecutableNode(Env env, AppenderCall appenderCall, Level level,
 			Node node, boolean onEnter, Map<AppenderCall, List<Expression>> appenderCallToActualArgs) {
-//		FIXME
-//		if (appenderCall.getArgs().stream().allMatch(a -> !(a instanceof ParameterReference))) {
-//			appenderCallToActualArgs.putIfAbsent(appenderCall, new ArrayList<>(appenderCall.getArgs()));
-//		}
+		// FIXME
+		if (appenderCall.getArgs().stream().allMatch(a -> !(a instanceof PropertyReference))) {
+			appenderCallToActualArgs.putIfAbsent(appenderCall, new ArrayList<>(appenderCall.getArgs()));
+		}
 		final Appender appender = appenderCall.getAppender();
 
 		switch (appender.eClass().getClassifierID()) {

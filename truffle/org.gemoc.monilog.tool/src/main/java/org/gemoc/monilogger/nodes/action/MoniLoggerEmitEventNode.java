@@ -5,20 +5,17 @@ import java.util.Map;
 
 import org.gemoc.monilogger.nodes.MoniLoggerExecutableNode;
 
-import com.espertech.esper.runtime.client.EPRuntime;
 import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.nodes.ExplodeLoop;
 
 public class MoniLoggerEmitEventNode extends MoniLoggerExecutableNode {
 
-	private final EPRuntime epRuntime;
 	private final String eventType;
 
 	@Children
 	private MoniLoggerExecutableNode[] values;
 	
-	public MoniLoggerEmitEventNode(EPRuntime epRuntime, String eventType, MoniLoggerExecutableNode[] values) {
-		this.epRuntime = epRuntime;
+	public MoniLoggerEmitEventNode(String eventType, MoniLoggerExecutableNode[] values) {
 		this.eventType = eventType;
 		this.values = values;
 	}
@@ -32,7 +29,7 @@ public class MoniLoggerEmitEventNode extends MoniLoggerExecutableNode {
 			final Object value = values[i].execute(frame);
 			event.put("prop"+i, value);
 		}
-		epRuntime.getEventService().sendEventMap(event, eventType);
+//		TODO send the event somehow
 		return null;
 	}
 }

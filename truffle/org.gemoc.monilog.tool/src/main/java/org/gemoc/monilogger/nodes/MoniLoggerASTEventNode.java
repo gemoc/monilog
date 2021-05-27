@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.espertech.esper.runtime.client.EPRuntime;
 import com.oracle.truffle.api.CompilerDirectives;
 import com.oracle.truffle.api.frame.FrameSlot;
 import com.oracle.truffle.api.frame.VirtualFrame;
@@ -21,23 +20,19 @@ public class MoniLoggerASTEventNode extends ExecutionEventNode {
 
 	private FrameSlot[] frameSlots = null;
 
-	private final EPRuntime epRuntime;
-
 	public MoniLoggerASTEventNode(String name, boolean onEnter, List<String> properties,
-			MoniLoggerExecutableNode moniloggers, EPRuntime epRuntime) {
+			MoniLoggerExecutableNode moniloggers) {
 		this.name = name;
 		this.onEnter = onEnter;
 		this.properties = properties.toArray(new String[0]);
 		this.moniloggers = moniloggers;
-		this.epRuntime = epRuntime;
 	}
 
 	@Override
 	@ExplodeLoop
 	protected void onEnter(VirtualFrame frame) {
 		if (onEnter) {
-			final Map<String, Object> event = new HashMap<>(properties.length + 1);
-			event.put(name, name);
+			final Map<String, Object> event = new HashMap<>(properties.length);
 			if (frameSlots == null) {
 				CompilerDirectives.transferToInterpreterAndInvalidate();
 				frameSlots = new FrameSlot[properties.length];
@@ -48,8 +43,6 @@ public class MoniLoggerASTEventNode extends ExecutionEventNode {
 			for (int i = 0; i < properties.length; i++) {
 				event.put(properties[i], frame.getValue(frameSlots[i]));
 			}
-//			TODO
-//			epRuntime.getEventService().sendEventMap(event, name);
 			moniloggers.execute(frame);
 		}
 	}
@@ -59,7 +52,6 @@ public class MoniLoggerASTEventNode extends ExecutionEventNode {
 	protected void onReturnValue(VirtualFrame frame, Object result) {
 		if (!onEnter) {
 			final Map<String, Object> event = new HashMap<>(properties.length + 1);
-			event.put(name, name);
 			if (frameSlots == null) {
 				CompilerDirectives.transferToInterpreterAndInvalidate();
 				frameSlots = new FrameSlot[properties.length];
@@ -71,8 +63,6 @@ public class MoniLoggerASTEventNode extends ExecutionEventNode {
 				event.put(properties[i], frame.getValue(frameSlots[i]));
 			}
 			event.put("result", result);
-//			TODO
-//			epRuntime.getEventService().sendEventMap(event, name);
 			moniloggers.execute(frame);
 		}
 	}
