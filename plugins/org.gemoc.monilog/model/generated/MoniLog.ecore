@@ -16,11 +16,7 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="moniloggers" upperBound="-1"
         eType="#//MoniLogger" containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Import">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="importedNamespace" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="alias" eType="#//FileAlias"
-        containment="true"/>
-  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Import"/>
   <eClassifiers xsi:type="ecore:EClass" name="FileAlias">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="filePath" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -57,8 +53,8 @@
   <eClassifiers xsi:type="ecore:EClass" name="ExternalLayout" eSuperTypes="#//Layout"/>
   <eClassifiers xsi:type="ecore:EClass" name="ParameterDecl">
     <eStructuralFeatures xsi:type="ecore:EReference" name="parameters" upperBound="-1"
-        eType="#//Parameter" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="varArgs" eType="#//Parameter"
+        eType="#//PropertyDefinition" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="varArgs" eType="#//PropertyDefinition"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="MoniLogger">
@@ -74,9 +70,6 @@
         eType="#//Condition" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="actions" upperBound="-1"
         eType="#//Action" containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Parameter">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Event">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -156,6 +149,13 @@
     <eLiterals name="finest" value="4" literal="FINEST"/>
     <eLiterals name="severe" value="5" literal="SEVERE"/>
     <eLiterals name="warning" value="6" literal="WARNING"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ModelImport" eSuperTypes="#//Import">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="importedNamespace" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="FileImport" eSuperTypes="#//Import">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="alias" eType="#//FileAlias"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ASTEvent" eSuperTypes="#//Event">
     <eStructuralFeatures xsi:type="ecore:EReference" name="kind" eType="#//ASTEventKind"

@@ -27,10 +27,7 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//Document/layouts"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//Document/moniloggers"/>
     </genClasses>
-    <genClasses ecoreClass="MoniLog.ecore#//Import">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog.ecore#//Import/importedNamespace"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//Import/alias"/>
-    </genClasses>
+    <genClasses ecoreClass="MoniLog.ecore#//Import"/>
     <genClasses ecoreClass="MoniLog.ecore#//FileAlias">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog.ecore#//FileAlias/filePath"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog.ecore#//FileAlias/name"/>
@@ -70,9 +67,6 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//MoniLogger/streamEvent"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//MoniLogger/conditions"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//MoniLogger/actions"/>
-    </genClasses>
-    <genClasses ecoreClass="MoniLog.ecore#//Parameter">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog.ecore#//Parameter/name"/>
     </genClasses>
     <genClasses ecoreClass="MoniLog.ecore#//Event">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog.ecore#//Event/name"/>
@@ -131,6 +125,12 @@
     <genClasses ecoreClass="MoniLog.ecore#//VarRef"/>
     <genClasses ecoreClass="MoniLog.ecore#//ArraySize">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//ArraySize/array"/>
+    </genClasses>
+    <genClasses ecoreClass="MoniLog.ecore#//ModelImport">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog.ecore#//ModelImport/importedNamespace"/>
+    </genClasses>
+    <genClasses ecoreClass="MoniLog.ecore#//FileImport">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//FileImport/alias"/>
     </genClasses>
     <genClasses ecoreClass="MoniLog.ecore#//ASTEvent">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//ASTEvent/kind"/>

@@ -51,9 +51,9 @@ import org.gemoc.monilog.moniLog.LocalAppender;
 import org.gemoc.monilog.moniLog.LocalLayout;
 import org.gemoc.monilog.moniLog.MoniLogPackage;
 import org.gemoc.monilog.moniLog.MoniLogger;
-import org.gemoc.monilog.moniLog.Parameter;
 import org.gemoc.monilog.moniLog.ParameterDecl;
 import org.gemoc.monilog.moniLog.Property;
+import org.gemoc.monilog.moniLog.PropertyDefinition;
 import org.gemoc.monilog.moniLog.PropertyReference;
 import org.gemoc.monilog.moniLog.RealConstant;
 import org.gemoc.monilog.moniLog.SetVariable;
@@ -216,8 +216,8 @@ public class MoniLogInstrument implements IInstrument {
 		case MoniLogPackage.EXTERNAL_APPENDER:
 			final IMoniLogAppender externalAppender = getExternalAppender(appender);
 			final ParameterDecl parameterDecl = appenderCall.getAppender().getParameterDecl();
-			final List<Parameter> parameters = parameterDecl.getParameters();
-			final String message = args.get(parameters.get(0).getName()).toString();
+			final List<PropertyDefinition> parameters = parameterDecl.getParameters();
+			final String message = args.get(parameters.get(0).getProperty().getName()).toString();
 			externalAppender.call(message, getArgs(parameterDecl, 1, args));
 			break;
 		default:
@@ -244,12 +244,12 @@ public class MoniLogInstrument implements IInstrument {
 	}
 
 	private Object[] getArgs(ParameterDecl parameterDecl, int offset, Map<String, Object> args) {
-		final List<Parameter> parameters = parameterDecl.getParameters();
+		final List<PropertyDefinition> parameters = parameterDecl.getParameters();
 		final Object[] argsArray = parameters.subList(offset, parameters.size()).stream()
-				.map(p -> args.get(p.getName())).collect(Collectors.toList()).toArray();
+				.map(p -> args.get(p.getProperty().getName())).collect(Collectors.toList()).toArray();
 		if (parameterDecl.getVarArgs() != null) {
 			// Varargs are provided as a List<Object>.
-			final Object[] varArgsArray = ((List<?>) args.get(parameterDecl.getVarArgs().getName())).toArray();
+			final Object[] varArgsArray = ((List<?>) args.get(parameterDecl.getVarArgs().getProperty().getName())).toArray();
 			final Object[] completeArgs = new Object[argsArray.length + varArgsArray.length];
 			System.arraycopy(argsArray, 0, completeArgs, 0, argsArray.length);
 			System.arraycopy(varArgsArray, 0, completeArgs, argsArray.length, varArgsArray.length);
@@ -264,16 +264,16 @@ public class MoniLogInstrument implements IInstrument {
 	 */
 	private Map<String, Object> gatherCallArgs(ParameterDecl parameterDecl, List<Expression> callArgs,
 			IContextWrapper context, Map<String, Object> args) {
-		final List<Parameter> parameters = parameterDecl.getParameters();
+		final List<PropertyDefinition> parameters = parameterDecl.getParameters();
 		final Map<String, Object> result = new HashMap<>(args);
 		int i = 0;
 		for (; i < parameters.size(); i++) {
 			// TODO eventually handle monilog parameter references.
 			final Object argValue = evaluateExpression(callArgs.get(i), context, args);
-			result.put(parameters.get(i).getName(), argValue);
+			result.put(parameters.get(i).getProperty().getName(), argValue);
 		}
 		if (parameterDecl.getVarArgs() != null) {
-			final String varArgsName = parameterDecl.getVarArgs().getName();
+			final String varArgsName = parameterDecl.getVarArgs().getProperty().getName();
 			final List<Object> varArgs = new ArrayList<>();
 			for (; i < callArgs.size(); i++) {
 				// TODO eventually handle monilog parameter references.

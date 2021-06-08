@@ -11,7 +11,7 @@ Document:
 	(events+=Event* & appenders+=Appender* & layouts+=Layout* & moniloggers+=MoniLogger*);
 
 Import:
-	'import' importedNamespace=QualifiedNameWithWildcard | 'import' alias=FileAlias;
+	{ModelImport} 'import' importedNamespace=QualifiedNameWithWildcard | {FileImport} 'import' alias=FileAlias;
 
 FileAlias:
 	filePath=STRING 'as' name=ID;
@@ -20,7 +20,7 @@ Setup:
 	{Setup} 'setup' '{' (properties+=PropertyDefinition (';' properties+=PropertyDefinition)* ';'?)? '}';
 
 PropertyDefinition:
-	property=Property (':=' value=Expression)?;
+	property=Property ('=' value=Expression)?;
 
 @Exported
 Appender:
@@ -48,10 +48,10 @@ ExternalLayout:
 	'layout' name=ID ('(' parameterDecl=ParameterDeclVarArgs ')')?;
 
 ParameterDeclVarArgs returns ParameterDecl:
-	{ParameterDecl} (parameters+=Parameter (',' parameters+=Parameter)* (',' varArgs=Parameter '...')?)?;
+	{ParameterDecl} (parameters+=PropertyDefinition (',' parameters+=PropertyDefinition)* (',' varArgs=PropertyDefinition '...')?)?;
 
 ParameterDeclNoVarArgs returns ParameterDecl:
-	{ParameterDecl} (parameters+=Parameter (',' parameters+=Parameter)*)?;
+	{ParameterDecl} (parameters+=PropertyDefinition (',' parameters+=PropertyDefinition)*)?;
 
 @Exported
 MoniLogger:
@@ -62,16 +62,18 @@ MoniLogger:
 		'actions' '{' (actions+=Action) (';' actions+=Action)* ';'? '}'
 	'}';
 
-Parameter:
-	name=ID;
-
 @Exported
 Event:
-	({ASTEvent}
+	{ASTEvent}
 	'call' name=ID ('(' parameterDecl=ParameterDeclNoVarArgs ')')? '{'
 		kind=ASTEventKind element=ASTReference
-	'}') |
-	({UserEvent} 'custom' name=ID ('(' parameterDecl=ParameterDeclNoVarArgs ')')?);
+	'}' |
+//	ASTEvent |
+	{UserEvent} 'custom' name=ID ('(' parameterDecl=ParameterDeclNoVarArgs ')')?;
+
+//ASTEvent:
+//	{CallEvent} kind=ASTEventKind name=ID '{' 'call' '(' element=[instrumentation::CallableElement|QualifiedName] ('(' parameterDecl=ParameterDeclNoVarArgs ')')? ')' '}' |
+//	{WriteEvent} kind=ASTEventKind name=ID '{' 'write' '(' element=[instrumentation::WriteableElement|QualifiedName] ')' '}';
 
 ASTReference:
 //	{CallableElementObjectReference} '$' target=[ecore::EObject|ID] |
@@ -81,13 +83,12 @@ ASTEventKind:
 	{BeforeASTEvent} 'before'| {AfterASTEvent} 'after';
 
 Condition:
-	expression=(Expression | LanguageValue);
+	expression=Expression;
 
 Action:
 	LanguageValue | AppenderCall
 	| EmitEvent | MoniloggerCall
-	| SetVariable
-;
+	| SetVariable;
 
 AppenderCall:
 	appender=[Appender|QualifiedName] '.' 'call' ( '(' (args+=Expression (',' args+=Expression)*)? ')' )?;
@@ -99,7 +100,7 @@ EmitEvent:
 	event=[UserEvent|ID] '.' 'emit' ('(' (args+=Expression (',' args+=Expression)*)? ')' )?;
 
 SetVariable:
-	variable=PropertyReference ':=' value=Expression;
+	variable=PropertyReference '=' value=Expression;
 
 MoniloggerCall:
 	{StartMoniLogger} monilogger=[MoniLogger|ID] '.' 'start' ( '(' (args+=Expression (',' args+=Expression)*)? ')' )? |
@@ -115,7 +116,7 @@ LanguageCall:
 	file=[FileAlias|ID] '.' fqn=QualifiedName ('(' (args+=Expression (',' args+=Expression)*)? ')' )?;
 
 StreamEvent:
-	name=ID '=' event=[Event|ID];
+	(name=ID ':')? event=[Event|ID];
 
 Property:
 	name=ID;
@@ -161,11 +162,11 @@ Atomic returns SimpleExpression:
 	{VectorConstant} '[' values+=Expression (',' values+=Expression)* ']' | Ref | ArraySize | LanguageValue | LayoutCall;
 
 Ref:
-	'$' VarRef ({ArrayRef.array=current} '[' indices+=Expression (',' indices+=Expression)* ']' |
+	VarRef ({ArrayRef.array=current} '[' indices+=Expression (',' indices+=Expression)* ']' |
 	{FieldReference.object=current} '.' field=ID)*;
 
 VarRef:
-	PropertyReference | {ContextVarReference} 'context' '(' target=ID ')';
+	PropertyReference | {ContextVarReference} 'context' '(' target=ID /*[instrumentation::ReadableElement|QualifiedName]*/ ')';
 
 ArraySize:
 	'sizeOf' '(' array=Ref ')';

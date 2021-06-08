@@ -60,7 +60,7 @@ public class MoniLog2Ir {
 			final ASTEvent ev = (ASTEvent) event;
 			final Map<String, Object> eventProperties = new HashMap<>();
 			if (ev.getParameterDecl() != null) {
-				ev.getParameterDecl().getParameters().forEach(p -> eventProperties.put(p.getName(), Object.class));
+				ev.getParameterDecl().getParameters().forEach(p -> eventProperties.put(p.getProperty().getName(), Object.class));
 			}
 			eventToEventProperties.put(ev, eventProperties);
 			break;
