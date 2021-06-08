@@ -272,7 +272,7 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 				final Map<String, Object> eventType = new HashMap<>();
 				final ParameterDecl decl = astEvent.getParameterDecl();
 				if (decl != null) {
-					decl.getParameters().stream().forEach(p -> eventType.put(p.getName(), Object.class));
+					decl.getParameters().stream().forEach(p -> eventType.put(p.getProperty().getName(), Object.class));
 				}
 				final ASTEventKind kind = astEvent.getKind();
 				if (kind instanceof AfterASTEvent) {
@@ -285,7 +285,7 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 				final UserEvent userEvent = (UserEvent) event;
 				final Map<String, Object> eventType = new HashMap<>();
 				userEvent.getParameterDecl().getParameters().stream()
-						.forEach(p -> eventType.put(p.getName(), Object.class));
+						.forEach(p -> eventType.put(p.getProperty().getName(), Object.class));
 				eventTypes.put(event.getName(), eventType);
 				break;
 			}
