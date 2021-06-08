@@ -27,6 +27,7 @@ Workflow {
 		language = StandardLanguage {
 			name = "org.gemoc.monilog.MoniLog"
 			fileExtensions = "mnlg"
+			referencedResource = "platform:/resource/org.gemoc.instrument.interface/model/InstrumentationInterface.genmodel"
 			
 			parserGenerator = {
 				options = {

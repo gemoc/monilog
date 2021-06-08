@@ -200,7 +200,7 @@ public class SimpleExpressionParser {
 	}
 
 	private SimpleExpressionNode createReadVariableNode(ContextVarReference varRef, Node node, boolean onEnter) {
-		final SimpleExpressionReadLocalVariableNode readLocal = SimpleExpressionReadLocalVariableNodeGen.create(varRef.getTarget(), node, onEnter);
+		final SimpleExpressionReadLocalVariableNode readLocal = SimpleExpressionReadLocalVariableNodeGen.create(varRef.getTarget().getName(), node, onEnter);
 		final SimpleExpressionUnboxValueNode unbox = SimpleExpressionUnboxValueNodeGen.create(readLocal);
 		return unbox;
 	}

@@ -12,13 +12,11 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiFunction;
@@ -29,13 +27,12 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.gemoc.monilog.moniLog.ASTEvent;
 import org.gemoc.monilog.moniLog.ASTEventKind;
-import org.gemoc.monilog.moniLog.ASTReference;
 import org.gemoc.monilog.moniLog.Action;
 import org.gemoc.monilog.moniLog.AfterASTEvent;
 import org.gemoc.monilog.moniLog.Appender;
 import org.gemoc.monilog.moniLog.AppenderCall;
 import org.gemoc.monilog.moniLog.BeforeASTEvent;
-import org.gemoc.monilog.moniLog.CallableElementNamedReference;
+import org.gemoc.monilog.moniLog.CallEvent;
 import org.gemoc.monilog.moniLog.Condition;
 import org.gemoc.monilog.moniLog.Document;
 import org.gemoc.monilog.moniLog.Event;
@@ -50,9 +47,8 @@ import org.gemoc.monilog.moniLog.Property;
 import org.gemoc.monilog.moniLog.PropertyReference;
 import org.gemoc.monilog.moniLog.SetVariable;
 import org.gemoc.monilog.moniLog.Setup;
-import org.gemoc.monilog.moniLog.SourceRangeReference;
-import org.gemoc.monilog.moniLog.StreamEvent;
 import org.gemoc.monilog.moniLog.UserEvent;
+import org.gemoc.monilog.moniLog.WriteEvent;
 import org.gemoc.monilogger.nodes.MoniLoggerBlockNode;
 import org.gemoc.monilogger.nodes.MoniLoggerCopyVariablesFromScopeNodeGen;
 import org.gemoc.monilogger.nodes.MoniLoggerExecutableNode;
@@ -68,7 +64,6 @@ import org.graalvm.options.OptionDescriptors;
 import org.graalvm.options.OptionKey;
 import org.graalvm.options.OptionStability;
 import org.graalvm.options.OptionValues;
-import org.graalvm.polyglot.Context;
 import org.graalvm.polyglot.Value;
 
 import com.google.common.collect.Streams;
@@ -79,9 +74,11 @@ import com.oracle.truffle.api.TruffleLogger;
 import com.oracle.truffle.api.instrumentation.ContextsListener;
 import com.oracle.truffle.api.instrumentation.EventBinding;
 import com.oracle.truffle.api.instrumentation.Instrumenter;
+import com.oracle.truffle.api.instrumentation.SourceFilter;
 import com.oracle.truffle.api.instrumentation.SourceSectionFilter;
 import com.oracle.truffle.api.instrumentation.SourceSectionFilter.IndexRange;
 import com.oracle.truffle.api.instrumentation.StandardTags.RootBodyTag;
+import com.oracle.truffle.api.instrumentation.StandardTags.WriteVariableTag;
 import com.oracle.truffle.api.instrumentation.TruffleInstrument;
 import com.oracle.truffle.api.instrumentation.TruffleInstrument.Registration;
 import com.oracle.truffle.api.nodes.LanguageInfo;
@@ -267,12 +264,17 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 	private void processEvent(Event event) {
 		if (events.add(event)) {
 			switch (event.eClass().getClassifierID()) {
-			case MoniLogPackage.AST_EVENT: {
-				final ASTEvent astEvent = (ASTEvent) event;
+			case MoniLogPackage.WRITE_EVENT: {
+				final Map<String, Object> eventType = new HashMap<>();
+				eventTypes.put(event.getName(), eventType);
+				break;
+			}
+			case MoniLogPackage.CALL_EVENT: {
+				final CallEvent astEvent = (CallEvent) event;
 				final Map<String, Object> eventType = new HashMap<>();
 				final ParameterDecl decl = astEvent.getParameterDecl();
 				if (decl != null) {
-					decl.getParameters().stream().forEach(p -> eventType.put(p.getName(), Object.class));
+					decl.getParameters().stream().forEach(p -> eventType.put(p.getProperty().getName(), Object.class));
 				}
 				final ASTEventKind kind = astEvent.getKind();
 				if (kind instanceof AfterASTEvent) {
@@ -285,7 +287,7 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 				final UserEvent userEvent = (UserEvent) event;
 				final Map<String, Object> eventType = new HashMap<>();
 				userEvent.getParameterDecl().getParameters().stream()
-						.forEach(p -> eventType.put(p.getName(), Object.class));
+						.forEach(p -> eventType.put(p.getProperty().getName(), Object.class));
 				eventTypes.put(event.getName(), eventType);
 				break;
 			}
@@ -294,31 +296,28 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 	}
 
 	private SourceSectionFilter getSourceFilter(ASTEvent event) {
-		final ASTReference astReference = event.getElement();
-		switch (astReference.eClass().getClassifierID()) {
-//		TODO case MoniLogPackage.CALLABLE_ELEMENT_OBJECT_REFERENCE:
-//		final EStructuralFeature nameFeature = callableElementReference.eClass()
-//		.getEAllStructuralFeatures().stream().filter(f -> f.getName().equals("name")).findFirst().orElse(null);
-//		if (nameFeature != null) {
-//			return ((CallableElementObjectReference) callableElementReference).getTarget().eGet(nameFeature).toString();
-//		} else {
-//			return "";
-//		}
-		case MoniLogPackage.CALLABLE_ELEMENT_NAMED_REFERENCE:
-			final String name = ((CallableElementNamedReference) astReference).getTarget();
+		switch (event.eClass().getClassifierID()) {
+		case MoniLogPackage.WRITE_EVENT: {
+			return SourceSectionFilter.newBuilder() //
+					.includeInternal(false) //
+					.tagIs(WriteVariableTag.class).build();
+		}
+		case MoniLogPackage.CALL_EVENT: {
+			final String name = ((CallEvent) event).getElement().getName();
 			return SourceSectionFilter.newBuilder() //
 					.includeInternal(false) //
 					.tagIs(RootBodyTag.class) //
 					.rootNameIs(s -> name.equals(s)).build();
-		case MoniLogPackage.SOURCE_RANGE_REFERENCE:
-			final SourceRangeReference range = (SourceRangeReference) astReference;
-			final int line = range.getLine();
-			final int start = range.getFrom();
-			final int end = range.getTo();
-			return SourceSectionFilter.newBuilder() //
-					.includeInternal(false) //
-					.lineIs(line).columnStartsIn(IndexRange.byLength(start, 1))
-					.columnEndsIn(IndexRange.byLength(end, 1)).build();
+		}
+//		case MoniLogPackage.SOURCE_RANGE_REFERENCE:
+//			final SourceRangeReference range = (SourceRangeReference) astReference;
+//			final int line = range.getLine();
+//			final int start = range.getFrom();
+//			final int end = range.getTo();
+//			return SourceSectionFilter.newBuilder() //
+//					.includeInternal(false) //
+//					.lineIs(line).columnStartsIn(IndexRange.byLength(start, 1))
+//					.columnEndsIn(IndexRange.byLength(end, 1)).build();
 		default:
 			throw new UnsupportedOperationException();
 		}

@@ -1,6 +1,7 @@
 grammar org.gemoc.monilog.MoniLog with org.eclipse.xtext.common.Terminals
 
 import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+import "http://www.gemoc.org/instrument/InstrumentationInterface" as instrumentation
 
 generate moniLog "http://www.gemoc.org/monilog/MoniLog"
 
@@ -64,20 +65,19 @@ MoniLogger:
 
 @Exported
 Event:
-	{ASTEvent}
-	'call' name=ID ('(' parameterDecl=ParameterDeclNoVarArgs ')')? '{'
-		kind=ASTEventKind element=ASTReference
-	'}' |
-//	ASTEvent |
-	{UserEvent} 'custom' name=ID ('(' parameterDecl=ParameterDeclNoVarArgs ')')?;
+//	{ASTEvent}
+//	'call' name=ID ('(' parameterDecl=ParameterDeclNoVarArgs ')')? '{'
+//		kind=ASTEventKind element=ASTReference
+//	'}' |
+	ASTEvent | {UserEvent} 'custom' name=ID ('(' parameterDecl=ParameterDeclNoVarArgs ')')?;
 
-//ASTEvent:
-//	{CallEvent} kind=ASTEventKind name=ID '{' 'call' '(' element=[instrumentation::CallableElement|QualifiedName] ('(' parameterDecl=ParameterDeclNoVarArgs ')')? ')' '}' |
-//	{WriteEvent} kind=ASTEventKind name=ID '{' 'write' '(' element=[instrumentation::WriteableElement|QualifiedName] ')' '}';
+ASTEvent:
+	{CallEvent} kind=ASTEventKind name=ID '{' 'call' '(' element=[instrumentation::CallableElement|QualifiedName] ('(' parameterDecl=ParameterDeclNoVarArgs ')')? ')' '}' |
+	{WriteEvent} kind=ASTEventKind name=ID '{' 'write' '(' element=[instrumentation::WriteableElement|QualifiedName] ')' '}';
 
-ASTReference:
+//ASTReference:
 //	{CallableElementObjectReference} '$' target=[ecore::EObject|ID] |
-	{CallableElementNamedReference} target=ID | {SourceRangeReference} 'l' line=INT '['from=INT ',' to=INT ']';
+//	{CallableElementNamedReference} target=ID | {SourceRangeReference} 'l' line=INT '['from=INT ',' to=INT ']';
 
 ASTEventKind:
 	{BeforeASTEvent} 'before'| {AfterASTEvent} 'after';
@@ -166,7 +166,7 @@ Ref:
 	{FieldReference.object=current} '.' field=ID)*;
 
 VarRef:
-	PropertyReference | {ContextVarReference} 'context' '(' target=ID /*[instrumentation::ReadableElement|QualifiedName]*/ ')';
+	PropertyReference | {ContextVarReference} 'context' '(' target=[instrumentation::ReadableElement|QualifiedName] ')';
 
 ArraySize:
 	'sizeOf' '(' array=Ref ')';
