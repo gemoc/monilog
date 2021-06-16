@@ -34,27 +34,44 @@ public abstract class MoniLoggerExternalAppenderNode extends MoniLoggerExecutabl
 	@ExplodeLoop
 	@Specialization(guards = "message.isString()")
 	public Object executeString(VirtualFrame frame, Value message) {
-		final Object[] args = new Object[argNodes.length];
+		final Object[] args = new Object[argNodes.length + 1];
+		args[0] = message.asString();
 		for (int i = 0; i < argNodes.length; i++) {
-			args[i] = argNodes[i].execute(frame);
+			args[i+1] = argNodes[i].execute(frame);
 		}
-		doInvoke(message.asString(), args);
+		doInvoke(args);
 		return null;
 	}
 	
 	@ExplodeLoop
 	@Specialization
 	public Object executeString(VirtualFrame frame, String message) {
-		final Object[] args = new Object[argNodes.length];
+		final Object[] args = new Object[argNodes.length + 1];
+		args[0] = message;
 		for (int i = 0; i < argNodes.length; i++) {
-			args[i] = argNodes[i].execute(frame);
+			args[i+1] = argNodes[i].execute(frame);
 		}
-		doInvoke(message, args);
+		doInvoke(args);
+		return null;
+	}
+	
+	@ExplodeLoop
+	@Specialization
+	public Object executeString(VirtualFrame frame, Object message) {
+		final Object[] args = new Object[argNodes.length + 1];
+		args[0] = message;
+		for (int i = 0; i < argNodes.length; i++) {
+			args[i+1] = argNodes[i].execute(frame);
+		}
+		doInvoke(args);
 		return null;
 	}
 	
 	@TruffleBoundary(allowInlining = true)
-	private void doInvoke(String message, Object[] args) {
-		appenderValue.invokeMember("call", message, args);
+	private void doInvoke(Object[] args) {
+		appenderValue.invokeMember("call", args);
 	}
+	
+	
+	
 }

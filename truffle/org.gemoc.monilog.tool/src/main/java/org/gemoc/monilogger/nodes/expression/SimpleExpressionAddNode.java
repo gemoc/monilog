@@ -27,6 +27,11 @@ public abstract class SimpleExpressionAddNode extends SimpleExpressionBinaryNode
 		return left + right;
 	}
 
+	@Specialization
+	protected Object add(String left, String right) {
+		return left + right;
+	}
+
 	@Fallback
 	protected Object typeError(Object left, Object right) {
 		throw SimpleExpressionException.typeError(this, left, right);

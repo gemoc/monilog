@@ -12,13 +12,11 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiFunction;
@@ -51,7 +49,6 @@ import org.gemoc.monilog.moniLog.PropertyReference;
 import org.gemoc.monilog.moniLog.SetVariable;
 import org.gemoc.monilog.moniLog.Setup;
 import org.gemoc.monilog.moniLog.SourceRangeReference;
-import org.gemoc.monilog.moniLog.StreamEvent;
 import org.gemoc.monilog.moniLog.UserEvent;
 import org.gemoc.monilogger.nodes.MoniLoggerBlockNode;
 import org.gemoc.monilogger.nodes.MoniLoggerCopyVariablesFromScopeNodeGen;
@@ -68,7 +65,6 @@ import org.graalvm.options.OptionDescriptors;
 import org.graalvm.options.OptionKey;
 import org.graalvm.options.OptionStability;
 import org.graalvm.options.OptionValues;
-import org.graalvm.polyglot.Context;
 import org.graalvm.polyglot.Value;
 
 import com.google.common.collect.Streams;
@@ -408,7 +404,7 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 
 		final EventBinding<MoniLoggerASTEventNodeFactory> binding = instrumenter.attachExecutionEventFactory(
 				filterRules, new MoniLoggerASTEventNodeFactory(event, moniloggerFactory));
-
+		
 		return binding;
 	}
 

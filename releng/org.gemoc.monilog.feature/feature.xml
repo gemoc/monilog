@@ -52,13 +52,6 @@
          id="org.gemoc.monilog"
          download-size="0"
          install-size="0"
-         version="1.0.0.qualifier"
-         unpack="false"/>
-
-   <plugin
-         id="org.gemoc.monilog.polyglot"
-         download-size="0"
-         install-size="0"
          version="1.0.0.qualifier"/>
 
 </feature>

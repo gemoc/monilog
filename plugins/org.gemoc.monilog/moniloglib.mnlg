@@ -4,4 +4,4 @@ appender ConsoleAppender(msg)
 
 appender FileAppender(msg, path)
 
-layout StringLayout(formatString, args...)
+layout StringLayout(formatString, args)
