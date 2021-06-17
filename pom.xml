@@ -21,6 +21,7 @@
 		<additionalTestArguments></additionalTestArguments>
 	</properties>
 	<modules>
+		<module>plugins/org.gemoc.instrument.interface</module>
 		<module>plugins/org.gemoc.monilog</module>
 		<module>plugins/org.gemoc.monilog.ide</module>
 		<module>plugins/org.gemoc.monilog.ui</module>

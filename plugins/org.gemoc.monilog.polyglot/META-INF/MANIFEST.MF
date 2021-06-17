@@ -1,7 +1,7 @@
 Manifest-Version: 1.0
 Automatic-Module-Name: org.gemoc.monilog.polyglot
 Bundle-ManifestVersion: 2
-Bundle-Name: Polyglot
+Bundle-Name: Polyglot Appender
 Bundle-Vendor: CEA
 Bundle-Version: 1.0.0.qualifier
 Bundle-SymbolicName: org.gemoc.monilog.polyglot;singleton:=true

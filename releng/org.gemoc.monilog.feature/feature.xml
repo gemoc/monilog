@@ -5,7 +5,7 @@
       version="1.0.0.qualifier">
 
    <description>
-      Xtext editor for MoniLog.
+      Xtext editor and standard library for MoniLog.
    </description>
 
    <requires>
@@ -50,13 +50,6 @@
 
    <plugin
          id="org.gemoc.monilog"
-         download-size="0"
-         install-size="0"
-         version="1.0.0.qualifier"
-         unpack="false"/>
-
-   <plugin
-         id="org.gemoc.monilog.polyglot"
          download-size="0"
          install-size="0"
          version="1.0.0.qualifier"/>

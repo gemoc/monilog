@@ -1,0 +1,3 @@
+package org.gemoc.monilog.rabbitmq
+
+appender RabbitMQAppender(value, queue)

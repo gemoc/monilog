@@ -407,7 +407,7 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 
 		final EventBinding<MoniLoggerASTEventNodeFactory> binding = instrumenter.attachExecutionEventFactory(
 				filterRules, new MoniLoggerASTEventNodeFactory(event, moniloggerFactory));
-
+		
 		return binding;
 	}
 

@@ -73,10 +73,11 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Event">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="parameterDecl" eType="#//ParameterDecl"
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ASTEvent" eSuperTypes="#//Event">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="kind" eType="#//ASTEventKind"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ASTReference"/>
   <eClassifiers xsi:type="ecore:EClass" name="ASTEventKind"/>
   <eClassifiers xsi:type="ecore:EClass" name="Condition">
     <eStructuralFeatures xsi:type="ecore:EReference" name="expression" eType="#//Expression"
@@ -157,20 +158,17 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="alias" eType="#//FileAlias"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ASTEvent" eSuperTypes="#//Event">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="kind" eType="#//ASTEventKind"
-        containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="element" eType="#//ASTReference"
+  <eClassifiers xsi:type="ecore:EClass" name="UserEvent" eSuperTypes="#//Event">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parameterDecl" eType="#//ParameterDecl"
         containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="UserEvent" eSuperTypes="#//Event"/>
-  <eClassifiers xsi:type="ecore:EClass" name="CallableElementNamedReference" eSuperTypes="#//ASTReference">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="target" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  <eClassifiers xsi:type="ecore:EClass" name="CallEvent" eSuperTypes="#//ASTEvent">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="element" eType="ecore:EClass platform:/resource/org.gemoc.instrument.interface/model/InstrumentationInterface.ecore#//CallableElement"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="parameterDecl" eType="#//ParameterDecl"
+        containment="true"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="SourceRangeReference" eSuperTypes="#//ASTReference">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="line" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="from" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="to" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EInt"/>
+  <eClassifiers xsi:type="ecore:EClass" name="WriteEvent" eSuperTypes="#//ASTEvent">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="element" eType="ecore:EClass platform:/resource/org.gemoc.instrument.interface/model/InstrumentationInterface.ecore#//WriteableElement"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="BeforeASTEvent" eSuperTypes="#//ASTEventKind"/>
   <eClassifiers xsi:type="ecore:EClass" name="AfterASTEvent" eSuperTypes="#//ASTEventKind"/>
@@ -289,6 +287,6 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="field" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ContextVarReference" eSuperTypes="#//VarRef">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="target" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="target" eType="ecore:EClass platform:/resource/org.gemoc.instrument.interface/model/InstrumentationInterface.ecore#//ReadableElement"/>
   </eClassifiers>
 </ecore:EPackage>

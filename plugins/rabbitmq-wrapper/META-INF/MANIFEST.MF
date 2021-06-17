@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Rabbitmq-wrapper
+Bundle-SymbolicName: rabbitmq-wrapper
+Bundle-Version: 5.7.1
+Bundle-ClassPath: mvn/amqp-client-5.7.1.jar,
+ mvn/slf4j-api-1.7.26.jar
+Export-Package: com.rabbitmq.client,
+ com.rabbitmq.client.impl,
+ com.rabbitmq.client.impl.nio,
+ com.rabbitmq.client.impl.recovery,
+ com.rabbitmq.tools.json,
+ com.rabbitmq.tools.jsonrpc,
+ com.rabbitmq.utility
+Bundle-RequiredExecutionEnvironment: JavaSE-11
+Automatic-Module-Name: rabbitmq-wrapper
