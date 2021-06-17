@@ -5,7 +5,7 @@
       version="1.0.0.qualifier">
 
    <description>
-      Xtext editor for MoniLog.
+      Xtext editor and standard library for MoniLog.
    </description>
 
    <requires>

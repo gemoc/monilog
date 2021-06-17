@@ -7,7 +7,6 @@ Bundle-Version: 1.0.0.qualifier
 Bundle-SymbolicName: org.gemoc.monilog.rabbitmq;singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.gemoc.monilog,
- rabbitmq-wrapper;bundle-version="5.7.1",
- com.google.gson
+ rabbitmq-wrapper;bundle-version="5.7.1"
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Export-Package: org.gemoc.monilog.rabbitmq
