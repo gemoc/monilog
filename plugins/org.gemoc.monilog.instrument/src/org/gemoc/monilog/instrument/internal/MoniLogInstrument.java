@@ -37,7 +37,6 @@ import org.gemoc.monilog.moniLog.Appender;
 import org.gemoc.monilog.moniLog.AppenderCall;
 import org.gemoc.monilog.moniLog.BeforeASTEvent;
 import org.gemoc.monilog.moniLog.BoolConstant;
-import org.gemoc.monilog.moniLog.CallableElementNamedReference;
 import org.gemoc.monilog.moniLog.Comparison;
 import org.gemoc.monilog.moniLog.ContextVarReference;
 import org.gemoc.monilog.moniLog.Document;
@@ -296,7 +295,7 @@ public class MoniLogInstrument implements IInstrument {
 					gatherCallArgs(layoutCall.getLayout().getParameterDecl(), layoutCall.getArgs(), context, args));
 		case MoniLogPackage.CONTEXT_VAR_REFERENCE:
 			final ContextVarReference contextVarReference = (ContextVarReference) arg;
-			return context.getVariableValue(contextVarReference.getTarget());
+			return context.getVariableValue(contextVarReference.getTarget().getName());
 		case MoniLogPackage.PROPERTY_REFERENCE:
 			final PropertyReference specVarNameReference = (PropertyReference) arg;
 			return propertyToValue.get(specVarNameReference.getProperty());
