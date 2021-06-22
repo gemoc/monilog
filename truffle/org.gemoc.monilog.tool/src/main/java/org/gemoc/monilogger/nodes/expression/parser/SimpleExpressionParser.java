@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -340,24 +341,34 @@ public class SimpleExpressionParser {
 		case MoniLogPackage.LANGUAGE_CALL: {
 			final LanguageCall call = (LanguageCall) value;
 			final String filePath = call.getFile().getFilePath();
-			final Source source = evaluatedSources.computeIfAbsent(filePath, p -> {
-				Source src;
-				try {
-					src = Source.newBuilder(languageId, new File(filePath)).build();
-					Context.getCurrent().eval(src);
-					return src;
-				} catch (IOException e) {
-					e.printStackTrace();
-					return null;
-				}
-			});
-			final Value ast = Context.getCurrent().getBindings(languageId).getMember(call.getFqn());
-			final SimpleExpressionNode[] args = call.getArgs().stream()
-					.map(e -> createExpressionNode(e, node, onEnter)).collect(Collectors.toList())
-					.toArray(EMPTY_ARRAY);
-			final SimpleExpressionNode callNode = new MoniLoggerCallSourceNode(Context.getCurrent(), source, ast,
-					args);
-			return callNode;
+			if (filePath != null && !filePath.isBlank()) {
+				final Source source = evaluatedSources.computeIfAbsent(filePath, p -> {
+					Source src;
+					try {
+						final String actualFilePath = Arrays.stream(filePath.split("/"))
+								.map(segment -> segment.startsWith("$") ? System.getenv(segment.substring(1)) : segment)
+								.reduce((s1, s2) -> s1 + "/" + s2).orElse("");
+						final File sourceFile = new File(actualFilePath);
+						if (sourceFile.exists() && sourceFile.isFile()) {
+							src = Source.newBuilder(languageId, sourceFile).build();
+							Context.getCurrent().eval(src);
+							return src;
+						} else {
+							throw new UnsupportedOperationException();
+						}
+					} catch (IOException e) {
+						e.printStackTrace();
+						return null;
+					}
+				});
+				final Value ast = Context.getCurrent().getBindings(languageId).getMember(call.getFqn());
+				final SimpleExpressionNode[] args = call.getArgs().stream()
+						.map(e -> createExpressionNode(e, node, onEnter)).collect(Collectors.toList())
+						.toArray(EMPTY_ARRAY);
+				final SimpleExpressionNode callNode = new MoniLoggerCallSourceNode(Context.getCurrent(), source, ast,
+						args);
+				return callNode;
+			}
 		}
 		default:
 			throw new UnsupportedOperationException();

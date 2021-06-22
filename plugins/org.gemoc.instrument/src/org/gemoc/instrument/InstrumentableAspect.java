@@ -22,12 +22,12 @@ public abstract class InstrumentableAspect<C> {
 		}
 	}
 	
-	protected void notifyBefore(String eventName, C context) {
-		registeredInstruments.forEach(i -> i.notifyBefore(eventName, getContextWrapper(context)));
+	protected void notifyBefore(String rule, String element, C context) {
+		registeredInstruments.forEach(i -> i.notifyBefore(rule, element, getContextWrapper(context)));
 	}
 	
-	protected void notifyAfter(String eventName, Object result, C context) {
-		registeredInstruments.forEach(i -> i.notifyAfter(eventName, result, getContextWrapper(context)));
+	protected void notifyAfter(String rule, String element, Object result, C context) {
+		registeredInstruments.forEach(i -> i.notifyAfter(rule, element, result, getContextWrapper(context)));
 	}
 	
 	protected abstract IContextWrapper getContextWrapper(C context);

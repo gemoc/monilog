@@ -58,9 +58,14 @@ ParameterDeclNoVarArgs returns ParameterDecl:
 MoniLogger:
 	annotations+=MoniLoggerAnnotation*
 	'monilogger' name=ID ('(' parameterDecl=ParameterDeclVarArgs ')')? ('[' level=LogLevel ']')? '{'
-		'event' streamEvent=StreamEvent
-		('conditions' '{' (conditions+=Condition) (';' conditions+=Condition)* ';'? '}')?
-		'actions' '{' (actions+=Action) (';' actions+=Action)* ';'? '}'
+		'when' streamEvent=StreamEvent
+		(
+			'if' '(' condition=Condition ')'
+			'then' '{' (thenActions+=Action) (';' thenActions+=Action)* ';'? '}'
+			('else' '{' (elseActions+=Action) (';' elseActions+=Action)* ';'? '}')?
+		|
+			'{' (thenActions+=Action) (';' thenActions+=Action)* ';'? '}'
+		)
 	'}';
 
 @Exported

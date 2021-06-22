@@ -32,6 +32,7 @@ import org.gemoc.monilog.MoniLogStandaloneSetup;
 import org.gemoc.monilog.api.IMoniLogAppender;
 import org.gemoc.monilog.api.IMoniLogLayout;
 import org.gemoc.monilog.moniLog.ASTEvent;
+import org.gemoc.monilog.moniLog.Action;
 import org.gemoc.monilog.moniLog.AfterASTEvent;
 import org.gemoc.monilog.moniLog.Appender;
 import org.gemoc.monilog.moniLog.AppenderCall;
@@ -76,6 +77,8 @@ public class MoniLogInstrument implements IInstrument {
 	private static ParseHelper<Document> moniLogParseHelper = moniLogInjector
 			.<ParseHelper>getInstance(ParseHelper.class);
 
+//	private final Map<String, Map<String, List<MoniLogger>>> beforeEventToMoniLoggers = new HashMap<>();
+//	private final Map<String, Map<String, List<MoniLogger>>> afterEventToMoniLoggers = new HashMap<>();
 	private final Map<String, List<MoniLogger>> beforeEventToMoniLoggers = new HashMap<>();
 	private final Map<String, List<MoniLogger>> afterEventToMoniLoggers = new HashMap<>();
 
@@ -133,48 +136,55 @@ public class MoniLogInstrument implements IInstrument {
 	}
 
 	@Override
-	public void notifyBefore(String name, IContextWrapper context) {
-		final List<MoniLogger> moniLoggers = beforeEventToMoniLoggers.get(name);
-		if (moniLoggers != null && !moniLoggers.isEmpty()) {
-			moniLoggers.forEach(m -> {
-				if (executeConditions(m, context)) {
-					executeActions(m, context);
-				}
-			});
-		}
+	public void notifyBefore(String rule, String element, IContextWrapper context) {
+//		final Map<String, List<MoniLogger>> candidateMoniLoggers = beforeEventToMoniLoggers.get(rule);
+//		if (candidateMoniLoggers != null && !candidateMoniLoggers.isEmpty()) {
+//			final List<MoniLogger> moniLoggers = candidateMoniLoggers.get(element);
+			final List<MoniLogger> moniLoggers = beforeEventToMoniLoggers.get(element);
+			if (moniLoggers != null && !moniLoggers.isEmpty()) {
+				moniLoggers.forEach(m -> {
+					if (m.getCondition() == null || executeConditions(m, context)) {
+						executeActions(m.getThenActions(), context);
+					} else {
+						executeActions(m.getElseActions(), context);
+					}
+				});
+			}
+//		}
 	}
 
 	@Override
-	public void notifyAfter(String name, Object result, IContextWrapper context) {
-		final List<MoniLogger> moniLoggers = afterEventToMoniLoggers.get(name);
-		if (moniLoggers != null && !moniLoggers.isEmpty()) {
-			// TODO handle result.
-			moniLoggers.forEach(m -> {
-				if (executeConditions(m, context)) {
-					executeActions(m, context);
-				}
-			});
-		}
+	public void notifyAfter(String rule, String element, Object result, IContextWrapper context) {
+//		final Map<String, List<MoniLogger>> candidateMoniLoggers = afterEventToMoniLoggers.get(rule);
+//		if (candidateMoniLoggers != null && !candidateMoniLoggers.isEmpty()) {
+//			final List<MoniLogger> moniLoggers = candidateMoniLoggers.get(element);
+			final List<MoniLogger> moniLoggers = afterEventToMoniLoggers.get(element);
+			if (moniLoggers != null && !moniLoggers.isEmpty()) {
+				// TODO handle result.
+				moniLoggers.forEach(m -> {
+					if (m.getCondition() == null || executeConditions(m, context)) {
+						executeActions(m.getThenActions(), context);
+					} else {
+						executeActions(m.getElseActions(), context);
+					}
+				});
+			}
+//		}
 	}
 
 	private boolean executeConditions(MoniLogger moniLogger, IContextWrapper context) {
-		final int[] iPtr = new int[] { 0 };
-		final String name = moniLogger.getName();
-		return moniLogger.getConditions().stream().allMatch(c -> {
-			iPtr[0]++;
-			final Value result = Value.asValue(evaluateExpression(c.getExpression(), context, Collections.emptyMap()));
-			if (result.isBoolean()) {
-				return result.asBoolean();
-			} else {
-				throw new IllegalArgumentException(name + ": condition at index " + iPtr[0]
-						+ " did not return a boolean value, " + result.toString() + " received instead");
-			}
-		});
+		final Value result = Value.asValue(
+				evaluateExpression(moniLogger.getCondition().getExpression(), context, Collections.emptyMap()));
+		if (result.isBoolean()) {
+			return result.asBoolean();
+		} else {
+			return result != null;
+		}
 	}
 
-	private void executeActions(MoniLogger moniLogger, IContextWrapper context) {
+	private void executeActions(List<Action> actions, IContextWrapper context) {
 		final int[] iPtr = new int[] { 0 };
-		moniLogger.getActions().forEach(action -> {
+		actions.forEach(action -> {
 			switch (action.eClass().getClassifierID()) {
 			case MoniLogPackage.APPENDER_CALL:
 				final AppenderCall appenderCall = (AppenderCall) action;
@@ -184,13 +194,14 @@ public class MoniLogInstrument implements IInstrument {
 			case MoniLogPackage.STOP_MONI_LOGGER:
 				final StopMoniLogger stop = (StopMoniLogger) action;
 				final MoniLogger toStop = stop.getMonilogger();
-				//FIXME concurrent mod
+				// FIXME concurrent mod
 				beforeEventToMoniLoggers.keySet().forEach(s -> beforeEventToMoniLoggers.get(s).remove(toStop));
 				afterEventToMoniLoggers.keySet().forEach(s -> afterEventToMoniLoggers.get(s).remove(toStop));
 				break;
 			case MoniLogPackage.SET_VARIABLE:
 				final SetVariable setVariable = (SetVariable) action;
-				final Value value = Value.asValue(evaluateExpression(setVariable.getValue(), context, Collections.emptyMap()));
+				final Value value = Value
+						.asValue(evaluateExpression(setVariable.getValue(), context, Collections.emptyMap()));
 				propertyToValue.put(setVariable.getVariable().getProperty(), value);
 				break;
 			case MoniLogPackage.EMIT_EVENT:
@@ -248,7 +259,8 @@ public class MoniLogInstrument implements IInstrument {
 				.map(p -> args.get(p.getProperty().getName())).collect(Collectors.toList()).toArray();
 		if (parameterDecl.getVarArgs() != null) {
 			// Varargs are provided as a List<Object>.
-			final Object[] varArgsArray = ((List<?>) args.get(parameterDecl.getVarArgs().getProperty().getName())).toArray();
+			final Object[] varArgsArray = ((List<?>) args.get(parameterDecl.getVarArgs().getProperty().getName()))
+					.toArray();
 			final Object[] completeArgs = new Object[argsArray.length + varArgsArray.length];
 			System.arraycopy(argsArray, 0, completeArgs, 0, argsArray.length);
 			System.arraycopy(varArgsArray, 0, completeArgs, argsArray.length, varArgsArray.length);

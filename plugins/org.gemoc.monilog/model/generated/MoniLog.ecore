@@ -66,9 +66,11 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="level" eType="#//LogLevel"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="streamEvent" eType="#//StreamEvent"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="conditions" upperBound="-1"
-        eType="#//Condition" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="actions" upperBound="-1"
+    <eStructuralFeatures xsi:type="ecore:EReference" name="condition" eType="#//Condition"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="thenActions" upperBound="-1"
+        eType="#//Action" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="elseActions" upperBound="-1"
         eType="#//Action" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Event">
