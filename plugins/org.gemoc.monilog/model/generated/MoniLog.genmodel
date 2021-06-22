@@ -65,8 +65,9 @@
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//MoniLogger/parameterDecl"/>
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog.ecore#//MoniLogger/level"/>
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//MoniLogger/streamEvent"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//MoniLogger/conditions"/>
-      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//MoniLogger/actions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//MoniLogger/condition"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//MoniLogger/thenActions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//MoniLogger/elseActions"/>
     </genClasses>
     <genClasses ecoreClass="MoniLog.ecore#//Event">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog.ecore#//Event/name"/>

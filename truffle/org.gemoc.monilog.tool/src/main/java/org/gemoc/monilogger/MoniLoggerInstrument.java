@@ -22,6 +22,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiFunction;
 import java.util.logging.Level;
 import java.util.stream.Collectors;
+import java.util.function.Function;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -58,6 +59,7 @@ import org.gemoc.monilogger.nodes.MoniLoggerNodeGen;
 import org.gemoc.monilogger.nodes.action.MoniLoggerExternalAppenderNodeGen;
 import org.gemoc.monilogger.nodes.action.MoniLoggerSetVariableNodeGen;
 import org.gemoc.monilogger.nodes.condition.MoniLoggerConditionalNode;
+import org.gemoc.monilogger.nodes.condition.MoniLoggerConditionalNodeGen;
 import org.gemoc.monilogger.nodes.expression.parser.SimpleExpressionParser;
 import org.gemoc.monilogger.parser.MoniLogParser;
 import org.graalvm.options.OptionCategory;
@@ -91,7 +93,7 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 
 	@Option(name = "polyglotContext", help = "Use polyglot context.", category = OptionCategory.EXPERT, stability = OptionStability.STABLE)
 	public static final OptionKey<Boolean> USE_POLYGLOT_CONTEXT = new OptionKey<Boolean>(false);
-	
+
 	public static final String MONILOG_CONTEXT = "monilog-context";
 
 	public static final String ID = "monilogger";
@@ -203,7 +205,7 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 
 	@Override
 	protected void onFinalize(Env env) {
-		
+
 	}
 
 	public CyclicAssumption getContextActive() {
@@ -233,7 +235,6 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 
 		eventTypes.clear();
 		eventToMoniLoggers.clear();
-
 
 		moniloggers.forEach(m -> processMonilogger(m));
 
@@ -342,22 +343,18 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 
 					final String packageName = ((Document) m.eContainer()).getName();
 
-					final List<Condition> conditions = m.getConditions();
-					final List<Action> actions = m.getActions();
+					final Condition condition = m.getCondition();
+					final List<Action> thenActions = m.getThenActions();
+					final List<Action> elseActions = m.getElseActions();
 
 					final List<MoniLoggerExecutableNode> prologNodes = new ArrayList<>();
-					final List<MoniLoggerExecutableNode> conditionNodes = new ArrayList<>();
-					final List<MoniLoggerExecutableNode> actionNodes = new ArrayList<>();
+					final List<MoniLoggerExecutableNode> thenActionNodes = new ArrayList<>();
+					final List<MoniLoggerExecutableNode> elseActionNodes = new ArrayList<>();
 
-					conditionNodes.addAll(conditions.stream().map(condition -> {
-						final Expression value = condition.getExpression();
-						return getExpressionNode(value, node, onEnter);
-					}).collect(Collectors.toList()));
+					final MoniLoggerConditionalNode conditionNode = MoniLoggerConditionalNodeGen
+							.create(getExpressionNode(condition.getExpression(), node, onEnter));
 
-					final MoniLoggerConditionalNode conditionNode = new MoniLoggerConditionalNode(
-							conditionNodes.toArray(EMPTY_ARRAY));
-
-					actionNodes.addAll(actions.stream().map(action -> {
+					final Function<Action, MoniLoggerExecutableNode> actionMapper = action -> {
 						switch (action.eClass().getClassifierID()) {
 						case MoniLogPackage.LANGUAGE_VALUE: {
 							final LanguageValue languageValue = (LanguageValue) action;
@@ -379,9 +376,15 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 						default:
 							throw new UnsupportedOperationException();
 						}
-					}).collect(Collectors.toList()));
+					};
 
-					final MoniLoggerBlockNode actionNode = new MoniLoggerBlockNode(actionNodes.toArray(EMPTY_ARRAY));
+					thenActionNodes.addAll(thenActions.stream().map(actionMapper).collect(Collectors.toList()));
+					elseActionNodes.addAll(elseActions.stream().map(actionMapper).collect(Collectors.toList()));
+
+					final MoniLoggerBlockNode thenActionNode = new MoniLoggerBlockNode(
+							thenActionNodes.toArray(EMPTY_ARRAY));
+					final MoniLoggerBlockNode elseActionNode = new MoniLoggerBlockNode(
+							elseActionNodes.toArray(EMPTY_ARRAY));
 
 					prologNodes.addAll(languages.stream().map(
 							l -> MoniLoggerCopyVariablesFromScopeNodeGen.create(l, node, onEnter, usePolyglotContext))
@@ -395,16 +398,16 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 					}
 
 					final MoniLoggerNode moniloggerNode = MoniLoggerNodeGen.create(prologNode, conditionNode,
-							actionNode);
+							thenActionNode, elseActionNode);
 
 					return moniloggerNode;
 				}).collect(Collectors.toList()).toArray(EMPTY_ARRAY));
 			}
 		};
 
-		final EventBinding<MoniLoggerASTEventNodeFactory> binding = instrumenter.attachExecutionEventFactory(
-				filterRules, new MoniLoggerASTEventNodeFactory(event, moniloggerFactory));
-		
+		final EventBinding<MoniLoggerASTEventNodeFactory> binding = instrumenter
+				.attachExecutionEventFactory(filterRules, new MoniLoggerASTEventNodeFactory(event, moniloggerFactory));
+
 		return binding;
 	}
 

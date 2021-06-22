@@ -14,12 +14,16 @@ public abstract class MoniLoggerNode extends MoniLoggerExecutableNode {
 	@Child
 	protected MoniLoggerExecutableNode condition;
 	@Child
-	protected MoniLoggerExecutableNode action;
+	protected MoniLoggerExecutableNode thenAction;
+	@Child
+	protected MoniLoggerExecutableNode elseAction;
 	
-	protected MoniLoggerNode(MoniLoggerExecutableNode prolog, MoniLoggerExecutableNode condition, MoniLoggerExecutableNode action) {
+	protected MoniLoggerNode(MoniLoggerExecutableNode prolog, MoniLoggerExecutableNode condition,
+			MoniLoggerExecutableNode thenAction, MoniLoggerExecutableNode elseAction) {
 		this.prolog = prolog;
 		this.condition = condition;
-		this.action = action;
+		this.thenAction = thenAction;
+		this.elseAction = elseAction;
 	}
 
 	@Specialization
@@ -28,9 +32,11 @@ public abstract class MoniLoggerNode extends MoniLoggerExecutableNode {
 			prolog.execute(frame);
 		}
 		if (conditionProfile.profile(CompilerDirectives.castExact(condition.execute(frame), Boolean.class))) {
-			action.execute(frame);
+			thenAction.execute(frame);
 			return true;
+		} else {
+			elseAction.execute(frame);
+			return false;
 		}
-		return false;
 	}
 }
