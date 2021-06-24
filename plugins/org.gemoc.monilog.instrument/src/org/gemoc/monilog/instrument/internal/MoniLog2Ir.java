@@ -8,10 +8,12 @@ import java.util.logging.Level;
 
 import org.eclipse.emf.ecore.EClass;
 import org.gemoc.monilog.moniLog.ASTEvent;
+import org.gemoc.monilog.moniLog.CallEvent;
 import org.gemoc.monilog.moniLog.Document;
 import org.gemoc.monilog.moniLog.Event;
 import org.gemoc.monilog.moniLog.MoniLogPackage;
 import org.gemoc.monilog.moniLog.MoniLogger;
+import org.gemoc.monilog.moniLog.WriteEvent;
 
 public class MoniLog2Ir {
 
@@ -56,13 +58,18 @@ public class MoniLog2Ir {
 		final EClass eClass = event.eClass();
 		final int classifierID = eClass.getClassifierID();
 		switch (classifierID) {
-		case MoniLogPackage.AST_EVENT: {
-			final ASTEvent ev = (ASTEvent) event;
+		case MoniLogPackage.CALL_EVENT: {
+			final CallEvent ev = (CallEvent) event;
 			final Map<String, Object> eventProperties = new HashMap<>();
 			if (ev.getParameterDecl() != null) {
 				ev.getParameterDecl().getParameters().forEach(p -> eventProperties.put(p.getProperty().getName(), Object.class));
 			}
 			eventToEventProperties.put(ev, eventProperties);
+			break;
+		}
+		case MoniLogPackage.WRITE_EVENT: {
+			final WriteEvent ev = (WriteEvent) event;
+			eventToEventProperties.put(ev, new HashMap<>());
 			break;
 		}
 //		case MoniLogPackage.USER_EVENT: {

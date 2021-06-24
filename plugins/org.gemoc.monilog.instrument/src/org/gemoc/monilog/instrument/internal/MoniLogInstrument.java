@@ -38,6 +38,7 @@ import org.gemoc.monilog.moniLog.Appender;
 import org.gemoc.monilog.moniLog.AppenderCall;
 import org.gemoc.monilog.moniLog.BeforeASTEvent;
 import org.gemoc.monilog.moniLog.BoolConstant;
+import org.gemoc.monilog.moniLog.CallEvent;
 import org.gemoc.monilog.moniLog.Comparison;
 import org.gemoc.monilog.moniLog.ContextVarReference;
 import org.gemoc.monilog.moniLog.Document;
@@ -59,6 +60,7 @@ import org.gemoc.monilog.moniLog.RealConstant;
 import org.gemoc.monilog.moniLog.SetVariable;
 import org.gemoc.monilog.moniLog.StopMoniLogger;
 import org.gemoc.monilog.moniLog.StringConstant;
+import org.gemoc.monilog.moniLog.WriteEvent;
 import org.graalvm.polyglot.Context;
 import org.graalvm.polyglot.Engine;
 import org.graalvm.polyglot.Source;
@@ -127,10 +129,21 @@ public class MoniLogInstrument implements IInstrument {
 
 		final Map<ASTEvent, List<MoniLogger>> eventToMoniLoggers = (new MoniLog2Ir()).buildIr(documents, Level.INFO);
 		eventToMoniLoggers.forEach((e, l) -> {
+			final String element;
+			switch (e.eClass().getClassifierID()) {
+			case MoniLogPackage.CALL_EVENT:
+				element = ((CallEvent) e).getElement().getName();
+				break;
+			case MoniLogPackage.WRITE_EVENT:
+				element = ((WriteEvent) e).getElement().getName();
+				break;
+			default:
+				throw new IllegalStateException("Event " + e.toString() + " is neither a call nor a write event.");
+			}
 			if (e.getKind() instanceof BeforeASTEvent) {
-				beforeEventToMoniLoggers.put(((CallableElementNamedReference) e.getElement()).getTarget(), l);
+				beforeEventToMoniLoggers.put(element, l);
 			} else if (e.getKind() instanceof AfterASTEvent) {
-				afterEventToMoniLoggers.put(((CallableElementNamedReference) e.getElement()).getTarget(), l);
+				afterEventToMoniLoggers.put(element, l);
 			}
 		});
 	}

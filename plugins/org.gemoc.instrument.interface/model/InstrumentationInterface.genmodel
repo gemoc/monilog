@@ -1,28 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <genmodel:GenModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
-    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.gemoc.instrument.interface/src" modelPluginID="org.gemoc.instrument.interface"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.gemoc.instrument.interface/src-gen" modelPluginID="org.gemoc.instrument.interface"
     modelName="InstrumentationInterface" rootExtendsClass="org.eclipse.emf.ecore.impl.MinimalEObjectImpl$Container"
     importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0" copyrightFields="false"
     operationReflection="true" importOrganizing="true">
   <foreignModel>InstrumentationInterface.ecore</foreignModel>
   <genPackages prefix="InstrumentationInterface" disposableProviderFactory="true"
-      ecorePackage="InstrumentationInterface.ecore#/">
-    <genClasses ecoreClass="InstrumentationInterface.ecore#//CallableElement">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference InstrumentationInterface.ecore#//CallableElement/element"/>
-    </genClasses>
-    <genClasses ecoreClass="InstrumentationInterface.ecore#//ReadableElement">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference InstrumentationInterface.ecore#//ReadableElement/element"/>
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute InstrumentationInterface.ecore#//ReadableElement/name"/>
-    </genClasses>
-    <genClasses ecoreClass="InstrumentationInterface.ecore#//WriteableElement">
-      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference InstrumentationInterface.ecore#//WriteableElement/element"/>
-    </genClasses>
-    <genClasses ecoreClass="InstrumentationInterface.ecore#//InstrumentableElement">
-      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute InstrumentationInterface.ecore#//InstrumentableElement/name"/>
-    </genClasses>
+      fileExtensions="instritf" ecorePackage="InstrumentationInterface.ecore#/">
+    <genClasses ecoreClass="InstrumentationInterface.ecore#//CallableElement"/>
+    <genClasses ecoreClass="InstrumentationInterface.ecore#//ReadableElement"/>
+    <genClasses ecoreClass="InstrumentationInterface.ecore#//WriteableElement"/>
+    <genClasses ecoreClass="InstrumentationInterface.ecore#//InstrumentableElement"/>
     <genClasses ecoreClass="InstrumentationInterface.ecore#//InstrumentationInterface">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference InstrumentationInterface.ecore#//InstrumentationInterface/instrumentableElements"/>
       <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference InstrumentationInterface.ecore#//InstrumentationInterface/readableElements"/>
+    </genClasses>
+    <genClasses ecoreClass="InstrumentationInterface.ecore#//NamedElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute InstrumentationInterface.ecore#//NamedElement/name"/>
     </genClasses>
   </genPackages>
 </genmodel:GenModel>

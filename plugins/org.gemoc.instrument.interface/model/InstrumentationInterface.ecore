@@ -2,28 +2,17 @@
 <ecore:EPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="instrumentationInterface" nsURI="http://www.gemoc.org/instrument/InstrumentationInterface"
     nsPrefix="instrumentationInterface">
-  <eClassifiers xsi:type="ecore:EClass" name="CallableElement" eSuperTypes="#//InstrumentableElement">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="element" lowerBound="1"
-        eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="ReadableElement">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="element" lowerBound="1"
-        eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
-        iD="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="WriteableElement" eSuperTypes="#//InstrumentableElement">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="element" lowerBound="1"
-        eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="InstrumentableElement">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
-        iD="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="InstrumentationInterface">
+  <eClassifiers xsi:type="ecore:EClass" name="CallableElement" eSuperTypes="#//InstrumentableElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ReadableElement" eSuperTypes="#//NamedElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="WriteableElement" eSuperTypes="#//InstrumentableElement #//ReadableElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="InstrumentableElement" eSuperTypes="#//NamedElement"/>
+  <eClassifiers xsi:type="ecore:EClass" name="InstrumentationInterface" eSuperTypes="#//NamedElement">
     <eStructuralFeatures xsi:type="ecore:EReference" name="instrumentableElements"
         upperBound="-1" eType="#//InstrumentableElement" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="readableElements" upperBound="-1"
-        eType="#//ReadableElement"/>
+        eType="#//ReadableElement" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="NamedElement">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
 </ecore:EPackage>

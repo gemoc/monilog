@@ -20,12 +20,15 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiFunction;
+import java.util.function.Function;
 import java.util.logging.Level;
 import java.util.stream.Collectors;
-import java.util.function.Function;
 
+import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.util.EcoreUtil;
+import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.gemoc.monilog.moniLog.ASTEvent;
 import org.gemoc.monilog.moniLog.ASTEventKind;
 import org.gemoc.monilog.moniLog.Action;
@@ -49,7 +52,6 @@ import org.gemoc.monilog.moniLog.PropertyReference;
 import org.gemoc.monilog.moniLog.SetVariable;
 import org.gemoc.monilog.moniLog.Setup;
 import org.gemoc.monilog.moniLog.UserEvent;
-import org.gemoc.monilog.moniLog.WriteEvent;
 import org.gemoc.monilogger.nodes.MoniLoggerBlockNode;
 import org.gemoc.monilogger.nodes.MoniLoggerCopyVariablesFromScopeNodeGen;
 import org.gemoc.monilogger.nodes.MoniLoggerExecutableNode;
@@ -67,6 +69,7 @@ import org.graalvm.options.OptionKey;
 import org.graalvm.options.OptionStability;
 import org.graalvm.options.OptionValues;
 import org.graalvm.polyglot.Value;
+import org.instrumentationInterface.InstrumentationInterfaceStandaloneSetup;
 
 import com.google.common.collect.Streams;
 import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;
@@ -76,9 +79,7 @@ import com.oracle.truffle.api.TruffleLogger;
 import com.oracle.truffle.api.instrumentation.ContextsListener;
 import com.oracle.truffle.api.instrumentation.EventBinding;
 import com.oracle.truffle.api.instrumentation.Instrumenter;
-import com.oracle.truffle.api.instrumentation.SourceFilter;
 import com.oracle.truffle.api.instrumentation.SourceSectionFilter;
-import com.oracle.truffle.api.instrumentation.SourceSectionFilter.IndexRange;
 import com.oracle.truffle.api.instrumentation.StandardTags.RootBodyTag;
 import com.oracle.truffle.api.instrumentation.StandardTags.WriteVariableTag;
 import com.oracle.truffle.api.instrumentation.TruffleInstrument;
@@ -168,7 +169,7 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 				final OptionValues contextOptions = env.getOptions(context);
 
 				final List<String> files = MoniLoggerContext.FILES.getValue(contextOptions);
-				final List<String> specs = files.stream().map(path -> {
+				final List<String> specs = files.stream().filter(path -> path.endsWith(".mnlg")).map(path -> {
 					try {
 						return new String(Files.readAllBytes(Paths.get(path)));
 					} catch (IOException e) {
@@ -180,9 +181,12 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 						return "";
 					}
 				}).collect(Collectors.toList());
+				final List<String> instrumentationInterfaces = files.stream().filter(path -> path.endsWith(".instritf"))
+						.collect(Collectors.toList());
 
 				if (!specs.isEmpty()) {
-					final List<EventBinding<MoniLoggerASTEventNodeFactory>> bindings = enable(specs);
+					final List<EventBinding<MoniLoggerASTEventNodeFactory>> bindings = enable(specs,
+							instrumentationInterfaces);
 					contextToFactory.put(context, bindings);
 				}
 			}
@@ -215,7 +219,8 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 
 	private final Map<String, Map<String, Object>> eventTypes = new HashMap<>();
 
-	private List<EventBinding<MoniLoggerASTEventNodeFactory>> enable(final List<String> specifications) {
+	private List<EventBinding<MoniLoggerASTEventNodeFactory>> enable(final List<String> specifications,
+			final List<String> instrumentationInterfaces) {
 		final List<Document> specificationModels = new ArrayList<>();
 		final List<MoniLogger> moniloggers = new ArrayList<>();
 		final List<Event> allEvents = new ArrayList<>();
@@ -223,6 +228,18 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 		final List<EventBinding<MoniLoggerASTEventNodeFactory>> bindings = new ArrayList<>();
 
 		final ResourceSet rs = parser.parse(specifications);
+
+		final InstrumentationInterfaceStandaloneSetup setup = new InstrumentationInterfaceStandaloneSetup();
+		setup.createInjectorAndDoEMFRegistration();
+
+		rs.getResourceFactoryRegistry().getExtensionToFactoryMap().put("instritf", new XMIResourceFactoryImpl());
+
+		instrumentationInterfaces.forEach(path -> {
+			rs.getResource(URI.createFileURI(path), true);
+		});
+
+		EcoreUtil.resolveAll(rs);
+
 		Streams.stream(rs.getAllContents()).filter(o -> o instanceof Document).map(o -> (Document) o).forEach(model -> {
 			specificationModels.add(model);
 			allEvents.addAll(model.getEvents());
@@ -354,8 +371,8 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 					final List<MoniLoggerExecutableNode> thenActionNodes = new ArrayList<>();
 					final List<MoniLoggerExecutableNode> elseActionNodes = new ArrayList<>();
 
-					final MoniLoggerConditionalNode conditionNode = MoniLoggerConditionalNodeGen
-							.create(getExpressionNode(condition.getExpression(), node, onEnter));
+					final MoniLoggerConditionalNode conditionNode = condition != null ? MoniLoggerConditionalNodeGen
+							.create(getExpressionNode(condition.getExpression(), node, onEnter)) : null;
 
 					final Function<Action, MoniLoggerExecutableNode> actionMapper = action -> {
 						switch (action.eClass().getClassifierID()) {
@@ -386,8 +403,8 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 
 					final MoniLoggerBlockNode thenActionNode = new MoniLoggerBlockNode(
 							thenActionNodes.toArray(EMPTY_ARRAY));
-					final MoniLoggerBlockNode elseActionNode = new MoniLoggerBlockNode(
-							elseActionNodes.toArray(EMPTY_ARRAY));
+					final MoniLoggerBlockNode elseActionNode = elseActionNodes.isEmpty() ? null
+							: new MoniLoggerBlockNode(elseActionNodes.toArray(EMPTY_ARRAY));
 
 					prologNodes.addAll(languages.stream().map(
 							l -> MoniLoggerCopyVariablesFromScopeNodeGen.create(l, node, onEnter, usePolyglotContext))

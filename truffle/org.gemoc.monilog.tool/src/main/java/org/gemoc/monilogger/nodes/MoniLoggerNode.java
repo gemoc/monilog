@@ -31,12 +31,18 @@ public abstract class MoniLoggerNode extends MoniLoggerExecutableNode {
 		if (prolog != null) {
 			prolog.execute(frame);
 		}
-		if (conditionProfile.profile(CompilerDirectives.castExact(condition.execute(frame), Boolean.class))) {
+		if (condition != null) {
+			if (conditionProfile.profile(CompilerDirectives.castExact(condition.execute(frame), Boolean.class))) {
+				thenAction.execute(frame);
+				return true;
+			} else if (elseAction != null) {
+				elseAction.execute(frame);
+			}
+			return false;
+		} else {
 			thenAction.execute(frame);
 			return true;
-		} else {
-			elseAction.execute(frame);
-			return false;
 		}
+		
 	}
 }

@@ -70,19 +70,11 @@ MoniLogger:
 
 @Exported
 Event:
-//	{ASTEvent}
-//	'call' name=ID ('(' parameterDecl=ParameterDeclNoVarArgs ')')? '{'
-//		kind=ASTEventKind element=ASTReference
-//	'}' |
-	ASTEvent | {UserEvent} 'custom' name=ID ('(' parameterDecl=ParameterDeclNoVarArgs ')')?;
+	'event' (ASTEvent | {UserEvent} name=ID ('(' parameterDecl=ParameterDeclNoVarArgs ')')?);
 
 ASTEvent:
-	{CallEvent} kind=ASTEventKind name=ID '{' 'call' '(' element=[instrumentation::CallableElement|QualifiedName] ('(' parameterDecl=ParameterDeclNoVarArgs ')')? ')' '}' |
-	{WriteEvent} kind=ASTEventKind name=ID '{' 'write' '(' element=[instrumentation::WriteableElement|QualifiedName] ')' '}';
-
-//ASTReference:
-//	{CallableElementObjectReference} '$' target=[ecore::EObject|ID] |
-//	{CallableElementNamedReference} target=ID | {SourceRangeReference} 'l' line=INT '['from=INT ',' to=INT ']';
+	{CallEvent} name=ID '{' kind=ASTEventKind 'call' element=[instrumentation::CallableElement|QualifiedName] ('(' parameterDecl=ParameterDeclNoVarArgs ')')? '}' |
+	{WriteEvent} name=ID '{' kind=ASTEventKind 'write' element=[instrumentation::WriteableElement|QualifiedName] '}';
 
 ASTEventKind:
 	{BeforeASTEvent} 'before'| {AfterASTEvent} 'after';
