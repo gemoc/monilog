@@ -33,7 +33,9 @@ public abstract class MoniLoggerNode extends MoniLoggerExecutableNode {
 		}
 		if (condition != null) {
 			if (conditionProfile.profile(CompilerDirectives.castExact(condition.execute(frame), Boolean.class))) {
-				thenAction.execute(frame);
+				if (thenAction != null) {
+					thenAction.execute(frame);
+				}
 				return true;
 			} else if (elseAction != null) {
 				elseAction.execute(frame);

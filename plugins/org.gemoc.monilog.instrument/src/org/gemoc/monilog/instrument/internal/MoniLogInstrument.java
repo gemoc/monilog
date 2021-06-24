@@ -45,7 +45,6 @@ import org.gemoc.monilog.moniLog.Document;
 import org.gemoc.monilog.moniLog.Expression;
 import org.gemoc.monilog.moniLog.FileAlias;
 import org.gemoc.monilog.moniLog.LanguageCall;
-import org.gemoc.monilog.moniLog.LanguageValue;
 import org.gemoc.monilog.moniLog.Layout;
 import org.gemoc.monilog.moniLog.LayoutCall;
 import org.gemoc.monilog.moniLog.LocalAppender;
@@ -120,8 +119,8 @@ public class MoniLogInstrument implements IInstrument {
 		}).filter(specification -> specification != null).collect(Collectors.toList());
 		EcoreUtil.resolveAll(rs);
 		documents.forEach(d -> {
-			Streams.stream(d.eAllContents()).filter(o -> o instanceof LanguageValue)
-					.forEach(o -> languageIds.add(((LanguageValue) o).getLanguageId()));
+			Streams.stream(d.eAllContents()).filter(o -> o instanceof LanguageCall)
+					.forEach(o -> languageIds.add(((LanguageCall) o).getFile().getLanguageID()));
 			Optional.ofNullable(d.getSetup())
 					.ifPresent(s -> s.getProperties().forEach(p -> propertyToValue.put(p.getProperty(),
 							evaluateExpression((Expression) p.getValue(), null, Collections.emptyMap()))));
@@ -309,7 +308,6 @@ public class MoniLogInstrument implements IInstrument {
 		return result;
 	}
 
-	private Map<String, Value> fileAliasToAST = new HashMap<>();
 	private Map<String, Value> memberToAST = new HashMap<>();
 
 	private Object evaluateExpression(Expression arg, IContextWrapper context, Map<String, Object> args) {
@@ -324,43 +322,36 @@ public class MoniLogInstrument implements IInstrument {
 		case MoniLogPackage.PROPERTY_REFERENCE:
 			final PropertyReference specVarNameReference = (PropertyReference) arg;
 			return propertyToValue.get(specVarNameReference.getProperty());
-		case MoniLogPackage.LANGUAGE_VALUE:
-			final LanguageValue languageValue = (LanguageValue) arg;
-			final String languageId = languageValue.getLanguageId();
-			switch (languageValue.getValue().eClass().getClassifierID()) {
-			case MoniLogPackage.LANGUAGE_CALL:
-				final LanguageCall languageCall = (LanguageCall) languageValue.getValue();
-				final String memberName = languageCall.getFqn();
-				final FileAlias alias = languageCall.getFile();
-				final Value ast = memberToAST.computeIfAbsent(alias.getName() + "." + memberName, fqn -> {
-					try {
-						polyglotContext.eval(Source.newBuilder(languageId, new File(alias.getFilePath())).build());
-						final Value languageBindings = polyglotContext.getBindings(languageId);
-						if (languageBindings.hasMember(memberName)) {
-							return languageBindings.getMember(memberName);
-						} else {
-							return null;
-						}
-					} catch (IOException e) {
-						e.printStackTrace();
+		case MoniLogPackage.LANGUAGE_CALL:
+			final LanguageCall languageCall = (LanguageCall) arg;
+			final String memberName = languageCall.getFqn();
+			final FileAlias alias = languageCall.getFile();
+			final Value ast = memberToAST.computeIfAbsent(alias.getName() + "." + memberName, fqn -> {
+				try {
+					polyglotContext.eval(Source.newBuilder(alias.getLanguageID(), new File(alias.getFilePath())).build());
+					final Value languageBindings = polyglotContext.getBindings(alias.getLanguageID());
+					if (languageBindings.hasMember(memberName)) {
+						return languageBindings.getMember(memberName);
+					} else {
 						return null;
 					}
-				});
-				if (ast != null) {
-					final Object[] callArgs = languageCall.getArgs().stream()
-							.map(a -> evaluateExpression(a, context, args)).collect(Collectors.toList()).toArray();
-					if (callArgs.length == 0) {
-						return ast.execute();
-					} else if (callArgs.length == 1) {
-						return ast.execute(callArgs[0]);
-					} else {
-						return ast.execute(callArgs);
-					}
-				} else {
+				} catch (IOException e) {
+					e.printStackTrace();
 					return null;
 				}
-			default:
-				throw new UnsupportedOperationException();
+			});
+			if (ast != null) {
+				final Object[] callArgs = languageCall.getArgs().stream()
+						.map(a -> evaluateExpression(a, context, args)).collect(Collectors.toList()).toArray();
+				if (callArgs.length == 0) {
+					return ast.execute();
+				} else if (callArgs.length == 1) {
+					return ast.execute(callArgs[0]);
+				} else {
+					return ast.execute(callArgs);
+				}
+			} else {
+				return null;
 			}
 		case MoniLogPackage.STRING_CONSTANT:
 			return ((StringConstant) arg).getValue();

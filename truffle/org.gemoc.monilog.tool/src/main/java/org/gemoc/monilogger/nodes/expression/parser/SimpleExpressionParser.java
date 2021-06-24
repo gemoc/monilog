@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import org.eclipse.emf.ecore.EObject;
 import org.gemoc.monilog.moniLog.And;
 import org.gemoc.monilog.moniLog.ArrayRef;
 import org.gemoc.monilog.moniLog.ArraySize;
@@ -27,8 +26,6 @@ import org.gemoc.monilog.moniLog.ExternalLayout;
 import org.gemoc.monilog.moniLog.FieldReference;
 import org.gemoc.monilog.moniLog.IntConstant;
 import org.gemoc.monilog.moniLog.LanguageCall;
-import org.gemoc.monilog.moniLog.LanguageExpression;
-import org.gemoc.monilog.moniLog.LanguageValue;
 import org.gemoc.monilog.moniLog.Layout;
 import org.gemoc.monilog.moniLog.LayoutCall;
 import org.gemoc.monilog.moniLog.LocalLayout;
@@ -165,9 +162,9 @@ public class SimpleExpressionParser {
 		case MoniLogPackage.ARRAY_SIZE:
 			expressionNode = createArraySizeNode((ArraySize) expression, node, onEnter);
 			break;
-		case MoniLogPackage.LANGUAGE_VALUE:
-			final LanguageValue languageValue = (LanguageValue) expression;
-			expressionNode = createLanguageValue(languageValue.getLanguageId(), languageValue, node, onEnter);
+		case MoniLogPackage.LANGUAGE_CALL:
+			final LanguageCall languageCall = (LanguageCall) expression;
+			expressionNode = createLanguageValue(languageCall.getFile().getLanguageID(), languageCall, node, onEnter);
 			break;
 		case MoniLogPackage.LAYOUT_CALL:
 			final LayoutCall layoutCall = (LayoutCall) expression;
@@ -326,53 +323,38 @@ public class SimpleExpressionParser {
 		return SimpleExpressionArraySizeNodeGen.create(expr);
 	}
 	
-	private SimpleExpressionNode createLanguageValue(String languageId, LanguageValue languageValue, Node node,
+	private SimpleExpressionNode createLanguageValue(String languageId, LanguageCall languageCall, Node node,
 			boolean onEnter) {
-		final EObject value = languageValue.getValue();
-		switch (value.eClass().getClassifierID()) {
-		case MoniLogPackage.LANGUAGE_EXPRESSION: {
-			final LanguageExpression expression = (LanguageExpression) value;
-			final String expressionString = expression.getExpression();
-			final SimpleExpressionNode callNode = new MoniLoggerCallSourceNode(Context.getCurrent(),
-					expressionToSource.computeIfAbsent(expressionString,
-							s -> Source.newBuilder(languageId, s, null).buildLiteral()));
+		final String filePath = languageCall.getFile().getFilePath();
+		if (filePath != null && !filePath.isBlank()) {
+			final Source source = evaluatedSources.computeIfAbsent(filePath, p -> {
+				Source src;
+				try {
+					final String actualFilePath = Arrays.stream(filePath.split("/"))
+							.map(segment -> segment.startsWith("$") ? System.getenv(segment.substring(1)) : segment)
+							.reduce((s1, s2) -> s1 + "/" + s2).orElse("");
+					final File sourceFile = new File(actualFilePath);
+					if (sourceFile.exists() && sourceFile.isFile()) {
+						src = Source.newBuilder(languageId, sourceFile).build();
+						Context.getCurrent().eval(src);
+						return src;
+					} else {
+						throw new UnsupportedOperationException();
+					}
+				} catch (IOException e) {
+					e.printStackTrace();
+					return null;
+				}
+			});
+			final Value ast = Context.getCurrent().getBindings(languageId).getMember(languageCall.getFqn());
+			final SimpleExpressionNode[] args = languageCall.getArgs().stream()
+					.map(e -> createExpressionNode(e, node, onEnter)).collect(Collectors.toList())
+					.toArray(EMPTY_ARRAY);
+			final SimpleExpressionNode callNode = new MoniLoggerCallSourceNode(Context.getCurrent(), source, ast,
+					args);
 			return callNode;
 		}
-		case MoniLogPackage.LANGUAGE_CALL: {
-			final LanguageCall call = (LanguageCall) value;
-			final String filePath = call.getFile().getFilePath();
-			if (filePath != null && !filePath.isBlank()) {
-				final Source source = evaluatedSources.computeIfAbsent(filePath, p -> {
-					Source src;
-					try {
-						final String actualFilePath = Arrays.stream(filePath.split("/"))
-								.map(segment -> segment.startsWith("$") ? System.getenv(segment.substring(1)) : segment)
-								.reduce((s1, s2) -> s1 + "/" + s2).orElse("");
-						final File sourceFile = new File(actualFilePath);
-						if (sourceFile.exists() && sourceFile.isFile()) {
-							src = Source.newBuilder(languageId, sourceFile).build();
-							Context.getCurrent().eval(src);
-							return src;
-						} else {
-							throw new UnsupportedOperationException();
-						}
-					} catch (IOException e) {
-						e.printStackTrace();
-						return null;
-					}
-				});
-				final Value ast = Context.getCurrent().getBindings(languageId).getMember(call.getFqn());
-				final SimpleExpressionNode[] args = call.getArgs().stream()
-						.map(e -> createExpressionNode(e, node, onEnter)).collect(Collectors.toList())
-						.toArray(EMPTY_ARRAY);
-				final SimpleExpressionNode callNode = new MoniLoggerCallSourceNode(Context.getCurrent(), source, ast,
-						args);
-				return callNode;
-			}
-		}
-		default:
-			throw new UnsupportedOperationException();
-		}
+		throw new IllegalArgumentException();
 	}
 	
 	private List<Expression> computeLayoutCallActualArgs(LayoutCall childCall, LayoutCall parentCall,

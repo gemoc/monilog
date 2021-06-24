@@ -42,12 +42,12 @@ import org.gemoc.monilog.moniLog.Document;
 import org.gemoc.monilog.moniLog.Event;
 import org.gemoc.monilog.moniLog.Expression;
 import org.gemoc.monilog.moniLog.ExternalAppender;
-import org.gemoc.monilog.moniLog.LanguageValue;
 import org.gemoc.monilog.moniLog.LocalAppender;
 import org.gemoc.monilog.moniLog.MoniLogPackage;
 import org.gemoc.monilog.moniLog.MoniLogger;
 import org.gemoc.monilog.moniLog.ParameterDecl;
 import org.gemoc.monilog.moniLog.Property;
+import org.gemoc.monilog.moniLog.LanguageCall;
 import org.gemoc.monilog.moniLog.PropertyReference;
 import org.gemoc.monilog.moniLog.SetVariable;
 import org.gemoc.monilog.moniLog.Setup;
@@ -243,12 +243,7 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 		Streams.stream(rs.getAllContents()).filter(o -> o instanceof Document).map(o -> (Document) o).forEach(model -> {
 			specificationModels.add(model);
 			allEvents.addAll(model.getEvents());
-			model.getMoniloggers().forEach(monilogger -> {
-				final Level level = Level.parse(monilogger.getLevel().getLiteral());
-				if (logger.isLoggable(level)) {
-					moniloggers.add(monilogger);
-				}
-			});
+			moniloggers.addAll(model.getMoniloggers());
 		});
 
 		eventTypes.clear();
@@ -356,10 +351,9 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 				// for each monilogger that can be triggered by this AST event
 				return new MoniLoggerBlockNode(moniloggers.stream().map(m -> {
 
-					final Level level = Level.parse(m.getLevel().getLiteral());
 					final Set<String> languages = Streams.stream(m.eAllContents())
-							.filter(o -> o instanceof LanguageValue).map(o -> ((LanguageValue) o).getLanguageId())
-							.collect(Collectors.toSet());
+							.filter(o -> o instanceof LanguageCall)
+							.map(o -> ((LanguageCall) o).getFile().getLanguageID()).collect(Collectors.toSet());
 
 					final String packageName = ((Document) m.eContainer()).getName();
 
@@ -371,17 +365,19 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 					final List<MoniLoggerExecutableNode> thenActionNodes = new ArrayList<>();
 					final List<MoniLoggerExecutableNode> elseActionNodes = new ArrayList<>();
 
-					final MoniLoggerConditionalNode conditionNode = condition != null ? MoniLoggerConditionalNodeGen
-							.create(getExpressionNode(condition.getExpression(), node, onEnter)) : null;
+					final MoniLoggerConditionalNode conditionNode = condition != null
+							? MoniLoggerConditionalNodeGen
+									.create(getExpressionNode(condition.getExpression(), node, onEnter))
+							: null;
 
 					final Function<Action, MoniLoggerExecutableNode> actionMapper = action -> {
 						switch (action.eClass().getClassifierID()) {
-						case MoniLogPackage.LANGUAGE_VALUE: {
-							final LanguageValue languageValue = (LanguageValue) action;
-							return getExpressionNode(languageValue, node, onEnter);
+						case MoniLogPackage.LANGUAGE_CALL: {
+							final LanguageCall languageCall = (LanguageCall) action;
+							return getExpressionNode(languageCall, node, onEnter);
 						}
 						case MoniLogPackage.APPENDER_CALL:
-							return getAppenderExecutableNode(env, (AppenderCall) action, level, node, onEnter,
+							return getAppenderExecutableNode(env, (AppenderCall) action, node, onEnter,
 									new HashMap<>());
 //						case MoniLogPackage.EMIT_EVENT:
 //							return new MoniLoggerEmitEventNode(epRuntime, ((EmitEvent) action).getEvent().getName(),
@@ -401,8 +397,8 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 					thenActionNodes.addAll(thenActions.stream().map(actionMapper).collect(Collectors.toList()));
 					elseActionNodes.addAll(elseActions.stream().map(actionMapper).collect(Collectors.toList()));
 
-					final MoniLoggerBlockNode thenActionNode = new MoniLoggerBlockNode(
-							thenActionNodes.toArray(EMPTY_ARRAY));
+					final MoniLoggerBlockNode thenActionNode = thenActionNodes.isEmpty() ? null
+							: new MoniLoggerBlockNode(thenActionNodes.toArray(EMPTY_ARRAY));
 					final MoniLoggerBlockNode elseActionNode = elseActionNodes.isEmpty() ? null
 							: new MoniLoggerBlockNode(elseActionNodes.toArray(EMPTY_ARRAY));
 
@@ -462,8 +458,8 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 		}).collect(Collectors.toList());
 	}
 
-	private MoniLoggerExecutableNode getAppenderExecutableNode(Env env, AppenderCall appenderCall, Level level,
-			Node node, boolean onEnter, Map<AppenderCall, List<Expression>> appenderCallToActualArgs) {
+	private MoniLoggerExecutableNode getAppenderExecutableNode(Env env, AppenderCall appenderCall, Node node,
+			boolean onEnter, Map<AppenderCall, List<Expression>> appenderCallToActualArgs) {
 		// FIXME
 		if (appenderCall.getArgs().stream().allMatch(a -> !(a instanceof PropertyReference))) {
 			appenderCallToActualArgs.putIfAbsent(appenderCall, new ArrayList<>(appenderCall.getArgs()));
@@ -479,7 +475,7 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 			localAppender.getCalls().forEach(childCall -> appenderCallToActualArgs.computeIfAbsent(childCall,
 					a -> computeAppenderCallActualArgs(a, appenderCall, appenderCallToActualArgs)));
 			final MoniLoggerExecutableNode[] calls = localAppender.getCalls().stream()
-					.map(call -> getAppenderExecutableNode(env, call, level, node, onEnter, appenderCallToActualArgs))
+					.map(call -> getAppenderExecutableNode(env, call, node, onEnter, appenderCallToActualArgs))
 					.collect(Collectors.toList()).toArray(EMPTY_ARRAY);
 			return new MoniLoggerBlockNode(calls);
 		}
@@ -497,7 +493,7 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 						.map(arg -> getExpressionNode(arg, node, onEnter)).collect(Collectors.toList())
 						.toArray(EMPTY_ARRAY);
 				return MoniLoggerExternalAppenderNodeGen.create(appenderValue,
-						Arrays.copyOfRange(valueNodes, 1, valueNodes.length), level, valueNodes[0]);
+						Arrays.copyOfRange(valueNodes, 1, valueNodes.length), valueNodes[0]);
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			} catch (NoSuchMethodException | SecurityException e) {
