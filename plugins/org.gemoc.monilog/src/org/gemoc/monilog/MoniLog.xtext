@@ -15,7 +15,7 @@ Import:
 	{ModelImport} 'import' importedNamespace=QualifiedNameWithWildcard | {FileImport} 'import' alias=FileAlias;
 
 FileAlias:
-	filePath=STRING 'as' name=ID;
+	languageID=ID '(' filePath=STRING ')' 'as' name=ID;
 
 Setup:
 	{Setup} 'setup' '{' (properties+=PropertyDefinition (';' properties+=PropertyDefinition)* ';'?)? '}';
@@ -57,14 +57,14 @@ ParameterDeclNoVarArgs returns ParameterDecl:
 @Exported
 MoniLogger:
 	annotations+=MoniLoggerAnnotation*
-	'monilogger' name=ID ('(' parameterDecl=ParameterDeclVarArgs ')')? ('[' level=LogLevel ']')? '{'
+	'monilogger' name=ID ('(' parameterDecl=ParameterDeclVarArgs ')')? '{'
 		'when' streamEvent=StreamEvent
 		(
 			'if' '(' condition=Condition ')'
-			'then' '{' (thenActions+=Action) (';' thenActions+=Action)* ';'? '}'
-			('else' '{' (elseActions+=Action) (';' elseActions+=Action)* ';'? '}')?
+			'then' '{' ((thenActions+=Action) (';' thenActions+=Action)* ';'?)? '}'
+			('else' '{' ((elseActions+=Action) (';' elseActions+=Action)* ';'?)? '}')?
 		|
-			'{' (thenActions+=Action) (';' thenActions+=Action)* ';'? '}'
+			'{' ((thenActions+=Action) (';' thenActions+=Action)* ';'?)? '}'
 		)
 	'}';
 
@@ -83,7 +83,7 @@ Condition:
 	expression=Expression;
 
 Action:
-	LanguageValue | AppenderCall
+	LanguageCall | AppenderCall
 	| EmitEvent | MoniloggerCall
 	| SetVariable;
 
@@ -102,12 +102,6 @@ SetVariable:
 MoniloggerCall:
 	{StartMoniLogger} monilogger=[MoniLogger|ID] '.' 'start' ( '(' (args+=Expression (',' args+=Expression)*)? ')' )? |
 	{StopMoniLogger} monilogger=[MoniLogger|ID] '.' 'stop' ('(' ')')?;
-
-LanguageValue:
-	languageId=ID '(' value=(LanguageExpression | LanguageCall) ')';
-
-LanguageExpression:
-	expression=STRING;
 
 LanguageCall:
 	file=[FileAlias|ID] '.' fqn=QualifiedName ('(' (args+=Expression (',' args+=Expression)*)? ')' )?;
@@ -156,7 +150,7 @@ Primary returns SimpleExpression:
 
 Atomic returns SimpleExpression:
 	{IntConstant} value=INT | {RealConstant} value=REAL | {BoolConstant} (value?='true' | 'false') | {StringConstant} value=STRING |
-	{VectorConstant} '[' values+=Expression (',' values+=Expression)* ']' | Ref | ArraySize | LanguageValue | LayoutCall;
+	{VectorConstant} '[' values+=Expression (',' values+=Expression)* ']' | Ref | ArraySize | LanguageCall | LayoutCall;
 
 Ref:
 	VarRef ({ArrayRef.array=current} '[' indices+=Expression (',' indices+=Expression)* ']' |

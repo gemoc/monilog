@@ -18,6 +18,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Import"/>
   <eClassifiers xsi:type="ecore:EClass" name="FileAlias">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="languageID" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="filePath" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
@@ -63,7 +64,6 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="parameterDecl" eType="#//ParameterDecl"
         containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="level" eType="#//LogLevel"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="streamEvent" eType="#//StreamEvent"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="condition" eType="#//Condition"
@@ -110,15 +110,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="MoniloggerCall" eSuperTypes="#//Action">
     <eStructuralFeatures xsi:type="ecore:EReference" name="monilogger" eType="#//MoniLogger"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="LanguageValue" eSuperTypes="#//Action #//SimpleExpression">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="languageId" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="value" eType="ecore:EClass http://www.eclipse.org/emf/2002/Ecore#//EObject"
-        containment="true"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="LanguageExpression">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="expression" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="LanguageCall">
+  <eClassifiers xsi:type="ecore:EClass" name="LanguageCall" eSuperTypes="#//Action #//SimpleExpression">
     <eStructuralFeatures xsi:type="ecore:EReference" name="file" eType="#//FileAlias"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="fqn" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="args" upperBound="-1" eType="#//Expression"
