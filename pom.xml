@@ -24,6 +24,8 @@
 		<module>plugins/org.gemoc.monilog</module>
 		<module>plugins/org.gemoc.monilog.ide</module>
 		<module>plugins/org.gemoc.monilog.ui</module>
+		<module>releng/org.gemoc.monilog.feature</module>
+		<module>releng/org.gemoc.monilog.updatesite</module>
 		<module>releng/org.gemoc.monilog.target</module>
 	</modules>
 	<dependencyManagement>
