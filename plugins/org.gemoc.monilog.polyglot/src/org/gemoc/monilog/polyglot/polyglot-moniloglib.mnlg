@@ -1,3 +1,0 @@
-package org.gemoc.monilog.polyglot
-
-appender PolyglotAppender(value, destination)

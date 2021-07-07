@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<site>
-   <feature id="org.gemoc.monilog.feature" version="0.0.0">
-      <category name="org.gemoc.monilog.category"/>
-   </feature>
-   <category-def name="org.gemoc.monilog.category" label="Monilog"/>
-</site>
