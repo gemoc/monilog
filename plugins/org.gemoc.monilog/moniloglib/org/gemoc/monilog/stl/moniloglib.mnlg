@@ -1,7 +1,0 @@
-package org.gemoc.monilog.stl
-
-appender ConsoleAppender(msg)
-
-appender FileAppender(msg, path)
-
-layout StringLayout(formatString, args)
