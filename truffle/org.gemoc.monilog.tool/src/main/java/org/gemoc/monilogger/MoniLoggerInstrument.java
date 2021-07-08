@@ -21,7 +21,6 @@ import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.BiFunction;
 import java.util.function.Function;
-import java.util.logging.Level;
 import java.util.stream.Collectors;
 
 import org.eclipse.emf.common.util.URI;
@@ -42,12 +41,13 @@ import org.gemoc.monilog.moniLog.Document;
 import org.gemoc.monilog.moniLog.Event;
 import org.gemoc.monilog.moniLog.Expression;
 import org.gemoc.monilog.moniLog.ExternalAppender;
+import org.gemoc.monilog.moniLog.LanguageCall;
 import org.gemoc.monilog.moniLog.LocalAppender;
 import org.gemoc.monilog.moniLog.MoniLogPackage;
 import org.gemoc.monilog.moniLog.MoniLogger;
+import org.gemoc.monilog.moniLog.MoniloggerCall;
 import org.gemoc.monilog.moniLog.ParameterDecl;
 import org.gemoc.monilog.moniLog.Property;
-import org.gemoc.monilog.moniLog.LanguageCall;
 import org.gemoc.monilog.moniLog.PropertyReference;
 import org.gemoc.monilog.moniLog.SetVariable;
 import org.gemoc.monilog.moniLog.Setup;
@@ -231,9 +231,9 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 
 		final InstrumentationInterfaceStandaloneSetup setup = new InstrumentationInterfaceStandaloneSetup();
 		setup.createInjectorAndDoEMFRegistration();
-
+		
 		rs.getResourceFactoryRegistry().getExtensionToFactoryMap().put("instritf", new XMIResourceFactoryImpl());
-
+		
 		instrumentationInterfaces.forEach(path -> {
 			rs.getResource(URI.createFileURI(path), true);
 		});
@@ -268,6 +268,7 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 
 	private void processMonilogger(MoniLogger monilogger) {
 		final Event event = monilogger.getStreamEvent().getEvent();
+//		monilogger.getStreamEvent().getProp()
 		eventToMoniLoggers.computeIfAbsent(event, o -> new ArrayList<>()).add(monilogger);
 		processEvent(event);
 	}
@@ -353,7 +354,7 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 
 					final Set<String> languages = Streams.stream(m.eAllContents())
 							.filter(o -> o instanceof LanguageCall)
-							.map(o -> ((LanguageCall) o).getFile().getLanguageID()).collect(Collectors.toSet());
+							.map(o -> ((LanguageCall) o).getLanguageID()).collect(Collectors.toSet());
 
 					final String packageName = ((Document) m.eContainer()).getName();
 
@@ -388,6 +389,8 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 									getPropertyFQN(setVariable.getVariable().getProperty()),
 									getExpressionNode(setVariable.getValue(), node, onEnter));
 						case MoniLogPackage.MONILOGGER_CALL:
+							final MoniloggerCall moniloggerCall = (MoniloggerCall) action;
+//							moniloggerCall.
 							throw new UnsupportedOperationException();
 						default:
 							throw new UnsupportedOperationException();

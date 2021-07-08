@@ -164,7 +164,7 @@ public class SimpleExpressionParser {
 			break;
 		case MoniLogPackage.LANGUAGE_CALL:
 			final LanguageCall languageCall = (LanguageCall) expression;
-			expressionNode = createLanguageValue(languageCall.getFile().getLanguageID(), languageCall, node, onEnter);
+			expressionNode = createLanguageValue(languageCall.getLanguageID(), languageCall, node, onEnter);
 			break;
 		case MoniLogPackage.LAYOUT_CALL:
 			final LayoutCall layoutCall = (LayoutCall) expression;

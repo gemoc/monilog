@@ -6,7 +6,7 @@ import com.oracle.truffle.api.frame.VirtualFrame;
 import com.oracle.truffle.api.profiles.ConditionProfile;
 
 public abstract class MoniLoggerNode extends MoniLoggerExecutableNode {
-	
+
 	private final ConditionProfile conditionProfile = ConditionProfile.createCountingProfile();
 
 	@Child
@@ -17,7 +17,7 @@ public abstract class MoniLoggerNode extends MoniLoggerExecutableNode {
 	protected MoniLoggerExecutableNode thenAction;
 	@Child
 	protected MoniLoggerExecutableNode elseAction;
-	
+
 	protected MoniLoggerNode(MoniLoggerExecutableNode prolog, MoniLoggerExecutableNode condition,
 			MoniLoggerExecutableNode thenAction, MoniLoggerExecutableNode elseAction) {
 		this.prolog = prolog;
@@ -37,14 +37,17 @@ public abstract class MoniLoggerNode extends MoniLoggerExecutableNode {
 					thenAction.execute(frame);
 				}
 				return true;
-			} else if (elseAction != null) {
-				elseAction.execute(frame);
+			} else {
+				if (elseAction != null) {
+					elseAction.execute(frame);
+				}
+				return false;
 			}
-			return false;
 		} else {
-			thenAction.execute(frame);
+			if (thenAction != null) {
+				thenAction.execute(frame);
+			}
 			return true;
 		}
-		
 	}
 }

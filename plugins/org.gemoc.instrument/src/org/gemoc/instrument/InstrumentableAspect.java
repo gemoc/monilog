@@ -1,33 +1,45 @@
 package org.gemoc.instrument;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import java.util.function.Supplier;
 
 import org.osgi.framework.BundleContext;
 import org.osgi.framework.ServiceReference;
 
 public abstract class InstrumentableAspect<C> {
 
-	private final Collection<IInstrument> registeredInstruments = new ArrayList<>();
+	
+	private final InstrumentRegistry registry;
 	
 	protected InstrumentableAspect() {
 		final BundleContext context = Activator.getContext();
 		if (context != null) {
 			final ServiceReference<InstrumentRegistry> serviceReference = context.getServiceReference(InstrumentRegistry.class);
-			final InstrumentRegistry instrumentRegistry = Activator.getContext().getService(serviceReference);
-			registeredInstruments.addAll(instrumentRegistry.getRegisteredInstruments());
+			registry = Activator.getContext().getService(serviceReference);
 		} else {
-			final InstrumentRegistry instrumentRegistry = InstrumentRegistry.getInstance();
-			registeredInstruments.addAll(instrumentRegistry.getRegisteredInstruments());
+			registry = InstrumentRegistry.getInstance();
 		}
 	}
 	
 	protected void notifyBefore(String rule, String element, C context) {
-		registeredInstruments.forEach(i -> i.notifyBefore(rule, element, getContextWrapper(context)));
+		registry.getRegisteredInstruments().forEach(i -> i.notifyBefore(rule, element, getContextSupplier(context)));
 	}
 	
 	protected void notifyAfter(String rule, String element, Object result, C context) {
-		registeredInstruments.forEach(i -> i.notifyAfter(rule, element, result, getContextWrapper(context)));
+		registry.getRegisteredInstruments().forEach(i -> i.notifyAfter(rule, element, result, getContextSupplier(context)));
+	}
+	
+	private Supplier<IContextWrapper> getContextSupplier(C context) {
+		return new Supplier<IContextWrapper>() {
+			private IContextWrapper cached = null;
+			@Override
+			public IContextWrapper get() {
+				if (cached != null) {
+					return cached;
+				}
+				cached = getContextWrapper(context);
+				return cached;
+			}
+		};
 	}
 	
 	protected abstract IContextWrapper getContextWrapper(C context);

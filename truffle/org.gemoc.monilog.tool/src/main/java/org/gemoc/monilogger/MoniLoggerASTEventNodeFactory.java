@@ -1,6 +1,8 @@
 package org.gemoc.monilogger;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.function.BiFunction;
 
 import org.gemoc.monilog.moniLog.ASTEvent;
@@ -25,6 +27,7 @@ public class MoniLoggerASTEventNodeFactory implements ExecutionEventNodeFactory 
 	private final String name;
 	private final boolean call;
 	private final boolean before;
+	private final List<String> properties = new ArrayList<>();
 
 	private final BiFunction<String, Node, MoniLoggerExecutableNode> moniloggerFactory;
 
@@ -36,7 +39,8 @@ public class MoniLoggerASTEventNodeFactory implements ExecutionEventNodeFactory 
 			break;
 		}
 		case MoniLogPackage.CALL_EVENT: {
-			this.name = ((CallEvent) event).getElement().getName();
+			final CallEvent callEvent = (CallEvent) event;
+			this.name = callEvent.getElement().getName();
 			this.call = true;
 			break;
 		}

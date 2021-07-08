@@ -1,5 +1,7 @@
 package org.gemoc.monilog.stl
 
+appender BlackHole(msg)
+
 appender ConsoleAppender(msg)
 
 appender FileAppender(msg, path)

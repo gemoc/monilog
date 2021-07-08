@@ -3,6 +3,7 @@ package org.gemoc.monilogger.parser;
 import java.util.List;
 
 import org.eclipse.emf.ecore.resource.ResourceSet;
+import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.xtext.testing.util.ParseHelper;
 import org.gemoc.monilog.moniLog.Document;
 
@@ -23,7 +24,7 @@ public class MoniLogParser {
 	}
 	
 	public ResourceSet parse(List<String> specifications) {
-		final ResourceSet rs = resourceSetProvider.get();
+		final ResourceSet rs = new ResourceSetImpl();//resourceSetProvider.get();
 		specifications.forEach(s -> {
 			try {
 				moniLogParseHelper.parse(s, rs);

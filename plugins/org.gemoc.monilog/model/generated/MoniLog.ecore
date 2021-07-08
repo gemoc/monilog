@@ -18,7 +18,6 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Import"/>
   <eClassifiers xsi:type="ecore:EClass" name="FileAlias">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="languageID" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="filePath" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>
@@ -111,13 +110,15 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="monilogger" eType="#//MoniLogger"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="LanguageCall" eSuperTypes="#//Action #//SimpleExpression">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="languageID" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="file" eType="#//FileAlias"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="fqn" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="args" upperBound="-1" eType="#//Expression"
         containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="StreamEvent">
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="prop" eType="#//Property"
+        containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="event" eType="#//Event"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Property">
@@ -135,15 +136,6 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EEnum" name="MoniLoggerAnnotation">
     <eLiterals name="inactive" literal="@Inactive"/>
-  </eClassifiers>
-  <eClassifiers xsi:type="ecore:EEnum" name="LogLevel">
-    <eLiterals name="info" literal="INFO"/>
-    <eLiterals name="config" value="1" literal="CONFIG"/>
-    <eLiterals name="fine" value="2" literal="FINE"/>
-    <eLiterals name="finer" value="3" literal="FINER"/>
-    <eLiterals name="finest" value="4" literal="FINEST"/>
-    <eLiterals name="severe" value="5" literal="SEVERE"/>
-    <eLiterals name="warning" value="6" literal="WARNING"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="ModelImport" eSuperTypes="#//Import">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="importedNamespace" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>

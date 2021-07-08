@@ -15,7 +15,7 @@ Import:
 	{ModelImport} 'import' importedNamespace=QualifiedNameWithWildcard | {FileImport} 'import' alias=FileAlias;
 
 FileAlias:
-	languageID=ID '(' filePath=STRING ')' 'as' name=ID;
+	filePath=STRING 'as' name=ID;
 
 Setup:
 	{Setup} 'setup' '{' (properties+=PropertyDefinition (';' properties+=PropertyDefinition)* ';'?)? '}';
@@ -49,7 +49,7 @@ ExternalLayout:
 	'layout' name=ID ('(' parameterDecl=ParameterDeclVarArgs ')')?;
 
 ParameterDeclVarArgs returns ParameterDecl:
-	{ParameterDecl} (parameters+=PropertyDefinition (',' parameters+=PropertyDefinition)* (',' varArgs=PropertyDefinition '...')?)?;
+	{ParameterDecl} (parameters+=PropertyDefinition (',' parameters+=PropertyDefinition)* (',' varArgs=PropertyDefinition '[' ']')?)?;
 
 ParameterDeclNoVarArgs returns ParameterDecl:
 	{ParameterDecl} (parameters+=PropertyDefinition (',' parameters+=PropertyDefinition)*)?;
@@ -61,10 +61,10 @@ MoniLogger:
 		'when' streamEvent=StreamEvent
 		(
 			'if' '(' condition=Condition ')'
-			'then' '{' ((thenActions+=Action) (';' thenActions+=Action)* ';'?)? '}'
-			('else' '{' ((elseActions+=Action) (';' elseActions+=Action)* ';'?)? '}')?
+			'then' '{' (thenActions+=Action (';' thenActions+=Action)* ';'?)? '}'
+			('else' '{' (elseActions+=Action (';' elseActions+=Action)* ';'?)? '}')?
 		|
-			'{' ((thenActions+=Action) (';' thenActions+=Action)* ';'?)? '}'
+			'{' (thenActions+=Action (';' thenActions+=Action)* ';'?)? '}'
 		)
 	'}';
 
@@ -104,10 +104,10 @@ MoniloggerCall:
 	{StopMoniLogger} monilogger=[MoniLogger|ID] '.' 'stop' ('(' ')')?;
 
 LanguageCall:
-	file=[FileAlias|ID] '.' fqn=QualifiedName ('(' (args+=Expression (',' args+=Expression)*)? ')' )?;
+	languageID=ID '(' file=[FileAlias|ID] '.' fqn=QualifiedName ('(' (args+=Expression (',' args+=Expression)*)? ')' )? ')';
 
 StreamEvent:
-	(name=ID ':')? event=[Event|ID];
+	(prop=Property ':')? event=[Event|ID];
 
 Property:
 	name=ID;
@@ -167,10 +167,6 @@ terminal REAL:
 
 enum MoniLoggerAnnotation:
 	inactive='@Inactive';
-
-enum LogLevel:
-	info='INFO' | config='CONFIG' | fine='FINE' | finer='FINER' |
-	finest='FINEST' | severe='SEVERE' | warning='WARNING';
 
 QualifiedName: ID ('.' ID)*;
 QualifiedNameWithWildcard: QualifiedName '.*'?;
