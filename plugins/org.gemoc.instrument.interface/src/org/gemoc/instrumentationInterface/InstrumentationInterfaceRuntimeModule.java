@@ -1,4 +1,4 @@
-package org.instrumentationInterface;
+package org.gemoc.instrumentationInterface;
 
 import org.eclipse.xtext.resource.generic.AbstractGenericResourceRuntimeModule;
 import org.eclipse.xtext.naming.DefaultDeclarativeQualifiedNameProvider;

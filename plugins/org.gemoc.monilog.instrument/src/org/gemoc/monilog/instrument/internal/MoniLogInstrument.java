@@ -31,6 +31,7 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import org.eclipse.xtext.testing.util.ParseHelper;
 import org.gemoc.instrument.IContextWrapper;
 import org.gemoc.instrument.IInstrument;
+import org.gemoc.instrumentationInterface.InstrumentationInterfaceStandaloneSetup;
 import org.gemoc.monilog.MoniLogStandaloneSetup;
 import org.gemoc.monilog.api.IMoniLogAppender;
 import org.gemoc.monilog.api.IMoniLogLayout;
@@ -67,7 +68,6 @@ import org.graalvm.polyglot.Context;
 import org.graalvm.polyglot.Engine;
 import org.graalvm.polyglot.Source;
 import org.graalvm.polyglot.Value;
-import org.instrumentationInterface.InstrumentationInterfaceStandaloneSetup;
 
 import com.google.common.collect.Streams;
 import com.google.inject.Injector;

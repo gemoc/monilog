@@ -1,4 +1,4 @@
-package org.instrumentationInterface;
+package org.gemoc.instrumentationInterface;
 
 import org.eclipse.emf.ecore.EPackage;
 import org.eclipse.xtext.ISetup;
@@ -8,8 +8,6 @@ import org.eclipse.xtext.resource.IResourceServiceProvider;
 import com.google.inject.Guice;
 import com.google.inject.Inject;
 import com.google.inject.Injector;
-
-import instrumentationInterface.InstrumentationInterfacePackage;
 
 public class InstrumentationInterfaceStandaloneSetup implements ISetup {
 	

@@ -8,14 +8,13 @@ Bundle-Vendor: %providerName
 Bundle-Localization: plugin
 Automatic-Module-Name: org.gemoc.instrument.interface
 Bundle-RequiredExecutionEnvironment: JavaSE-11
-Export-Package: instrumentationInterface,
- instrumentationInterface.impl,
- instrumentationInterface.util,
- org.instrumentationInterface,
- org.instrumentationInterface.ui
+Export-Package: org.gemoc.instrumentationInterface,
+ org.gemoc.instrumentationInterface.impl,
+ org.gemoc.instrumentationInterface.util,
+ org.gemoc.instrumentationInterface.ui
 Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.emf.ecore;visibility:=reexport,
  org.eclipse.xtext.ui;bundle-version="2.21.0",
  org.eclipse.xtext.ui.shared;bundle-version="2.21.0"
 Bundle-ActivationPolicy: lazy
-Bundle-Activator: org.instrumentationInterface.ui.Activator
+Bundle-Activator: org.gemoc.instrumentationInterface.ui.Activator

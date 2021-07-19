@@ -1,4 +1,4 @@
-package org.instrumentationInterface.ui;
+package org.gemoc.instrumentationInterface.ui;
 
 import com.google.inject.Guice;
 import com.google.inject.Injector;
@@ -6,7 +6,7 @@ import com.google.inject.util.Modules;
 
 import org.eclipse.ui.plugin.AbstractUIPlugin;
 import org.eclipse.xtext.ui.shared.SharedStateModule;
-import org.instrumentationInterface.InstrumentationInterfaceRuntimeModule;
+import org.gemoc.instrumentationInterface.InstrumentationInterfaceRuntimeModule;
 import org.osgi.framework.BundleContext;
 import org.eclipse.xtext.ui.resource.generic.EmfUiModule;
 

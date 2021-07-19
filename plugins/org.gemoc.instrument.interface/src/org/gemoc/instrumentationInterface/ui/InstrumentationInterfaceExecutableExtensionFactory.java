@@ -1,4 +1,4 @@
-package org.instrumentationInterface.ui;
+package org.gemoc.instrumentationInterface.ui;
 
 import org.eclipse.xtext.ui.guice.AbstractGuiceAwareExecutableExtensionFactory;
 import org.osgi.framework.Bundle;

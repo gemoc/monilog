@@ -10,13 +10,13 @@
       <!-- @generated InstrumentationInterface -->
       <package
             uri="http://www.gemoc.org/instrument/InstrumentationInterface"
-            class="org.instrumentationInterface.InstrumentationInterfacePackage"
+            class="org.gemoc.instrumentationInterface.InstrumentationInterfacePackage"
             genModel="model/InstrumentationInterface.genmodel"/>
    </extension>
    <extension
          point="org.eclipse.xtext.extension_resourceServiceProvider">
 	    <resourceServiceProvider
-	          class="org.instrumentationInterface.ui.InstrumentationInterfaceExecutableExtensionFactory:org.eclipse.xtext.ui.resource.generic.EmfResourceUIServiceProvider"
+	          class="org.gemoc.instrumentationinterface.ui.InstrumentationInterfaceExecutableExtensionFactory:org.eclipse.xtext.ui.resource.generic.EmfResourceUIServiceProvider"
 	          uriExtension="instritf">
 	    </resourceServiceProvider>
    	</extension>

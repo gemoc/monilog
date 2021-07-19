@@ -28,6 +28,7 @@ import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.util.EcoreUtil;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
+import org.gemoc.instrumentationInterface.InstrumentationInterfaceStandaloneSetup;
 import org.gemoc.monilog.moniLog.ASTEvent;
 import org.gemoc.monilog.moniLog.ASTEventKind;
 import org.gemoc.monilog.moniLog.Action;
@@ -69,7 +70,6 @@ import org.graalvm.options.OptionKey;
 import org.graalvm.options.OptionStability;
 import org.graalvm.options.OptionValues;
 import org.graalvm.polyglot.Value;
-import org.instrumentationInterface.InstrumentationInterfaceStandaloneSetup;
 
 import com.google.common.collect.Streams;
 import com.oracle.truffle.api.CompilerDirectives.CompilationFinal;

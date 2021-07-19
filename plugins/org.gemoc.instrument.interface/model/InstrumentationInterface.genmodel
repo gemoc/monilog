@@ -5,7 +5,7 @@
     importerID="org.eclipse.emf.importer.ecore" complianceLevel="5.0" copyrightFields="false"
     operationReflection="true" importOrganizing="true">
   <foreignModel>InstrumentationInterface.ecore</foreignModel>
-  <genPackages prefix="InstrumentationInterface" disposableProviderFactory="true"
+  <genPackages prefix="InstrumentationInterface" basePackage="org.gemoc" disposableProviderFactory="true"
       fileExtensions="instritf" ecorePackage="InstrumentationInterface.ecore#/">
     <genClasses ecoreClass="InstrumentationInterface.ecore#//CallableElement"/>
     <genClasses ecoreClass="InstrumentationInterface.ecore#//ReadableElement"/>
