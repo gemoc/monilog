@@ -4,7 +4,7 @@ Bundle-Name: %pluginName
 Bundle-SymbolicName: org.gemoc.instrument.interface;singleton:=true
 Bundle-Version: 1.0.0.qualifier
 Bundle-ClassPath: .
-Bundle-Vendor: %providerName
+Bundle-Vendor: CEA
 Bundle-Localization: plugin
 Automatic-Module-Name: org.gemoc.instrument.interface
 Bundle-RequiredExecutionEnvironment: JavaSE-11

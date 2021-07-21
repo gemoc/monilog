@@ -16,7 +16,7 @@
    <extension
          point="org.eclipse.xtext.extension_resourceServiceProvider">
 	    <resourceServiceProvider
-	          class="org.gemoc.instrumentationinterface.ui.InstrumentationInterfaceExecutableExtensionFactory:org.eclipse.xtext.ui.resource.generic.EmfResourceUIServiceProvider"
+	          class="org.gemoc.instrumentationInterface.ui.InstrumentationInterfaceExecutableExtensionFactory:org.eclipse.xtext.ui.resource.generic.EmfResourceUIServiceProvider"
 	          uriExtension="instritf">
 	    </resourceServiceProvider>
    	</extension>
