@@ -2,10 +2,9 @@ package org.gemoc.monilogger;
 
 import com.oracle.truffle.api.CompilerAsserts;
 import com.oracle.truffle.api.CompilerDirectives;
-import com.oracle.truffle.api.TruffleException;
-import com.oracle.truffle.api.nodes.Node;
+import com.oracle.truffle.api.exception.AbstractTruffleException;
 
-public final class MoniLoggerInternalError  extends Error implements TruffleException {
+public final class MoniLoggerInternalError extends AbstractTruffleException {
 
     private static final long serialVersionUID = 80698622974155216L;
 
@@ -17,7 +16,7 @@ public final class MoniLoggerInternalError  extends Error implements TruffleExce
     }
 
     public MoniLoggerInternalError(Throwable cause, String message, Object... args) {
-        super(String.format(message, args), cause);
+        super(String.format(message, args), cause, UNLIMITED_STACK_TRACE, null);
         CompilerAsserts.neverPartOfCompilation();
         verboseStackTrace = createVerboseStackTrace();
     }
@@ -27,7 +26,7 @@ public final class MoniLoggerInternalError  extends Error implements TruffleExce
      * formatting instructions.
      */
     public MoniLoggerInternalError(Throwable cause, String message) {
-        super(message, cause);
+        super(message, cause, UNLIMITED_STACK_TRACE, null);
         CompilerAsserts.neverPartOfCompilation();
         verboseStackTrace = createVerboseStackTrace();
     }
@@ -95,15 +94,5 @@ public final class MoniLoggerInternalError  extends Error implements TruffleExce
 
     static String createVerboseStackTrace() {
         return "";
-    }
-
-    @Override
-    public Node getLocation() {
-        return null;
-    }
-
-    @Override
-    public boolean isInternalError() {
-        return true;
     }
 }

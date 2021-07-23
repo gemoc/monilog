@@ -2,7 +2,7 @@
 <feature
       id="org.gemoc.monilog.feature"
       label="Monilog"
-      version="1.0.0.qualifier">
+      version="2.1.0.qualifier">
 
    <description>
       Xtext editor and standard library for MoniLog.
@@ -38,27 +38,27 @@
          id="org.gemoc.monilog.ui"
          download-size="0"
          install-size="0"
-         version="1.0.0.qualifier"
+         version="2.1.0.qualifier"
          unpack="false"/>
 
    <plugin
          id="org.gemoc.monilog.ide"
          download-size="0"
          install-size="0"
-         version="1.0.0.qualifier"
+         version="2.1.0.qualifier"
          unpack="false"/>
 
    <plugin
          id="org.gemoc.monilog"
          download-size="0"
          install-size="0"
-         version="1.0.0.qualifier"/>
+         version="2.1.0.qualifier"/>
 
    <plugin
          id="org.gemoc.instrument.interface"
          download-size="0"
          install-size="0"
-         version="1.0.0.qualifier"
+         version="2.1.0.qualifier"
          unpack="false"/>
 
 </feature>

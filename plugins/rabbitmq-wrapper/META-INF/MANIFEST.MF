@@ -1,8 +1,8 @@
 Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
-Bundle-Name: Rabbitmq-wrapper
+Bundle-Name: RabbitMQ Wrapper
 Bundle-SymbolicName: rabbitmq-wrapper
-Bundle-Version: 5.7.1
+Bundle-Version: 5.7.1.qualifier
 Bundle-ClassPath: mvn/amqp-client-5.7.1.jar,
  mvn/slf4j-api-1.7.26.jar
 Export-Package: com.rabbitmq.client,

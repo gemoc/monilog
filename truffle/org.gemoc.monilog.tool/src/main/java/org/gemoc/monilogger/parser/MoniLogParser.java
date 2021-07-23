@@ -8,13 +8,9 @@ import org.eclipse.xtext.testing.util.ParseHelper;
 import org.gemoc.monilog.moniLog.Document;
 
 import com.google.inject.Inject;
-import com.google.inject.Provider;
 
 public class MoniLogParser {
 
-	@Inject
-	private Provider<ResourceSet> resourceSetProvider;
-	
 	@Inject
 	private ParseHelper<Document> moniLogParseHelper;
 	
@@ -24,7 +20,7 @@ public class MoniLogParser {
 	}
 	
 	public ResourceSet parse(List<String> specifications) {
-		final ResourceSet rs = new ResourceSetImpl();//resourceSetProvider.get();
+		final ResourceSet rs = new ResourceSetImpl();
 		specifications.forEach(s -> {
 			try {
 				moniLogParseHelper.parse(s, rs);

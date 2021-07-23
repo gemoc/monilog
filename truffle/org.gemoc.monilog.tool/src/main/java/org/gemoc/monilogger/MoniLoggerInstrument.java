@@ -19,7 +19,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -49,10 +48,9 @@ import org.gemoc.monilog.moniLog.MoniLogger;
 import org.gemoc.monilog.moniLog.MoniloggerCall;
 import org.gemoc.monilog.moniLog.ParameterDecl;
 import org.gemoc.monilog.moniLog.Property;
-import org.gemoc.monilog.moniLog.PropertyReference;
 import org.gemoc.monilog.moniLog.SetVariable;
 import org.gemoc.monilog.moniLog.Setup;
-import org.gemoc.monilog.moniLog.UserEvent;
+import org.gemoc.monilog.moniLog.WriteEvent;
 import org.gemoc.monilogger.nodes.MoniLoggerBlockNode;
 import org.gemoc.monilogger.nodes.MoniLoggerCopyVariablesFromScopeNodeGen;
 import org.gemoc.monilogger.nodes.MoniLoggerExecutableNode;
@@ -127,8 +125,6 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 	private final CyclicAssumption contextActive = new CyclicAssumption("MoniLog context active");
 
 	private Map<Event, List<MoniLogger>> eventToMoniLoggers = new HashMap<>();
-	private final Map<Event, Set<Event>> eventToParentEvents = new HashMap<>();
-	private final Map<Event, Set<Event>> eventToChildEvents = new HashMap<>();
 	private final Set<Event> events = new HashSet<>();
 
 	private MoniLogParser parser = new MoniLogParser();
@@ -279,8 +275,9 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 		if (events.add(event)) {
 			switch (event.eClass().getClassifierID()) {
 			case MoniLogPackage.WRITE_EVENT: {
+				final WriteEvent writeEvent = (WriteEvent) event;
 				final Map<String, Object> eventType = new HashMap<>();
-				eventTypes.put(event.getName(), eventType);
+				eventTypes.put(writeEvent.getName(), eventType);
 				break;
 			}
 			case MoniLogPackage.CALL_EVENT: {
@@ -294,17 +291,17 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 				if (kind instanceof AfterASTEvent) {
 					eventType.put("result", Object.class);
 				}
-				eventTypes.put(event.getName(), eventType);
+				eventTypes.put(astEvent.getName(), eventType);
 				break;
 			}
-			case MoniLogPackage.USER_EVENT: {
-				final UserEvent userEvent = (UserEvent) event;
-				final Map<String, Object> eventType = new HashMap<>();
-				userEvent.getParameterDecl().getParameters().stream()
-						.forEach(p -> eventType.put(p.getProperty().getName(), Object.class));
-				eventTypes.put(event.getName(), eventType);
-				break;
-			}
+//			case MoniLogPackage.USER_EVENT: {
+//				final UserEvent userEvent = (UserEvent) event;
+//				final Map<String, Object> eventType = new HashMap<>();
+//				userEvent.getParameterDecl().getParameters().stream()
+//						.forEach(p -> eventType.put(p.getProperty().getName(), Object.class));
+//				eventTypes.put(event.getName(), eventType);
+//				break;
+//			}
 			}
 		}
 	}
@@ -323,19 +320,14 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 					.tagIs(RootBodyTag.class) //
 					.rootNameIs(s -> name.equals(s)).build();
 		}
-//		case MoniLogPackage.SOURCE_RANGE_REFERENCE:
-//			final SourceRangeReference range = (SourceRangeReference) astReference;
-//			final int line = range.getLine();
-//			final int start = range.getFrom();
-//			final int end = range.getTo();
-//			return SourceSectionFilter.newBuilder() //
-//					.includeInternal(false) //
-//					.lineIs(line).columnStartsIn(IndexRange.byLength(start, 1))
-//					.columnEndsIn(IndexRange.byLength(end, 1)).build();
 		default:
 			throw new UnsupportedOperationException();
 		}
 	}
+	
+//	private void egzegzeg(MoniloggerCall moniloggerCall) {
+//		moniloggerCall.getMonilogger()
+//	}
 
 	private EventBinding<MoniLoggerASTEventNodeFactory> createASTEventBinding(ASTEvent event,
 			List<MoniLogger> relatedMoniLoggers) {
@@ -343,20 +335,18 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 
 		final SourceSectionFilter filterRules = getSourceFilter(event);
 
-		final BiFunction<String, Node, MoniLoggerExecutableNode> moniloggerFactory = new BiFunction<String, Node, MoniLoggerExecutableNode>() {
+		final Function<Node, MoniLoggerExecutableNode> moniloggerFactory = new Function<Node, MoniLoggerExecutableNode>() {
 
 			private boolean onEnter = event.getKind() instanceof BeforeASTEvent;
 			private final List<MoniLogger> moniloggers = new ArrayList<>(relatedMoniLoggers);
 
-			public MoniLoggerExecutableNode apply(String hostLanguageId, Node node) {
+			public MoniLoggerExecutableNode apply(Node node) {
 				// for each monilogger that can be triggered by this AST event
 				return new MoniLoggerBlockNode(moniloggers.stream().map(m -> {
 
 					final Set<String> languages = Streams.stream(m.eAllContents())
 							.filter(o -> o instanceof LanguageCall)
 							.map(o -> ((LanguageCall) o).getLanguageID()).collect(Collectors.toSet());
-
-					final String packageName = ((Document) m.eContainer()).getName();
 
 					final Condition condition = m.getCondition();
 					final List<Action> thenActions = m.getThenActions();
@@ -378,8 +368,7 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 							return getExpressionNode(languageCall, node, onEnter);
 						}
 						case MoniLogPackage.APPENDER_CALL:
-							return getAppenderExecutableNode(env, (AppenderCall) action, node, onEnter,
-									new HashMap<>());
+							return getAppenderExecutableNode(env, (AppenderCall) action, node, onEnter);
 //						case MoniLogPackage.EMIT_EVENT:
 //							return new MoniLoggerEmitEventNode(epRuntime, ((EmitEvent) action).getEvent().getName(),
 //									EMPTY_ARRAY);
@@ -389,6 +378,7 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 									getPropertyFQN(setVariable.getVariable().getProperty()),
 									getExpressionNode(setVariable.getValue(), node, onEnter));
 						case MoniLogPackage.MONILOGGER_CALL:
+//							TODO
 							final MoniloggerCall moniloggerCall = (MoniloggerCall) action;
 //							moniloggerCall.
 							throw new UnsupportedOperationException();
@@ -443,30 +433,8 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 		}
 	}
 
-	private List<Expression> computeAppenderCallActualArgs(AppenderCall childCall, AppenderCall parentCall,
-			Map<AppenderCall, List<Expression>> appenderCallToActualArgs) {
-		return childCall.getArgs().stream().map(a -> {
-//			FIXME
-//			if (a instanceof ParameterReference) {
-//				final Parameter param = ((ParameterReference) a).getParameter();
-//				final int paramIdx = parentCall.getAppender().getParameterDecl().getParameters().indexOf(param);
-//				if (paramIdx > -1) {
-//					return appenderCallToActualArgs.get(parentCall).get(paramIdx);
-//				} else {
-//					throw new IllegalArgumentException("Referenced parameter " + param.getName()
-//							+ " not found in calling appender definition " + parentCall.getAppender().getName() + ".");
-//				}
-//			}
-			return a;
-		}).collect(Collectors.toList());
-	}
-
 	private MoniLoggerExecutableNode getAppenderExecutableNode(Env env, AppenderCall appenderCall, Node node,
-			boolean onEnter, Map<AppenderCall, List<Expression>> appenderCallToActualArgs) {
-		// FIXME
-		if (appenderCall.getArgs().stream().allMatch(a -> !(a instanceof PropertyReference))) {
-			appenderCallToActualArgs.putIfAbsent(appenderCall, new ArrayList<>(appenderCall.getArgs()));
-		}
+			boolean onEnter) {
 		final Appender appender = appenderCall.getAppender();
 
 		switch (appender.eClass().getClassifierID()) {
@@ -475,10 +443,8 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 		}
 		case MoniLogPackage.LOCAL_APPENDER: {
 			final LocalAppender localAppender = (LocalAppender) appender;
-			localAppender.getCalls().forEach(childCall -> appenderCallToActualArgs.computeIfAbsent(childCall,
-					a -> computeAppenderCallActualArgs(a, appenderCall, appenderCallToActualArgs)));
 			final MoniLoggerExecutableNode[] calls = localAppender.getCalls().stream()
-					.map(call -> getAppenderExecutableNode(env, call, node, onEnter, appenderCallToActualArgs))
+					.map(call -> getAppenderExecutableNode(env, call, node, onEnter))
 					.collect(Collectors.toList()).toArray(EMPTY_ARRAY);
 			return new MoniLoggerBlockNode(calls);
 		}
@@ -491,8 +457,7 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 				final Class<?> appenderClass = contextClassLoader.loadClass(className);
 				final Constructor<?> constructor = appenderClass.getConstructor();
 				final Value appenderValue = Value.asValue(constructor.newInstance());
-				final List<Expression> actualArgs = appenderCallToActualArgs.get(appenderCall);
-				final MoniLoggerExecutableNode[] valueNodes = actualArgs.stream()
+				final MoniLoggerExecutableNode[] valueNodes = appenderCall.getArgs().stream()
 						.map(arg -> getExpressionNode(arg, node, onEnter)).collect(Collectors.toList())
 						.toArray(EMPTY_ARRAY);
 				return MoniLoggerExternalAppenderNodeGen.create(appenderValue,

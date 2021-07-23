@@ -87,7 +87,6 @@ public class SimpleExpressionParser {
 	
 	private static final SimpleExpressionNode[] EMPTY_ARRAY = new SimpleExpressionNode[0];
 	
-	private Map<String, Source> expressionToSource = new HashMap<>();
 	private Map<String, Source> evaluatedSources = new HashMap<>();
 
 	public SimpleExpressionNode createExpressionNode(Expression expression, Node node, boolean onEnter) {
@@ -355,24 +354,6 @@ public class SimpleExpressionParser {
 			return callNode;
 		}
 		throw new IllegalArgumentException();
-	}
-	
-	private List<Expression> computeLayoutCallActualArgs(LayoutCall childCall, LayoutCall parentCall,
-			Map<LayoutCall, List<Expression>> layoutCallToActualArgs) {
-		return childCall.getArgs().stream().map(a -> {
-//			FIXME
-//			if (a instanceof ParameterReference) {
-//				final Parameter param = ((ParameterReference) a).getParameter();
-//				final int paramIdx = parentCall.getLayout().getParameterDecl().getParameters().indexOf(param);
-//				if (paramIdx > -1) {
-//					return layoutCallToActualArgs.get(parentCall).get(paramIdx);
-//				} else {
-//					throw new IllegalArgumentException("Referenced parameter " + param.getName()
-//							+ " not found in calling layout definition " + parentCall.getLayout().getName() + ".");
-//				}
-//			}
-			return a;
-		}).collect(Collectors.toList());
 	}
 	
 	private SimpleExpressionNode createLayoutExecutableNode(LayoutCall layoutCall, Node node, boolean onEnter) {

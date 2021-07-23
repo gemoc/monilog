@@ -28,7 +28,7 @@ Appender:
 	LocalAppender | ExternalAppender;
 
 LocalAppender:
-	'appender' name=ID ('(' parameterDecl=ParameterDeclVarArgs ')')? '{'
+	'appender' name=ID /*('(' parameterDecl=ParameterDeclVarArgs ')')?*/ '{'
 		calls+=AppenderCall (';' calls+=AppenderCall)* ';'?
 	'}';
 
@@ -40,13 +40,13 @@ Layout:
 
 @Exported
 LocalLayout:
-	'layout' name=ID ('(' parameterDecl=ParameterDeclVarArgs ')')? '{'
+	'layout' name=ID  /*('(' parameterDecl=ParameterDeclVarArgs ')')?*/ '{'
 		call=LayoutCall
 	'}';
 
 @Exported
 ExternalLayout:
-	'layout' name=ID ('(' parameterDecl=ParameterDeclVarArgs ')')?;
+	'layout' name=ID  ('(' parameterDecl=ParameterDeclVarArgs ')')?;
 
 ParameterDeclVarArgs returns ParameterDecl:
 	{ParameterDecl} (parameters+=PropertyDefinition (',' parameters+=PropertyDefinition)* (',' varArgs=PropertyDefinition '[' ']')?)?;
@@ -57,7 +57,7 @@ ParameterDeclNoVarArgs returns ParameterDecl:
 @Exported
 MoniLogger:
 	annotations+=MoniLoggerAnnotation*
-	'monilogger' name=ID ('(' parameterDecl=ParameterDeclVarArgs ')')? '{'
+	'monilogger' name=ID  /*('(' parameterDecl=ParameterDeclVarArgs ')')?*/ '{'
 		'when' streamEvent=StreamEvent
 		(
 			'if' '(' condition=Condition ')'
@@ -70,7 +70,7 @@ MoniLogger:
 
 @Exported
 Event:
-	'event' (ASTEvent | {UserEvent} name=ID ('(' parameterDecl=ParameterDeclNoVarArgs ')')?);
+	'event' (ASTEvent /*| {UserEvent} name=ID ('(' parameterDecl=ParameterDeclNoVarArgs ')')?*/);
 
 ASTEvent:
 	{CallEvent} name=ID '{' kind=ASTEventKind 'call' element=[instrumentation::CallableElement|QualifiedName] ('(' parameterDecl=ParameterDeclNoVarArgs ')')? '}' |
@@ -84,7 +84,7 @@ Condition:
 
 Action:
 	LanguageCall | AppenderCall
-	| EmitEvent | MoniloggerCall
+	/* | EmitEvent */| MoniloggerCall
 	| SetVariable;
 
 AppenderCall:
@@ -93,14 +93,14 @@ AppenderCall:
 LayoutCall:
 	layout=[Layout|QualifiedName] '.' 'call' ( '(' args+=Expression (',' args+=Expression)* ')' )?;
 
-EmitEvent:
-	event=[UserEvent|ID] '.' 'emit' ('(' (args+=Expression (',' args+=Expression)*)? ')' )?;
+/*EmitEvent:
+	event=[UserEvent|ID] '.' 'emit' ('(' (args+=Expression (',' args+=Expression)*)? ')' )?;*/
 
 SetVariable:
 	variable=PropertyReference '=' value=Expression;
 
 MoniloggerCall:
-	{StartMoniLogger} monilogger=[MoniLogger|ID] '.' 'start' ( '(' (args+=Expression (',' args+=Expression)*)? ')' )? |
+	{StartMoniLogger} monilogger=[MoniLogger|ID] '.' 'start' ( '(' /*(args+=Expression (',' args+=Expression)*)? */ ')')? |
 	{StopMoniLogger} monilogger=[MoniLogger|ID] '.' 'stop' ('(' ')')?;
 
 LanguageCall:

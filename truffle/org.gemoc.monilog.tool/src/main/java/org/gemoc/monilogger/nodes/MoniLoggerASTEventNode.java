@@ -12,7 +12,6 @@ import com.oracle.truffle.api.nodes.ExplodeLoop;
 
 public class MoniLoggerASTEventNode extends ExecutionEventNode {
 
-	private final String name;
 	private final boolean onEnter;
 	private final String[] properties;
 	@Child
@@ -20,9 +19,8 @@ public class MoniLoggerASTEventNode extends ExecutionEventNode {
 
 	private FrameSlot[] frameSlots = null;
 
-	public MoniLoggerASTEventNode(String name, boolean onEnter, List<String> properties,
+	public MoniLoggerASTEventNode(boolean onEnter, List<String> properties,
 			MoniLoggerExecutableNode moniloggers) {
-		this.name = name;
 		this.onEnter = onEnter;
 		this.properties = properties.toArray(new String[0]);
 		this.moniloggers = moniloggers;
