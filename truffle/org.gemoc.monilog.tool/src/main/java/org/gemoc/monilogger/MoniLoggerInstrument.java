@@ -45,11 +45,13 @@ import org.gemoc.monilog.moniLog.LanguageCall;
 import org.gemoc.monilog.moniLog.LocalAppender;
 import org.gemoc.monilog.moniLog.MoniLogPackage;
 import org.gemoc.monilog.moniLog.MoniLogger;
-import org.gemoc.monilog.moniLog.MoniloggerCall;
+import org.gemoc.monilog.moniLog.MoniLoggerAnnotation;
 import org.gemoc.monilog.moniLog.ParameterDecl;
 import org.gemoc.monilog.moniLog.Property;
 import org.gemoc.monilog.moniLog.SetVariable;
 import org.gemoc.monilog.moniLog.Setup;
+import org.gemoc.monilog.moniLog.StartMoniLogger;
+import org.gemoc.monilog.moniLog.StopMoniLogger;
 import org.gemoc.monilog.moniLog.WriteEvent;
 import org.gemoc.monilogger.nodes.MoniLoggerBlockNode;
 import org.gemoc.monilogger.nodes.MoniLoggerCopyVariablesFromScopeNodeGen;
@@ -57,6 +59,7 @@ import org.gemoc.monilogger.nodes.MoniLoggerExecutableNode;
 import org.gemoc.monilogger.nodes.MoniLoggerNode;
 import org.gemoc.monilogger.nodes.MoniLoggerNodeGen;
 import org.gemoc.monilogger.nodes.action.MoniLoggerExternalAppenderNodeGen;
+import org.gemoc.monilogger.nodes.action.MoniLoggerSetMoniLoggerStatusNodeGen;
 import org.gemoc.monilogger.nodes.action.MoniLoggerSetVariableNodeGen;
 import org.gemoc.monilogger.nodes.condition.MoniLoggerConditionalNode;
 import org.gemoc.monilogger.nodes.condition.MoniLoggerConditionalNodeGen;
@@ -125,6 +128,8 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 	private final CyclicAssumption contextActive = new CyclicAssumption("MoniLog context active");
 
 	private Map<Event, List<MoniLogger>> eventToMoniLoggers = new HashMap<>();
+	private Map<MoniLogger, CyclicAssumption> monilogggerStatusStable = new HashMap<>();
+	private Map<MoniLogger, Boolean> moniloggerActive = new HashMap<>();
 	private final Set<Event> events = new HashSet<>();
 
 	private MoniLogParser parser = new MoniLogParser();
@@ -195,6 +200,7 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 			@Override
 			public void onContextClosed(TruffleContext context) {
 				expressionParser.clean();
+				monilogggerStatusStable.values().forEach(a -> a.invalidate());
 				List<EventBinding<MoniLoggerASTEventNodeFactory>> bindings = contextToFactory.remove(context);
 				if (bindings != null) {
 					bindings.forEach(b -> b.dispose());
@@ -211,6 +217,18 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 
 	public CyclicAssumption getContextActive() {
 		return contextActive;
+	}
+
+	public CyclicAssumption getMoniloggerStatusStable(MoniLogger monilogger) {
+		return monilogggerStatusStable.get(monilogger);
+	}
+
+	public boolean isMoniloggerActive(MoniLogger monilogger) {
+		return moniloggerActive.get(monilogger);
+	}
+
+	public void setMoniloggerStatus(MoniLogger monilogger, boolean status) {
+		moniloggerActive.put(monilogger, status);
 	}
 
 	private final Map<String, Map<String, Object>> eventTypes = new HashMap<>();
@@ -244,6 +262,7 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 
 		eventTypes.clear();
 		eventToMoniLoggers.clear();
+		monilogggerStatusStable.clear();
 
 		moniloggers.forEach(m -> processMonilogger(m));
 
@@ -264,8 +283,9 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 
 	private void processMonilogger(MoniLogger monilogger) {
 		final Event event = monilogger.getStreamEvent().getEvent();
-//		monilogger.getStreamEvent().getProp()
 		eventToMoniLoggers.computeIfAbsent(event, o -> new ArrayList<>()).add(monilogger);
+		moniloggerActive.put(monilogger, !monilogger.getAnnotations().contains(MoniLoggerAnnotation.INACTIVE));
+		monilogggerStatusStable.put(monilogger, new CyclicAssumption(monilogger.getName() + "_status_stable"));
 		processEvent(event);
 	}
 
@@ -324,10 +344,6 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 			throw new UnsupportedOperationException();
 		}
 	}
-	
-//	private void egzegzeg(MoniloggerCall moniloggerCall) {
-//		moniloggerCall.getMonilogger()
-//	}
 
 	private EventBinding<MoniLoggerASTEventNodeFactory> createASTEventBinding(ASTEvent event,
 			List<MoniLogger> relatedMoniLoggers) {
@@ -342,74 +358,77 @@ public class MoniLoggerInstrument extends TruffleInstrument {
 
 			public MoniLoggerExecutableNode apply(Node node) {
 				// for each monilogger that can be triggered by this AST event
-				return new MoniLoggerBlockNode(moniloggers.stream().map(m -> {
+				return new MoniLoggerBlockNode(moniloggers.stream().map(new Function<MoniLogger, MoniLoggerNode>() {
+					public MoniLoggerNode apply(MoniLogger m) {
+						final Set<String> languages = Streams.stream(m.eAllContents())
+								.filter(o -> o instanceof LanguageCall)
+								.map(o -> ((LanguageCall) o).getLanguageID()).collect(Collectors.toSet());
 
-					final Set<String> languages = Streams.stream(m.eAllContents())
-							.filter(o -> o instanceof LanguageCall)
-							.map(o -> ((LanguageCall) o).getLanguageID()).collect(Collectors.toSet());
+						final Condition condition = m.getCondition();
+						final List<Action> thenActions = m.getThenActions();
+						final List<Action> elseActions = m.getElseActions();
 
-					final Condition condition = m.getCondition();
-					final List<Action> thenActions = m.getThenActions();
-					final List<Action> elseActions = m.getElseActions();
+						final List<MoniLoggerExecutableNode> prologNodes = new ArrayList<>();
+						final List<MoniLoggerExecutableNode> thenActionNodes = new ArrayList<>();
+						final List<MoniLoggerExecutableNode> elseActionNodes = new ArrayList<>();
 
-					final List<MoniLoggerExecutableNode> prologNodes = new ArrayList<>();
-					final List<MoniLoggerExecutableNode> thenActionNodes = new ArrayList<>();
-					final List<MoniLoggerExecutableNode> elseActionNodes = new ArrayList<>();
+						final MoniLoggerConditionalNode conditionNode = condition != null
+								? MoniLoggerConditionalNodeGen
+										.create(getExpressionNode(condition.getExpression(), node, onEnter))
+								: null;
 
-					final MoniLoggerConditionalNode conditionNode = condition != null
-							? MoniLoggerConditionalNodeGen
-									.create(getExpressionNode(condition.getExpression(), node, onEnter))
-							: null;
+						final Function<Action, MoniLoggerExecutableNode> actionMapper = action -> {
+							switch (action.eClass().getClassifierID()) {
+							case MoniLogPackage.LANGUAGE_CALL: {
+								final LanguageCall languageCall = (LanguageCall) action;
+								return getExpressionNode(languageCall, node, onEnter);
+							}
+							case MoniLogPackage.APPENDER_CALL:
+								return getAppenderExecutableNode(env, (AppenderCall) action, node, onEnter);
+//							case MoniLogPackage.EMIT_EVENT:
+//								return new MoniLoggerEmitEventNode(epRuntime, ((EmitEvent) action).getEvent().getName(),
+//										EMPTY_ARRAY);
+							case MoniLogPackage.SET_VARIABLE:
+								final SetVariable setVariable = (SetVariable) action;
+								return MoniLoggerSetVariableNodeGen.create(
+										getPropertyFQN(setVariable.getVariable().getProperty()),
+										getExpressionNode(setVariable.getValue(), node, onEnter));
+							case MoniLogPackage.START_MONI_LOGGER:
+								final StartMoniLogger startMoniLogger = (StartMoniLogger) action;
+								return MoniLoggerSetMoniLoggerStatusNodeGen.create(startMoniLogger.getMonilogger(), true);
+								
+							case MoniLogPackage.STOP_MONI_LOGGER:
+								final StopMoniLogger stopMoniLogger = (StopMoniLogger) action;
+								return MoniLoggerSetMoniLoggerStatusNodeGen.create(stopMoniLogger.getMonilogger(), false);
+							default:
+								throw new UnsupportedOperationException();
+							}
+						};
 
-					final Function<Action, MoniLoggerExecutableNode> actionMapper = action -> {
-						switch (action.eClass().getClassifierID()) {
-						case MoniLogPackage.LANGUAGE_CALL: {
-							final LanguageCall languageCall = (LanguageCall) action;
-							return getExpressionNode(languageCall, node, onEnter);
+						thenActionNodes.addAll(thenActions.stream().map(actionMapper).collect(Collectors.toList()));
+						elseActionNodes.addAll(elseActions.stream().map(actionMapper).collect(Collectors.toList()));
+
+						final MoniLoggerBlockNode thenActionNode = thenActionNodes.isEmpty() ? null
+								: new MoniLoggerBlockNode(thenActionNodes.toArray(EMPTY_ARRAY));
+						final MoniLoggerBlockNode elseActionNode = elseActionNodes.isEmpty() ? null
+								: new MoniLoggerBlockNode(elseActionNodes.toArray(EMPTY_ARRAY));
+
+						prologNodes.addAll(languages.stream().map(
+								l -> MoniLoggerCopyVariablesFromScopeNodeGen.create(l, node, onEnter, usePolyglotContext))
+								.collect(Collectors.toList()));
+
+						final MoniLoggerBlockNode prologNode;
+						if (!prologNodes.isEmpty()) {
+							prologNode = new MoniLoggerBlockNode(prologNodes.toArray(EMPTY_ARRAY));
+						} else {
+							prologNode = null;
 						}
-						case MoniLogPackage.APPENDER_CALL:
-							return getAppenderExecutableNode(env, (AppenderCall) action, node, onEnter);
-//						case MoniLogPackage.EMIT_EVENT:
-//							return new MoniLoggerEmitEventNode(epRuntime, ((EmitEvent) action).getEvent().getName(),
-//									EMPTY_ARRAY);
-						case MoniLogPackage.SET_VARIABLE:
-							final SetVariable setVariable = (SetVariable) action;
-							return MoniLoggerSetVariableNodeGen.create(
-									getPropertyFQN(setVariable.getVariable().getProperty()),
-									getExpressionNode(setVariable.getValue(), node, onEnter));
-						case MoniLogPackage.MONILOGGER_CALL:
-//							TODO
-							final MoniloggerCall moniloggerCall = (MoniloggerCall) action;
-//							moniloggerCall.
-							throw new UnsupportedOperationException();
-						default:
-							throw new UnsupportedOperationException();
-						}
+
+						final MoniLoggerNode moniloggerNode = MoniLoggerNodeGen.create(m, prologNode, conditionNode,
+								thenActionNode, elseActionNode);
+
+						return moniloggerNode;
 					};
-
-					thenActionNodes.addAll(thenActions.stream().map(actionMapper).collect(Collectors.toList()));
-					elseActionNodes.addAll(elseActions.stream().map(actionMapper).collect(Collectors.toList()));
-
-					final MoniLoggerBlockNode thenActionNode = thenActionNodes.isEmpty() ? null
-							: new MoniLoggerBlockNode(thenActionNodes.toArray(EMPTY_ARRAY));
-					final MoniLoggerBlockNode elseActionNode = elseActionNodes.isEmpty() ? null
-							: new MoniLoggerBlockNode(elseActionNodes.toArray(EMPTY_ARRAY));
-
-					prologNodes.addAll(languages.stream().map(
-							l -> MoniLoggerCopyVariablesFromScopeNodeGen.create(l, node, onEnter, usePolyglotContext))
-							.collect(Collectors.toList()));
-
-					final MoniLoggerBlockNode prologNode;
-					if (!prologNodes.isEmpty()) {
-						prologNode = new MoniLoggerBlockNode(prologNodes.toArray(EMPTY_ARRAY));
-					} else {
-						prologNode = null;
-					}
-
-					final MoniLoggerNode moniloggerNode = MoniLoggerNodeGen.create(prologNode, conditionNode,
-							thenActionNode, elseActionNode);
-
-					return moniloggerNode;
 				}).collect(Collectors.toList()).toArray(EMPTY_ARRAY));
 			}
 		};
