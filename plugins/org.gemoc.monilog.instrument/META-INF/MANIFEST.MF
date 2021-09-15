@@ -2,7 +2,7 @@ Manifest-Version: 1.0
 Bundle-ManifestVersion: 2
 Bundle-Name: Instrument
 Bundle-SymbolicName: org.gemoc.monilog.instrument;singleton:=true
-Bundle-Version: 2.1.0.qualifier
+Bundle-Version: 2.1.1.qualifier
 Bundle-Activator: org.gemoc.monilog.instrument.Activator
 Require-Bundle: org.eclipse.core.runtime,
  org.gemoc.instrument,
@@ -13,7 +13,7 @@ Require-Bundle: org.eclipse.core.runtime,
  org.eclipse.xtend.lib,
  org.eclipse.xtend.lib.macro,
  truffle-api-wrapper;bundle-version="21.1.0",
- org.gemoc.instrument.interface;bundle-version="2.1.0"
+ org.gemoc.instrument.interface;bundle-version="2.1.1"
 Bundle-RequiredExecutionEnvironment: JavaSE-11
 Automatic-Module-Name: org.gemoc.monilog.instrument
 Bundle-ActivationPolicy: lazy

@@ -3,6 +3,12 @@
  */
 package org.gemoc.monilog.validation
 
+import java.io.File
+import java.util.Arrays
+import org.eclipse.xtext.validation.Check
+import org.gemoc.monilog.moniLog.FileAlias
+import org.gemoc.monilog.moniLog.FileContent
+import org.gemoc.monilog.moniLog.MoniLogPackage
 
 /**
  * This class contains custom validation rules. 
@@ -11,15 +17,29 @@ package org.gemoc.monilog.validation
  */
 class MoniLogValidator extends AbstractMoniLogValidator {
 	
-//	public static val INVALID_NAME = 'invalidName'
-//
-//	@Check
-//	def checkGreetingStartsWithCapital(Greeting greeting) {
-//		if (!Character.isUpperCase(greeting.name.charAt(0))) {
-//			warning('Name should start with a capital', 
-//					MoniLogPackage.Literals.GREETING__NAME,
-//					INVALID_NAME)
-//		}
-//	}
+	@Check
+	def checkFileAlias(FileAlias fileAlias) {
+		if (!fileExists(fileAlias.filePath)) {
+			error('File not found', fileAlias, MoniLogPackage.Literals.FILE_ALIAS__FILE_PATH)
+		}
+	}
 	
+	@Check
+	def checkFileContent(FileContent fileContent) {
+		if (!fileExists(fileContent.value)) {
+			error('File not found', fileContent, MoniLogPackage.Literals.FILE_CONTENT__VALUE)
+		}
+	}
+	
+	private def boolean fileExists(String filePath) {
+		val actualFilePath = Arrays::stream(filePath.split(File::pathSeparator)).map[segment|
+			if (segment.startsWith("$")) {
+				System::getenv(segment.substring(1))
+			} else {
+				segment
+			}
+		].reduce[s1, s2| s1 + File::pathSeparator + s2].orElse("")
+		val f = new File(actualFilePath)
+		return f.isFile
+	}
 }

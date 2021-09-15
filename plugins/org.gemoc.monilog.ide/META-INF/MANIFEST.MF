@@ -3,7 +3,7 @@ Automatic-Module-Name: org.gemoc.monilog.ide
 Bundle-ManifestVersion: 2
 Bundle-Name: org.gemoc.monilog.ide
 Bundle-Vendor: My Company
-Bundle-Version: 2.1.0.qualifier
+Bundle-Version: 2.1.1.qualifier
 Bundle-SymbolicName: org.gemoc.monilog.ide; singleton:=true
 Bundle-ActivationPolicy: lazy
 Require-Bundle: org.gemoc.monilog,

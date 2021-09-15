@@ -196,6 +196,9 @@
     <genClasses ecoreClass="MoniLog.ecore#//StringConstant">
       <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog.ecore#//StringConstant/value"/>
     </genClasses>
+    <genClasses ecoreClass="MoniLog.ecore#//FileContent">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute MoniLog.ecore#//FileContent/value"/>
+    </genClasses>
     <genClasses ecoreClass="MoniLog.ecore#//VectorConstant">
       <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference MoniLog.ecore#//VectorConstant/values"/>
     </genClasses>

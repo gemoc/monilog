@@ -150,7 +150,7 @@ Primary returns SimpleExpression:
 
 Atomic returns SimpleExpression:
 	{IntConstant} value=INT | {RealConstant} value=REAL | {BoolConstant} (value?='true' | 'false') | {StringConstant} value=STRING |
-	{VectorConstant} '[' values+=Expression (',' values+=Expression)* ']' | Ref | ArraySize | LanguageCall | LayoutCall;
+	{FileContent} 'read' value=STRING | {VectorConstant} '[' values+=Expression (',' values+=Expression)* ']' | Ref | ArraySize | LanguageCall | LayoutCall;
 
 Ref:
 	VarRef ({ArrayRef.array=current} '[' indices+=Expression (',' indices+=Expression)* ']' |

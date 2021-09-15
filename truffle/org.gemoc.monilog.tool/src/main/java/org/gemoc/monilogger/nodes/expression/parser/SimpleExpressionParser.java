@@ -1,7 +1,12 @@
 package org.gemoc.monilogger.nodes.expression.parser;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.Arrays;
@@ -24,6 +29,7 @@ import org.gemoc.monilog.moniLog.Equality;
 import org.gemoc.monilog.moniLog.Expression;
 import org.gemoc.monilog.moniLog.ExternalLayout;
 import org.gemoc.monilog.moniLog.FieldReference;
+import org.gemoc.monilog.moniLog.FileContent;
 import org.gemoc.monilog.moniLog.IntConstant;
 import org.gemoc.monilog.moniLog.LanguageCall;
 import org.gemoc.monilog.moniLog.Layout;
@@ -103,6 +109,9 @@ public class SimpleExpressionParser {
 			break;
 		case MoniLogPackage.STRING_CONSTANT:
 			expressionNode = createSimpleExpressionStringConstantNode(((StringConstant) expression).getValue());
+			break;
+		case MoniLogPackage.FILE_CONTENT:
+			expressionNode = createSimpleExpressionFileContentNode(((FileContent) expression).getValue());
 			break;
 		case MoniLogPackage.VECTOR_CONSTANT:
 			expressionNode = createSimpleExpressionVectorNode((VectorConstant) expression, node, onEnter);
@@ -189,6 +198,19 @@ public class SimpleExpressionParser {
 
 	private SimpleExpressionNode createSimpleExpressionStringConstantNode(String value) {
 		return new SimpleExpressionStringLiteralNode(value);
+	}
+
+	private SimpleExpressionNode createSimpleExpressionFileContentNode(String path) {
+		InputStream is;
+		try {
+			is = new FileInputStream(new File(path));
+			final String string = new BufferedReader(new InputStreamReader(is)).lines()
+					.reduce((s1, s2) -> s1 + "\n" + s2).get();
+			return new SimpleExpressionStringLiteralNode(string);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			return new SimpleExpressionStringLiteralNode("");
+		}
 	}
 
 	private SimpleExpressionNode createSimpleExpressionVectorNode(VectorConstant value, Node node, boolean onEnter) {
@@ -333,13 +355,9 @@ public class SimpleExpressionParser {
 							.map(segment -> segment.startsWith("$") ? System.getenv(segment.substring(1)) : segment)
 							.reduce((s1, s2) -> s1 + "/" + s2).orElse("");
 					final File sourceFile = new File(actualFilePath);
-					if (sourceFile.exists() && sourceFile.isFile()) {
-						src = Source.newBuilder(languageId, sourceFile).build();
-						Context.getCurrent().eval(src);
-						return src;
-					} else {
-						throw new UnsupportedOperationException();
-					}
+					src = Source.newBuilder(languageId, sourceFile).build();
+					Context.getCurrent().eval(src);
+					return src;
 				} catch (IOException e) {
 					e.printStackTrace();
 					return null;
