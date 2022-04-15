@@ -129,8 +129,11 @@ setup(
     url="https://github.com/cea-hpc/monilog",
     description="A Python logging and monitoring toolbox for C++ applications.",
     long_description="",
-    package_dir={"": "src"},
     packages=["monilog"],
+    package_dir={"": "src"},
+    package_data={
+        "monilog": ["include/MoniLog.h"],
+    },
     ext_modules=ext_modules,
     cmdclass={"build_ext": CMakeBuild},
     extras_require={"test": "pytest"},

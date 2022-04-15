@@ -1,4 +1,4 @@
-#include "MoniLog.h"
+#include <MoniLog.h>
 
 namespace py = pybind11;
 
@@ -249,12 +249,13 @@ namespace MoniLog
         }
 
         // // Initializing the MoniLog Python module.
-        // py::module_ monilogModule = py::module_::import("monilog");
+        py::module_ monilogModule = py::module_::import("monilog");
+        py::module_ monilogInternalModule = py::module_::import("monilog._monilog");
 
         // // Initializing the user-provided interface module exposing C++ variables to Python scripts.
-        // py::module_ interface_py_module = py::module_::import(interface_module.c_str());
-        // py::object ctx = py::class_<MoniLogExecutionContext, std::shared_ptr<MoniLogExecutionContext>>(interface_py_module, "MoniLogExecutionContext");
-        // interface_module_initializer(interface_py_module, ctx);
+        py::module_ interface_py_module = py::module_::import(interface_module.c_str());
+        py::object ctx = (py::object) monilogInternalModule.attr("MoniLogExecutionContext");
+        interface_module_initializer(interface_py_module, ctx);
 
         // Loading the user-provided Python scripts containing monilogger definitions.
         for (size_t i = 0; i < python_scripts.size(); i++)
